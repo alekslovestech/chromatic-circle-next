@@ -3,16 +3,15 @@
 import Link from "next/link";
 
 export default function AdvancedPage() {
+  const gridContainerClasses = `grid grid-cols-2 lg:grid-cols-4 h-screen p-2 gap-1 overflow-hidden
+    grid-rows-[100px_0.55fr_1fr_1fr] lg:grid-rows-[100px_1fr_1fr]
+    grid-areas-[staff_staff_staff_staff]
+    [circular_circular_sidebar_sidebar]
+    [circular_circular_linear_linear]`;
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 to-pink-500">
       {/* Grid Container - Advanced Mode */}
-      <div
-        className="grid grid-cols-2 lg:grid-cols-4 h-screen p-2 gap-1 overflow-hidden
-                    grid-rows-[100px_0.55fr_1fr_1fr] lg:grid-rows-[100px_1fr_1fr]
-                    grid-areas-[staff_staff_staff_staff]
-                              [circular_circular_sidebar_sidebar]
-                              [circular_circular_linear_linear]"
-      >
+      <div className={gridContainerClasses}>
         {/* Staff Area */}
         <div className="grid-area-staff flex justify-center items-center px-5 border border-white/30 rounded">
           <div className="w-full">Staff Component</div>
