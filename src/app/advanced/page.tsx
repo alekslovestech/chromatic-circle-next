@@ -2,16 +2,24 @@
 
 import { STAFF_HEIGHT_PX } from "@/lib/constants";
 import Link from "next/link";
+import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
 
 export default function AdvancedPage() {
-  const gridRows = `${STAFF_HEIGHT_PX} 1fr 1fr 1fr`;
-  const gridAreas = ` 'staff staff'
-                      'sidebar sidebar'
-                      'circular circular'                      
-                      'linear linear'`;
+  const isLandscape = useIsLandscape();
+  const gridRowsPortrait = `${STAFF_HEIGHT_PX} 0.55fr 1fr 1fr`;
+  const gridAreasPortrait = ` 'staff staff'
+                              'sidebar sidebar'
+                              'circular circular'                      
+                              'linear linear'`;
+  const gridRowsLandscape = `${STAFF_HEIGHT_PX} 1fr 1fr`;
+  const gridAreasLandscape = `'circular circular staff staff'
+                              'circular circular sidebar sidebar'
+                              'circular circular linear linear'
+                              'circular circular linear linear'`;
+  const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
+  const gridAreas = isLandscape ? gridAreasLandscape : gridAreasPortrait;
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-600 to-blue-500">
-      {/* Grid Container - Advanced Mode */}
       <div
         className={`grid lg:grid-cols-4 h-screen p-2 gap-1 overflow-hidden`}
         style={{

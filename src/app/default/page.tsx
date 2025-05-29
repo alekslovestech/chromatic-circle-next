@@ -1,16 +1,24 @@
 "use client";
 import Link from "next/link";
 import { STAFF_HEIGHT_PX } from "@/lib/constants";
+import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
 
 //NB using Styles instead of tailwind classes for grids
 export default function Home() {
-  const gridRows = `${STAFF_HEIGHT_PX} 2fr 2fr 2fr`;
-  const gridAreas = ` 'staff staff' 
-                      'settings settings'
-                      'circular circular'
-                      'linear linear'`;
+  const isLandscape = useIsLandscape();
+  const gridRowsPortrait = `${STAFF_HEIGHT_PX} minmax(230px, 3fr) 3fr 2fr`;
+  const gridAreasPortrait = ` 'staff staff' 
+                              'settings settings'
+                              'circular circular'
+                              'linear linear'`;
 
-  console.log(`gridRows: ${gridRows}`);
+  const gridRowsLandscape = `${STAFF_HEIGHT_PX} 1fr 1fr`;
+  const gridAreasLandscape = `'circular circular staff staff'
+                              'circular circular settings settings'
+                              'linear linear settings settings'`;
+  const gridAreas = isLandscape ? gridAreasLandscape : gridAreasPortrait;
+  const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 to-pink-500">
       {/* Grid Container - Default Mode */}
