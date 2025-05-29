@@ -51,7 +51,7 @@ export default function AdvancedPage() {
 
         <div className="fixed bottom-4 right-4">
           <Link
-            href="/"
+            href="/default"
             className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-purple-600 bg-white hover:bg-gray-50 transition-colors"
           >
             Switch to Default View

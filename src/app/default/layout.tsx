@@ -1,22 +1,11 @@
-import { geistSans, geistMono } from "@/lib/fonts";
-import { defaultMetadata, viewport } from "@/lib/metadata";
-import "./globals.css";
+import { defaultViewMetadata } from "@/lib/metadata";
 
-export { viewport };
-export const metadata = defaultMetadata;
+export const metadata = defaultViewMetadata;
 
-export default function RootLayout({
+export default function DefaultLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
-  );
+  return <div>{children}</div>;
 }

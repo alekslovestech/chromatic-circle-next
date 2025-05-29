@@ -7,7 +7,7 @@ export const viewport: Viewport = {
 };
 
 // Base metadata shared across the application
-const baseMetadata = {
+export const baseMetadata: Metadata = {
   title: "Chromatic Circle",
   description:
     "Interactive music theory application for exploring the chromatic circle",
@@ -26,15 +26,30 @@ const baseMetadata = {
     description:
       "Interactive music theory application for exploring the chromatic circle",
   },
-} as const;
+};
 
-// Default metadata for the root layout
-export const defaultMetadata: Metadata = {
+// Default view metadata
+export const defaultViewMetadata: Metadata = {
   ...baseMetadata,
+  title: "Default View - Chromatic Circle",
+  description:
+    "Basic features for exploring music theory with the chromatic circle",
+  openGraph: {
+    ...baseMetadata.openGraph,
+    title: "Default View - Chromatic Circle",
+    description:
+      "Basic features for exploring music theory with the chromatic circle",
+  },
+  twitter: {
+    ...baseMetadata.twitter,
+    title: "Default View - Chromatic Circle",
+    description:
+      "Basic features for exploring music theory with the chromatic circle",
+  },
 };
 
 // Advanced view metadata
-export const advancedMetadata: Metadata = {
+export const advancedViewMetadata: Metadata = {
   ...baseMetadata,
   title: "Advanced View - Chromatic Circle",
   description:
