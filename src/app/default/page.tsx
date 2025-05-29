@@ -16,48 +16,54 @@ export default function Home() {
   const gridAreasLandscape = `'circular circular staff staff'
                               'circular circular settings settings'
                               'linear linear settings settings'`;
+  const gridCols = isLandscape ? "4fr 1fr" : "1fr 1fr";
   const gridAreas = isLandscape ? gridAreasLandscape : gridAreasPortrait;
   const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 min-h-screen bg-gray-500">
+    <div className="mx-auto max-w-7x1 px-4 md:px-6 lg:px-8 min-h-screen bg-gray-600">
       <div
         className="grid h-screen p-2 gap-1 overflow-hidden"
         style={{
+          gridTemplateColumns: gridCols,
           gridTemplateRows: gridRows,
           gridTemplateAreas: gridAreas,
         }}
       >
         <div className={COMMON_STYLES.staff} style={{ gridArea: "staff" }}>
-          <div className="w-full text-2xl text-center">Staff Component</div>
+          <div className="w-full h-full flex items-center justify-center text-2xl">
+            Staff Component
+          </div>
         </div>
 
         <div
           className={COMMON_STYLES.circular}
           style={{ gridArea: "circular" }}
         >
-          <div className="border-r border-white/30 p-2 text-2xl text-center">
+          <div className="border-r border-white/30 p-2 h-full flex items-center justify-center text-2xl">
             Circular Keyboard
           </div>
           <div
             className="self-end mb-4 flex flex-col justify-end text-right max-w-[120px] p-2"
             style={{ gridArea: "sidebar" }}
           >
-            <div className="w-full break-words text-2xl text-center">
+            <div className="w-full h-full flex items-center justify-center text-2xl break-words">
               Chord Display
             </div>
           </div>
         </div>
 
         <div className={COMMON_STYLES.linear} style={{ gridArea: "linear" }}>
-          <div className="text-2xl text-center">Linear Keyboard</div>
+          <div className="h-full flex items-center justify-center text-2xl">
+            Linear Keyboard
+          </div>
         </div>
 
         <div
           className={COMMON_STYLES.settings}
           style={{ gridArea: "settings" }}
         >
-          <div className="max-h-[45px] rounded text-2xl text-center">
+          <div className="max-h-[45px] rounded text-2xl text-center align-middle">
             Settings Component
           </div>
         </div>
