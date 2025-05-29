@@ -1,1 +1,1 @@
-export const STAFF_HEIGHT = "100px";
+export const STAFF_HEIGHT_PX = "100px";
