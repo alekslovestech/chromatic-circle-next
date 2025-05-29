@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { STAFF_HEIGHT_PX } from "@/lib/constants";
+import { COMMON_STYLES, STAFF_HEIGHT_PX } from "@/lib/constants";
 import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
 
 //NB using Styles instead of tailwind classes for grids
@@ -28,15 +28,12 @@ export default function Home() {
           gridTemplateAreas: gridAreas,
         }}
       >
-        <div
-          className="flex justify-center items-center px-5 border border-white/30 rounded"
-          style={{ gridArea: "staff" }}
-        >
+        <div className={COMMON_STYLES.staff} style={{ gridArea: "staff" }}>
           <div className="w-full text-2xl text-center">Staff Component</div>
         </div>
 
         <div
-          className="grid grid-areas-[circular-keyboard_sidebar] grid-cols-[200px_1fr] p-2 overflow-hidden max-h-full border border-white/30 rounded"
+          className={COMMON_STYLES.circular}
           style={{ gridArea: "circular" }}
         >
           <div className="border-r border-white/30 p-2 text-2xl text-center">
@@ -52,14 +49,14 @@ export default function Home() {
           </div>
         </div>
 
-        <div
-          className="grid-area-linear w-full h-full flex items-center justify-center overflow-hidden border border-white/30 rounded"
-          style={{ gridArea: "linear" }}
-        >
+        <div className={COMMON_STYLES.linear} style={{ gridArea: "linear" }}>
           <div className="text-2xl text-center">Linear Keyboard</div>
         </div>
 
-        <div className="grid-area-settings flex gap-4 overflow-hidden p-4 h-full min-h-0 box-border border border-white/30 rounded">
+        <div
+          className={COMMON_STYLES.settings}
+          style={{ gridArea: "settings" }}
+        >
           <div className="max-h-[45px] rounded text-2xl text-center">
             Settings Component
           </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { STAFF_HEIGHT_PX } from "@/lib/constants";
+import { COMMON_STYLES, STAFF_HEIGHT_PX } from "@/lib/constants";
 import Link from "next/link";
 import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
 
@@ -27,31 +27,22 @@ export default function AdvancedPage() {
           gridTemplateAreas: gridAreas,
         }}
       >
-        <div
-          className="flex justify-center items-center px-5 border border-white/30 rounded"
-          style={{ gridArea: "staff" }}
-        >
+        <div className={COMMON_STYLES.staff} style={{ gridArea: "staff" }}>
           <div className="w-full text-2xl text-center">Staff Component</div>
         </div>
 
         <div
-          className="grid grid-areas-[circular-keyboard] p-2 overflow-hidden max-h-full border border-white/30 rounded"
+          className={COMMON_STYLES.circular}
           style={{ gridArea: "circular" }}
         >
           <div className="p-2 text-2xl text-center">Circular Keyboard</div>
         </div>
 
-        <div
-          className="w-full h-full flex items-center justify-center overflow-hidden border border-white/30 rounded"
-          style={{ gridArea: "linear" }}
-        >
+        <div className={COMMON_STYLES.linear} style={{ gridArea: "linear" }}>
           <div className="text-2xl text-center">Linear Keyboard</div>
         </div>
 
-        <div
-          className="flex gap-4 overflow-hidden p-4 h-full min-h-0 box-border border border-white/30 rounded"
-          style={{ gridArea: "sidebar" }}
-        >
+        <div className={COMMON_STYLES.settings} style={{ gridArea: "sidebar" }}>
           <div className="max-h-[45px] rounded text-2xl text-center">
             Sidebar Component
           </div>
