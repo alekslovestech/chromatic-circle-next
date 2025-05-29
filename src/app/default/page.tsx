@@ -20,7 +20,7 @@ export default function Home() {
   const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 to-pink-500">
+    <div className="min-h-screen bg-gray-500">
       {/* Grid Container - Default Mode */}
       <div
         className={`grid h-screen p-2 gap-1 overflow-hidden`}

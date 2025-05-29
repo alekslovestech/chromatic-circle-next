@@ -19,7 +19,7 @@ export default function AdvancedPage() {
   const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
   const gridAreas = isLandscape ? gridAreasLandscape : gridAreasPortrait;
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-600 to-blue-500">
+    <div className="min-h-screen bg-gray-600">
       <div
         className={`grid lg:grid-cols-4 h-screen p-2 gap-1 overflow-hidden`}
         style={{
