@@ -20,10 +20,9 @@ export default function Home() {
   const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
 
   return (
-    <div className="min-h-screen bg-gray-500">
-      {/* Grid Container - Default Mode */}
+    <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 min-h-screen bg-gray-500">
       <div
-        className={`grid h-screen p-2 gap-1 overflow-hidden`}
+        className="grid h-screen p-2 gap-1 overflow-hidden"
         style={{
           gridTemplateRows: gridRows,
           gridTemplateAreas: gridAreas,

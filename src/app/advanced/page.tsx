@@ -19,9 +19,9 @@ export default function AdvancedPage() {
   const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
   const gridAreas = isLandscape ? gridAreasLandscape : gridAreasPortrait;
   return (
-    <div className="min-h-screen bg-gray-600">
+    <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 min-h-screen bg-gray-600">
       <div
-        className={`grid lg:grid-cols-4 h-screen p-2 gap-1 overflow-hidden`}
+        className="grid lg:grid-cols-4 h-screen p-2 gap-1 overflow-hidden"
         style={{
           gridTemplateRows: gridRows,
           gridTemplateAreas: gridAreas,
