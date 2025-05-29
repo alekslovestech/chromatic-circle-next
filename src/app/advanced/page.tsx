@@ -2,16 +2,22 @@
 
 import Link from "next/link";
 
+const STAFF_HEIGHT = 100;
 export default function AdvancedPage() {
-  const gridContainerClasses = `grid grid-cols-2 lg:grid-cols-4 h-screen p-2 gap-1 overflow-hidden
-    grid-rows-[100px_0.55fr_1fr_1fr] lg:grid-rows-[100px_1fr_1fr]
-    grid-areas-[staff_staff_staff_staff]
-    [circular_circular_sidebar_sidebar]
-    [circular_circular_linear_linear]`;
+  const gridRows = `${STAFF_HEIGHT}px_1fr_1fr_1fr`;
+  const gridAreas = `
+                      'staff_staff'
+                      'sidebar_sidebar'
+                      'circular_circular'                      
+                      'linear_linear'`;
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 to-pink-500">
+    <div className="min-h-screen bg-gradient-to-br from-green-600 to-blue-500">
       {/* Grid Container - Advanced Mode */}
-      <div className={gridContainerClasses}>
+      <div
+        className={`grid lg:grid-cols-4 h-screen p-2 gap-1 overflow-hidden
+                    grid-rows-[${gridRows}] lg:grid-rows-[1fr_1fr_1fr]
+                    [grid-template-areas:${gridAreas}]`}
+      >
         {/* Staff Area */}
         <div className="grid-area-staff flex justify-center items-center px-5 border border-white/30 rounded">
           <div className="w-full">Staff Component</div>

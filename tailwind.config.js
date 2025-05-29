@@ -8,6 +8,7 @@ module.exports = {
   ],
   theme: {
     extend: {
+      staffHeight: "100px",
       gridTemplateAreas: {
         default: [
           "staff staff staff staff",

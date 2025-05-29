@@ -1,16 +1,22 @@
 "use client";
 import Link from "next/link";
+import { STAFF_HEIGHT } from "@/lib/constants";
 
 export default function Home() {
+  const gridAreas = `
+                      'staff_staff'
+                      'settings_settings'
+                      'circular_circular'
+                      'linear_linear'`;
+
+  const gridRows = `${STAFF_HEIGHT}_2fr_2fr_2fr`;
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 to-pink-500">
       {/* Grid Container - Default Mode */}
       <div
-        className="grid grid-cols-2 lg:grid-cols-4 h-screen p-2 gap-1 overflow-hidden
-                    grid-rows-[100px_minmax(230px,3fr)_3fr_2fr] lg:grid-rows-[100px_1fr_1fr]
-                    grid-areas-[staff_staff_staff_staff]
-                              [circular_circular_settings_settings]
-                              [linear_linear_settings_settings]"
+        className={`grid lg:grid-cols-4 h-screen p-2 gap-1 overflow-hidden
+                    grid-rows-[${gridRows}] lg:grid-rows-[1fr_1fr_1fr]
+                    [grid-template-areas:${gridAreas}]`}
       >
         {/* Staff Area */}
         <div className="grid-area-staff flex justify-center items-center px-5 border border-white/30 rounded">
