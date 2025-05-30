@@ -3,7 +3,7 @@ export type ButtonDensity = "compact" | "comfortable" | "standard";
 export type ButtonSize = "sm" | "md" | "lg";
 
 export const BASE_STYLES =
-  "rounded-2xl border border-serenity-transparent1 bg-test text-serenity-textblack hover:bg-serenity-transparent1";
+  "rounded-2xl border border-serenity-transparent1 bg-serenity-light text-serenity-textblack hover:bg-serenity-transparent1";
 
 export const VARIANTS: Record<ButtonVariant, string> = {
   option: "bg-serenity-light text-serenity-textblack",

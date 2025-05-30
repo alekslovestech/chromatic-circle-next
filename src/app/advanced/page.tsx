@@ -3,6 +3,7 @@
 import { COMMON_STYLES, STAFF_HEIGHT_PX } from "@/lib/constants";
 import Link from "next/link";
 import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
+import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 
 export default function AdvancedPage() {
   const isLandscape = useIsLandscape();
@@ -51,11 +52,8 @@ export default function AdvancedPage() {
         </div>
 
         <div className="fixed bottom-4 right-4">
-          <Link
-            href="/default"
-            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-purple-600 bg-white hover:bg-gray-50 transition-colors"
-          >
-            Switch to Default View
+          <Link href="/default">
+            <GlobalModeButton text="Switch to Basic Mode" />
           </Link>
         </div>
       </div>

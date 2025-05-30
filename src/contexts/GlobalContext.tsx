@@ -1,6 +1,7 @@
 "use client";
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
+//NB: GlobalMode might no longer be necessary since we're using Next.js routing instead
 export enum GlobalMode {
   Default = "Default",
   Logo = "Logo",
