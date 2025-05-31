@@ -9,6 +9,16 @@ export const viewport: Viewport = {
 // Base metadata shared across the application
 export const baseMetadata: Metadata = {
   title: "Chromatic Circle",
+  keywords: [
+    "music theory",
+    "chromatic circle",
+    "circular keyboard",
+    "music education",
+    "harmony",
+    "geometry",
+    "color coding chords",
+    "circle of fifths",
+  ],
   description:
     "Interactive music theory application for exploring the chromatic circle",
   icons: {
@@ -32,6 +42,7 @@ export const baseMetadata: Metadata = {
 export const defaultViewMetadata: Metadata = {
   ...baseMetadata,
   title: "Default View - Chromatic Circle",
+  keywords: ["black and white keys", "intervals", "chord presets"],
   description:
     "Basic features for exploring music theory with the chromatic circle",
   openGraph: {
@@ -52,6 +63,18 @@ export const defaultViewMetadata: Metadata = {
 export const advancedViewMetadata: Metadata = {
   ...baseMetadata,
   title: "Advanced View - Chromatic Circle",
+  keywords: [
+    "ionian, dorian, phrygian, lydian, mixolydian, aeolian, locrian",
+    "hungarian minor",
+    "ukranian dorian",
+    "phrygian dominant",
+    "greek modes",
+    "musical modes",
+    "modes",
+    "scales",
+    "chords",
+    "progressions",
+  ],
   description:
     "Advanced features for exploring music theory with the chromatic circle",
   openGraph: {

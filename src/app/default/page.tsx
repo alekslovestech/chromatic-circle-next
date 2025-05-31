@@ -1,7 +1,8 @@
 "use client";
-import Link from "next/link";
 import { COMMON_STYLES, STAFF_HEIGHT_PX } from "@/lib/constants";
 import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
+import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
+import Link from "next/link";
 
 //NB using Styles instead of tailwind classes for grids
 export default function Home() {
@@ -69,11 +70,8 @@ export default function Home() {
         </div>
 
         <div className="fixed bottom-4 right-4">
-          <Link
-            href="/advanced"
-            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-purple-600 bg-white hover:bg-gray-50 transition-colors"
-          >
-            Switch to Advanced View
+          <Link href="/advanced">
+            <GlobalModeButton text="Switch to Scale Preview Mode" />
           </Link>
         </div>
       </div>
