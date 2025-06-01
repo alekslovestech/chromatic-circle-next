@@ -17,11 +17,11 @@ async function generateIcons(): Promise<void> {
     __dirname,
     "../src/assets/icons/icon.svg"
   );
-  const appDir: string = path.join(__dirname, "../src/app");
+  const publicDir: string = path.join(__dirname, "../public");
 
   // Ensure app directory exists
-  if (!fs.existsSync(appDir)) {
-    fs.mkdirSync(appDir, { recursive: true });
+  if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir, { recursive: true });
   }
 
   // Generate PNG files for each size using appropriate SVG
@@ -41,8 +41,8 @@ async function generateIcons(): Promise<void> {
   ]);
 
   // Create ICO file with all sizes
-  const icoPath = path.join(appDir, "favicon.ico");
-  const pngPath = path.join(appDir, "icon-256.png");
+  const icoPath = path.join(publicDir, "favicon.ico");
+  const pngPath = path.join(publicDir, "icon-256.png");
 
   // Convert PNG buffers to ICO
   const icoBuffer = await pngToIco(pngBuffers);
@@ -53,7 +53,7 @@ async function generateIcons(): Promise<void> {
   // Write the 256x256 PNG file (it's the last buffer in the array)
   await fs.promises.writeFile(pngPath, pngBuffers[pngBuffers.length - 1]);
 
-  console.log("✅ Icons generated successfully in src/app/");
+  console.log("✅ Icons generated successfully in public/");
 }
 
 generateIcons().catch((error: Error) => {
