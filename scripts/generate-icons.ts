@@ -42,12 +42,16 @@ async function generateIcons(): Promise<void> {
 
   // Create ICO file with all sizes
   const icoPath = path.join(appDir, "favicon.ico");
+  const pngPath = path.join(appDir, "icon-256.png");
 
   // Convert PNG buffers to ICO
   const icoBuffer = await pngToIco(pngBuffers);
 
   // Write the ICO file
   await fs.promises.writeFile(icoPath, icoBuffer);
+
+  // Write the 256x256 PNG file (it's the last buffer in the array)
+  await fs.promises.writeFile(pngPath, pngBuffers[pngBuffers.length - 1]);
 
   console.log("✅ Icons generated successfully in src/app/");
 }

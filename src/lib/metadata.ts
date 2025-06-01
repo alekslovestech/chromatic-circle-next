@@ -29,6 +29,14 @@ export const baseMetadata: Metadata = {
     description:
       "Interactive music theory application for exploring the chromatic circle",
     type: "website",
+    images: [
+      {
+        url: "https://chromatic-circle-next.vercel.app/icon-256.png",
+        width: 256,
+        height: 256,
+        alt: "Chromatic Circle Icon",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
