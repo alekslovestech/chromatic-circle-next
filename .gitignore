@@ -20,6 +20,9 @@
 # production
 /build
 
+# generated assets
+/src/app/favicon.ico
+
 # misc
 .DS_Store
 *.pem
