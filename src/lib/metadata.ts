@@ -8,7 +8,7 @@ export const viewport: Viewport = {
 
 // Base metadata shared across the application
 export const baseMetadata: Metadata = {
-  title: "Chromatic Circle",
+  title: "Chromatic Circle App",
   keywords: [
     "music theory",
     "chromatic circle",
@@ -29,6 +29,7 @@ export const baseMetadata: Metadata = {
     description:
       "Interactive music theory application for exploring the chromatic circle",
     type: "website",
+    url: "https://chromatic-circle-next.vercel.app",
     images: [
       {
         url: "https://chromatic-circle-next.vercel.app/icon-256.png",
@@ -49,15 +50,13 @@ export const baseMetadata: Metadata = {
 // Default view metadata
 export const defaultViewMetadata: Metadata = {
   ...baseMetadata,
-  title: "Default View - Chromatic Circle",
+  title: "Chromatic Circle App - Intervals and Chords",
   keywords: ["black and white keys", "intervals", "chord presets"],
-  description:
-    "Basic features for exploring music theory with the chromatic circle",
+  description: "Exploring intervals and chords on the chromatic circle",
   openGraph: {
     ...baseMetadata.openGraph,
     title: "Default View - Chromatic Circle",
-    description:
-      "Basic features for exploring music theory with the chromatic circle",
+    description: "Exploring intervals and chords on the chromatic circle",
   },
   twitter: {
     ...baseMetadata.twitter,
@@ -70,7 +69,7 @@ export const defaultViewMetadata: Metadata = {
 // Advanced view metadata
 export const advancedViewMetadata: Metadata = {
   ...baseMetadata,
-  title: "Advanced View - Chromatic Circle",
+  title: "Chromatic Circle App - Musical Modes and Scales",
   keywords: [
     "ionian, dorian, phrygian, lydian, mixolydian, aeolian, locrian",
     "hungarian minor",
@@ -87,14 +86,12 @@ export const advancedViewMetadata: Metadata = {
     "Advanced features for exploring music theory with the chromatic circle",
   openGraph: {
     ...baseMetadata.openGraph,
-    title: "Advanced View - Chromatic Circle",
-    description:
-      "Advanced features for exploring music theory with the chromatic circle",
+    title: "Chromatic Circle App - Musical Modes and Scales",
+    description: "Exploring musical modes and scales on the chromatic circle",
   },
   twitter: {
     ...baseMetadata.twitter,
-    title: "Advanced View - Chromatic Circle",
-    description:
-      "Advanced features for exploring music theory with the chromatic circle",
+    title: "Chromatic Circle App - Musical Modes and Scales",
+    description: "Exploring musical modes and scales on the chromatic circle",
   },
 };
