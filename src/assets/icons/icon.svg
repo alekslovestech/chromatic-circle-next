@@ -14,6 +14,6 @@
     <g fill="#555555" id='A#'><path d="M -25.98 -15 A 30 30 0 0 1 -15 -25.98 L -7.5 -12.99 A 15 15 0 0 0 -12.99 -7.5 Z"></path></g>
     <g fill="#eeeeee" id='B'><path d="M -15 -25.98 A 30 30 0 0 1 0 -30 L 0 -15 A 15 15 0 0 0 -7.5 -12.99 Z"></path></g>
  </g>
- <polygon points="14.489 -3.882 -10.607 10.607 -10.607 -10.607" fill="none" vector-effect="non-scaling-stroke" stroke="rgb(117, 172, 147)" stroke-width="10"></polygon> 
- <circle cx="0" cy="0" r="30" fill="none" vector-effect="non-scaling-stroke" stroke="#888888" stroke-width="6"/>
+ <polygon points="14.489 -3.882 -10.607 10.607 -10.607 -10.607" fill="none"  stroke="rgb(117, 172, 147)" stroke-width="2"></polygon> 
+ <circle cx="0" cy="0" r="30" fill="none"  stroke="#888888" stroke-width="2"/>
  </svg>
