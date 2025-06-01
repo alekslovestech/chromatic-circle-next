@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "yarn generate-icons && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-icons": "ts-node scripts/generate-icons.ts"
   },
   "dependencies": {
     "next": "15.3.2",
@@ -22,7 +23,10 @@
     "autoprefixer": "^10.4.21",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
+    "png-to-ico": "^2.1.8",
     "postcss": "^8.5.3",
+    "sharp": "^0.34.2",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }
