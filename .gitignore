@@ -21,8 +21,8 @@
 /build
 
 # generated assets
-/src/app/favicon.ico
-/src/app/icon-256.png
+/public/favicon.ico
+/public/icon-256.png
 
 # misc
 .DS_Store
