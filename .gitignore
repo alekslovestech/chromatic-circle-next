@@ -22,7 +22,7 @@
 
 # generated assets
 /public/favicon.ico
-/public/icon-256.png
+/public/*.png
 
 # misc
 .DS_Store
