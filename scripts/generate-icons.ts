@@ -34,15 +34,28 @@ async function generateIcons(): Promise<void> {
       .png()
       .toBuffer();
 
+  // Generate OpenGraph preview image
+  const generateOpenGraphBuffer = (svgPath: string) =>
+    sharp(svgPath)
+      .resize(1200, 630, {
+        fit: "contain",
+        background: { r: 255, g: 255, b: 255, alpha: 1 },
+      })
+      .png()
+      .toBuffer();
+
   // Generate all sizes
   const pngBuffers = await Promise.all([
     ...smallSizes.map((size) => generatePngBuffer(smallSvgPath, size)),
     ...largeSizes.map((size) => generatePngBuffer(largeSvgPath, size)),
   ]);
 
+  // Generate OpenGraph image
+  const openGraphBuffer = await generateOpenGraphBuffer(largeSvgPath);
+
   // Create ICO file with all sizes
   const icoPath = path.join(publicDir, "favicon.ico");
-  const pngPath = path.join(publicDir, "icon-256.png");
+  const openGraphPath = path.join(publicDir, "opengraph-image.png");
 
   // Convert PNG buffers to ICO
   const icoBuffer = await pngToIco(pngBuffers);
@@ -50,8 +63,8 @@ async function generateIcons(): Promise<void> {
   // Write the ICO file
   await fs.promises.writeFile(icoPath, icoBuffer);
 
-  // Write the 256x256 PNG file (it's the last buffer in the array)
-  await fs.promises.writeFile(pngPath, pngBuffers[pngBuffers.length - 1]);
+  // Write the OpenGraph preview image
+  await fs.promises.writeFile(openGraphPath, openGraphBuffer);
 
   console.log("✅ Icons generated successfully in public/");
 }

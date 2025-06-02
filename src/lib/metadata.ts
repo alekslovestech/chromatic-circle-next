@@ -32,9 +32,9 @@ export const baseMetadata: Metadata = {
     url: "https://chromatic-circle-next.vercel.app",
     images: [
       {
-        url: "https://chromatic-circle-next.vercel.app/icon-256.png",
-        width: 256,
-        height: 256,
+        url: "https://chromatic-circle-next.vercel.app/opengraph-image.png",
+        width: 1200,
+        height: 630,
         alt: "Chromatic Circle Icon",
       },
     ],
