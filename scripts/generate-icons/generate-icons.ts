@@ -11,13 +11,13 @@ const largeSizes: number[] = [64, 128, 256];
 async function generateIcons(): Promise<void> {
   const smallSvgPath: string = path.join(
     __dirname,
-    "../src/assets/icons/icon_small.svg"
+    "../../src/assets/icons/icon_small.svg"
   );
   const largeSvgPath: string = path.join(
     __dirname,
-    "../src/assets/icons/icon.svg"
+    "../../src/assets/icons/icon.svg"
   );
-  const publicDir: string = path.join(__dirname, "../public");
+  const publicDir: string = path.join(__dirname, "../../public");
 
   // Ensure app directory exists
   if (!fs.existsSync(publicDir)) {
