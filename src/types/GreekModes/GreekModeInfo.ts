@@ -21,7 +21,7 @@ export class GreekModeInfo implements IScalePatternForRomanChords {
   constructor(
     public readonly type: GreekModeType,
     pattern: number[], // The pattern of the mode, typically 7 notes. e.g. [0, 2, 4, 5, 7, 9, 10] for Mixolydian
-    public readonly modeNumber: number, // The number of the mode, typically 1-7. e.g. 1 for Ionian, 2 for Dorian, etc.
+    public readonly modeNumber: number // The number of the mode, typically 1-7. e.g. 1 for Ionian, 2 for Dorian, etc.
   ) {
     this.scalePattern = new ScalePattern(pattern);
   }
@@ -34,7 +34,7 @@ export class GreekModeInfo implements IScalePatternForRomanChords {
    */
   public getScaleDegreeInfoFromChromatic(
     chromaticIndex: ChromaticIndex,
-    tonicIndex: ChromaticIndex,
+    tonicIndex: ChromaticIndex
   ): ScaleDegreeInfo | null {
     const relativeOffset = (chromaticIndex - tonicIndex + 12) % 12; // Normalize to 0-11
     const scaleDegreePosition: ScaleDegreeIndex =
@@ -57,7 +57,7 @@ export class GreekModeInfo implements IScalePatternForRomanChords {
   public getDisplayStrings(keyTextMode: KeyDisplayMode): string[] {
     return Array.from({ length: this.scalePattern.getLength() }, (_, i) => {
       const scaleDegreeInfo = this.scalePattern.getScaleDegreeInfoFromPosition(
-        ixScaleDegreeIndex(i),
+        ixScaleDegreeIndex(i)
       );
       return this.getDisplayString(scaleDegreeInfo, keyTextMode);
     });
@@ -68,19 +68,25 @@ export class GreekModeInfo implements IScalePatternForRomanChords {
 
     const scaleLength = this.scalePattern.getLength();
     const ionianOffset = this.scalePattern.getOffsetAtIndex(
-      ixScaleDegreeIndex((scaleLength - offset) % scaleLength),
+      ixScaleDegreeIndex((scaleLength - offset) % scaleLength)
     );
 
     // Apply the offset to the tonic to get the Ionian tonic
     return addChromatic(tonicIndex, ionianOffset);
   }
 
-  public isDiatonicNote(chromaticIndex: ChromaticIndex, tonicIndex: ChromaticIndex): boolean {
+  public isDiatonicNote(
+    chromaticIndex: ChromaticIndex,
+    tonicIndex: ChromaticIndex
+  ): boolean {
     const scaleNotes = this.getAbsoluteScaleNotes(tonicIndex);
     return scaleNotes.includes(chromaticIndex);
   }
 
-  public getDisplayString(scaleDegreeInfo: ScaleDegreeInfo, keyTextMode: KeyDisplayMode): string {
+  public getDisplayString(
+    scaleDegreeInfo: ScaleDegreeInfo,
+    keyTextMode: KeyDisplayMode
+  ): string {
     if (keyTextMode === KeyDisplayMode.ScaleDegree) {
       return scaleDegreeInfo.getDisplayString();
     }
@@ -101,8 +107,10 @@ export class GreekModeInfo implements IScalePatternForRomanChords {
     };
 
     // Find matching chord pattern
-    const matchingPattern = Object.entries(patterns).find(([_, pattern]) => {
-      return offsetsFromRoot.every((offset, index) => offset === pattern[index]);
+    const matchingPattern = Object.entries(patterns).find(([, pattern]) => {
+      return offsetsFromRoot.every(
+        (offset, index) => offset === pattern[index]
+      );
     });
 
     return (matchingPattern?.[0] as ChordType) || ChordType.Unknown;
