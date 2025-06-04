@@ -8,19 +8,34 @@ const sizes: number[] = [16, 32, 48, 64, 128, 256];
 const smallSizes: number[] = [16, 32, 48];
 const largeSizes: number[] = [64, 128, 256];
 
+async function checkFileExists(filePath: string): Promise<void> {
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`Source file not found: ${filePath}`);
+  }
+}
+
 async function generateIcons(): Promise<void> {
+  console.log("🎨 Starting icon generation...");
+
   const smallSvgPath: string = path.join(
     __dirname,
-    "../src/assets/icons/icon_small.svg"
+    "../../src/assets/icons/icon_small.svg"
   );
   const largeSvgPath: string = path.join(
     __dirname,
-    "../src/assets/icons/icon.svg"
+    "../../src/assets/icons/icon.svg"
   );
-  const publicDir: string = path.join(__dirname, "../public");
+  const publicDir: string = path.join(__dirname, "../../public");
+
+  // Validate source files
+  console.log("📂 Checking source files...");
+  await checkFileExists(smallSvgPath);
+  await checkFileExists(largeSvgPath);
+  console.log("✅ Source files found");
 
   // Ensure app directory exists
   if (!fs.existsSync(publicDir)) {
+    console.log("📁 Creating public directory...");
     fs.mkdirSync(publicDir, { recursive: true });
   }
 
@@ -45,12 +60,15 @@ async function generateIcons(): Promise<void> {
       .toBuffer();
 
   // Generate all sizes
+  console.log("🖼️ Generating PNG icons...");
   const pngBuffers = await Promise.all([
     ...smallSizes.map((size) => generatePngBuffer(smallSvgPath, size)),
     ...largeSizes.map((size) => generatePngBuffer(largeSvgPath, size)),
   ]);
+  console.log(`✅ Generated ${pngBuffers.length} PNG icons`);
 
   // Generate OpenGraph image
+  console.log("🖼️ Generating OpenGraph image...");
   const openGraphBuffer = await generateOpenGraphBuffer(largeSvgPath);
 
   // Create ICO file with all sizes
@@ -58,18 +76,21 @@ async function generateIcons(): Promise<void> {
   const openGraphPath = path.join(publicDir, "opengraph-image.png");
 
   // Convert PNG buffers to ICO
+  console.log("🔄 Converting to ICO format...");
   const icoBuffer = await pngToIco(pngBuffers);
 
   // Write the ICO file
+  console.log("💾 Saving files...");
   await fs.promises.writeFile(icoPath, icoBuffer);
-
-  // Write the OpenGraph preview image
   await fs.promises.writeFile(openGraphPath, openGraphBuffer);
 
-  console.log("✅ Icons generated successfully in public/");
+  console.log("✨ Icon generation complete!");
+  console.log("📁 Files generated:");
+  console.log(`   - ${icoPath}`);
+  console.log(`   - ${openGraphPath}`);
 }
 
 generateIcons().catch((error: Error) => {
-  console.error("Error generating icons:", error);
+  console.error("❌ Error generating icons:", error.message);
   process.exit(1);
 });

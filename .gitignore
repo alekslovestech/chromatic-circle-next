@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/scripts/generate-icons/node_modules
 /.pnp
 .pnp.*
 .yarn/*
