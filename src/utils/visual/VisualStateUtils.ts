@@ -1,6 +1,5 @@
-import { ChromaticIndex } from "../../types/ChromaticIndex";
-
-import { MusicalKey } from "../../types/Keys/MusicalKey";
+import { ChromaticIndex } from "@/types/ChromaticIndex";
+import { MusicalKey } from "@/types/Keys/MusicalKey";
 
 export class VisualStateUtils {
   static getKeyVisualClasses(
@@ -10,7 +9,7 @@ export class VisualStateUtils {
     monochromeMode: boolean,
     isBlack: boolean,
     isSelected: boolean,
-    isSvg: boolean,
+    isSvg: boolean
   ): string[] {
     // Base colors for black/white keys
     const getFillClass = (isSvg: boolean, baseClass: string): string => {
@@ -19,7 +18,7 @@ export class VisualStateUtils {
 
     const isDiatonic = musicalKey.greekModeInfo.isDiatonicNote(
       chromaticIndex,
-      musicalKey.tonicIndex,
+      musicalKey.tonicIndex
     );
 
     // State-based colors
@@ -56,7 +55,9 @@ export class VisualStateUtils {
       });
     }
     const commonClasses = [stateFill, selectedFill, stateText, selectedText];
-    const borderClasses = isSvg ? ["stroke-gray-400", "stroke-1"] : ["border", "border-gray-400"];
+    const borderClasses = isSvg
+      ? ["stroke-gray-400", "stroke-1"]
+      : ["border", "border-gray-400"];
     return [...commonClasses, ...borderClasses];
   }
 }
