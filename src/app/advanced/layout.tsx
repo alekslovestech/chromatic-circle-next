@@ -1,3 +1,5 @@
+import { GlobalMode } from "@/contexts/GlobalContext";
+import { RootProvider } from "@/contexts/RootContext";
 import { advancedViewMetadata } from "@/lib/metadata";
 
 export const metadata = advancedViewMetadata;
@@ -7,5 +9,7 @@ export default function AdvancedLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div>{children}</div>;
+  return (
+    <RootProvider globalMode={GlobalMode.Advanced}>{children}</RootProvider>
+  );
 }
