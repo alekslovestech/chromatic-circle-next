@@ -6,8 +6,12 @@ import {
   LAYOUT_CONSTRAINTS,
 } from "@/lib/layout-constants";
 import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
+
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 import Link from "next/link";
+import { ChordNameDisplay } from "@/components/ChordNameDisplay";
+import StaffRenderer from "@/components/StaffRenderer";
+import SettingsContainer from "@/components/Settings/SettingsContainer";
 
 //NB using Styles instead of tailwind classes for grids
 export default function Home() {
@@ -42,7 +46,7 @@ export default function Home() {
       >
         <div className={COMMON_STYLES.staff} style={{ gridArea: "staff" }}>
           <div className="w-full h-full flex items-center justify-center text-2xl">
-            Staff Component
+            <StaffRenderer />
           </div>
         </div>
 
@@ -58,7 +62,7 @@ export default function Home() {
             style={{ gridArea: "sidebar" }}
           >
             <div className="w-full h-full flex items-center justify-center text-2xl break-words">
-              Chord Display
+              <ChordNameDisplay />
             </div>
           </div>
         </div>
@@ -74,7 +78,7 @@ export default function Home() {
           style={{ gridArea: "settings" }}
         >
           <div className="max-h-[45px] rounded text-2xl text-center align-middle">
-            Settings Component
+            <SettingsContainer />
           </div>
         </div>
 

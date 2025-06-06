@@ -9,6 +9,8 @@ import {
 import Link from "next/link";
 import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
+import StaffRenderer from "@/components/StaffRenderer";
+import SettingsContainer from "@/components/Settings/SettingsContainer";
 
 export default function AdvancedPage() {
   const isLandscape = useIsLandscape();
@@ -40,7 +42,9 @@ export default function AdvancedPage() {
         }}
       >
         <div className={COMMON_STYLES.staff} style={{ gridArea: "staff" }}>
-          <div className="w-full text-2xl text-center">Staff Component</div>
+          <div className="w-full text-2xl text-center">
+            <StaffRenderer />
+          </div>
         </div>
 
         <div
@@ -56,7 +60,7 @@ export default function AdvancedPage() {
 
         <div className={COMMON_STYLES.settings} style={{ gridArea: "sidebar" }}>
           <div className="max-h-[45px] rounded text-2xl text-center">
-            Sidebar Component
+            <SettingsContainer />
           </div>
         </div>
 
