@@ -1,3 +1,5 @@
+"use client";
+
 import React, { createContext, useContext, useState, useRef } from "react";
 import { KeyDisplayMode } from "@/types/SettingModes";
 import {
