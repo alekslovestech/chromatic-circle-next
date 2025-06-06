@@ -1,4 +1,4 @@
-import { ColorUtils } from "../utils/ColorUtils";
+import { ColorUtils } from "../utils/visual/ColorUtils";
 
 describe("ColorUtils.cyclicIntervals", () => {
   const testCases = [
@@ -95,6 +95,8 @@ describe("ColorUtils.cyclicIntervals", () => {
   ];
 
   test.each(testCases)("$name", ({ input, expected }) => {
-    expect(ColorUtils.cyclicIntervalsFromActualIndices(input)).toEqual(expected);
+    expect(ColorUtils.cyclicIntervalsFromActualIndices(input)).toEqual(
+      expected
+    );
   });
 });

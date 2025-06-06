@@ -1,7 +1,7 @@
 import { TWELVE } from "@/types/NoteConstants";
 import { ChromaticIndex, ixChromatic } from "@/types/ChromaticIndex";
 
-import { ColorUtils } from "@/utils/ColorUtils";
+import { ColorUtils } from "@/utils/visual/ColorUtils";
 import { CartesianPoint, PolarMath } from "@/utils/Keyboard/Circular/PolarMath";
 
 import { useDisplay } from "@/contexts/DisplayContext";

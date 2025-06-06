@@ -1,15 +1,18 @@
-import { ActualIndex } from "../types/IndexTypes";
-import { TWELVE } from "../types/NoteConstants";
-import { isBlackKey } from "./Keyboard/KeyboardUtils";
-import { ChromaticIndex } from "../types/ChromaticIndex";
+import { ActualIndex } from "../../types/IndexTypes";
+import { TWELVE } from "../../types/NoteConstants";
+import { isBlackKey } from "../Keyboard/KeyboardUtils";
+import { ChromaticIndex } from "../../types/ChromaticIndex";
 
 export function getComputedColor(cssVariable: string): string {
-  const color = getComputedStyle(document.documentElement).getPropertyValue(cssVariable).trim();
+  const color = getComputedStyle(document.documentElement)
+    .getPropertyValue(cssVariable)
+    .trim();
   return color || "#000000";
 }
 
-export const getBlackWhiteString = (index: ActualIndex | ChromaticIndex): string =>
-  isBlackKey(index) ? "black" : "white";
+export const getBlackWhiteString = (
+  index: ActualIndex | ChromaticIndex
+): string => (isBlackKey(index) ? "black" : "white");
 
 export type RGB = [number, number, number];
 
@@ -71,7 +74,11 @@ export class ColorUtils {
       totalWeight += weight;
     });
 
-    return [rgbSum[0] / totalWeight, rgbSum[1] / totalWeight, rgbSum[2] / totalWeight];
+    return [
+      rgbSum[0] / totalWeight,
+      rgbSum[1] / totalWeight,
+      rgbSum[2] / totalWeight,
+    ];
   }
 
   // Interval class → RGB color mapping
