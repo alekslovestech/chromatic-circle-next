@@ -13,7 +13,7 @@ export const SectionTitle: React.FC<SectionTitleProps> = ({
 }) => {
   return (
     <div
-      className={`text-base font-medium mb-2 text-gray-600 flex-shrink-0 ${
+      className={`section-title text-base font-medium mb-2 text-serenity-textblack flex-shrink-0 ${
         centered ? "text-center" : ""
       } ${className}`}
     >

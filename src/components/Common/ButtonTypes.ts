@@ -19,9 +19,9 @@ export const DENSITIES: Record<ButtonDensity, string> = {
 };
 
 export const SIZES: Record<ButtonSize, string> = {
-  sm: "min-w-button-sm max-w-button-sm px-2 py-1",
-  md: "min-w-button-md max-w-button-md px-4 py-2",
-  lg: "min-w-button-lg max-w-button-lg px-6 py-3",
+  sm: "min-w-button-sm max-w-button-sm px-2 py-1 text-[0.6rem]", //0.8rem;
+  md: "min-w-button-md max-w-button-md px-4 py-2 text-base",
+  lg: "min-w-button-lg max-w-button-lg px-6 py-3 text-lg",
 };
 
 export const SELECTED_STYLES =

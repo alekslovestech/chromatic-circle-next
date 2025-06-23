@@ -11,6 +11,11 @@ import { MusicalKey } from "../types/Keys/MusicalKey";
 import { KeyType } from "../types/Keys/KeyType";
 import { useMusical } from "../contexts/MusicalContext";
 import { KeyNoteResolver } from "../types/Keys/KeyNoteResolver";
+import { COMMON_STYLES } from "@/lib/constants";
+
+interface StaffRendererProps {
+  style?: React.CSSProperties;
+}
 
 const EasyScoreFromNotes = (
   actualIndices: ActualIndex[],
@@ -54,7 +59,7 @@ const getKeySignatureForVex = (musicalKey: MusicalKey) => {
   return pureKey + majorMinor;
 };
 
-const StaffRenderer: React.FC = () => {
+const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
   const staffDivRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const { selectedNoteIndices, selectedMusicalKey } = useMusical();
@@ -108,8 +113,14 @@ const StaffRenderer: React.FC = () => {
   }, [selectedNoteIndices, selectedMusicalKey]);
 
   return (
-    <div className="staff-container" ref={containerRef}>
-      <div id="staff" ref={staffDivRef}></div>
+    <div
+      className={`staff-container ${COMMON_STYLES.staff}`}
+      style={style}
+      ref={containerRef}
+    >
+      <div className="staff-content w-full h-full flex items-center justify-center">
+        <div className="staff-canvas" id="staff" ref={staffDivRef}></div>
+      </div>
     </div>
   );
 };
