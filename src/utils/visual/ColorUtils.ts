@@ -1,21 +1,7 @@
 import { ActualIndex } from "@/types/IndexTypes";
 import { TWELVE } from "@/types/NoteConstants";
-import { ChromaticIndex } from "@/types/ChromaticIndex";
-import { isBlackKey } from "../Keyboard/KeyboardUtils";
 
-export function getComputedColor(cssVariable: string): string {
-  const color = getComputedStyle(document.documentElement)
-    .getPropertyValue(cssVariable)
-    .trim();
-  return color || "#000000";
-}
-
-export const getBlackWhiteString = (
-  index: ActualIndex | ChromaticIndex
-): string => (isBlackKey(index) ? "black" : "white");
-
-export type RGB = [number, number, number];
-
+type RGB = [number, number, number];
 export class ColorUtils {
   static getChordColor(indices: ActualIndex[]): string {
     const cyclicIntervals = this.cyclicIntervalsFromActualIndices(indices);

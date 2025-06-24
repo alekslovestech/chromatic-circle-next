@@ -5,16 +5,29 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        test: "red",
-        serenity: {
-          light: "#f7f8fa",
-          dark: "#333333",
-          textblack: "#1A1A1A",
-          textwhite: "#FFFFFF",
-          transparent1: "rgba(45, 45, 45, 0.1)",
-          transparent2: "rgba(45, 45, 45, 0.2)",
+        buttons: {
+          bgDefault: "#e1e3e6",
+          bgSelected: "#598abb",
+          bgHover: "rgba(99, 132, 165, 0.3)",
+          textDefault: "#1A1A1A",
+          textSelected: "rgb(255, 255, 255)",
+          border: "rgba(45, 45, 45, 0.1)", // Added border style matching serenity-transparent1
+          borderSelected: "rgba(192, 42, 42, 0.2)",
+        },
+        labels: {
+          textDefault: "#1f1f1f",
+        },
+        keys: {
+          bgWhite: "#ffffff",
+          bgBlack: "#2d2d2d",
+          bgSelected: "#598abb",
+          bgHover: "#f0f0f0",
+          bgPressed: "#d0d0d0",
         },
       },
+      test: "red",
+      test2: "#598abb",
+
       staffHeight: "100px",
       gridTemplateAreas: {
         default: [

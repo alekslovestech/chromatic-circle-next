@@ -44,10 +44,27 @@ export const InputModeSelector: React.FC = () => {
     setInputMode(newMode);
   };
 
+  /*.mode-selector {
+  display: flex;
+  width: 100px;
+  min-height: 0;
+  max-height: 100%;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: stretch;
+  overflow-y: auto;
+}*/
+  /*.mode-button-container {
+  width: 100%;
+  display: flex;          
+  flex-direction: column; 
+  gap: 0.5rem;
+}
+}*/
   return (
-    <div className="mode-selector text-center">
+    <div className="input-mode-selector text-center space-y-2">
       <SectionTitle>Input Mode</SectionTitle>
-      <div className="mode-button-container">
+      <div className="mode-selector-buttons w-full flex flex-col gap-2">
         {AVAILABLE_MODES.map(({ id, mode, description }) => {
           return (
             <Button
