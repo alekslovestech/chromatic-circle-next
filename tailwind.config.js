@@ -8,7 +8,7 @@ module.exports = {
         buttons: {
           bgDefault: "#e1e3e6",
           bgSelected: "#598abb",
-          bgHover: "#7ba3c7",
+          bgHover: "rgba(99, 132, 165, 0.3)",
           textDefault: "#1A1A1A",
           textSelected: "#FFFFFF",
           border: "rgba(45, 45, 45, 0.1)", // Added border style matching serenity-transparent1
