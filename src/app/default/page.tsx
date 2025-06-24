@@ -29,11 +29,11 @@ export default function Home() {
   const gridCols = isLandscape ? GRID_COLUMNS.landscape : GRID_COLUMNS.portrait;
   const gridAreas = isLandscape ? gridAreasLandscape : gridAreasPortrait;
   const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
-
+  //background: linear-gradient(135deg, #F7F8FA, #EAEFF3);
   return (
-    <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 min-h-screen bg-gray-600 flex items-center justify-center">
+    <div className="DefaultPage-container mx-auto max-w-7xl px-4 md:px-6 lg:px-8 min-h-screen bg-[#F7F8FA] flex items-center justify-center">
       <div
-        className="grid p-2 gap-1 overflow-hidden"
+        className="DefaultPage-grid grid p-2 gap-1 overflow-hidden"
         style={{
           gridTemplateColumns: gridCols,
           gridTemplateRows: gridRows,
@@ -44,45 +44,50 @@ export default function Home() {
           height: "100vh",
         }}
       >
+        <StaffRenderer style={{ gridArea: "staff" }} />
+        {/*
         <div className={COMMON_STYLES.staff} style={{ gridArea: "staff" }}>
           <div className="w-full h-full flex items-center justify-center text-2xl">
             <StaffRenderer />
           </div>
         </div>
-
+*/}
         <div
-          className={COMMON_STYLES.circular}
+          className={`DefaultPage-keyboard-circular-container ${COMMON_STYLES.circular}`}
           style={{ gridArea: "circular" }}
         >
-          <div className="border-r border-white/30 p-2 h-full flex items-center justify-center text-2xl">
+          <div className="DefaultPage-keyboard-circular border-r border-white/30 p-2 h-full flex items-center justify-center text-2xl">
             Circular Keyboard
           </div>
           <div
-            className="self-end mb-4 flex flex-col justify-end text-right max-w-[120px] p-2"
+            className="DefaultPage-chord-sidebar self-end mb-4 flex flex-col justify-end text-right max-w-[120px] p-2"
             style={{ gridArea: "sidebar" }}
           >
-            <div className="w-full h-full flex items-center justify-center text-2xl break-words">
+            <div className="DefaultPage-chord-display w-full h-full flex items-center justify-center text-2xl break-words">
               <ChordNameDisplay />
             </div>
           </div>
         </div>
 
-        <div className={COMMON_STYLES.linear} style={{ gridArea: "linear" }}>
-          <div className="h-full flex items-center justify-center text-2xl">
+        <div
+          className={`DefaultPage-keyboard-linear-container ${COMMON_STYLES.linear}`}
+          style={{ gridArea: "linear" }}
+        >
+          <div className="DefaultPage-keyboard-linear h-full flex items-center justify-center text-2xl">
             Linear Keyboard
           </div>
         </div>
 
         <div
-          className={COMMON_STYLES.settings}
+          className={`DefaultPage-settings-container ${COMMON_STYLES.settings}`}
           style={{ gridArea: "settings" }}
         >
-          <div className="max-h-[45px] rounded text-2xl text-center align-middle">
+          <div className="DefaultPage-settings-header max-h-[45px] rounded text-2xl text-center align-middle">
             <SettingsContainer />
           </div>
         </div>
 
-        <div className="fixed bottom-4 right-4">
+        <div className="DefaultPage-global-mode-switch fixed bottom-4 right-4">
           <Link href="/advanced">
             <GlobalModeButton text="Switch to Scale Preview Mode" />
           </Link>

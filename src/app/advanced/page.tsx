@@ -28,9 +28,9 @@ export default function AdvancedPage() {
   const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
   const gridAreas = isLandscape ? gridAreasLandscape : gridAreasPortrait;
   return (
-    <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 min-h-screen bg-gray-500 flex items-center justify-center">
+    <div className="AdvancedPage-container mx-auto max-w-7xl px-4 md:px-6 lg:px-8 min-h-screen bg-gray-500 flex items-center justify-center">
       <div
-        className="grid p-2 gap-1 overflow-hidden"
+        className="AdvancedPage-grid grid p-2 gap-1 overflow-hidden"
         style={{
           gridTemplateColumns: gridCols,
           gridTemplateRows: gridRows,
@@ -41,30 +41,36 @@ export default function AdvancedPage() {
           height: "100vh",
         }}
       >
-        <div className={COMMON_STYLES.staff} style={{ gridArea: "staff" }}>
-          <div className="w-full text-2xl text-center">
-            <StaffRenderer />
+        <StaffRenderer style={{ gridArea: "staff" }} />
+
+        <div
+          className={`AdvancedPage-keyboard-circular-container ${COMMON_STYLES.circular}`}
+          style={{ gridArea: "circular" }}
+        >
+          <div className="AdvancedPage-keyboard-circular p-2 text-2xl text-center">
+            Circular Keyboard
           </div>
         </div>
 
         <div
-          className={COMMON_STYLES.circular}
-          style={{ gridArea: "circular" }}
+          className={`AdvancedPage-keyboard-linear-container ${COMMON_STYLES.linear}`}
+          style={{ gridArea: "linear" }}
         >
-          <div className="p-2 text-2xl text-center">Circular Keyboard</div>
+          <div className="AdvancedPage-keyboard-linear text-2xl text-center">
+            Linear Keyboard
+          </div>
         </div>
 
-        <div className={COMMON_STYLES.linear} style={{ gridArea: "linear" }}>
-          <div className="text-2xl text-center">Linear Keyboard</div>
-        </div>
-
-        <div className={COMMON_STYLES.settings} style={{ gridArea: "sidebar" }}>
-          <div className="max-h-[45px] rounded text-2xl text-center">
+        <div
+          className={`AdvancedPage-settings-container ${COMMON_STYLES.settings}`}
+          style={{ gridArea: "sidebar" }}
+        >
+          <div className="AdvancedPage-settings-sidebar max-h-[45px] rounded text-2xl text-center">
             <SettingsContainer />
           </div>
         </div>
 
-        <div className="fixed bottom-4 right-4">
+        <div className="AdvancedPage-global-mode-switch fixed bottom-4 right-4">
           <Link href="/default">
             <GlobalModeButton text="Switch to Basic Mode" />
           </Link>
