@@ -14,6 +14,9 @@ module.exports = {
           border: "rgba(45, 45, 45, 0.1)", // Added border style matching serenity-transparent1
           borderSelected: "rgba(45, 45, 45, 0.2)",
         },
+        labels: {
+          textDefault: "#1f1f1f",
+        },
         keys: {
           bgWhite: "#ffffff",
           bgBlack: "#2d2d2d",
