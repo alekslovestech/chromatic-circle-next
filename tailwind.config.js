@@ -25,7 +25,7 @@ module.exports = {
           bgPressed: "rgb(208, 208, 208)", //"#d0d0d0",
         },
         containers: {
-          border: "rgba(0,0,0, 0.3)", // Default container border
+          border: "rgba(0,0,0, 0.4)", // Default container border
           borderDebug: "rgba(255, 0, 255, 0.5)", // Debug mode border
         },
       },

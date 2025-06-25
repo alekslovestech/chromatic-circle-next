@@ -45,13 +45,6 @@ export default function Home() {
         }}
       >
         <StaffRenderer style={{ gridArea: "staff" }} />
-        {/*
-        <div className={COMMON_STYLES.staff} style={{ gridArea: "staff" }}>
-          <div className="w-full h-full flex items-center justify-center text-2xl">
-            <StaffRenderer />
-          </div>
-        </div>
-*/}
         <div
           className={`DefaultPage-keyboard-circular-container border border-containers-border ${COMMON_STYLES.circular}`}
           style={{ gridArea: "circular" }}

@@ -48,25 +48,6 @@ export const PresetsSelector: React.FC = () => {
     setSelectedNoteIndices(updatedIndices);
   };
 
-  const renderInversionButtons = () => {
-    const presetDefinition =
-      NoteGroupingLibrary.getGroupingById(selectedChordType);
-    if (presetDefinition && presetDefinition.hasInversions) {
-      const inversionCount = presetDefinition.inversions.length;
-      return (
-        <div className="inversion-controls">
-          <SectionTitle centered={true}>Inversion</SectionTitle>
-          <div className="inversion-button-container">
-            {Array.from({ length: inversionCount }, (_, i) => (
-              <InversionButton key={i} inversionIndex={ixInversion(i)} />
-            ))}
-          </div>
-        </div>
-      );
-    }
-    return null;
-  };
-
   const renderPresetButtons = () => {
     const presets = NoteGroupingLibrary.IntervalOrChordIds(
       inputMode === InputMode.IntervalPresets
@@ -75,7 +56,7 @@ export const PresetsSelector: React.FC = () => {
 
     return (
       <div
-        className="preset-buttons-grid"
+        className="preset-buttons-grid grid gap-1 w-full"
         style={{ gridTemplateColumns: `repeat(${numColumns}, 1fr)` }}
       >
         {presets
@@ -95,8 +76,27 @@ export const PresetsSelector: React.FC = () => {
     );
   };
 
+  const renderInversionButtons = () => {
+    const presetDefinition =
+      NoteGroupingLibrary.getGroupingById(selectedChordType);
+    if (presetDefinition && presetDefinition.hasInversions) {
+      const inversionCount = presetDefinition.inversions.length;
+      return (
+        <div className="inversion-controls">
+          <SectionTitle centered={true}>Inversion</SectionTitle>
+          <div className="inversion-button-container flex flex-row gap-3 justify-center">
+            {Array.from({ length: inversionCount }, (_, i) => (
+              <InversionButton key={i} inversionIndex={ixInversion(i)} />
+            ))}
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
-    <div className="presets-selector">
+    <div className="presets-selector border border-containers-border">
       {renderPresetButtons()}
       {inputMode === InputMode.ChordPresets && renderInversionButtons()}
     </div>

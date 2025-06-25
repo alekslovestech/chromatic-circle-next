@@ -114,11 +114,11 @@ const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
 
   return (
     <div
-      className={`staff-container ${COMMON_STYLES.staff}`}
+      className={`staff-container ${COMMON_STYLES.staff} border border-containers-border`}
       style={style}
       ref={containerRef}
     >
-      <div className="staff-content w-full h-full flex items-center justify-center">
+      <div className="staff-content w-full h-full flex items-center justify-center border border-containers-border">
         <div className="staff-canvas" id="staff" ref={staffDivRef}></div>
       </div>
     </div>
