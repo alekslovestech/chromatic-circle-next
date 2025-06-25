@@ -33,7 +33,7 @@ export default function Home() {
   return (
     <div className="DefaultPage-container mx-auto max-w-7xl px-4 md:px-6 lg:px-8 min-h-screen bg-[#F7F8FA] flex items-center justify-center">
       <div
-        className="DefaultPage-grid grid p-2 gap-1 overflow-hidden"
+        className="DefaultPage-grid grid p-2 gap-1 overflow-hidden border border-containers-border"
         style={{
           gridTemplateColumns: gridCols,
           gridTemplateRows: gridRows,
@@ -53,10 +53,10 @@ export default function Home() {
         </div>
 */}
         <div
-          className={`DefaultPage-keyboard-circular-container ${COMMON_STYLES.circular}`}
+          className={`DefaultPage-keyboard-circular-container border border-containers-border ${COMMON_STYLES.circular}`}
           style={{ gridArea: "circular" }}
         >
-          <div className="DefaultPage-keyboard-circular border-r border-white/30 p-2 h-full flex items-center justify-center text-2xl">
+          <div className="DefaultPage-keyboard-circular border border-containers-border p-2 h-full flex items-center justify-center text-2xl !text-labels-textDefault">
             Circular Keyboard
           </div>
           <div
@@ -73,7 +73,7 @@ export default function Home() {
           className={`DefaultPage-keyboard-linear-container ${COMMON_STYLES.linear}`}
           style={{ gridArea: "linear" }}
         >
-          <div className="DefaultPage-keyboard-linear h-full flex items-center justify-center text-2xl">
+          <div className="DefaultPage-keyboard-linear h-full flex items-center justify-center text-2xl !text-labels-textDefault">
             Linear Keyboard
           </div>
         </div>
