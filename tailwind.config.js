@@ -13,6 +13,7 @@ module.exports = {
           textSelected: "rgb(255, 255, 255)", //"#ffffff",
           border: "rgba(45, 45, 45, 0.1)", // Added border style matching serenity-transparent1
           borderSelected: "rgba(192, 42, 42, 0.2)",
+          bgDisabled: "rgb(229, 231, 235)", // #e5e7eb - Tailwind gray-200
         },
         labels: {
           textDefault: "rgb(31, 31, 31)", //"#1f1f1f",

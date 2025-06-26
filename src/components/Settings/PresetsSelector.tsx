@@ -85,7 +85,7 @@ export const PresetsSelector: React.FC = () => {
       return (
         <div className="inversion-controls">
           <SectionTitle centered={true}>Inversion</SectionTitle>
-          <div className="inversion-button-container flex flex-row gap-3 justify-center">
+          <div className="inversion-button-container flex flex-row gap-2 justify-center">
             {Array.from({ length: inversionCount }, (_, i) => (
               <InversionButton key={i} inversionIndex={ixInversion(i)} />
             ))}

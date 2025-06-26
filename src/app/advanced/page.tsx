@@ -24,6 +24,7 @@ export default function AdvancedPage() {
                               'circular circular sidebar sidebar'
                               'circular circular linear linear'
                               'circular circular linear linear'`;
+
   const gridCols = isLandscape ? GRID_COLUMNS.landscape : GRID_COLUMNS.portrait;
   const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
   const gridAreas = isLandscape ? gridAreasLandscape : gridAreasPortrait;
@@ -65,9 +66,7 @@ export default function AdvancedPage() {
           className={`AdvancedPage-settings-container ${COMMON_STYLES.settings}`}
           style={{ gridArea: "sidebar" }}
         >
-          <div className="AdvancedPage-settings-sidebar max-h-[45px] rounded text-2xl text-center">
-            <SettingsContainer />
-          </div>
+          <SettingsContainer />
         </div>
 
         <div className="AdvancedPage-global-mode-switch fixed bottom-4 right-4">
