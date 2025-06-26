@@ -28,6 +28,10 @@ module.exports = {
           border: "rgba(0,0,0, 0.1)", // Default container border
           borderDebug: "rgba(0,0,0, 0.4)", // Default container border
         },
+        canvas: {
+          bgDefault: "rgb(247, 248, 250)", //"#F7F8FA",
+          bgAdvanced: "rgb(107, 114, 128)", //"#6B7280",
+        },
       },
       test: "red",
       test2: "#598abb",
