@@ -5,9 +5,9 @@ import React from "react";
 import { InputMode } from "@/types/SettingModes";
 
 import { usePreset } from "@/contexts/PresetContext";
-
 import { Button } from "@/components/Common/Button";
 import { SectionTitle } from "@/components/Common/SectionTitle";
+import { DEBUG_BORDER } from "@/lib/constants";
 
 interface ModeSelectorButton {
   id: string;
@@ -62,7 +62,9 @@ export const InputModeSelector: React.FC = () => {
 }
 }*/
   return (
-    <div className="input-mode-selector text-center space-y-2 border border-containers-border">
+    <div
+      className={`input-mode-selector text-center space-y-2 ${DEBUG_BORDER}`}
+    >
       <SectionTitle>Input Mode</SectionTitle>
       <div className="mode-selector-buttons w-full flex flex-col gap-2">
         {AVAILABLE_MODES.map(({ id, mode, description }) => {

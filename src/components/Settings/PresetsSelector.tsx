@@ -15,6 +15,7 @@ import { useMusical } from "@/contexts/MusicalContext";
 import { SectionTitle } from "../Common/SectionTitle";
 import { InversionButton } from "../Buttons/InversionButton";
 import { PresetButton } from "./PresetButton";
+import { DEBUG_BORDER } from "@/lib/constants";
 
 export const PresetsSelector: React.FC = () => {
   const {
@@ -96,7 +97,7 @@ export const PresetsSelector: React.FC = () => {
   };
 
   return (
-    <div className="presets-selector border border-containers-border">
+    <div className={`presets-selector ${DEBUG_BORDER}`}>
       {renderPresetButtons()}
       {inputMode === InputMode.ChordPresets && renderInversionButtons()}
     </div>
