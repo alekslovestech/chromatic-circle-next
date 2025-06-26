@@ -28,7 +28,7 @@ export default function AdvancedPage() {
   const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
   const gridAreas = isLandscape ? gridAreasLandscape : gridAreasPortrait;
   return (
-    <div className="AdvancedPage-container mx-auto max-w-7xl px-4 md:px-6 lg:px-8 min-h-screen bg-gray-500 flex items-center justify-center">
+    <div className="AdvancedPage-container mx-auto max-w-7xl px-4 md:px-6 lg:px-8 min-h-screen bg-canvas-bgAdvanced flex items-center justify-center">
       <div
         className="AdvancedPage-grid grid p-2 gap-1 overflow-hidden"
         style={{
