@@ -5,6 +5,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        test: "red",
+        test2: "#598abb",
+
         buttons: {
           bgDefault: "rgb(225, 227, 230)", //"#e1e3e6",
           bgSelected: "rgb(99, 132, 165)", //"#598abb",
@@ -34,9 +37,19 @@ module.exports = {
           bgAdvanced: "rgb(107, 114, 128)", //"#6B7280",
         },
       },
-      test: "red",
-      test2: "#598abb",
-
+      spacing: {
+        //used for gaps and margins
+        tight: "0.25rem",
+        snug: "0.5rem",
+        normal: "1rem",
+        loose: "1.25rem",
+        spacious: "1.5rem",
+      },
+      minWidth: {
+        "button-sm": "1.75rem",
+        "button-md": "2.25rem",
+        "button-lg": "2.75rem",
+      },
       staffHeight: "100px",
       gridTemplateAreas: {
         default: [
