@@ -97,7 +97,7 @@ export const PresetsSelector: React.FC = () => {
   };
 
   return (
-    <div className={`presets-selector ${DEBUG_BORDER} flex flex-col gap-loose`}>
+    <div className={`presets-selector ${DEBUG_BORDER} flex flex-col gap-snug`}>
       {renderPresetButtons()}
       {inputMode === InputMode.ChordPresets && renderInversionButtons()}
     </div>
