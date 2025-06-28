@@ -1,16 +1,13 @@
 import { useRef } from "react";
 
-import { TWENTY4 } from "../../../types/NoteConstants";
-import { ActualIndex } from "../../../types/IndexTypes";
+import { TWENTY4 } from "@/types/NoteConstants";
+import { ActualIndex } from "@/types/IndexTypes";
 
-import { useKeyboardHandlers } from "../KeyboardBase";
-import { PianoKeyLinear } from "./PianoKeyLinear";
-import { GlobalMode, useGlobal } from "../../../contexts/GlobalContext";
-import { LinearKeyboardUtils } from "../../../utils/Keyboard/Linear/LinearKeyboardUtils";
-import { useMusical } from "../../../contexts/MusicalContext";
-
-import "../../../styles/KeyboardBase.css";
-import "../../../styles/KeyboardLinear.css";
+import { useKeyboardHandlers } from "@/components/Keyboard/KeyboardBase";
+import { PianoKeyLinear } from "@/components/Keyboard/Linear/PianoKeyLinear";
+import { GlobalMode, useGlobal } from "@/contexts/GlobalContext";
+import { LinearKeyboardUtils } from "@/utils/Keyboard/Linear/LinearKeyboardUtils";
+import { useMusical } from "@/contexts/MusicalContext";
 
 export const KeyboardLinear = () => {
   const { handleKeyClick, checkIsRootNote } = useKeyboardHandlers();
@@ -24,7 +21,7 @@ export const KeyboardLinear = () => {
     if (!isAdvanced) return null;
 
     const { x1, x2 } = LinearKeyboardUtils.calculateScaleBoundaryPercentages(
-      selectedMusicalKey.tonicIndex,
+      selectedMusicalKey.tonicIndex
     );
 
     const startY = 90;
@@ -32,7 +29,11 @@ export const KeyboardLinear = () => {
     const circleCenterY = 105;
     // Create a vertical line at the tonic position - in both scales
     return (
-      <svg className="scale-boundary-svg" viewBox="0 -10 100 110" preserveAspectRatio="none">
+      <svg
+        className="scale-boundary-svg"
+        viewBox="0 -10 100 110"
+        preserveAspectRatio="none"
+      >
         <line
           className="scale-boundary linear"
           key="scale-boundrary-left"
@@ -74,7 +75,11 @@ export const KeyboardLinear = () => {
   };
 
   const keys = [];
-  for (let actualIndex = 0 as ActualIndex; actualIndex < TWENTY4; actualIndex++) {
+  for (
+    let actualIndex = 0 as ActualIndex;
+    actualIndex < TWENTY4;
+    actualIndex++
+  ) {
     const isRootNote = checkIsRootNote(actualIndex);
 
     keys.push(
@@ -83,7 +88,7 @@ export const KeyboardLinear = () => {
         actualIndex={actualIndex}
         isRootNote={isRootNote}
         onClick={handleKeyClick}
-      />,
+      />
     );
   }
 
