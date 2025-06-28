@@ -24,13 +24,14 @@ export default function AdvancedPage() {
                               'circular circular sidebar sidebar'
                               'circular circular linear linear'
                               'circular circular linear linear'`;
+
   const gridCols = isLandscape ? GRID_COLUMNS.landscape : GRID_COLUMNS.portrait;
   const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
   const gridAreas = isLandscape ? gridAreasLandscape : gridAreasPortrait;
   return (
-    <div className="AdvancedPage-container mx-auto max-w-7xl px-4 md:px-6 lg:px-8 min-h-screen bg-gray-500 flex items-center justify-center">
+    <div className="AdvancedPage-container mx-auto max-w-7xl px-normal md:px-loose lg:px-spacious min-h-screen bg-canvas-bgAdvanced flex items-center justify-center">
       <div
-        className="AdvancedPage-grid grid p-2 gap-1 overflow-hidden"
+        className="AdvancedPage-grid grid p-2 gap-tight overflow-hidden"
         style={{
           gridTemplateColumns: gridCols,
           gridTemplateRows: gridRows,
@@ -65,9 +66,7 @@ export default function AdvancedPage() {
           className={`AdvancedPage-settings-container ${COMMON_STYLES.settings}`}
           style={{ gridArea: "sidebar" }}
         >
-          <div className="AdvancedPage-settings-sidebar max-h-[45px] rounded text-2xl text-center">
-            <SettingsContainer />
-          </div>
+          <SettingsContainer />
         </div>
 
         <div className="AdvancedPage-global-mode-switch fixed bottom-4 right-4">

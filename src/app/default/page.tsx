@@ -1,5 +1,5 @@
 "use client";
-import { COMMON_STYLES } from "@/lib/constants";
+import { COMMON_STYLES, DEBUG_BORDER } from "@/lib/constants";
 import {
   STAFF_HEIGHT_PX,
   GRID_COLUMNS,
@@ -13,7 +13,7 @@ import { ChordNameDisplay } from "@/components/ChordNameDisplay";
 import StaffRenderer from "@/components/StaffRenderer";
 import SettingsContainer from "@/components/Settings/SettingsContainer";
 
-//NB using Styles instead of tailwind classes for grids
+//NB using Styles instead of tailwind classes for grid areas
 export default function Home() {
   const isLandscape = useIsLandscape();
   const gridRowsPortrait = `${STAFF_HEIGHT_PX} minmax(230px, 3fr) 3fr 2fr`;
@@ -29,11 +29,10 @@ export default function Home() {
   const gridCols = isLandscape ? GRID_COLUMNS.landscape : GRID_COLUMNS.portrait;
   const gridAreas = isLandscape ? gridAreasLandscape : gridAreasPortrait;
   const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
-  //background: linear-gradient(135deg, #F7F8FA, #EAEFF3);
   return (
-    <div className="DefaultPage-container mx-auto max-w-7xl px-4 md:px-6 lg:px-8 min-h-screen bg-[#F7F8FA] flex items-center justify-center">
+    <div className="DefaultPage-container mx-auto max-w-7xl px-normal md:px-loose lg:px-spacious min-h-screen bg-canvas-bgDefault flex items-center justify-center">
       <div
-        className="DefaultPage-grid grid p-2 gap-1 overflow-hidden"
+        className={`DefaultPage-grid grid p-2 gap-tight overflow-hidden ${DEBUG_BORDER}`}
         style={{
           gridTemplateColumns: gridCols,
           gridTemplateRows: gridRows,
@@ -45,22 +44,15 @@ export default function Home() {
         }}
       >
         <StaffRenderer style={{ gridArea: "staff" }} />
-        {/*
-        <div className={COMMON_STYLES.staff} style={{ gridArea: "staff" }}>
-          <div className="w-full h-full flex items-center justify-center text-2xl">
-            <StaffRenderer />
-          </div>
-        </div>
-*/}
         <div
-          className={`DefaultPage-keyboard-circular-container ${COMMON_STYLES.circular}`}
+          className={`DefaultPage-keyboard-circular-container ${COMMON_STYLES.circular} ${DEBUG_BORDER}`}
           style={{ gridArea: "circular" }}
         >
-          <div className="DefaultPage-keyboard-circular border-r border-white/30 p-2 h-full flex items-center justify-center text-2xl">
+          <div className="DefaultPage-keyboard-circular p-2 h-full flex items-center justify-center text-2xl !text-labels-textDefault">
             Circular Keyboard
           </div>
           <div
-            className="DefaultPage-chord-sidebar self-end mb-4 flex flex-col justify-end text-right max-w-[120px] p-2"
+            className="DefaultPage-chord-sidebar self-end mb-normal flex flex-col justify-end text-right max-w-[120px] p-2"
             style={{ gridArea: "sidebar" }}
           >
             <div className="DefaultPage-chord-display w-full h-full flex items-center justify-center text-2xl break-words">
@@ -73,7 +65,7 @@ export default function Home() {
           className={`DefaultPage-keyboard-linear-container ${COMMON_STYLES.linear}`}
           style={{ gridArea: "linear" }}
         >
-          <div className="DefaultPage-keyboard-linear h-full flex items-center justify-center text-2xl">
+          <div className="DefaultPage-keyboard-linear h-full flex items-center justify-center text-2xl !text-labels-textDefault">
             Linear Keyboard
           </div>
         </div>
@@ -82,12 +74,10 @@ export default function Home() {
           className={`DefaultPage-settings-container ${COMMON_STYLES.settings}`}
           style={{ gridArea: "settings" }}
         >
-          <div className="DefaultPage-settings-header max-h-[45px] rounded text-2xl text-center align-middle">
-            <SettingsContainer />
-          </div>
+          <SettingsContainer />
         </div>
 
-        <div className="DefaultPage-global-mode-switch fixed bottom-4 right-4">
+        <div className="DefaultPage-global-mode-switch fixed bottom-normal right-normal">
           <Link href="/advanced">
             <GlobalModeButton text="Switch to Scale Preview Mode" />
           </Link>

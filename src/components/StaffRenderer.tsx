@@ -11,7 +11,7 @@ import { MusicalKey } from "../types/Keys/MusicalKey";
 import { KeyType } from "../types/Keys/KeyType";
 import { useMusical } from "../contexts/MusicalContext";
 import { KeyNoteResolver } from "../types/Keys/KeyNoteResolver";
-import { COMMON_STYLES } from "@/lib/constants";
+import { COMMON_STYLES, DEBUG_BORDER } from "@/lib/constants";
 
 interface StaffRendererProps {
   style?: React.CSSProperties;
@@ -114,11 +114,13 @@ const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
 
   return (
     <div
-      className={`staff-container ${COMMON_STYLES.staff}`}
+      className={`staff-container ${COMMON_STYLES.staff} ${DEBUG_BORDER}`}
       style={style}
       ref={containerRef}
     >
-      <div className="staff-content w-full h-full flex items-center justify-center">
+      <div
+        className={`staff-content w-full h-full flex items-center justify-center ${DEBUG_BORDER}`}
+      >
         <div className="staff-canvas" id="staff" ref={staffDivRef}></div>
       </div>
     </div>

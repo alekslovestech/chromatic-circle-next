@@ -15,6 +15,7 @@ import { useMusical } from "@/contexts/MusicalContext";
 import { SectionTitle } from "../Common/SectionTitle";
 import { InversionButton } from "../Buttons/InversionButton";
 import { PresetButton } from "./PresetButton";
+import { DEBUG_BORDER } from "@/lib/constants";
 
 export const PresetsSelector: React.FC = () => {
   const {
@@ -48,25 +49,6 @@ export const PresetsSelector: React.FC = () => {
     setSelectedNoteIndices(updatedIndices);
   };
 
-  const renderInversionButtons = () => {
-    const presetDefinition =
-      NoteGroupingLibrary.getGroupingById(selectedChordType);
-    if (presetDefinition && presetDefinition.hasInversions) {
-      const inversionCount = presetDefinition.inversions.length;
-      return (
-        <div className="inversion-controls">
-          <SectionTitle centered={true}>Inversion</SectionTitle>
-          <div className="inversion-button-container">
-            {Array.from({ length: inversionCount }, (_, i) => (
-              <InversionButton key={i} inversionIndex={ixInversion(i)} />
-            ))}
-          </div>
-        </div>
-      );
-    }
-    return null;
-  };
-
   const renderPresetButtons = () => {
     const presets = NoteGroupingLibrary.IntervalOrChordIds(
       inputMode === InputMode.IntervalPresets
@@ -75,7 +57,7 @@ export const PresetsSelector: React.FC = () => {
 
     return (
       <div
-        className="preset-buttons-grid"
+        className={`preset-buttons-grid grid gap-tight w-full ${DEBUG_BORDER}`}
         style={{ gridTemplateColumns: `repeat(${numColumns}, 1fr)` }}
       >
         {presets
@@ -95,8 +77,31 @@ export const PresetsSelector: React.FC = () => {
     );
   };
 
+  const renderInversionButtons = () => {
+    const presetDefinition =
+      NoteGroupingLibrary.getGroupingById(selectedChordType);
+    if (presetDefinition && presetDefinition.hasInversions) {
+      const inversionCount = presetDefinition.inversions.length;
+      return (
+        <div
+          className={`inversion-controls flex flex-col gap-tight ${DEBUG_BORDER}`}
+        >
+          <SectionTitle centered={true}>Inversion</SectionTitle>
+          <div
+            className={`inversion-button-container flex flex-row gap-snug justify-center ${DEBUG_BORDER}`}
+          >
+            {Array.from({ length: inversionCount }, (_, i) => (
+              <InversionButton key={i} inversionIndex={ixInversion(i)} />
+            ))}
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
-    <div className="presets-selector">
+    <div className={`presets-selector ${DEBUG_BORDER} flex flex-col gap-snug`}>
       {renderPresetButtons()}
       {inputMode === InputMode.ChordPresets && renderInversionButtons()}
     </div>

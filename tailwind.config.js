@@ -5,29 +5,51 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        test: "red",
+        test2: "#598abb",
+
         buttons: {
-          bgDefault: "#e1e3e6",
-          bgSelected: "#598abb",
+          bgDefault: "rgb(225, 227, 230)", //"#e1e3e6",
+          bgSelected: "rgb(99, 132, 165)", //"#598abb",
           bgHover: "rgba(99, 132, 165, 0.3)",
-          textDefault: "#1A1A1A",
-          textSelected: "rgb(255, 255, 255)",
+          textDefault: "rgb(26, 26, 26)", //"#1A1A1A",
+          textSelected: "rgb(255, 255, 255)", //"#ffffff",
           border: "rgba(45, 45, 45, 0.1)", // Added border style matching serenity-transparent1
           borderSelected: "rgba(192, 42, 42, 0.2)",
+          bgDisabled: "rgb(229, 231, 235)", // #e5e7eb - Tailwind gray-200
         },
         labels: {
-          textDefault: "#1f1f1f",
+          textDefault: "rgb(31, 31, 31)", //"#1f1f1f",
         },
         keys: {
-          bgWhite: "#ffffff",
-          bgBlack: "#2d2d2d",
-          bgSelected: "#598abb",
-          bgHover: "#f0f0f0",
-          bgPressed: "#d0d0d0",
+          bgWhite: "rgb(255, 255, 255)", //"#ffffff",
+          bgBlack: "rgb(45, 45, 45)", //"#2d2d2d",
+          bgSelected: "rgb(99, 132, 165)", //"#598abb",
+          bgHover: "rgb(240, 240, 240)", //"#f0f0f0",
+          bgPressed: "rgb(208, 208, 208)", //"#d0d0d0",
+        },
+        containers: {
+          border: "rgba(0,0,0, 0.1)", // Default container border
+          borderDebug: "rgba(0,0,0, 0.4)", // Default container border
+        },
+        canvas: {
+          bgDefault: "rgb(247, 248, 250)", //"#F7F8FA",
+          bgAdvanced: "rgb(107, 114, 128)", //"#6B7280",
         },
       },
-      test: "red",
-      test2: "#598abb",
-
+      spacing: {
+        //used for gaps and margins
+        tight: "0.25rem",
+        snug: "0.5rem",
+        normal: "1rem",
+        loose: "1.25rem",
+        spacious: "1.5rem",
+      },
+      minWidth: {
+        "button-sm": "1.75rem",
+        "button-md": "2.25rem",
+        "button-lg": "2.75rem",
+      },
       staffHeight: "100px",
       gridTemplateAreas: {
         default: [

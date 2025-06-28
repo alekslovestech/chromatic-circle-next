@@ -16,7 +16,7 @@ export const Select: React.FC<SelectProps> = ({
   ...props
 }) => {
   const baseStyles =
-    "rounded-2xl border border-serenity-transparent1 bg-serenity-light text-serenity-textblack px-2 py-1";
+    "rounded-2xl border border-serenity-transparent1 bg-serenity-light text-serenity-textblack px-snug py-snug";
 
   return (
     <select

@@ -7,9 +7,14 @@ interface ToggleProps {
   label: string;
 }
 
-export const Toggle: React.FC<ToggleProps> = ({ id, checked, onChange, label }) => {
+export const Toggle: React.FC<ToggleProps> = ({
+  id,
+  checked,
+  onChange,
+  label,
+}) => {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-normal">
       <input
         type="checkbox"
         id={id}
