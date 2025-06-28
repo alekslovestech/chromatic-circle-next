@@ -83,9 +83,13 @@ export const PresetsSelector: React.FC = () => {
     if (presetDefinition && presetDefinition.hasInversions) {
       const inversionCount = presetDefinition.inversions.length;
       return (
-        <div className={`inversion-controls ${DEBUG_BORDER}`}>
+        <div
+          className={`inversion-controls flex flex-col gap-tight ${DEBUG_BORDER}`}
+        >
           <SectionTitle centered={true}>Inversion</SectionTitle>
-          <div className="inversion-button-container flex flex-row gap-normal justify-center">
+          <div
+            className={`inversion-button-container flex flex-row gap-snug justify-center ${DEBUG_BORDER}`}
+          >
             {Array.from({ length: inversionCount }, (_, i) => (
               <InversionButton key={i} inversionIndex={ixInversion(i)} />
             ))}
