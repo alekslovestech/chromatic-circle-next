@@ -30,9 +30,9 @@ export default function Home() {
   const gridAreas = isLandscape ? gridAreasLandscape : gridAreasPortrait;
   const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
   return (
-    <div className="DefaultPage-container mx-auto max-w-7xl px-4 md:px-6 lg:px-8 min-h-screen bg-canvas-bgDefault flex items-center justify-center">
+    <div className="DefaultPage-container mx-auto max-w-7xl px-normal md:px-loose lg:px-spacious min-h-screen bg-canvas-bgDefault flex items-center justify-center">
       <div
-        className={`DefaultPage-grid grid p-2 gap-1 overflow-hidden ${DEBUG_BORDER}`}
+        className={`DefaultPage-grid grid p-2 gap-tight overflow-hidden ${DEBUG_BORDER}`}
         style={{
           gridTemplateColumns: gridCols,
           gridTemplateRows: gridRows,
@@ -52,7 +52,7 @@ export default function Home() {
             Circular Keyboard
           </div>
           <div
-            className="DefaultPage-chord-sidebar self-end mb-4 flex flex-col justify-end text-right max-w-[120px] p-2"
+            className="DefaultPage-chord-sidebar self-end mb-normal flex flex-col justify-end text-right max-w-[120px] p-2"
             style={{ gridArea: "sidebar" }}
           >
             <div className="DefaultPage-chord-display w-full h-full flex items-center justify-center text-2xl break-words">
@@ -77,7 +77,7 @@ export default function Home() {
           <SettingsContainer />
         </div>
 
-        <div className="DefaultPage-global-mode-switch fixed bottom-4 right-4">
+        <div className="DefaultPage-global-mode-switch fixed bottom-normal right-normal">
           <Link href="/advanced">
             <GlobalModeButton text="Switch to Scale Preview Mode" />
           </Link>

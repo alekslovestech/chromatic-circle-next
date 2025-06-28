@@ -66,7 +66,7 @@ export const InputModeSelector: React.FC = () => {
       className={`input-mode-selector text-center space-y-2 ${DEBUG_BORDER}`}
     >
       <SectionTitle>Input Mode</SectionTitle>
-      <div className="mode-selector-buttons w-full flex flex-col gap-2">
+      <div className="mode-selector-buttons w-full flex flex-col gap-normal">
         {AVAILABLE_MODES.map(({ id, mode, description }) => {
           return (
             <Button

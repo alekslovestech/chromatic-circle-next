@@ -57,7 +57,7 @@ export const PresetsSelector: React.FC = () => {
 
     return (
       <div
-        className="preset-buttons-grid grid gap-1 w-full"
+        className={`preset-buttons-grid grid gap-tight w-full ${DEBUG_BORDER}`}
         style={{ gridTemplateColumns: `repeat(${numColumns}, 1fr)` }}
       >
         {presets
@@ -83,9 +83,9 @@ export const PresetsSelector: React.FC = () => {
     if (presetDefinition && presetDefinition.hasInversions) {
       const inversionCount = presetDefinition.inversions.length;
       return (
-        <div className="inversion-controls">
+        <div className={`inversion-controls ${DEBUG_BORDER}`}>
           <SectionTitle centered={true}>Inversion</SectionTitle>
-          <div className="inversion-button-container flex flex-row gap-2 justify-center">
+          <div className="inversion-button-container flex flex-row gap-normal justify-center">
             {Array.from({ length: inversionCount }, (_, i) => (
               <InversionButton key={i} inversionIndex={ixInversion(i)} />
             ))}
@@ -97,7 +97,7 @@ export const PresetsSelector: React.FC = () => {
   };
 
   return (
-    <div className={`presets-selector ${DEBUG_BORDER}`}>
+    <div className={`presets-selector ${DEBUG_BORDER} flex flex-col gap-loose`}>
       {renderPresetButtons()}
       {inputMode === InputMode.ChordPresets && renderInversionButtons()}
     </div>

@@ -15,7 +15,7 @@ const SettingsContainer: React.FC = () => {
     inputMode === InputMode.IntervalPresets;
 
   return (
-    <div className="settings-container flex flex-row w-full">
+    <div className="settings-container flex flex-row w-full gap-loose">
       <InputModeSelector />
       <div className="presets-container flex-1">
         {showPresets && <PresetsSelector />}
