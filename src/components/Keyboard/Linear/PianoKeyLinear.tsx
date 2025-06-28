@@ -38,7 +38,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   const isSelected = selectedNoteIndices.includes(actualIndex);
   const isAdvanced = globalMode === GlobalMode.Advanced;
 
-  console.log(`isRootNote: ${isRootNote} should be used somewhere`);
+  //console.log(`isRootNote: ${isRootNote} should be used somewhere`);
 
   const visualClasses = VisualStateUtils.getKeyVisualClasses(
     chromaticIndex,
