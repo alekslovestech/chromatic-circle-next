@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "@/styles/KeyboardBase.css";
+@import "@/styles/KeyboardLinear.css";
+@import "@/styles/KeyboardCircular.css";
+
+/* old styles, consider removing */
+/*
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -27,3 +33,4 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+*/

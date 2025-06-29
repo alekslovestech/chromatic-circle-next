@@ -13,7 +13,7 @@ export class VisualStateUtils {
   ): string[] {
     // Base colors for black/white keys
     const getFillClass = (isSvg: boolean, baseClass: string): string => {
-      return isSvg ? `fill-${baseClass}` : `bg-${baseClass}`;
+      return isSvg ? `!fill-keys-bg${baseClass}` : `!bg-keys-bg${baseClass}`;
     };
 
     const isDiatonic = musicalKey.greekModeInfo.isDiatonicNote(
@@ -27,11 +27,11 @@ export class VisualStateUtils {
         ? "highlighted"
         : "muted"
       : isBlack
-      ? "black"
-      : "white";
+      ? "Black"
+      : "White";
 
-    const stateFill = getFillClass(isSvg, `darksky-${stateColor}`);
-    const stateText = `text-darksky-text_on_${stateColor}`;
+    const stateFill = getFillClass(isSvg, `${stateColor}`);
+    const stateText = `!text-keys-textOn${stateColor}`;
 
     // Selection state
     const selectedFill = isSelected ? getFillClass(isSvg, "selected") : "";
