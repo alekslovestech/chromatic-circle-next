@@ -1,6 +1,5 @@
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
-import tailwindConfig from "../../../tailwind.config.js";
 
 interface KeyColors {
   primary: string;
@@ -10,27 +9,28 @@ interface KeyColors {
 export class VisualStateUtils {
   static getKeyColors(
     chromaticIndex: ChromaticIndex,
-    //isAdvanced: boolean,
+    isAdvanced: boolean,
     musicalKey: MusicalKey,
     //monochromeMode: boolean,
-    isBlack: boolean
-    //isSelected: boolean
+    isBlack: boolean,
+    isSelected: boolean
   ): KeyColors {
-    const colors = tailwindConfig.theme?.extend?.colors as any;
-
     const isDiatonic = musicalKey.greekModeInfo.isDiatonicNote(
       chromaticIndex,
       musicalKey.tonicIndex
     );
-    const stateColor = /*isAdvanced
+    const stateColor = isAdvanced
       ? isDiatonic
         ? "Highlighted"
         : "Muted"
-      : */ isBlack ? "Black" : "White";
+      : isBlack
+      ? "Black"
+      : "White";
 
+    const selectedString = isSelected ? "Selected" : "";
     return {
-      primary: isBlack ? colors.keys.bgBlack : colors.keys.bgWhite,
-      text: isBlack ? colors.keys.textOnBlack : colors.keys.textOnWhite,
+      primary: `bg-keys-bg${stateColor}${selectedString}`,
+      text: `text-keys-textOn${stateColor}`,
     };
   }
 
