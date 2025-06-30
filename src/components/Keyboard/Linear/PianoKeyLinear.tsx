@@ -50,9 +50,22 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
     false
   );
 
+  const keyColors = VisualStateUtils.getKeyColors(
+    chromaticIndex,
+    selectedMusicalKey,
+    isShortKey
+  );
+
   if (isShortKey) baseClasses.push("short");
   if (isAdvanced) baseClasses.push("disabled");
 
+  if (actualIndex === 1) {
+    //console.log(`1: baseClasses = ${baseClasses}`);
+    //console.log(`1: visualClasses = ${visualClasses}`);
+    console.log(
+      `1: keyColors.primary = ${keyColors.primary}, keyColors.text = ${keyColors.text}`
+    );
+  }
   const id = IndexUtils.StringWithPaddedIndex("linearKey", actualIndex);
   const noteText = selectedMusicalKey.getDisplayString(
     chromaticIndex,
@@ -62,8 +75,9 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   return (
     <div
       id={id}
-      className={[...baseClasses, ...visualClasses].join(" ")}
-      style={{ left }}
+      //className={[...baseClasses, ...visualClasses].join(" ")}
+      className={baseClasses.join(" ")}
+      style={{ left, backgroundColor: keyColors.primary }}
       onClick={() => onClick(actualIndex)}
     >
       {noteText}

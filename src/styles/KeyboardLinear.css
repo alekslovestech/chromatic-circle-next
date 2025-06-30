@@ -29,8 +29,8 @@
   width: var(--white-key-width);
   height: 100%;
   padding: 0 5px; /* Added padding to center the text */
-  border: 1px solid var(--serenity-key-border-color);
-  
+  border: 1px solid theme("colors.keys.borderColor");
+
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -44,21 +44,18 @@
 
 .piano-key.short {
   align-items: center;
-  border: 2.0px solid var(--serenity-key-border-color);
+  border: 2px solid theme("colors.keys.borderColor");
   font-size: 0.8rem;
   width: var(--black-key-width);
   height: 60%;
-  
+
   justify-content: center;
   opacity: 1;
   transform: translateX(-50%);
- 
+
   z-index: 2;
 }
 
 .piano-key.root-note {
-  border: 2px solid var(--root-note-highlight);
+  border: 2px solid theme("colors.keys.rootNoteHighlight");
 }
-
-
-

@@ -91,6 +91,10 @@ export const KeyboardLinear = () => {
       />
     );
   }
+  /*const testElement = (
+    <div className="bg-red-500 text-white p-4">TAILWIND TEST</div>
+  );
+  keys.push(testElement);*/
 
   return (
     <div ref={containerRef} className="keyboardlinear">
