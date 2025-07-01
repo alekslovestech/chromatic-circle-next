@@ -44,6 +44,8 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
     chromaticIndex,
     isAdvanced,
     selectedMusicalKey,
+    monochromeMode,
+    isRootNote,
     isShortKey,
     isSelected
   );
@@ -70,7 +72,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
       //className={[...baseClasses, ...visualClasses].join(" ")}
       className={`${baseClasses.join(" ")} ${keyColors.primary} ${
         keyColors.text
-      }`}
+      } !${keyColors.border}`}
       style={{ left }}
       onClick={() => onClick(actualIndex)}
     >

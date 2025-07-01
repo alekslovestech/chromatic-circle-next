@@ -11,6 +11,9 @@ module.exports = {
     {
       pattern: /text-keys-*/,
     },
+    {
+      pattern: /border-keys-*/,
+    },
   ],
   theme: {
     extend: {
@@ -49,7 +52,8 @@ module.exports = {
           bgMutedSelected: "rgb(150, 150, 150)", //"#969696",
           textOnMuted: "rgb(156, 156, 156)", //"#9C9C9C",
 
-          rootNoteHighlight: "rgb(59, 97, 222)", //"#3B61DE",
+          //borderRootNote: "rgb(59, 97, 222)", //"#3B61DE",
+          borderRootNote: "rgb(255, 0, 0)", //"#6E6E6E",
           scaleBoundaryColor: "rgb(60, 60, 60)", //"#3C3C3C",
         },
         containers: {

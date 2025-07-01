@@ -5,7 +5,7 @@
   font-weight: bold;
   border-width: 1px;
   border-style: solid;
-  border-color: theme("colors.keys.borderColor");
+  /*border-color: theme("colors.keys.borderColor");*/
 }
 
 :is(.key-base.disabled, .key-base.disabled path) {
@@ -14,9 +14,9 @@
   opacity: 1;
 }
 
-.key-base.root-note {
-  border-color: theme("colors.keys.rootNoteHighlight");
-}
+/*.key-base.root-note {
+  border-color: theme("colors.keys.borderRootNote");
+}*/
 
 /* white unselected
 :is(.key-base.white, .key-base.white path) {

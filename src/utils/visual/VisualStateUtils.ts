@@ -4,6 +4,7 @@ import { MusicalKey } from "@/types/Keys/MusicalKey";
 interface KeyColors {
   primary: string;
   text: string;
+  border: string;
 }
 
 export class VisualStateUtils {
@@ -11,7 +12,8 @@ export class VisualStateUtils {
     chromaticIndex: ChromaticIndex,
     isAdvanced: boolean,
     musicalKey: MusicalKey,
-    //monochromeMode: boolean,
+    monochromeMode: boolean,
+    isRootNote: boolean,
     isBlack: boolean,
     isSelected: boolean
   ): KeyColors {
@@ -23,14 +25,19 @@ export class VisualStateUtils {
       ? isDiatonic
         ? "Highlighted"
         : "Muted"
-      : isBlack
+      : isBlack && !monochromeMode
       ? "Black"
       : "White";
+
+    const borderColor = isRootNote
+      ? "border-keys-borderRootNote"
+      : "border-keys-borderColor";
 
     const selectedString = isSelected ? "Selected" : "";
     return {
       primary: `bg-keys-bg${stateColor}${selectedString}`,
       text: `text-keys-textOn${stateColor}`,
+      border: borderColor,
     };
   }
 
@@ -58,7 +65,7 @@ export class VisualStateUtils {
       ? isDiatonic
         ? "highlighted"
         : "muted"
-      : isBlack
+      : isBlack && !monochromeMode
       ? "Black"
       : "White";
 
@@ -69,23 +76,6 @@ export class VisualStateUtils {
     const selectedFill = isSelected ? getFillClass(isSvg, "selected") : "";
     const selectedText = isSelected ? "text-selected" : "";
 
-    /*if (chromaticIndex === 1) {
-      console.log({
-        chromaticIndex,
-        isAdvanced,
-        isDiatonic,
-        monochromeMode,
-        isBlack,
-        isSelected,
-        isSvg,
-      });
-      console.log({
-        stateFill,
-        stateText,
-        selectedFill,
-        selectedText,
-      });
-    }*/
     const commonClasses = [stateFill, selectedFill, stateText, selectedText];
     const borderClasses = isSvg
       ? ["stroke-gray-400", "stroke-1"]
