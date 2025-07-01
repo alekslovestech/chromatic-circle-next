@@ -33,7 +33,6 @@ module.exports = {
         },
         keys: {
           bgWhite: "rgb(250, 250, 246)", //"#fafaf6",
-          //bgWhite: "rgb(0, 255, 0)", //"#ffffff",
           bgBlack: "rgb(68, 68, 68)", //"#444444",
           bgWhiteSelected: "rgb(168, 213, 226)", //"#A8D5E2",
           bgBlackSelected: "rgb(107, 170, 204)", //"#6BB4C7",
