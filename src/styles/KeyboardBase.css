@@ -1,0 +1,39 @@
+/* Common base styles for both circular and linear keys */
+:is(.key-base, .key-base path) {
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-width: 1px;
+  border-style: solid;
+  /*border-color: theme("colors.keys.borderColor");*/
+}
+
+:is(.key-base.disabled, .key-base.disabled path) {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 1;
+}
+
+.scale-boundary-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+  overflow: visible;
+}
+
+.scale-boundary {
+  stroke: theme("colors.keys.scaleBoundaryColor");
+}
+
+.scale-boundary.linear {
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.scale-boundary.circular {
+  stroke-width: 2;
+}

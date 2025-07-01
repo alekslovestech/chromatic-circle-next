@@ -38,16 +38,16 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   const isSelected = selectedNoteIndices.includes(actualIndex);
   const isAdvanced = globalMode === GlobalMode.Advanced;
 
-  console.log(`isRootNote: ${isRootNote} should be used somewhere`);
+  //console.log(`isRootNote: ${isRootNote} should be used somewhere`);
 
-  const visualClasses = VisualStateUtils.getKeyVisualClasses(
+  const keyColors = VisualStateUtils.getKeyColors(
     chromaticIndex,
     isAdvanced,
     selectedMusicalKey,
     monochromeMode,
+    isRootNote,
     isShortKey,
-    isSelected,
-    false
+    isSelected
   );
 
   if (isShortKey) baseClasses.push("short");
@@ -62,7 +62,9 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   return (
     <div
       id={id}
-      className={[...baseClasses, ...visualClasses].join(" ")}
+      className={`${baseClasses.join(" ")} ${keyColors.primary} ${
+        keyColors.text
+      } !${keyColors.border}`}
       style={{ left }}
       onClick={() => onClick(actualIndex)}
     >

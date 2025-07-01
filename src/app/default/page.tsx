@@ -1,4 +1,6 @@
 "use client";
+import Link from "next/link";
+
 import { COMMON_STYLES, DEBUG_BORDER } from "@/lib/constants";
 import {
   STAFF_HEIGHT_PX,
@@ -8,10 +10,10 @@ import {
 import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
 
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
-import Link from "next/link";
 import { ChordNameDisplay } from "@/components/ChordNameDisplay";
 import StaffRenderer from "@/components/StaffRenderer";
 import SettingsContainer from "@/components/Settings/SettingsContainer";
+import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 
 //NB using Styles instead of tailwind classes for grid areas
 export default function Home() {
@@ -65,8 +67,8 @@ export default function Home() {
           className={`DefaultPage-keyboard-linear-container ${COMMON_STYLES.linear}`}
           style={{ gridArea: "linear" }}
         >
-          <div className="DefaultPage-keyboard-linear h-full flex items-center justify-center text-2xl !text-labels-textDefault">
-            Linear Keyboard
+          <div className="DefaultPage-keyboard-linear w-full h-full text-2xl">
+            <KeyboardLinear />
           </div>
         </div>
 

@@ -2,6 +2,19 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
+  safelist: [
+    // Force these classes to be generated
+    "bg-test",
+    {
+      pattern: /bg-keys-*/,
+    },
+    {
+      pattern: /text-keys-*/,
+    },
+    {
+      pattern: /border-keys-*/,
+    },
+  ],
   theme: {
     extend: {
       colors: {
@@ -22,11 +35,26 @@ module.exports = {
           textDefault: "rgb(31, 31, 31)", //"#1f1f1f",
         },
         keys: {
-          bgWhite: "rgb(255, 255, 255)", //"#ffffff",
-          bgBlack: "rgb(45, 45, 45)", //"#2d2d2d",
-          bgSelected: "rgb(99, 132, 165)", //"#598abb",
+          bgWhite: "rgb(250, 250, 246)", //"#fafaf6",
+          bgBlack: "rgb(68, 68, 68)", //"#444444",
+          bgWhiteSelected: "rgb(168, 213, 226)", //"#A8D5E2",
+          bgBlackSelected: "rgb(107, 170, 204)", //"#6BB4C7",
+          textOnWhite: "rgb(51, 51, 51)", //"#333333",
+          textOnBlack: "rgb(245, 245, 245)", //"#F5F5F5",
           bgHover: "rgb(240, 240, 240)", //"#f0f0f0",
-          bgPressed: "rgb(208, 208, 208)", //"#d0d0d0",
+          borderColor: "rgb(110, 110, 110)", //"#6E6E6E",
+
+          bgHighlighted: "rgb(176, 214, 253)", //"#B0D6FD",
+          bgHighlightedSelected: "rgb(59, 97, 222)", //"#3B61DE",
+          textOnHighlighted: "rgb(156, 156, 156)", //"#9C9C9C",
+
+          bgMuted: "rgb(228, 229, 230)", //"#E4E5E6",
+          bgMutedSelected: "rgb(150, 150, 150)", //"#969696",
+          textOnMuted: "rgb(156, 156, 156)", //"#9C9C9C",
+
+          //borderRootNote: "rgb(59, 97, 222)", //"#3B61DE",
+          borderRootNote: "rgb(255, 0, 0)", //"#6E6E6E",
+          scaleBoundaryColor: "rgb(60, 60, 60)", //"#3C3C3C",
         },
         containers: {
           border: "rgba(0,0,0, 0.1)", // Default container border
