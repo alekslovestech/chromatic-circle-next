@@ -13,7 +13,7 @@ const BASE_FREQUENCY = 440;
 // A4 is at index 69 in MIDI notation
 const A4_MIDI_INDEX = 69;
 
-const AudioPlayer: React.FC = () => {
+export const AudioPlayer: React.FC = () => {
   const synthRef = useRef<Tone.PolySynth | null>(null);
   const { isAudioInitialized, setAudioInitialized } = useAudio();
   const { selectedNoteIndices } = useMusical();
@@ -156,5 +156,3 @@ const AudioPlayer: React.FC = () => {
 
   return null;
 };
-
-export default AudioPlayer;
