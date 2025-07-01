@@ -13,6 +13,7 @@ import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 import StaffRenderer from "@/components/StaffRenderer";
 import SettingsContainer from "@/components/Settings/SettingsContainer";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
+import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
 
 export default function AdvancedPage() {
   const isLandscape = useIsLandscape();
@@ -51,7 +52,7 @@ export default function AdvancedPage() {
           style={{ gridArea: "circular" }}
         >
           <div className="AdvancedPage-keyboard-circular p-2 text-2xl text-center">
-            Circular Keyboard
+            <KeyboardCircular />
           </div>
         </div>
 
