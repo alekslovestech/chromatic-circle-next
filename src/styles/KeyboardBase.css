@@ -14,62 +14,6 @@
   opacity: 1;
 }
 
-/*.key-base.root-note {
-  border-color: theme("colors.keys.borderRootNote");
-}*/
-
-/* white unselected
-:is(.key-base.white, .key-base.white path) {
-  color: theme("colors.keys.textOnWhite");
-  background-color: theme("colors.keys.bgWhite");
-  fill: theme("colors.keys.bgWhite");
-}
-
-:is(.key-base.white.selected, .key-base.white.selected path) {
-  background-color: theme("colors.keys.bgWhiteSelected");
-  fill: theme("colors.keys.bgWhiteSelected");
-}
-
-// black unselected 
-:is(.key-base.black, .key-base.black path) {
-  color: theme("colors.keys.textOnBlack");
-  background-color: theme("colors.keys.bgBlack");
-  fill: theme("colors.keys.bgBlack");
-} 
-
-:is(.key-base.black.selected, .key-base.black.selected path) {
-  background-color: theme("colors.keys.bgBlackSelected");
-  fill: theme("colors.keys.bgBlackSelected");
-}
-
-// Highlighted unselectd 
-:is(.key-base.highlighted, .key-base.highlighted path) {
-  color: theme("colors.keys.textOnWhite");
-  background-color: theme("colors.keys.bgHighlightedUnselected");
-  fill: theme("colors.keys.bgHighlightedUnselected");
-}
-
-// Highlighted selected 
-:is(.key-base.highlighted.selected, .key-base.highlighted.selected path) {
-  color: theme("colors.keys.textOnWhite");
-  background-color: theme("colors.keys.bgHighlightedSelected");
-  fill: theme("colors.keys.bgHighlightedSelected");
-} 
-
-// Muted unselectd 
-:is(.key-base.muted, .key-base.muted path) {
-  color: theme("colors.keys.textMuted");
-  background-color: theme("colors.keys.bgMutedUnselected");
-  fill: theme("colors.keys.bgMutedUnselected");
-}
-
-// Muted selected 
-:is(.key-base.muted.selected, .key-base.muted.selected path) {
-  color: theme("colors.keys.textOnBlack");
-  background-color: theme("colors.keys.bgMutedSelected");
-  fill: theme("colors.keys.bgMutedSelected");
-} */
-
 .scale-boundary-svg {
   position: absolute;
   top: 0;

@@ -2,11 +2,11 @@ import { useRef } from "react";
 
 import { TWENTY4 } from "@/types/NoteConstants";
 import { ActualIndex } from "@/types/IndexTypes";
+import { LinearKeyboardUtils } from "@/utils/Keyboard/Linear/LinearKeyboardUtils";
 
 import { useKeyboardHandlers } from "@/components/Keyboard/KeyboardBase";
 import { PianoKeyLinear } from "@/components/Keyboard/Linear/PianoKeyLinear";
 import { GlobalMode, useGlobal } from "@/contexts/GlobalContext";
-import { LinearKeyboardUtils } from "@/utils/Keyboard/Linear/LinearKeyboardUtils";
 import { useMusical } from "@/contexts/MusicalContext";
 
 export const KeyboardLinear = () => {

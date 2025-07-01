@@ -1,4 +1,6 @@
 "use client";
+import Link from "next/link";
+
 import { COMMON_STYLES, DEBUG_BORDER } from "@/lib/constants";
 import {
   STAFF_HEIGHT_PX,
@@ -8,7 +10,6 @@ import {
 import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
 
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
-import Link from "next/link";
 import { ChordNameDisplay } from "@/components/ChordNameDisplay";
 import StaffRenderer from "@/components/StaffRenderer";
 import SettingsContainer from "@/components/Settings/SettingsContainer";

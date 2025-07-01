@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 import { COMMON_STYLES } from "@/lib/constants";
 import {
@@ -6,8 +7,8 @@ import {
   GRID_COLUMNS,
   LAYOUT_CONSTRAINTS,
 } from "@/lib/layout-constants";
-import Link from "next/link";
 import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
+
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 import StaffRenderer from "@/components/StaffRenderer";
 import SettingsContainer from "@/components/Settings/SettingsContainer";
