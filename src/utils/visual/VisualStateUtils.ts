@@ -15,7 +15,8 @@ export class VisualStateUtils {
     monochromeMode: boolean,
     isRootNote: boolean,
     isBlack: boolean,
-    isSelected: boolean
+    isSelected: boolean,
+    isSvg: boolean
   ): KeyColors {
     const isDiatonic = musicalKey.greekModeInfo.isDiatonicNote(
       chromaticIndex,
@@ -34,9 +35,12 @@ export class VisualStateUtils {
       : "border-keys-borderColor";
 
     const selectedString = isSelected ? "Selected" : "";
+    const primaryPrefix = isSvg ? "fill" : "bg";
+    const textPrefix = isSvg ? "fill" : "text";
+
     return {
-      primary: `bg-keys-bg${stateColor}${selectedString}`,
-      text: `text-keys-textOn${stateColor}`,
+      primary: `${primaryPrefix}-keys-bg${stateColor}${selectedString}`,
+      text: `${textPrefix}-keys-textOn${stateColor}`,
       border: borderColor,
     };
   }

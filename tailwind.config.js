@@ -9,6 +9,9 @@ module.exports = {
       pattern: /bg-keys-*/,
     },
     {
+      pattern: /fill-keys-*/,
+    },
+    {
       pattern: /text-keys-*/,
     },
     {

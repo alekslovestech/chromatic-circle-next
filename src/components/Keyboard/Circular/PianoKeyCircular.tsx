@@ -7,6 +7,7 @@ import {
   chromaticToActual,
   ixOctaveOffset,
 } from "@/types/IndexTypes";
+
 import { ArcPathVisualizer } from "@/utils/Keyboard/Circular/ArcPathVisualizer";
 import { IndexUtils } from "@/utils/IndexUtils";
 import { isBlackKey } from "@/utils/Keyboard/KeyboardUtils";
@@ -66,11 +67,12 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   );
 
   // Add color classes based on visual state and selection
-  const visualClasses = VisualStateUtils.getKeyVisualClasses(
+  const keyColors = VisualStateUtils.getKeyColors(
     chromaticIndex,
     isAdvanced,
     selectedMusicalKey,
     monochromeMode,
+    false,
     isBlack,
     isSelected,
     true
@@ -88,21 +90,20 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   return (
     <g
       id={id}
-      className={[...baseClasses, ...visualClasses].join(" ")}
+      className={`${baseClasses.join(" ")}  !${keyColors.border}`}
       onClick={() => {
         onClick(chromaticToActual(chromaticIndex, ixOctaveOffset(0)));
       }}
     >
-      <path d={pathData} className={visualClasses.join(" ")} />
+      <path
+        d={pathData}
+        className={`${keyColors.primary} stroke-gray-400 stroke-1`}
+      />
       {showText && (
         <text
           x={textPoint.x}
           y={textPoint.y}
-          className={[
-            ...visualClasses,
-            "text-center",
-            "pointer-events-none",
-          ].join(" ")}
+          className={`text-center pointer-events-none ${keyColors.text}`}
         >
           {noteText}
         </text>
