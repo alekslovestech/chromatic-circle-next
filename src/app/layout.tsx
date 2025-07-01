@@ -1,7 +1,9 @@
 import { geistSans, geistMono } from "@/lib/fonts";
 import { baseMetadata, viewport } from "@/lib/metadata";
 import "./globals.css";
-import { GlobalMode, GlobalProvider } from "@/contexts/GlobalContext";
+import { GlobalMode } from "@/contexts/GlobalContext";
+import { RootProvider } from "@/contexts/RootContext";
+import { AudioPlayer } from "@/components/AudioPlayer";
 
 export { viewport };
 export const metadata = baseMetadata;
@@ -16,9 +18,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <GlobalProvider globalMode={GlobalMode.Default}>
+        <RootProvider globalMode={GlobalMode.Default}>
           {children}
-        </GlobalProvider>
+          <AudioPlayer />
+        </RootProvider>
       </body>
     </html>
   );
