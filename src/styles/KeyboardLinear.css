@@ -29,7 +29,7 @@
   width: var(--white-key-width);
   height: 100%;
   padding: 0 5px; /* Added padding to center the text */
-  /*border: 1px solid theme("colors.keys.borderColor");*/
+  border: 1px solid theme("colors.keys.borderColor");
 
   display: flex;
   align-items: flex-end;

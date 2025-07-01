@@ -11,6 +11,7 @@ import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 import StaffRenderer from "@/components/StaffRenderer";
 import SettingsContainer from "@/components/Settings/SettingsContainer";
+import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 
 export default function AdvancedPage() {
   const isLandscape = useIsLandscape();
@@ -57,8 +58,8 @@ export default function AdvancedPage() {
           className={`AdvancedPage-keyboard-linear-container ${COMMON_STYLES.linear}`}
           style={{ gridArea: "linear" }}
         >
-          <div className="AdvancedPage-keyboard-linear text-2xl text-center">
-            Linear Keyboard
+          <div className="AdvancedPage-keyboard-linear w-full h-full text-2xl">
+            <KeyboardLinear />
           </div>
         </div>
 
