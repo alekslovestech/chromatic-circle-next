@@ -12,7 +12,6 @@ import { ClearButton } from "@/components/Buttons/ClearButton";
 import { KeyTextModeSelect } from "@/components/Settings/NoteDisplayModeSelect";
 import { ScalePreviewToggle } from "@/components/Settings/ScalePreviewToggle";
 import { PlayScaleButton } from "@/components/Buttons/PlayScaleButton";
-//import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 
 import { CircularVisModeSelect } from "./CircularVisModeSelect";
 

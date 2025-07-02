@@ -2,7 +2,6 @@
 import { ixActualArray } from "../types/IndexTypes";
 import { IndexUtils } from "../utils/IndexUtils";
 import { useMusical } from "../contexts/MusicalContext";
-import "../styles/CircularSettings.css";
 import { Button } from "./Common/Button";
 
 // This component is used to transpose the selected notes OR the musical key.

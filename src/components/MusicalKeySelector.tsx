@@ -10,7 +10,6 @@ import { useMusical } from "../contexts/MusicalContext";
 import { useDisplay } from "../contexts/DisplayContext";
 import { useAudio } from "../contexts/AudioContext";
 
-import "../styles/CircularSettings.css";
 import { Button } from "./Common/Button";
 import { Select } from "./Common/Select";
 

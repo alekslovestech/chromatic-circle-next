@@ -100,7 +100,7 @@ export const KeyboardCircular = () => {
         selectedNoteIndices,
         circularVisMode,
         INNER_RADIUS,
-        color
+        "rgb(255,0,0)"
       )}
       {renderScaleBoundary()}
     </svg>
