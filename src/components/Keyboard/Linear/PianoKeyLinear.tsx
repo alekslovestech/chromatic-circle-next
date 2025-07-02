@@ -47,7 +47,8 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
     monochromeMode,
     isRootNote,
     isShortKey,
-    isSelected
+    isSelected,
+    false
   );
 
   if (isShortKey) baseClasses.push("short");

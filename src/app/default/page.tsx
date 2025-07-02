@@ -14,6 +14,7 @@ import { ChordNameDisplay } from "@/components/ChordNameDisplay";
 import StaffRenderer from "@/components/StaffRenderer";
 import SettingsContainer from "@/components/Settings/SettingsContainer";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
+import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
 
 //NB using Styles instead of tailwind classes for grid areas
 export default function Home() {
@@ -51,7 +52,7 @@ export default function Home() {
           style={{ gridArea: "circular" }}
         >
           <div className="DefaultPage-keyboard-circular p-2 h-full flex items-center justify-center text-2xl !text-labels-textDefault">
-            Circular Keyboard
+            <KeyboardCircular />
           </div>
           <div
             className="DefaultPage-chord-sidebar self-end mb-normal flex flex-col justify-end text-right max-w-[120px] p-2"
