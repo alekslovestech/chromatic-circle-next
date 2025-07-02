@@ -31,9 +31,10 @@ export class CircularVisualizations {
 
     return [
       <polygon
-        className="selected-notes-polygon fill-red-500"
+        className={`selected-notes-polygon fill-none`}
         key="circularVis"
-        stroke={color}
+        stroke={color} //tailwind has issues with arbitrary colors, so we use SVG attributes
+        strokeWidth={4}
         points={polyPoints.map((p) => `${p.x},${p.y}`).join(" ")}
       />,
       baseNoteDot,
