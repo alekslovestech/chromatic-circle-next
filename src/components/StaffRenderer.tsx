@@ -59,7 +59,7 @@ const getKeySignatureForVex = (musicalKey: MusicalKey) => {
   return pureKey + majorMinor;
 };
 
-const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
+export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
   const staffDivRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const { selectedNoteIndices, selectedMusicalKey } = useMusical();
@@ -126,5 +126,3 @@ const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
     </div>
   );
 };
-
-export default StaffRenderer;

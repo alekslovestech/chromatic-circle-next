@@ -7,7 +7,7 @@ import { InputMode } from "@/types/SettingModes";
 import { InputModeSelector } from "./InputModeSelector";
 import { PresetsSelector } from "./PresetsSelector";
 
-const SettingsContainer: React.FC = () => {
+export const SettingsContainer: React.FC = () => {
   const { inputMode } = usePreset();
 
   const showPresets =
@@ -23,5 +23,3 @@ const SettingsContainer: React.FC = () => {
     </div>
   );
 };
-
-export default SettingsContainer;
