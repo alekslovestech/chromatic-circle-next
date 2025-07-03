@@ -34,7 +34,7 @@ export default function Home() {
   const gridAreas = isLandscape ? gridAreasLandscape : gridAreasPortrait;
   const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
   return (
-    <div className="DefaultPage-container mx-auto max-w-7xl px-normal md:px-loose lg:px-spacious min-h-screen bg-canvas-bgDefault flex items-center justify-center">
+    <div className="DefaultPage-container mx-auto max-w-7xl px-snug md:px-loose lg:px-spacious min-h-screen bg-canvas-bgDefault flex items-center justify-center">
       <div
         className={`DefaultPage-grid grid p-2 gap-tight overflow-hidden ${DEBUG_BORDER}`}
         style={{
