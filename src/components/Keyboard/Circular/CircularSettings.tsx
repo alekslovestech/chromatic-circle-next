@@ -12,16 +12,16 @@ import { ClearButton } from "@/components/Buttons/ClearButton";
 import { KeyTextModeSelect } from "@/components/Settings/NoteDisplayModeSelect";
 import { ScalePreviewToggle } from "@/components/Settings/ScalePreviewToggle";
 import { PlayScaleButton } from "@/components/Buttons/PlayScaleButton";
-//import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 
 import { CircularVisModeSelect } from "./CircularVisModeSelect";
+import { DEBUG_BORDER } from "@/lib/constants";
 
 export const CircularSettings = () => {
   const { globalMode } = useGlobal();
   const isAdvanced = globalMode === GlobalMode.Advanced;
   if (isAdvanced) {
     return (
-      <div id="keyboardcircular-settings">
+      <div id="keyboardcircular-settings" className={DEBUG_BORDER}>
         <div style={{ display: "flex", flexDirection: "row", gap: 15 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             <div style={{ display: "flex", flexDirection: "row", gap: 15 }}>
@@ -43,7 +43,7 @@ export const CircularSettings = () => {
   }
 
   return (
-    <div id="keyboardcircular-settings">
+    <div id="keyboardcircular-settings" className={DEBUG_BORDER}>
       <div style={{ display: "flex", flexDirection: "row", gap: 15 }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
           <CircularVisModeSelect />

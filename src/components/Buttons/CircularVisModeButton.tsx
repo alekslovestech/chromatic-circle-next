@@ -25,7 +25,6 @@ export const CircularVisModeButton: React.FC<{
       id={`vis-button-${mode}`}
       size="sm"
       variant="vis"
-      density="comfortable"
       selected={isSelected}
       onClick={() => !isDisabled && setCircularVisMode(mode)}
       title={label}

@@ -17,6 +17,9 @@ module.exports = {
     {
       pattern: /border-keys-*/,
     },
+    {
+      pattern: /border-containers-border*/,
+    },
   ],
   theme: {
     extend: {

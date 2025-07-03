@@ -11,10 +11,11 @@ import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
 
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 import { ChordNameDisplay } from "@/components/ChordNameDisplay";
-import StaffRenderer from "@/components/StaffRenderer";
-import SettingsContainer from "@/components/Settings/SettingsContainer";
+import { StaffRenderer } from "@/components/StaffRenderer";
+import { SettingsContainer } from "@/components/Settings/SettingsContainer";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
+import { CircularSettings } from "@/components/Keyboard/Circular/CircularSettings";
 
 //NB using Styles instead of tailwind classes for grid areas
 export default function Home() {
@@ -33,7 +34,7 @@ export default function Home() {
   const gridAreas = isLandscape ? gridAreasLandscape : gridAreasPortrait;
   const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
   return (
-    <div className="DefaultPage-container mx-auto max-w-7xl px-normal md:px-loose lg:px-spacious min-h-screen bg-canvas-bgDefault flex items-center justify-center">
+    <div className="DefaultPage-container mx-auto max-w-7xl px-snug md:px-loose lg:px-spacious min-h-screen bg-canvas-bgDefault flex items-center justify-center">
       <div
         className={`DefaultPage-grid grid p-2 gap-tight overflow-hidden ${DEBUG_BORDER}`}
         style={{
@@ -53,6 +54,7 @@ export default function Home() {
         >
           <div className="DefaultPage-keyboard-circular p-2 h-full flex items-center justify-center text-2xl !text-labels-textDefault">
             <KeyboardCircular />
+            <CircularSettings />
           </div>
           <div
             className="DefaultPage-chord-sidebar self-end mb-normal flex flex-col justify-end text-right max-w-[120px] p-2"

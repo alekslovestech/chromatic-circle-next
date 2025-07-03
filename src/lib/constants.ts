@@ -1,4 +1,4 @@
-export const DEBUG_BORDER = "border border-containers-border";
+export const DEBUG_BORDER = "border border-containers-borderDebug";
 
 export const COMMON_STYLES = {
   staff: `flex justify-center items-center px-looser rounded ${DEBUG_BORDER} `,

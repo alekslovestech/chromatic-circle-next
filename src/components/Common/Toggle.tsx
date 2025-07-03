@@ -5,6 +5,8 @@ interface ToggleProps {
   checked: boolean;
   onChange: (checked: boolean) => void;
   label: string;
+  padding?: "tight" | "snug" | "normal" | "loose" | "spacious";
+  disabled?: boolean;
 }
 
 export const Toggle: React.FC<ToggleProps> = ({
@@ -12,20 +14,52 @@ export const Toggle: React.FC<ToggleProps> = ({
   checked,
   onChange,
   label,
+  padding = "normal",
+  disabled = false,
 }) => {
+  const paddingClass = `gap-${padding}`;
+
+  const checkboxStyles = [
+    // Base styles
+    "w-4 h-4 rounded border transition-colors duration-200",
+    // Using unified color system
+    "border-containers-border",
+    "bg-buttons-bgDefault",
+    // Checked state
+    checked ? "bg-buttons-bgSelected border-buttons-borderSelected" : "",
+    // Hover state (only if not disabled)
+    !disabled && !checked ? "hover:bg-buttons-bgHover" : "",
+    // Focus state
+    "focus:ring-2 focus:ring-buttons-bgSelected focus:ring-opacity-50",
+    // Disabled state
+    disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const labelStyles = [
+    "text-sm font-medium transition-colors duration-200",
+    // Using unified color system
+    "text-labels-textDefault",
+    // Hover state (only if not disabled)
+    !disabled
+      ? "hover:text-buttons-textSelected cursor-pointer"
+      : "cursor-not-allowed opacity-50",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <div className="flex items-center gap-normal">
+    <div className={`flex items-center ${paddingClass}`}>
       <input
         type="checkbox"
         id={id}
         checked={checked}
-        onChange={(e) => onChange(e.target.checked)}
-        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 hover:bg-gray-200 transition-colors duration-200"
+        onChange={(e) => !disabled && onChange(e.target.checked)}
+        disabled={disabled}
+        className={checkboxStyles}
       />
-      <label
-        htmlFor={id}
-        className="text-sm font-medium text-gray-900 cursor-pointer hover:text-gray-700 transition-colors duration-200"
-      >
+      <label htmlFor={id} className={labelStyles}>
         {label}
       </label>
     </div>

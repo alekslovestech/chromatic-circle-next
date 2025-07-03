@@ -10,7 +10,6 @@ import { useMusical } from "../contexts/MusicalContext";
 import { useDisplay } from "../contexts/DisplayContext";
 import { useAudio } from "../contexts/AudioContext";
 
-import "../styles/CircularSettings.css";
 import { Button } from "./Common/Button";
 import { Select } from "./Common/Select";
 
@@ -103,8 +102,7 @@ export const MusicalKeySelector = ({
         <Button
           id="major-minor-toggle"
           variant="action"
-          density="standard"
-          size="md"
+          size="sm"
           title="Toggle between major and minor"
           onClick={handleMajorMinorToggle}
         >

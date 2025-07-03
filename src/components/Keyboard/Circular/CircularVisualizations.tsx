@@ -12,9 +12,10 @@ export class CircularVisualizations {
     innerRadius: number,
     color: string
   ): JSX.Element[] {
+    console.log(`before, length = ${selectedNoteIndices.length}`);
     if (selectedNoteIndices.length <= 1) return [];
 
-    if (circularVisMode === CircularVisMode.None) return [];
+    console.log(`circularVisMode=${circularVisMode}`);
 
     const realInnerRadius =
       circularVisMode === CircularVisMode.Polygon
@@ -30,9 +31,10 @@ export class CircularVisualizations {
 
     return [
       <polygon
-        className="selected-notes-polygon"
+        className={`selected-notes-polygon fill-none`}
         key="circularVis"
-        stroke={color}
+        stroke={color} //tailwind has issues with arbitrary colors, so we use SVG attributes
+        strokeWidth={4}
         points={polyPoints.map((p) => `${p.x},${p.y}`).join(" ")}
       />,
       baseNoteDot,

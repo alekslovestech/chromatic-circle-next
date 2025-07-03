@@ -10,8 +10,8 @@ import {
 import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
 
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
-import StaffRenderer from "@/components/StaffRenderer";
-import SettingsContainer from "@/components/Settings/SettingsContainer";
+import { StaffRenderer } from "@/components/StaffRenderer";
+import { SettingsContainer } from "@/components/Settings/SettingsContainer";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
 
