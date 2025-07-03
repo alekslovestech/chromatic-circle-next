@@ -12,9 +12,9 @@ export const VARIANTS: Record<ButtonVariant, string> = {
 };
 
 export const SIZES: Record<ButtonSize, string> = {
-  sm: "px-tight py-tight min-w-button-sm max-w-button-sm text-[0.8rem]", // compact buttons
-  md: "px-snug py-snug min-w-button-md max-w-button-md text-base", // regular buttons
-  lg: "px-normal py-normal min-w-button-lg max-w-button-lg text-lg", // large buttons
+  sm: "px-tight py-tight min-w-button-sm max-w-button-sm",
+  md: "px-snug py-snug min-w-button-md max-w-button-md",
+  lg: "px-normal py-normal min-w-button-lg max-w-button-lg",
 };
 
 export const SELECTED_STYLES =
@@ -22,3 +22,14 @@ export const SELECTED_STYLES =
 
 export const DISABLED_STYLES =
   "opacity-50 cursor-not-allowed bg-buttons-bgDisabled";
+
+export const TYPOGRAPHY = {
+  sectionTitle: "text-base text-labels-textDefault font-bold",
+  controlLabel: "text-sm text-labels-textDefault font-medium",
+  buttonText: "text-labels-textDefault font-medium",
+  bodyText: "text-sm text-labels-textDefault",
+  displayText: "text-2xl text-labels-textDefault font-bold",
+  keyboardText: "text-2xl text-labels-textDefault",
+} as const;
+
+export type TypographyVariant = keyof typeof TYPOGRAPHY;

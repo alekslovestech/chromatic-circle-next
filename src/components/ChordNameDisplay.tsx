@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { ChordDisplayMode } from "@/types/SettingModes";
+import { TYPOGRAPHY } from "./Common/ButtonTypes";
 
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
@@ -33,16 +34,21 @@ export const ChordNameDisplay: React.FC = () => {
         selectedMusicalKey
       );
     return (
-      <div className="chord-name-description">
+      <div className={`chord-name-description ${TYPOGRAPHY.bodyText}`}>
         <span>{`${noteGroupingString}: `}</span>
-        <span className="chord-name-value">{chordName}</span>
+        <span className="chord-name-value font-bold">{chordName}</span>
       </div>
     );
   };
 
   return (
     <div className="chord-display">
-      <div onClick={toggleChordDisplayMode}>{renderNoteGrouping()}</div>
+      <div
+        onClick={toggleChordDisplayMode}
+        className="cursor-pointer hover:text-buttons-textSelected transition-colors duration-200"
+      >
+        {renderNoteGrouping()}
+      </div>
     </div>
   );
 };

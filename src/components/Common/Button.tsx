@@ -1,4 +1,5 @@
 import React from "react";
+import { TYPOGRAPHY } from "./ButtonTypes";
 
 import {
   ButtonVariant,
@@ -35,7 +36,7 @@ export const Button: React.FC<ButtonProps> = ({
   return (
     <button
       id={propsId}
-      className={`${BASE_STYLES} ${SIZES[size]} ${VARIANTS[variant]} ${selectedStyles} ${disabledStyles} ${className}`}
+      className={`${BASE_STYLES} ${TYPOGRAPHY.buttonText} ${SIZES[size]} ${VARIANTS[variant]} ${selectedStyles} ${disabledStyles} ${className}`}
       {...propsWithoutId}
     >
       {children}

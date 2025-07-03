@@ -1,14 +1,14 @@
 "use client";
 import React, { useEffect } from "react";
 
-import { MusicalKey } from "../types/Keys/MusicalKey";
-import { GreekModeType } from "../types/GreekModes/GreekModeType";
-import { KeyType } from "../types/Keys/KeyType";
-import { KeySignature } from "../types/Keys/KeySignature";
+import { MusicalKey } from "@/types/Keys/MusicalKey";
+import { GreekModeType } from "@/types/GreekModes/GreekModeType";
+import { KeyType } from "@/types/Keys/KeyType";
+import { KeySignature } from "@/types/Keys/KeySignature";
 
-import { useMusical } from "../contexts/MusicalContext";
-import { useDisplay } from "../contexts/DisplayContext";
-import { useAudio } from "../contexts/AudioContext";
+import { useMusical } from "@/contexts/MusicalContext";
+import { useDisplay } from "@/contexts/DisplayContext";
+import { useAudio } from "@/contexts/AudioContext";
 
 import { Button } from "./Common/Button";
 import { Select } from "./Common/Select";

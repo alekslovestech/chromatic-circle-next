@@ -1,7 +1,8 @@
 "use client";
-import { ixActualArray } from "../types/IndexTypes";
-import { IndexUtils } from "../utils/IndexUtils";
-import { useMusical } from "../contexts/MusicalContext";
+import { ixActualArray } from "@/types/IndexTypes";
+import { IndexUtils } from "@/utils/IndexUtils";
+import { useMusical } from "@/contexts/MusicalContext";
+
 import { Button } from "./Common/Button";
 
 type TransposeDirection = "up" | "down";
@@ -17,26 +18,28 @@ const TransposeButton: React.FC<TransposeButtonProps> = ({
 }) => {
   const arrow = direction === "up" ? "↑" : "↓";
   const amount = direction === "up" ? 1 : -1;
+  const symbol = target === "notes" ? "♫" : "𝄞";
+  const title = `Transpose ${target} ${direction}`;
   const {
     selectedNoteIndices,
     setSelectedNoteIndices,
     selectedMusicalKey,
     setSelectedMusicalKey,
   } = useMusical();
+
   const onClick = () => {
     if (target === "notes") {
+      // Transpose selected notes
       const transposedIndices = ixActualArray(
         IndexUtils.shiftIndices(selectedNoteIndices, amount)
       );
       setSelectedNoteIndices(transposedIndices);
     } else {
+      // Transpose musical key
       const newKey = selectedMusicalKey.getTransposedKey(amount);
       setSelectedMusicalKey(newKey);
     }
   };
-
-  const symbol = target === "notes" ? "♫" : "𝄞";
-  const title = `Transpose ${target} ${direction}`;
 
   return (
     <Button

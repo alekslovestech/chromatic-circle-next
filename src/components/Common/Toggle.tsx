@@ -37,11 +37,9 @@ export const Toggle: React.FC<ToggleProps> = ({
     .filter(Boolean)
     .join(" ");
 
+  // ✅ Use the same font constants as SectionTitle
   const labelStyles = [
-    "text-sm font-medium transition-colors duration-200",
-    // Using unified color system
-    "text-labels-textDefault",
-    // Hover state (only if not disabled)
+    "text-sm text-labels-textDefault font-medium transition-colors duration-200", // Same pattern as SectionTitle
     !disabled
       ? "hover:text-buttons-textSelected cursor-pointer"
       : "cursor-not-allowed opacity-50",
