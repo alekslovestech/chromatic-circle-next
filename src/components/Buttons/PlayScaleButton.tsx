@@ -17,12 +17,7 @@ export const PlayScaleButton: React.FC = () => {
   };
 
   return (
-    <Button
-      size="md"
-      variant="action"
-      density="comfortable"
-      onClick={handleClick}
-    >
+    <Button size="md" variant="action" onClick={handleClick}>
       {playbackState === PlaybackState.ScalePlaying
         ? "Stop Scale"
         : "Play Scale"}

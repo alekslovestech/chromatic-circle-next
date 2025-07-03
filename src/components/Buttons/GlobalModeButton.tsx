@@ -4,7 +4,7 @@ export const GlobalModeButton: React.FC<{
   text: string;
 }> = ({ text }) => {
   return (
-    <Button size="md" variant="global" density="comfortable">
+    <Button size="md" variant="global">
       {text}
     </Button>
   );

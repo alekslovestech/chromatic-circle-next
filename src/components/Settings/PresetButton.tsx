@@ -34,7 +34,6 @@ export const PresetButton: React.FC<PresetButtonProps> = ({
       id={`preset-${elementId}`}
       key={presetId}
       variant="option"
-      density="compact"
       size="sm"
       selected={selected}
       onClick={() => onClick(presetId)}
