@@ -2,11 +2,9 @@ import React from "react";
 
 import {
   ButtonVariant,
-  ButtonDensity,
   ButtonSize,
   BASE_STYLES,
   VARIANTS,
-  DENSITIES,
   SIZES,
   SELECTED_STYLES,
   DISABLED_STYLES,
@@ -14,7 +12,6 @@ import {
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
-  density?: ButtonDensity;
   size?: ButtonSize;
   selected?: boolean;
   disabled?: boolean;
@@ -23,7 +20,6 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 export const Button: React.FC<ButtonProps> = ({
   children,
   variant = "option",
-  density = "standard",
   size = "md",
   selected = false,
   disabled = false,
@@ -35,10 +31,11 @@ export const Button: React.FC<ButtonProps> = ({
   const propsId = props.id;
   const propsWithoutId = { ...props };
   delete propsWithoutId.id;
+
   return (
     <button
       id={propsId}
-      className={`${BASE_STYLES} ${DENSITIES[density]} ${SIZES[size]} ${VARIANTS[variant]} ${selectedStyles} ${disabledStyles} ${className}`}
+      className={`${BASE_STYLES} ${SIZES[size]} ${VARIANTS[variant]} ${selectedStyles} ${disabledStyles} ${className}`}
       {...propsWithoutId}
     >
       {children}

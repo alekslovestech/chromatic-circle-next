@@ -102,8 +102,7 @@ export const MusicalKeySelector = ({
         <Button
           id="major-minor-toggle"
           variant="action"
-          density="standard"
-          size="md"
+          size="sm"
           title="Toggle between major and minor"
           onClick={handleMajorMinorToggle}
         >

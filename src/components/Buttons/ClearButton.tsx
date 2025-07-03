@@ -7,7 +7,6 @@ export const ClearButton: React.FC = () => {
     <Button
       size="sm"
       variant="action"
-      density="comfortable"
       onClick={() => setSelectedNoteIndices([])}
     >
       Clear
