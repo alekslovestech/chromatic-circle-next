@@ -4,83 +4,71 @@ import { IndexUtils } from "../utils/IndexUtils";
 import { useMusical } from "../contexts/MusicalContext";
 import { Button } from "./Common/Button";
 
-// This component is used to transpose the selected notes OR the musical key.
-export const TransposeWidget: React.FC<{ showKeyTranspose: boolean }> = ({
-  showKeyTranspose = false,
+type TransposeDirection = "up" | "down";
+type TransposeTarget = "key" | "notes";
+interface TransposeButtonProps {
+  direction: TransposeDirection;
+  target: TransposeTarget;
+}
+
+const TransposeButton: React.FC<TransposeButtonProps> = ({
+  direction,
+  target,
 }) => {
+  const arrow = direction === "up" ? "↑" : "↓";
+  const amount = direction === "up" ? 1 : -1;
   const {
     selectedNoteIndices,
     setSelectedNoteIndices,
     selectedMusicalKey,
     setSelectedMusicalKey,
   } = useMusical();
-
-  const handleSelectedNotesTranspose = (amount: number) => {
-    const transposedIndices = ixActualArray(
-      IndexUtils.shiftIndices(selectedNoteIndices, amount)
-    );
-    setSelectedNoteIndices(transposedIndices);
+  const onClick = () => {
+    if (target === "notes") {
+      const transposedIndices = ixActualArray(
+        IndexUtils.shiftIndices(selectedNoteIndices, amount)
+      );
+      setSelectedNoteIndices(transposedIndices);
+    } else {
+      const newKey = selectedMusicalKey.getTransposedKey(amount);
+      setSelectedMusicalKey(newKey);
+    }
   };
 
-  const handleMusicalKeyTranspose = (amount: number) => {
-    const newKey = selectedMusicalKey.getTransposedKey(amount);
-    setSelectedMusicalKey(newKey);
-  };
+  const symbol = target === "notes" ? "♫" : "𝄞";
+  const title = `Transpose ${target} ${direction}`;
 
-  const VARIANT_TRANSPOSE_BUTTON = "action";
-  const DENSITY_TRANSPOSE_BUTTON = "compact";
-  const SIZE_TRANSPOSE_BUTTON = "sm";
+  return (
+    <Button
+      id={`transpose-${direction}-button`}
+      variant="action"
+      size="sm"
+      onClick={onClick}
+      title={title}
+    >
+      {`${arrow}${symbol}${arrow}`}
+    </Button>
+  );
+};
 
+// This component is used to transpose the selected notes OR the musical key.
+export const TransposeWidget: React.FC<{ showKeyTranspose: boolean }> = ({
+  showKeyTranspose = false,
+}) => {
   return (
     <div>
       <div className="transpose-buttons-container">
         {!showKeyTranspose && (
           <>
-            <Button
-              id="transpose-up-button"
-              variant={VARIANT_TRANSPOSE_BUTTON}
-              density={DENSITY_TRANSPOSE_BUTTON}
-              size={SIZE_TRANSPOSE_BUTTON}
-              onClick={() => handleSelectedNotesTranspose(1)}
-              title="Transpose selected notes up"
-            >
-              ↑♫↑
-            </Button>
-            <Button
-              id="transpose-down-button"
-              variant={VARIANT_TRANSPOSE_BUTTON}
-              density={DENSITY_TRANSPOSE_BUTTON}
-              size={SIZE_TRANSPOSE_BUTTON}
-              onClick={() => handleSelectedNotesTranspose(-1)}
-              title="Transpose selected notes down"
-            >
-              ↓♫↓
-            </Button>
+            <TransposeButton direction="up" target="notes" />
+            <TransposeButton direction="down" target="notes" />
           </>
         )}
 
         {showKeyTranspose && (
           <>
-            <Button
-              id="musicalkey-up-button"
-              variant={VARIANT_TRANSPOSE_BUTTON}
-              density={DENSITY_TRANSPOSE_BUTTON}
-              size={SIZE_TRANSPOSE_BUTTON}
-              onClick={() => handleMusicalKeyTranspose(1)}
-              title="Transpose musical key up"
-            >
-              ↑𝄞↑
-            </Button>
-            <Button
-              id="musicalkey-down-button"
-              variant={VARIANT_TRANSPOSE_BUTTON}
-              density={DENSITY_TRANSPOSE_BUTTON}
-              size={SIZE_TRANSPOSE_BUTTON}
-              onClick={() => handleMusicalKeyTranspose(-1)}
-              title="Transpose musical key down"
-            >
-              ↓𝄞↓
-            </Button>
+            <TransposeButton direction="up" target="key" />
+            <TransposeButton direction="down" target="key" />
           </>
         )}
       </div>
