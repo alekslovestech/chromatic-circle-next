@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
 import { ChordDisplayMode } from "@/types/SettingModes";
-import { TYPOGRAPHY } from "./Common/ButtonTypes";
 
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
 
 import { ChordUtils } from "@/utils/ChordUtils";
+import { TYPOGRAPHY } from "./Common/Typography";
 
 export const ChordNameDisplay: React.FC = () => {
   const { selectedNoteIndices, selectedMusicalKey } = useMusical();

@@ -34,17 +34,14 @@ export default function Home() {
   const gridAreas = isLandscape ? gridAreasLandscape : gridAreasPortrait;
   const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
   return (
-    <div className="DefaultPage-container mx-auto max-w-7xl px-snug md:px-loose lg:px-spacious min-h-screen bg-canvas-bgDefault flex items-center justify-center">
+    <div className="DefaultPage-container h-full w-full bg-canvas-bgDefault flex flex-col px-snug md:px-loose lg:px-spacious">
       <div
-        className={`DefaultPage-grid grid p-2 gap-tight overflow-hidden ${DEBUG_BORDER}`}
+        className={`DefaultPage-grid grid p-2 gap-tight overflow-hidden flex-1 ${DEBUG_BORDER}`}
         style={{
           gridTemplateColumns: gridCols,
           gridTemplateRows: gridRows,
           gridTemplateAreas: gridAreas,
-          maxWidth: LAYOUT_CONSTRAINTS.maxWidth,
-          maxHeight: LAYOUT_CONSTRAINTS.maxHeight,
           width: "100%",
-          height: "100vh",
         }}
       >
         <StaffRenderer style={{ gridArea: "staff" }} />

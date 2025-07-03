@@ -1,7 +1,7 @@
 "use client";
 import { useDisplay } from "@/contexts/DisplayContext";
 import { KeyDisplayMode } from "@/types/SettingModes";
-import { TYPOGRAPHY } from "../Common/ButtonTypes";
+import { TYPOGRAPHY } from "../Common/Typography";
 
 // determines the way the note names / scale degrees are displayed on the circular keyboard
 export const KeyTextModeSelect: React.FC = () => {

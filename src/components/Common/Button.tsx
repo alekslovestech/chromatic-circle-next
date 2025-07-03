@@ -1,5 +1,5 @@
 import React from "react";
-import { TYPOGRAPHY } from "./ButtonTypes";
+import { TYPOGRAPHY } from "./Typography";
 
 import {
   ButtonVariant,
