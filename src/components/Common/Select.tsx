@@ -1,4 +1,5 @@
 import React from "react";
+import { TYPOGRAPHY } from "./Typography";
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   id: string;
@@ -15,8 +16,10 @@ export const Select: React.FC<SelectProps> = ({
   children,
   ...props
 }) => {
-  const baseStyles =
-    "rounded-2xl border border-containers-border bg-bgDefault text-sm text-keys-textOnWhite px-snug py-snug";
+  const baseStyles = [
+    "rounded-2xl border border-containers-border bg-bgDefault px-snug py-snug",
+    TYPOGRAPHY.controlLabel,
+  ].join(" ");
 
   return (
     <select

@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Ensure Next.js root and parents have full height */
+html,
+body,
+#__next {
+  height: 100%;
+}
+
 @import "@/styles/KeyboardBase.css";
 @import "@/styles/KeyboardLinear.css";
 @import "@/styles/KeyboardCircular.css";

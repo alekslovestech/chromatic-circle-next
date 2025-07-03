@@ -1,10 +1,14 @@
 "use client";
 import { useDisplay } from "@/contexts/DisplayContext";
 import { KeyDisplayMode } from "@/types/SettingModes";
+import { TYPOGRAPHY } from "../Common/Typography";
 
 // determines the way the note names / scale degrees are displayed on the circular keyboard
 export const KeyTextModeSelect: React.FC = () => {
   const { keyTextMode, setKeyTextMode } = useDisplay();
+
+  const labelStyles = `${TYPOGRAPHY.controlLabel} cursor-pointer hover:text-buttons-textSelected transition-colors duration-200`;
+
   return (
     <div
       className="note-display-mode-container"
@@ -19,7 +23,9 @@ export const KeyTextModeSelect: React.FC = () => {
           checked={keyTextMode === KeyDisplayMode.NoteNames}
           onChange={() => setKeyTextMode(KeyDisplayMode.NoteNames)}
         />
-        <label htmlFor="key-text-note-names">A</label>
+        <label htmlFor="key-text-note-names" className={labelStyles}>
+          A
+        </label>
       </div>
 
       <div className="radio-option">
@@ -31,7 +37,9 @@ export const KeyTextModeSelect: React.FC = () => {
           checked={keyTextMode === KeyDisplayMode.ScaleDegree}
           onChange={() => setKeyTextMode(KeyDisplayMode.ScaleDegree)}
         />
-        <label htmlFor="key-text-numbers">1</label>
+        <label htmlFor="key-text-numbers" className={labelStyles}>
+          1
+        </label>
       </div>
 
       <div className="radio-option">
@@ -43,7 +51,9 @@ export const KeyTextModeSelect: React.FC = () => {
           checked={keyTextMode === KeyDisplayMode.Roman}
           onChange={() => setKeyTextMode(KeyDisplayMode.Roman)}
         />
-        <label htmlFor="key-text-roman">iv</label>
+        <label htmlFor="key-text-roman" className={labelStyles}>
+          iv
+        </label>
       </div>
     </div>
   );

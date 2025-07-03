@@ -12,9 +12,9 @@ export const VARIANTS: Record<ButtonVariant, string> = {
 };
 
 export const SIZES: Record<ButtonSize, string> = {
-  sm: "px-tight py-tight min-w-button-sm max-w-button-sm text-[0.8rem]", // compact buttons
-  md: "px-snug py-snug min-w-button-md max-w-button-md text-base", // regular buttons
-  lg: "px-normal py-normal min-w-button-lg max-w-button-lg text-lg", // large buttons
+  sm: "px-tight py-tight min-w-button-sm max-w-button-sm",
+  md: "px-snug py-snug min-w-button-md max-w-button-md",
+  lg: "px-normal py-normal min-w-button-lg max-w-button-lg",
 };
 
 export const SELECTED_STYLES =

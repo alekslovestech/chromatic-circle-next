@@ -1,4 +1,5 @@
 import React from "react";
+import { TYPOGRAPHY } from "./Typography";
 
 interface SectionTitleProps {
   children: React.ReactNode;
@@ -13,9 +14,9 @@ export const SectionTitle: React.FC<SectionTitleProps> = ({
 }) => {
   return (
     <div
-      className={`section-title text-base text-labels-textDefault font-bold mb-tight flex-shrink-0 ${
-        centered ? "text-center" : ""
-      } ${className}`}
+      className={`section-title ${
+        TYPOGRAPHY.sectionTitle
+      } mb-tight flex-shrink-0 ${centered ? "text-center" : ""} ${className}`}
     >
       {children}
     </div>
