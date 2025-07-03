@@ -1,12 +1,8 @@
 "use client";
 import Link from "next/link";
 
-import { COMMON_STYLES } from "@/lib/constants";
-import {
-  STAFF_HEIGHT_PX,
-  GRID_COLUMNS,
-  LAYOUT_CONSTRAINTS,
-} from "@/lib/layout-constants";
+import { COMMON_STYLES, DEBUG_BORDER } from "@/lib/constants";
+import { STAFF_HEIGHT_PX, GRID_COLUMNS } from "@/lib/layout-constants";
 import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
 
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
@@ -17,7 +13,7 @@ import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircula
 
 export default function AdvancedPage() {
   const isLandscape = useIsLandscape();
-  const gridRowsPortrait = `${STAFF_HEIGHT_PX} 0.55fr 1fr 1fr`;
+  const gridRowsPortrait = `${STAFF_HEIGHT_PX} 1fr 2fr 1fr`;
   const gridAreasPortrait = ` 'staff staff'
                               'sidebar sidebar'
                               'circular circular'                      
@@ -32,17 +28,14 @@ export default function AdvancedPage() {
   const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
   const gridAreas = isLandscape ? gridAreasLandscape : gridAreasPortrait;
   return (
-    <div className="AdvancedPage-container mx-auto max-w-7xl px-normal md:px-loose lg:px-spacious min-h-screen bg-canvas-bgAdvanced flex items-center justify-center">
+    <div className="AdvancedPage-container h-full w-full bg-canvas-bgAdvanced flex flex-col px-snug md:px-loose lg:px-spacious">
       <div
-        className="AdvancedPage-grid grid p-2 gap-tight overflow-hidden"
+        className={`AdvancedPage-grid grid p-2 gap-tight overflow-hidden flex-1 ${DEBUG_BORDER}`}
         style={{
           gridTemplateColumns: gridCols,
           gridTemplateRows: gridRows,
           gridTemplateAreas: gridAreas,
-          maxWidth: LAYOUT_CONSTRAINTS.maxWidth,
-          maxHeight: LAYOUT_CONSTRAINTS.maxHeight,
           width: "100%",
-          height: "100vh",
         }}
       >
         <StaffRenderer style={{ gridArea: "staff" }} />
@@ -51,7 +44,7 @@ export default function AdvancedPage() {
           className={`AdvancedPage-keyboard-circular-container ${COMMON_STYLES.circular}`}
           style={{ gridArea: "circular" }}
         >
-          <div className="AdvancedPage-keyboard-circular p-2 text-2xl text-center">
+          <div className="AdvancedPage-keyboard-circular p-2 h-full flex items-center justify-center text-2xl !text-labels-textDefault">
             <KeyboardCircular />
           </div>
         </div>
