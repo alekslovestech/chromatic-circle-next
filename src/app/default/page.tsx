@@ -2,11 +2,7 @@
 import Link from "next/link";
 
 import { COMMON_STYLES, DEBUG_BORDER } from "@/lib/constants";
-import {
-  STAFF_HEIGHT_PX,
-  GRID_COLUMNS,
-  LAYOUT_CONSTRAINTS,
-} from "@/lib/layout-constants";
+import { STAFF_HEIGHT_PX, GRID_COLUMNS } from "@/lib/layout-constants";
 import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
 
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
