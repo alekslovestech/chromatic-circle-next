@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { DEBUG_BORDER } from "@/lib/constants";
+import { DEBUG_BORDER } from "@/lib/design";
 import { InputMode } from "@/types/SettingModes";
 import { useGlobalMode, GlobalMode } from "@/lib/hooks";
 

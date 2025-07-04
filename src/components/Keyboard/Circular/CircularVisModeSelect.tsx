@@ -44,7 +44,7 @@ export const CircularVisModeSelect: React.FC = () => {
   ];
 
   return (
-    <div className="vis-button-group">
+    <div className="flex flex-nowrap gap-tight">
       {visList.map(({ mode, label }) => (
         <CircularVisModeButton key={mode} mode={mode} label={label} />
       ))}

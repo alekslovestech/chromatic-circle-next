@@ -1,11 +1,12 @@
 import React from "react";
+import { SpacingSize } from "@/lib/design";
 
 interface ToggleProps {
   id: string;
   checked: boolean;
   onChange: (checked: boolean) => void;
   label: string;
-  padding?: "tight" | "snug" | "normal" | "loose" | "spacious";
+  padding?: SpacingSize;
   disabled?: boolean;
 }
 
@@ -14,7 +15,7 @@ export const Toggle: React.FC<ToggleProps> = ({
   checked,
   onChange,
   label,
-  padding = "normal",
+  padding,
   disabled = false,
 }) => {
   const paddingClass = `gap-${padding}`;

@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 
-import { COMMON_STYLES, DEBUG_BORDER } from "@/lib/constants";
-import { STAFF_HEIGHT_PX, GRID_COLUMNS } from "@/lib/layout-constants";
+import { COMMON_STYLES, DEBUG_BORDER } from "@/lib/design";
+import { STAFF_HEIGHT_PX, GRID_COLUMNS } from "@/lib/design";
 import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
 
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
@@ -45,9 +45,11 @@ export default function Home() {
           className={`DefaultPage-keyboard-circular-container ${COMMON_STYLES.circular} ${DEBUG_BORDER}`}
           style={{ gridArea: "circular" }}
         >
-          <div className="DefaultPage-keyboard-circular p-2 h-full flex items-center justify-center text-2xl !text-labels-textDefault">
+          <div className="DefaultPage-keyboard-circular p-2 h-full flex items-center justify-center gap-4 text-2xl !text-labels-textDefault">
             <KeyboardCircular />
-            <CircularSettings />
+            <div className="flex-1">
+              <CircularSettings />
+            </div>
           </div>
           <div
             className="DefaultPage-chord-sidebar self-end mb-normal flex flex-col justify-end text-right max-w-[120px] p-2"

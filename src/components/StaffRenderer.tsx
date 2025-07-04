@@ -11,7 +11,7 @@ import { MusicalKey } from "../types/Keys/MusicalKey";
 import { KeyType } from "../types/Keys/KeyType";
 import { useMusical } from "../contexts/MusicalContext";
 import { KeyNoteResolver } from "../types/Keys/KeyNoteResolver";
-import { COMMON_STYLES, DEBUG_BORDER } from "@/lib/constants";
+import { COMMON_STYLES, DEBUG_BORDER } from "@/lib/design";
 
 interface StaffRendererProps {
   style?: React.CSSProperties;

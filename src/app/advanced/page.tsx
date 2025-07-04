@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 
-import { COMMON_STYLES, DEBUG_BORDER } from "@/lib/constants";
-import { STAFF_HEIGHT_PX, GRID_COLUMNS } from "@/lib/layout-constants";
+import { COMMON_STYLES, DEBUG_BORDER } from "@/lib/design";
+import { STAFF_HEIGHT_PX, GRID_COLUMNS } from "@/lib/design";
 import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
 
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";

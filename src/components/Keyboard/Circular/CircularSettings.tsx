@@ -14,18 +14,20 @@ import { ScalePreviewToggle } from "@/components/Settings/ScalePreviewToggle";
 import { PlayScaleButton } from "@/components/Buttons/PlayScaleButton";
 
 import { CircularVisModeSelect } from "./CircularVisModeSelect";
-import { DEBUG_BORDER } from "@/lib/constants";
+import { DEBUG_BORDER } from "@/lib/design";
 
 export const CircularSettings = () => {
   const globalMode = useGlobalMode();
   const isAdvanced = globalMode === GlobalMode.Advanced;
   console.log(`CircularSettings: isAdvanced=${isAdvanced}`);
+  const outerGapVertical = "gap-tight";
+  const outerGapHorizontal = "gap-normal";
   const settingsGap = "gap-tight";
   if (isAdvanced) {
     return (
       <div
         id="keyboardcircular-settings"
-        className={`${DEBUG_BORDER} flex ${settingsGap}`}
+        className={`${DEBUG_BORDER} flex ${outerGapVertical} ${outerGapHorizontal}`}
       >
         <div className={`flex flex-col ${settingsGap}`}>
           <div className={`flex ${settingsGap}`}>
