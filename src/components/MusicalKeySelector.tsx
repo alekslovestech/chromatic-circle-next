@@ -69,47 +69,54 @@ export const MusicalKeySelector = ({
     setSelectedMusicalKey(newKey);
   };
 
+  const TonicSelector = () => (
+    <Select
+      id="tonic-select"
+      value={selectedMusicalKey.tonicString}
+      onChange={handleTonicNameChange}
+      title="Select tonic note (scale start)"
+    >
+      {KeySignature.getKeyList(selectedMusicalKey.classicalMode).map((note) => (
+        <option key={note} value={note}>
+          {note}
+        </option>
+      ))}
+    </Select>
+  );
+
   return (
-    <div className="musical-key-selector">
-      <Select
-        id="tonic-select"
-        value={selectedMusicalKey.tonicString}
-        onChange={handleTonicNameChange}
-        title="Select tonic note (scale start)"
-      >
-        {KeySignature.getKeyList(selectedMusicalKey.classicalMode).map(
-          (note) => (
-            <option key={note} value={note}>
-              {note}
-            </option>
-          )
-        )}
-      </Select>
+    <div className="musical-key-selector text-sm font-medium">
       {useDropdownSelector ? (
-        <Select
-          id="greek-mode-select"
-          value={selectedMusicalKey.greekMode}
-          onChange={handleGreekModeChange}
-          title="Select musical mode"
-        >
-          {Object.values(GreekModeType).map((mode) => (
-            <option id={`greek-mode-option-${mode}`} key={mode} value={mode}>
-              {mode}
-            </option>
-          ))}
-        </Select>
+        <div className="flex flex-col gap-2">
+          <TonicSelector />
+          <Select
+            id="greek-mode-select"
+            value={selectedMusicalKey.greekMode}
+            onChange={handleGreekModeChange}
+            title="Select musical mode"
+          >
+            {Object.values(GreekModeType).map((mode) => (
+              <option id={`greek-mode-option-${mode}`} key={mode} value={mode}>
+                {mode}
+              </option>
+            ))}
+          </Select>
+        </div>
       ) : (
-        <Button
-          id="major-minor-toggle"
-          variant="action"
-          size="sm"
-          title="Toggle between major and minor"
-          onClick={handleMajorMinorToggle}
-        >
-          {selectedMusicalKey.classicalMode === KeyType.Major
-            ? "Major"
-            : "Minor"}
-        </Button>
+        <div className="flex flex-col gap-2">
+          <TonicSelector />
+          <Button
+            id="major-minor-toggle"
+            variant="action"
+            size="sm"
+            title="Toggle between major and minor"
+            onClick={handleMajorMinorToggle}
+          >
+            {selectedMusicalKey.classicalMode === KeyType.Major
+              ? "Major"
+              : "Minor"}
+          </Button>
+        </div>
       )}
     </div>
   );

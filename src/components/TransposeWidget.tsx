@@ -60,7 +60,7 @@ export const TransposeWidget: React.FC<{ target: TransposeTarget }> = ({
 }) => {
   return (
     <div>
-      <div className="transpose-buttons-container">
+      <div className="transpose-buttons-container flex flex-col gap-2">
         <TransposeButton direction="up" target={target} />
         <TransposeButton direction="down" target={target} />
       </div>
