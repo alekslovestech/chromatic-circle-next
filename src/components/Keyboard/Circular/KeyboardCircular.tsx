@@ -22,10 +22,9 @@ export const KeyboardCircular = () => {
   const { handleKeyClick } = useKeyboardHandlers();
   const { selectedNoteIndices, selectedMusicalKey } = useMusical();
   const { circularVisMode } = useDisplay();
-  const isLogo = false; //globalMode === GlobalMode.Logo;
   const isAdvanced = globalMode === GlobalMode.Advanced;
   const coords = [-MAX_RADIUS, -MAX_RADIUS, MAX_RADIUS * 2, MAX_RADIUS * 2];
-  const color = ColorUtils.getChordColor(selectedNoteIndices);
+  const chordColor = ColorUtils.getChordColor(selectedNoteIndices);
 
   const getLineCartesianPoints = (
     tonicIndex: ChromaticIndex,
@@ -91,7 +90,7 @@ export const KeyboardCircular = () => {
         <PianoKeyCircular
           key={index}
           chromaticIndex={ixChromatic(index)}
-          onClick={isLogo ? () => {} : handleKeyClick}
+          onClick={handleKeyClick}
           outerRadius={OUTER_RADIUS}
           innerRadius={INNER_RADIUS}
         />
@@ -100,7 +99,7 @@ export const KeyboardCircular = () => {
         selectedNoteIndices,
         circularVisMode,
         INNER_RADIUS,
-        color
+        chordColor
       )}
       {renderScaleBoundary()}
     </svg>

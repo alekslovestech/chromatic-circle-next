@@ -19,6 +19,7 @@ import { DEBUG_BORDER } from "@/lib/constants";
 export const CircularSettings = () => {
   const globalMode = useGlobalMode();
   const isAdvanced = globalMode === GlobalMode.Advanced;
+  console.log(`CircularSettings: isAdvanced=${isAdvanced}`);
   if (isAdvanced) {
     return (
       <div id="keyboardcircular-settings" className={DEBUG_BORDER}>
@@ -26,7 +27,7 @@ export const CircularSettings = () => {
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             <div style={{ display: "flex", flexDirection: "row", gap: 15 }}>
               <MusicalKeySelector useDropdownSelector={true} />
-              <TransposeWidget showKeyTranspose={true} />
+              <TransposeWidget target="key" />
             </div>
             <ScalePreviewToggle />
             <KeyTextModeSelect />
@@ -49,7 +50,7 @@ export const CircularSettings = () => {
           <CircularVisModeSelect />
           <div style={{ display: "flex", flexDirection: "row", gap: 15 }}>
             <MusicalKeySelector useDropdownSelector={false} />
-            <TransposeWidget showKeyTranspose={false} />
+            <TransposeWidget target="notes" />
           </div>
           <MonochromeModeToggle />
           <ClearButton />

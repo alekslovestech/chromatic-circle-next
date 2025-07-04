@@ -10,6 +10,7 @@ import { StaffRenderer } from "@/components/StaffRenderer";
 import { SettingsContainer } from "@/components/Settings/SettingsContainer";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
+import { CircularSettings } from "@/components/Keyboard/Circular/CircularSettings";
 
 export default function AdvancedPage() {
   const isLandscape = useIsLandscape();
@@ -62,7 +63,7 @@ export default function AdvancedPage() {
           className={`AdvancedPage-settings-container ${COMMON_STYLES.settings}`}
           style={{ gridArea: "sidebar" }}
         >
-          <SettingsContainer />
+          <CircularSettings />
         </div>
 
         <div className="AdvancedPage-global-mode-switch fixed bottom-4 right-4">

@@ -67,7 +67,7 @@ export class VisualStateUtils {
     isRootNote: boolean,
     isBlack: boolean,
     isSelected: boolean,
-    isSvg: boolean = false
+    isSvg: boolean
   ): KeyColors {
     const pureColors = this.getPureColors(
       chromaticIndex,
