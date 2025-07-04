@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useRef, useCallback } from "react";
+import * as Tone from "tone";
+
 import { TWELVE } from "@/types/NoteConstants";
 import { ActualIndex } from "@/types/IndexTypes";
+import { useGlobalMode } from "@/lib/hooks";
 
-import * as Tone from "tone";
-import { useAudio } from "../contexts/AudioContext";
-import { useMusical } from "../contexts/MusicalContext";
-import { useGlobal } from "../contexts/GlobalContext";
+import { useAudio } from "@/contexts/AudioContext";
+import { useMusical } from "@/contexts/MusicalContext";
 
 // Base frequency for A4 (440Hz)
 const BASE_FREQUENCY = 440;
@@ -17,7 +18,7 @@ export const AudioPlayer: React.FC = () => {
   const synthRef = useRef<Tone.PolySynth | null>(null);
   const { isAudioInitialized, setAudioInitialized } = useAudio();
   const { selectedNoteIndices } = useMusical();
-  const { globalMode } = useGlobal();
+  const globalMode = useGlobalMode();
 
   // Handle user interaction for audio initialization
   useEffect(() => {

@@ -5,6 +5,7 @@ import {
   actualIndexToChromaticAndOctave,
 } from "@/types/IndexTypes";
 import { KeyDisplayMode } from "@/types/SettingModes";
+import { useGlobalMode, GlobalMode } from "@/lib/hooks";
 
 import { IndexUtils } from "@/utils/IndexUtils";
 import { isBlackKey } from "@/utils/Keyboard/KeyboardUtils";
@@ -13,7 +14,6 @@ import { VisualStateUtils } from "@/utils/visual/VisualStateUtils";
 
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
-import { useGlobal, GlobalMode } from "@/contexts/GlobalContext";
 
 interface PianoKeyProps {
   actualIndex: ActualIndex;
@@ -26,7 +26,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   isRootNote,
   onClick,
 }) => {
-  const { globalMode } = useGlobal();
+  const globalMode = useGlobalMode();
   const { selectedMusicalKey, selectedNoteIndices } = useMusical();
   const { monochromeMode } = useDisplay();
 
@@ -37,8 +37,6 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   const baseClasses = ["key-base", "piano-key"];
   const isSelected = selectedNoteIndices.includes(actualIndex);
   const isAdvanced = globalMode === GlobalMode.Advanced;
-
-  //console.log(`isRootNote: ${isRootNote} should be used somewhere`);
 
   const keyColors = VisualStateUtils.getKeyColors(
     chromaticIndex,

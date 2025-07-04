@@ -7,13 +7,13 @@ import {
   chromaticToActual,
   ixOctaveOffset,
 } from "@/types/IndexTypes";
+import { useGlobalMode, GlobalMode } from "@/lib/hooks";
 
 import { ArcPathVisualizer } from "@/utils/Keyboard/Circular/ArcPathVisualizer";
 import { IndexUtils } from "@/utils/IndexUtils";
 import { isBlackKey } from "@/utils/Keyboard/KeyboardUtils";
 import { VisualStateUtils } from "@/utils/visual/VisualStateUtils";
 
-import { useGlobal, GlobalMode } from "@/contexts/GlobalContext";
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
 
@@ -42,7 +42,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     );
   };
 
-  const { globalMode } = useGlobal();
+  const globalMode = useGlobalMode();
   const { selectedMusicalKey, selectedNoteIndices } = useMusical();
   const { keyTextMode, monochromeMode } = useDisplay();
   const pathData = ArcPathVisualizer.getArcPathData(
@@ -81,7 +81,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   if (isAdvanced) baseClasses.push("disabled");
 
   const id = IndexUtils.StringWithPaddedIndex("circularKey", chromaticIndex);
-  const showText = globalMode !== GlobalMode.Logo;
+  const showText = true; //globalMode !== GlobalMode.Logo;
   const noteText = selectedMusicalKey.getDisplayString(
     chromaticIndex,
     keyTextMode

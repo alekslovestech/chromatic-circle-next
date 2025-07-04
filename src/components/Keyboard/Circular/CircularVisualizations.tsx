@@ -12,10 +12,7 @@ export class CircularVisualizations {
     innerRadius: number,
     color: string
   ): JSX.Element[] {
-    console.log(`before, length = ${selectedNoteIndices.length}`);
     if (selectedNoteIndices.length <= 1) return [];
-
-    console.log(`circularVisMode=${circularVisMode}`);
 
     const realInnerRadius =
       circularVisMode === CircularVisMode.Polygon

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-import { GlobalMode, useGlobal } from "@/contexts/GlobalContext";
+import { useGlobalMode, GlobalMode } from "@/lib/hooks";
 
 // Components
 import { MusicalKeySelector } from "@/components/MusicalKeySelector";
@@ -17,7 +17,7 @@ import { CircularVisModeSelect } from "./CircularVisModeSelect";
 import { DEBUG_BORDER } from "@/lib/constants";
 
 export const CircularSettings = () => {
-  const { globalMode } = useGlobal();
+  const globalMode = useGlobalMode();
   const isAdvanced = globalMode === GlobalMode.Advanced;
   if (isAdvanced) {
     return (

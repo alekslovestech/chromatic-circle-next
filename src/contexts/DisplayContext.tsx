@@ -12,7 +12,7 @@ import {
   ChordDisplayMode,
   KeyDisplayMode,
 } from "@/types/SettingModes";
-import { GlobalMode, useGlobal } from "./GlobalContext";
+import { useGlobalMode, GlobalMode } from "@/lib/hooks";
 
 export interface DisplaySettings {
   circularVisMode: CircularVisMode;
@@ -44,8 +44,8 @@ export const DisplayProvider: React.FC<{ children: ReactNode }> = ({
     ChordDisplayMode.Letters_Short
   );
 
-  // Get globalMode from context
-  const { globalMode } = useGlobal();
+  // Get globalMode from hook
+  const globalMode = useGlobalMode();
 
   // Use useEffect to update display settings when globalMode changes
   useEffect(() => {

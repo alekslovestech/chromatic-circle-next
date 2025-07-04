@@ -2,12 +2,14 @@
 
 import React from "react";
 
+import { DEBUG_BORDER } from "@/lib/constants";
 import { InputMode } from "@/types/SettingModes";
+import { useGlobalMode, GlobalMode } from "@/lib/hooks";
 
-import { usePreset } from "@/contexts/PresetContext";
 import { Button } from "@/components/Common/Button";
 import { SectionTitle } from "@/components/Common/SectionTitle";
-import { DEBUG_BORDER } from "@/lib/constants";
+
+import { usePreset } from "@/contexts/PresetContext";
 
 interface ModeSelectorButton {
   id: string;
@@ -40,27 +42,12 @@ const AVAILABLE_MODES: ModeSelectorButton[] = [
 
 export const InputModeSelector: React.FC = () => {
   const { inputMode, setInputMode } = usePreset();
+  const globalMode = useGlobalMode();
   const handleModeChange = (newMode: InputMode) => {
     setInputMode(newMode);
   };
 
-  /*.mode-selector {
-  display: flex;
-  width: 100px;
-  min-height: 0;
-  max-height: 100%;
-  flex-direction: column;
-  flex-shrink: 0;
-  align-items: stretch;
-  overflow-y: auto;
-}*/
-  /*.mode-button-container {
-  width: 100%;
-  display: flex;          
-  flex-direction: column; 
-  gap: 0.5rem;
-}
-}*/
+  const isAdvancedMode = globalMode === GlobalMode.Advanced;
   return (
     <div
       className={`input-mode-selector text-center space-y-2 ${DEBUG_BORDER}`}
@@ -68,6 +55,11 @@ export const InputModeSelector: React.FC = () => {
       <SectionTitle>Input Mode</SectionTitle>
       <div className="mode-selector-buttons w-full flex flex-col gap-snug">
         {AVAILABLE_MODES.map(({ id, mode, description }) => {
+          const isHidden =
+            isAdvancedMode &&
+            (mode === InputMode.IntervalPresets ||
+              mode === InputMode.ChordPresets);
+
           return (
             <Button
               id={id}
@@ -77,6 +69,7 @@ export const InputModeSelector: React.FC = () => {
               onClick={() => handleModeChange(mode)}
               selected={inputMode === mode}
               title={description}
+              hidden={isHidden}
             >
               {mode.toString()}
             </Button>
