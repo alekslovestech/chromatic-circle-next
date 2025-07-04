@@ -50,13 +50,13 @@ module.exports = {
           bgHover: "rgb(240, 240, 240)", //"#f0f0f0",
           borderColor: "rgb(110, 110, 110)", //"#6E6E6E",
 
-          bgHighlighted: "rgb(176, 214, 253)", //"#B0D6FD",
+          bgHighlighted: "rgb(113, 182, 255)", //"#B0D6FD",
           bgHighlightedSelected: "rgb(59, 97, 222)", //"#3B61DE",
-          textOnHighlighted: "rgb(156, 156, 156)", //"#9C9C9C",
+          textOnHighlighted: "rgb(68, 68, 68)", //"#444444",
 
           bgMuted: "rgb(228, 229, 230)", //"#E4E5E6",
           bgMutedSelected: "rgb(150, 150, 150)", //"#969696",
-          textOnMuted: "rgb(156, 156, 156)", //"#9C9C9C",
+          textOnMuted: "rgb(51, 51, 51)", //"#333333",
 
           //borderRootNote: "rgb(59, 97, 222)", //"#3B61DE",
           borderRootNote: "rgb(255, 0, 0)", //"#6E6E6E",

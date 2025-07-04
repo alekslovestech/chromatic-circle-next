@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "@/styles/KeyboardBase.css";
+@import "@/styles/KeyboardLinear.css";
+@import "@/styles/KeyboardCircular.css";
+
 /* Ensure Next.js root and parents have full height */
 html,
 body,
@@ -9,35 +13,15 @@ body,
   height: 100%;
 }
 
-@import "@/styles/KeyboardBase.css";
-@import "@/styles/KeyboardLinear.css";
-@import "@/styles/KeyboardCircular.css";
-
-/* old styles, consider removing */
-/*
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Only override browser defaults for select options */
+select option {
+  font-size: 0.875rem !important; /* text-sm */
+  font-weight: 500 !important; /* font-medium */
+  font-family: inherit !important;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+select,
+select * {
+  font-size: inherit !important;
+  font-family: inherit !important;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --staffHeight: 100px;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-*/

@@ -19,44 +19,46 @@ import { DEBUG_BORDER } from "@/lib/constants";
 export const CircularSettings = () => {
   const globalMode = useGlobalMode();
   const isAdvanced = globalMode === GlobalMode.Advanced;
+  console.log(`CircularSettings: isAdvanced=${isAdvanced}`);
+  const settingsGap = "gap-tight";
   if (isAdvanced) {
     return (
-      <div id="keyboardcircular-settings" className={DEBUG_BORDER}>
-        <div style={{ display: "flex", flexDirection: "row", gap: 15 }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <div style={{ display: "flex", flexDirection: "row", gap: 15 }}>
-              <MusicalKeySelector useDropdownSelector={true} />
-              <TransposeWidget showKeyTranspose={true} />
-            </div>
-            <ScalePreviewToggle />
-            <KeyTextModeSelect />
-            <PlayScaleButton />
+      <div
+        id="keyboardcircular-settings"
+        className={`${DEBUG_BORDER} flex ${settingsGap}`}
+      >
+        <div className={`flex flex-col ${settingsGap}`}>
+          <div className={`flex ${settingsGap}`}>
+            <MusicalKeySelector useDropdownSelector={true} />
+            <TransposeWidget target="key" />
           </div>
+          <ScalePreviewToggle />
+          <KeyTextModeSelect />
+          <PlayScaleButton />
+        </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <ChordNameDisplay />
-            {/* <GlobalModeButton /> */}
-          </div>
+        <div className={`flex flex-col ${settingsGap}`}>
+          <ChordNameDisplay />
+          {/* <GlobalModeButton /> */}
         </div>
       </div>
     );
   }
 
   return (
-    <div id="keyboardcircular-settings" className={DEBUG_BORDER}>
-      <div style={{ display: "flex", flexDirection: "row", gap: 15 }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          <CircularVisModeSelect />
-          <div style={{ display: "flex", flexDirection: "row", gap: 15 }}>
-            <MusicalKeySelector useDropdownSelector={false} />
-            <TransposeWidget showKeyTranspose={false} />
-          </div>
-          <MonochromeModeToggle />
-          <ClearButton />
-          <ChordNameDisplay />
-          {/* <GlobalModeButton /> */}
-        </div>
+    <div
+      id="keyboardcircular-settings"
+      className={`${DEBUG_BORDER} flex flex-col ${settingsGap}`}
+    >
+      <CircularVisModeSelect />
+      <div className={`flex ${settingsGap}`}>
+        <MusicalKeySelector useDropdownSelector={false} />
+        <TransposeWidget target="notes" />
       </div>
+      <MonochromeModeToggle />
+      <ClearButton />
+      <ChordNameDisplay />
+      {/* <GlobalModeButton /> */}
     </div>
   );
 };
