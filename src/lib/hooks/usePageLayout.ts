@@ -4,7 +4,7 @@ import {
   LAYOUT_CONFIGS,
   GRID_COLUMNS,
   OrientationType,
-} from "@/lib/design/layout-constants";
+} from "@/lib/design/LayoutConstants";
 
 // Single return type for the hook
 export interface PageLayout {

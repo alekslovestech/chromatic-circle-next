@@ -8,7 +8,7 @@ import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 import { StaffRenderer } from "@/components/StaffRenderer";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
-import { CircularSettings } from "@/components/Keyboard/Circular/CircularSettings";
+import { CircularSettings } from "@/components/Settings/CircularSettings";
 
 export default function AdvancedPage() {
   const { gridRows, gridAreas, gridColumns } = usePageLayout();

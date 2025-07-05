@@ -13,13 +13,12 @@ import { KeyTextModeSelect } from "@/components/Settings/NoteDisplayModeSelect";
 import { ScalePreviewToggle } from "@/components/Settings/ScalePreviewToggle";
 import { PlayScaleButton } from "@/components/Buttons/PlayScaleButton";
 
-import { CircularVisModeSelect } from "./CircularVisModeSelect";
+import { CircularVisModeSelect } from "../Keyboard/Circular/CircularVisModeSelect";
 import { DEBUG_BORDER } from "@/lib/design";
 
 export const CircularSettings = () => {
   const globalMode = useGlobalMode();
   const isAdvanced = globalMode === GlobalMode.Advanced;
-  console.log(`CircularSettings: isAdvanced=${isAdvanced}`);
   const outerGapVertical = "gap-tight";
   const outerGapHorizontal = "gap-normal";
   const settingsGap = "gap-tight";

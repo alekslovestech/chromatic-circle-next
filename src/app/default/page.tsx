@@ -10,7 +10,7 @@ import { StaffRenderer } from "@/components/StaffRenderer";
 import { SettingsContainer } from "@/components/Settings/SettingsContainer";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
-import { CircularSettings } from "@/components/Keyboard/Circular/CircularSettings";
+import { CircularSettings } from "@/components/Settings/CircularSettings";
 
 export default function Home() {
   const { gridRows, gridAreas, gridColumns } = usePageLayout();
@@ -35,7 +35,7 @@ export default function Home() {
           style={{ gridArea: "circular" }}
         >
           <div
-            className={`DefaultPage-circular-inner ${COMMON_STYLES.circularInner} gap-4`}
+            className={`DefaultPage-circular-inner ${COMMON_STYLES.circularInner}`}
           >
             <KeyboardCircular />
             <div className="flex-1">
