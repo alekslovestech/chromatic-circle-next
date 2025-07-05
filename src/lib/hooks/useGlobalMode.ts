@@ -3,7 +3,6 @@ import { usePathname } from "next/navigation";
 
 export enum GlobalMode {
   Default = "Default",
-  Logo = "Logo",
   Advanced = "Advanced",
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { TYPOGRAPHY } from "./Typography";
+import { TYPOGRAPHY } from "@/lib/design";
 
 interface SectionTitleProps {
   children: React.ReactNode;

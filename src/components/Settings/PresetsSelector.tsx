@@ -15,7 +15,7 @@ import { useMusical } from "@/contexts/MusicalContext";
 import { SectionTitle } from "../Common/SectionTitle";
 import { InversionButton } from "../Buttons/InversionButton";
 import { PresetButton } from "./PresetButton";
-import { DEBUG_BORDER } from "@/lib/constants";
+import { DEBUG_BORDER } from "@/lib/design";
 
 export const PresetsSelector: React.FC = () => {
   const {

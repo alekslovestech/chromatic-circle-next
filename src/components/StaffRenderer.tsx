@@ -2,16 +2,17 @@
 import React, { useEffect, useRef } from "react";
 import { Factory, StaveNote } from "vexflow";
 
-import { getAccidentalSignForEasyScore } from "../types/AccidentalType";
+import { getAccidentalSignForEasyScore } from "@/types/AccidentalType";
 import {
   ActualIndex,
   actualIndexToChromaticAndOctave,
-} from "../types/IndexTypes";
-import { MusicalKey } from "../types/Keys/MusicalKey";
-import { KeyType } from "../types/Keys/KeyType";
-import { useMusical } from "../contexts/MusicalContext";
-import { KeyNoteResolver } from "../types/Keys/KeyNoteResolver";
-import { COMMON_STYLES, DEBUG_BORDER } from "@/lib/constants";
+} from "@/types/IndexTypes";
+import { MusicalKey } from "@/types/Keys/MusicalKey";
+import { KeyType } from "@/types/Keys/KeyType";
+import { KeyNoteResolver } from "@/types/Keys/KeyNoteResolver";
+
+import { COMMON_STYLES, DEBUG_BORDER } from "@/lib/design";
+import { useMusical } from "@/contexts/MusicalContext";
 
 interface StaffRendererProps {
   style?: React.CSSProperties;

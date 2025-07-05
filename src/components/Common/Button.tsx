@@ -1,5 +1,5 @@
 import React from "react";
-import { TYPOGRAPHY } from "./Typography";
+import { TYPOGRAPHY } from "@/lib/design";
 
 import {
   ButtonVariant,
@@ -9,7 +9,7 @@ import {
   SIZES,
   SELECTED_STYLES,
   DISABLED_STYLES,
-} from "./ButtonTypes";
+} from "@/lib/design";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;

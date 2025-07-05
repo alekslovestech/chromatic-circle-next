@@ -1,4 +1,4 @@
-import { geistSans, geistMono } from "@/lib/fonts";
+import { geistSans, geistMono } from "@/lib/design";
 import { baseMetadata, viewport } from "@/lib/metadata";
 import "./globals.css";
 import { RootProvider } from "@/contexts/RootContext";

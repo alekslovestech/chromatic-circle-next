@@ -1,9 +1,8 @@
 "use client";
 import Link from "next/link";
 
-import { COMMON_STYLES, DEBUG_BORDER } from "@/lib/constants";
-import { STAFF_HEIGHT_PX, GRID_COLUMNS } from "@/lib/layout-constants";
-import { useIsLandscape } from "@/lib/hooks/useIsLandscape";
+import { COMMON_STYLES } from "@/lib/design";
+import { usePageLayout } from "@/lib/hooks/usePageLayout";
 
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 import { ChordNameDisplay } from "@/components/ChordNameDisplay";
@@ -11,30 +10,20 @@ import { StaffRenderer } from "@/components/StaffRenderer";
 import { SettingsContainer } from "@/components/Settings/SettingsContainer";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
-import { CircularSettings } from "@/components/Keyboard/Circular/CircularSettings";
+import { CircularSettings } from "@/components/Settings/CircularSettings";
 
-//NB using Styles instead of tailwind classes for grid areas
 export default function Home() {
-  const isLandscape = useIsLandscape();
-  const gridRowsPortrait = `${STAFF_HEIGHT_PX} minmax(230px, 3fr) 3fr 2fr`;
-  const gridAreasPortrait = ` 'staff staff' 
-                              'settings settings'
-                              'circular circular'
-                              'linear linear'`;
+  const { gridRows, gridAreas, gridColumns } = usePageLayout();
 
-  const gridRowsLandscape = `${STAFF_HEIGHT_PX} 1fr 1fr`;
-  const gridAreasLandscape = `'circular circular staff staff'
-                              'circular circular settings settings'
-                              'linear linear settings settings'`;
-  const gridCols = isLandscape ? GRID_COLUMNS.landscape : GRID_COLUMNS.portrait;
-  const gridAreas = isLandscape ? gridAreasLandscape : gridAreasPortrait;
-  const gridRows = isLandscape ? gridRowsLandscape : gridRowsPortrait;
   return (
-    <div className="DefaultPage-container h-full w-full bg-canvas-bgDefault flex flex-col px-snug md:px-loose lg:px-spacious">
+    <div
+      className={`DefaultPage-container ${COMMON_STYLES.pageContainer} bg-canvas-bgDefault`}
+    >
       <div
-        className={`DefaultPage-grid grid p-2 gap-tight overflow-hidden flex-1 ${DEBUG_BORDER}`}
+        className={`DefaultPage-grid ${COMMON_STYLES.pageGrid}`}
+        //NB using Styles instead of tailwind classes for grid areas
         style={{
-          gridTemplateColumns: gridCols,
+          gridTemplateColumns: gridColumns,
           gridTemplateRows: gridRows,
           gridTemplateAreas: gridAreas,
           width: "100%",
@@ -42,12 +31,16 @@ export default function Home() {
       >
         <StaffRenderer style={{ gridArea: "staff" }} />
         <div
-          className={`DefaultPage-keyboard-circular-container ${COMMON_STYLES.circular} ${DEBUG_BORDER}`}
+          className={`DefaultPage-circular-container ${COMMON_STYLES.circularContainer}`}
           style={{ gridArea: "circular" }}
         >
-          <div className="DefaultPage-keyboard-circular p-2 h-full flex items-center justify-center text-2xl !text-labels-textDefault">
+          <div
+            className={`DefaultPage-circular-inner ${COMMON_STYLES.circularInner}`}
+          >
             <KeyboardCircular />
-            <CircularSettings />
+            <div className="flex-1">
+              <CircularSettings />
+            </div>
           </div>
           <div
             className="DefaultPage-chord-sidebar self-end mb-normal flex flex-col justify-end text-right max-w-[120px] p-2"
@@ -60,16 +53,18 @@ export default function Home() {
         </div>
 
         <div
-          className={`DefaultPage-keyboard-linear-container ${COMMON_STYLES.linear}`}
+          className={`DefaultPage-linear-container ${COMMON_STYLES.linearContainer}`}
           style={{ gridArea: "linear" }}
         >
-          <div className="DefaultPage-keyboard-linear w-full h-full text-2xl">
+          <div
+            className={`DefaultPage-linear-inner ${COMMON_STYLES.linearInner}`}
+          >
             <KeyboardLinear />
           </div>
         </div>
 
         <div
-          className={`DefaultPage-settings-container ${COMMON_STYLES.settings}`}
+          className={`DefaultPage-settings-container ${COMMON_STYLES.settingsPanel}`}
           style={{ gridArea: "settings" }}
         >
           <SettingsContainer />
