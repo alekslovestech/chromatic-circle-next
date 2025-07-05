@@ -84,7 +84,6 @@ module.exports = {
         "button-md": "2.25rem",
         "button-lg": "2.75rem",
       },
-      staffHeight: "100px",
       gridTemplateAreas: {
         default: [
           "staff staff staff staff",

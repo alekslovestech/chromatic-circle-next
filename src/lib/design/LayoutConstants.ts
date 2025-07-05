@@ -1,6 +1,6 @@
 import { GlobalMode } from "../hooks";
 
-export const STAFF_HEIGHT_PX = "100px";
+export const STAFF_HEIGHT_PX = "90px";
 
 export const LAYOUT_CONSTRAINTS = {
   maxWidth: "800px",
