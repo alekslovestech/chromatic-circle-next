@@ -6,7 +6,8 @@ import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
 
 import { ChordUtils } from "@/utils/ChordUtils";
-import { TYPOGRAPHY } from "@/lib/design";
+import { DEBUG_BORDER, TYPOGRAPHY } from "@/lib/design";
+import { LAYOUT_PATTERNS } from "@/lib/design/LayoutPatterns";
 
 export const ChordNameDisplay: React.FC = () => {
   const { selectedNoteIndices, selectedMusicalKey } = useMusical();
@@ -34,15 +35,23 @@ export const ChordNameDisplay: React.FC = () => {
         selectedMusicalKey
       );
     return (
-      <div className={`chord-name-description ${TYPOGRAPHY.bodyText}`}>
-        <span>{`${noteGroupingString}: `}</span>
-        <span className="chord-name-value font-bold">{chordName}</span>
+      <div
+        className={`chord-name-description flex flex-col items-center ${LAYOUT_PATTERNS.fullSize}`}
+      >
+        <div className={`${TYPOGRAPHY.controlLabel} mb-normal`}>
+          {`${noteGroupingString}:`}
+        </div>
+        <div className={`chord-name-value ${TYPOGRAPHY.displayText} mb-normal`}>
+          {chordName}
+        </div>
       </div>
     );
   };
 
   return (
-    <div className="chord-display">
+    <div
+      className={`chord-display ${LAYOUT_PATTERNS.fullSize} ${DEBUG_BORDER}`}
+    >
       <div
         onClick={toggleChordDisplayMode}
         className="cursor-pointer hover:text-buttons-textSelected transition-colors duration-200"

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 
-import { COMMON_STYLES } from "@/lib/design";
+import { COMMON_STYLES, NOTATION_LAYOUT } from "@/lib/design";
 import { usePageLayout } from "@/lib/hooks/usePageLayout";
 
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
@@ -9,6 +9,7 @@ import { StaffRenderer } from "@/components/StaffRenderer";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
 import { CircularSettings } from "@/components/Settings/CircularSettings";
+import { ChordNameDisplay } from "@/components/ChordNameDisplay";
 
 export default function AdvancedPage() {
   const { gridRows, gridAreas, gridColumns } = usePageLayout();
@@ -27,7 +28,16 @@ export default function AdvancedPage() {
           width: "100%",
         }}
       >
-        <StaffRenderer style={{ gridArea: "staff" }} />
+        <div
+          className="grid"
+          style={{
+            gridArea: "staff",
+            ...NOTATION_LAYOUT,
+          }}
+        >
+          <StaffRenderer />
+          <ChordNameDisplay />
+        </div>
         <div
           className={`AdvancedPage-circular ${COMMON_STYLES.circularContainer}`}
           style={{ gridArea: "circular" }}

@@ -1,6 +1,6 @@
 import { GlobalMode } from "../hooks";
 
-export const STAFF_HEIGHT_PX = "100px";
+export const STAFF_HEIGHT_PX = "90px";
 
 export const LAYOUT_CONSTRAINTS = {
   maxWidth: "800px",
@@ -47,4 +47,9 @@ export const LAYOUT_CONFIGS = {
                   'circular circular linear linear'`,
     },
   },
+} as const;
+
+export const NOTATION_LAYOUT = {
+  gridTemplateColumns: "70% 30%",
+  gap: "0.5rem",
 } as const;

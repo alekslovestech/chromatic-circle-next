@@ -6,7 +6,6 @@ import { useGlobalMode, GlobalMode } from "@/lib/hooks";
 // Components
 import { MusicalKeySelector } from "@/components/MusicalKeySelector";
 import { TransposeWidget } from "@/components/TransposeWidget";
-import { ChordNameDisplay } from "@/components/ChordNameDisplay";
 import { MonochromeModeToggle } from "@/components/Settings/MonochromeModeToggle";
 import { ClearButton } from "@/components/Buttons/ClearButton";
 import { KeyTextModeSelect } from "@/components/Settings/NoteDisplayModeSelect";
@@ -38,10 +37,7 @@ export const CircularSettings = () => {
           <PlayScaleButton />
         </div>
 
-        <div className={`flex flex-col ${settingsGap}`}>
-          <ChordNameDisplay />
-          {/* <GlobalModeButton /> */}
-        </div>
+        <div className={`flex flex-col ${settingsGap}`}></div>
       </div>
     );
   }
@@ -58,8 +54,6 @@ export const CircularSettings = () => {
       </div>
       <MonochromeModeToggle />
       <ClearButton />
-      <ChordNameDisplay />
-      {/* <GlobalModeButton /> */}
     </div>
   );
 };

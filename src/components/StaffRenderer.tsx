@@ -66,29 +66,29 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
   const { selectedNoteIndices, selectedMusicalKey } = useMusical();
 
   useEffect(() => {
-    if (!staffDivRef.current) return;
+    if (!staffDivRef.current || !containerRef.current) return;
 
-    let curStaffDiv = staffDivRef.current;
-    curStaffDiv.innerHTML = "";
+    const staffDiv = staffDivRef.current;
+    staffDiv.innerHTML = "";
+
+    const containerWidth = containerRef.current.clientWidth;
+    const containerHeight = containerRef.current.clientHeight;
 
     const factory = new Factory({
       renderer: {
-        elementId: curStaffDiv.id,
-        width: containerRef.current?.clientWidth || 800,
-        height: parseInt(
-          getComputedStyle(document.documentElement).getPropertyValue(
-            "--staff-height"
-          )
-        ),
+        elementId: staffDiv.id,
+        width: containerWidth,
+        height: containerHeight,
       },
     });
 
     const context = factory.getContext();
-    const staveWidth = (containerRef.current?.clientWidth || 0) * 0.6;
+
+    // Let VexFlow determine the appropriate width based on content
     const stave = factory.Stave({
-      x: 0,
-      y: 0,
-      width: staveWidth,
+      x: 5,
+      y: -20, // VexFlow internal offset compensation
+      width: 200,
     });
 
     const canonicalIonianKey = selectedMusicalKey.getCanonicalIonianKey();
@@ -120,10 +120,14 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
       ref={containerRef}
     >
       <div
-        className={`staff-content w-full h-full flex items-center justify-center ${DEBUG_BORDER}`}
-      >
-        <div className="staff-canvas" id="staff" ref={staffDivRef}></div>
-      </div>
+        className="staff-canvas"
+        id="staff"
+        ref={staffDivRef}
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
+      />
     </div>
   );
 };
