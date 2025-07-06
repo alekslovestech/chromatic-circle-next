@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 
-import { COMMON_STYLES } from "@/lib/design";
+import { COMMON_STYLES, NOTATION_LAYOUT } from "@/lib/design";
 import { usePageLayout } from "@/lib/hooks/usePageLayout";
 
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
@@ -30,17 +30,14 @@ export default function Home() {
         }}
       >
         <div
-          className="grid grid-cols-3 gap-tight"
+          className="grid"
           style={{
             gridArea: "staff",
+            ...NOTATION_LAYOUT,
           }}
         >
-          <div className="col-span-2">
-            <StaffRenderer />
-          </div>
-          <div className="col-span-1">
-            <ChordNameDisplay />
-          </div>
+          <StaffRenderer />
+          <ChordNameDisplay />
         </div>
 
         <div

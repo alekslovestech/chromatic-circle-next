@@ -38,10 +38,7 @@ export const CircularSettings = () => {
           <PlayScaleButton />
         </div>
 
-        <div className={`flex flex-col ${settingsGap}`}>
-          <ChordNameDisplay />
-          {/* <GlobalModeButton /> */}
-        </div>
+        <div className={`flex flex-col ${settingsGap}`}></div>
       </div>
     );
   }
@@ -58,8 +55,6 @@ export const CircularSettings = () => {
       </div>
       <MonochromeModeToggle />
       <ClearButton />
-      {/* <ChordNameDisplay />  */}
-      {/* <GlobalModeButton /> */}
     </div>
   );
 };
