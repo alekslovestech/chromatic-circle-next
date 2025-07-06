@@ -1,10 +1,13 @@
 import { LAYOUT_PATTERNS } from "./LayoutPatterns";
 import { TYPOGRAPHY } from "./Typography";
 
-export const DEBUG_BORDER = "border border-containers-borderDebug";
+export const DEBUG_BORDER =
+  process.env.NODE_ENV === "development"
+    ? "border border-containers-borderDebug"
+    : "border border-containers-border";
 
 export const COMMON_STYLES = {
-  staff: `${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex} px-loose rounded ${DEBUG_BORDER}`,
+  staff: `${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex} px-snug rounded ${DEBUG_BORDER}`,
 
   keyboardCircular: `p-snug ${LAYOUT_PATTERNS.clippedContainer} max-h-full rounded ${DEBUG_BORDER}`,
   keyboardLinear: `${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex} ${LAYOUT_PATTERNS.clippedContainer} rounded ${DEBUG_BORDER}`,

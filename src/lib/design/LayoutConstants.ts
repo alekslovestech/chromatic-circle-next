@@ -33,14 +33,14 @@ export const LAYOUT_CONFIGS = {
   },
   [GlobalMode.Advanced]: {
     portrait: {
-      gridRows: `${STAFF_HEIGHT_PX} 1fr 2fr 1fr`,
+      gridRows: `${STAFF_HEIGHT_PX} 1.5fr 2fr 1fr`,
       gridAreas: `'staff staff'
                   'sidebar sidebar'
                   'circular circular'                      
                   'linear linear'`,
     },
     landscape: {
-      gridRows: `${STAFF_HEIGHT_PX} 1fr 1fr`,
+      gridRows: `${STAFF_HEIGHT_PX} 1.5fr 1fr`,
       gridAreas: `'circular circular staff staff'
                   'circular circular sidebar sidebar'
                   'circular circular linear linear'

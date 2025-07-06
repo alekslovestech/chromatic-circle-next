@@ -10,7 +10,7 @@ export const MonochromeModeToggle: React.FC = () => {
       id="monochrome-mode"
       checked={monochromeMode}
       onChange={setMonochromeMode}
-      label="Uniform Keys Mode"
+      label="Uniform Keys"
     />
   );
 };

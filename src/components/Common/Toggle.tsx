@@ -56,7 +56,7 @@ export const Toggle: React.FC<ToggleProps> = ({
         checked={checked}
         onChange={(e) => !disabled && onChange(e.target.checked)}
         disabled={disabled}
-        className={checkboxStyles}
+        className={`${checkboxStyles} mr-tight`}
       />
       <label htmlFor={id} className={labelStyles}>
         {label}
