@@ -86,7 +86,7 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
 
     // Let VexFlow determine the appropriate width based on content
     const stave = factory.Stave({
-      x: 20,
+      x: 5,
       y: -20, // VexFlow internal offset compensation
       width: 200,
     });

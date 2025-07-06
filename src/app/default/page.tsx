@@ -7,10 +7,10 @@ import { usePageLayout } from "@/lib/hooks/usePageLayout";
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 import { ChordNameDisplay } from "@/components/ChordNameDisplay";
 import { StaffRenderer } from "@/components/StaffRenderer";
-import { SettingsContainer } from "@/components/Settings/SettingsContainer";
+import { InputSettings } from "@/components/Settings/InputSettings";
+import { CircularSettings } from "@/components/Settings/CircularSettings";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
-import { CircularSettings } from "@/components/Settings/CircularSettings";
 
 export default function Home() {
   const { gridRows, gridAreas, gridColumns } = usePageLayout();
@@ -29,7 +29,20 @@ export default function Home() {
           width: "100%",
         }}
       >
-        <StaffRenderer style={{ gridArea: "staff" }} />
+        <div
+          className="grid grid-cols-3 gap-tight"
+          style={{
+            gridArea: "staff",
+          }}
+        >
+          <div className="col-span-2">
+            <StaffRenderer />
+          </div>
+          <div className="col-span-1">
+            <ChordNameDisplay />
+          </div>
+        </div>
+
         <div
           className={`DefaultPage-circular-container ${COMMON_STYLES.circularContainer}`}
           style={{ gridArea: "circular" }}
@@ -67,7 +80,7 @@ export default function Home() {
           className={`DefaultPage-settings-container ${COMMON_STYLES.settingsPanel}`}
           style={{ gridArea: "settings" }}
         >
-          <SettingsContainer />
+          <InputSettings />
         </div>
 
         <div className="DefaultPage-global-mode-switch fixed bottom-normal right-normal">

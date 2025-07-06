@@ -58,7 +58,7 @@ export const CircularSettings = () => {
       </div>
       <MonochromeModeToggle />
       <ClearButton />
-      <ChordNameDisplay />
+      {/* <ChordNameDisplay />  */}
       {/* <GlobalModeButton /> */}
     </div>
   );

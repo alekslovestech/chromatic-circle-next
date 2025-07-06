@@ -6,7 +6,8 @@ import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
 
 import { ChordUtils } from "@/utils/ChordUtils";
-import { TYPOGRAPHY } from "@/lib/design";
+import { DEBUG_BORDER, TYPOGRAPHY } from "@/lib/design";
+import { LAYOUT_PATTERNS } from "@/lib/design/LayoutPatterns";
 
 export const ChordNameDisplay: React.FC = () => {
   const { selectedNoteIndices, selectedMusicalKey } = useMusical();
@@ -42,7 +43,9 @@ export const ChordNameDisplay: React.FC = () => {
   };
 
   return (
-    <div className="chord-display">
+    <div
+      className={`chord-display ${LAYOUT_PATTERNS.fullSize} ${DEBUG_BORDER}`}
+    >
       <div
         onClick={toggleChordDisplayMode}
         className="cursor-pointer hover:text-buttons-textSelected transition-colors duration-200"

@@ -7,7 +7,7 @@ import { InputMode } from "@/types/SettingModes";
 import { InputModeSelector } from "./InputModeSelector";
 import { PresetsSelector } from "./PresetsSelector";
 
-export const SettingsContainer: React.FC = () => {
+export const InputSettings: React.FC = () => {
   const { inputMode } = usePreset();
 
   const showPresets =
