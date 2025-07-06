@@ -35,9 +35,15 @@ export const ChordNameDisplay: React.FC = () => {
         selectedMusicalKey
       );
     return (
-      <div className={`chord-name-description ${TYPOGRAPHY.bodyText}`}>
-        <span>{`${noteGroupingString}: `}</span>
-        <span className="chord-name-value font-bold">{chordName}</span>
+      <div
+        className={`chord-name-description flex flex-col items-center ${LAYOUT_PATTERNS.fullSize}`}
+      >
+        <div className={`${TYPOGRAPHY.controlLabel} mb-normal`}>
+          {`${noteGroupingString}:`}
+        </div>
+        <div className={`chord-name-value ${TYPOGRAPHY.displayText} mb-normal`}>
+          {chordName}
+        </div>
       </div>
     );
   };
