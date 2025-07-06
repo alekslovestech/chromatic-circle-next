@@ -34,9 +34,7 @@ export const CircularSettings = () => {
           </div>
           <ScalePreviewToggle />
           <KeyTextModeSelect />
-          <div className="max-w-[100px] self-center">
-            <PlayScaleButton />
-          </div>
+          <PlayScaleButton />
         </div>
 
         <div className={`flex flex-col ${settingsGap}`}></div>
@@ -55,9 +53,7 @@ export const CircularSettings = () => {
         <TransposeWidget target="notes" />
       </div>
       <MonochromeModeToggle />
-      <div className="max-w-[100px] self-center">
-        <ClearButton />
-      </div>
+      <ClearButton />
     </div>
   );
 };
