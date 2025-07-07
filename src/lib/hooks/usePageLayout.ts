@@ -1,5 +1,6 @@
 import { useIsLandscape } from "./useIsLandscape";
 import { useGlobalMode } from "./useGlobalMode";
+import { useBreakpoint } from "./useBreakpoint";
 import {
   LAYOUT_CONFIGS,
   GRID_COLUMNS,
@@ -12,19 +13,22 @@ export interface PageLayout {
   gridAreas: string;
   gridColumns: string;
   orientation: OrientationType;
+  breakpoint: string;
 }
 
 export function usePageLayout(): PageLayout {
-  const mode = useGlobalMode(); // Auto-detect from route
+  const mode = useGlobalMode();
   const isLandscape = useIsLandscape();
-  const orientation: OrientationType = isLandscape ? "landscape" : "portrait";
+  const breakpoint = useBreakpoint();
 
-  const config = LAYOUT_CONFIGS[mode][orientation];
+  const orientation: OrientationType = isLandscape ? "landscape" : "portrait";
+  const config = LAYOUT_CONFIGS[mode][breakpoint][orientation];
 
   return {
     gridRows: config.gridRows,
     gridAreas: config.gridAreas,
-    gridColumns: isLandscape ? GRID_COLUMNS.landscape : GRID_COLUMNS.portrait,
+    gridColumns: GRID_COLUMNS[breakpoint][orientation],
     orientation,
+    breakpoint,
   };
 }

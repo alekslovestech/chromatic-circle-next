@@ -15,7 +15,7 @@ export const Toggle: React.FC<ToggleProps> = ({
   checked,
   onChange,
   label,
-  padding,
+  padding = "tight",
   disabled = false,
 }) => {
   const paddingClass = `gap-${padding}`;

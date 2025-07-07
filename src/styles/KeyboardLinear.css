@@ -35,16 +35,12 @@
   align-items: flex-end;
   justify-content: center;
 
-  font-size: 0.8rem;
-  font-weight: bold;
-
   cursor: pointer;
   z-index: 1;
 }
 
 .piano-key.short {
   align-items: center;
-  font-size: 0.8rem;
   width: var(--black-key-width);
   height: 60%;
 

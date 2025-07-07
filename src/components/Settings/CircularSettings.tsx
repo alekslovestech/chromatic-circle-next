@@ -48,7 +48,7 @@ export const CircularSettings = () => {
       className={`${DEBUG_BORDER} flex flex-col ${settingsGap}`}
     >
       <CircularVisModeSelect />
-      <div className={`flex ${settingsGap}`}>
+      <div className={`key-selector-and-transpose flex ${settingsGap}`}>
         <MusicalKeySelector useDropdownSelector={false} />
         <TransposeWidget target="notes" />
       </div>
