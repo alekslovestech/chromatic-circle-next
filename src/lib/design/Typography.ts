@@ -3,8 +3,8 @@ export const TYPOGRAPHY = {
   controlLabel: "text-sm font-medium",
   buttonText: "text-sm font-medium",
   bodyText: "text-sm",
-  displayText: "text-xl sm:text-2xl lg:text-3xl font-bold",
-  keyboardText: "text-sm sm:text-base md:text-lg lg:text-xl font-bold",
+  displayText: "text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold",
+  keyboardText: "text-base sm:text-base md:text-2x1 lg:text-xl font-bold",
 } as const;
 
 export type TypographyVariant = keyof typeof TYPOGRAPHY;

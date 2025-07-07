@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { DEBUG_BORDER } from "@/lib/design";
+import { DEBUG_BORDER, LAYOUT_PATTERNS } from "@/lib/design";
 import { InputMode } from "@/types/SettingModes";
 import { useGlobalMode, GlobalMode } from "@/lib/hooks";
 
@@ -53,7 +53,9 @@ export const InputModeSelector: React.FC = () => {
       className={`input-mode-selector text-center space-y-2 ${DEBUG_BORDER}`}
     >
       <SectionTitle>Input Mode</SectionTitle>
-      <div className="mode-selector-buttons w-full flex flex-col gap-snug">
+      <div
+        className={`mode-selector-buttons ${LAYOUT_PATTERNS.centerFlexCol}  gap-snug`}
+      >
         {AVAILABLE_MODES.map(({ id, mode, description }) => {
           const isHidden =
             isAdvancedMode &&

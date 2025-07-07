@@ -13,10 +13,10 @@ export const COMMON_STYLES = {
   keyboardLinear: `${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex} ${LAYOUT_PATTERNS.clippedContainer} rounded ${DEBUG_BORDER}`,
 
   circularContainer: `p-snug overflow-hidden max-h-full rounded ${DEBUG_BORDER}`,
-  circularInner: `p-snug ${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex} ${TYPOGRAPHY.keyboardText}`,
+  circularInner: `p-snug ${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex}`,
 
   linearContainer: `${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex} overflow-hidden rounded ${DEBUG_BORDER}`,
-  linearInner: `${LAYOUT_PATTERNS.fullSize} ${TYPOGRAPHY.keyboardText}`,
+  linearInner: `${LAYOUT_PATTERNS.fullSize}`,
 
   settingsPanel: `flex overflow-hidden gap-snug p-snug h-full min-h-0 box-border rounded ${DEBUG_BORDER}`,
 

@@ -15,9 +15,11 @@ export const InputSettings: React.FC = () => {
     inputMode === InputMode.IntervalPresets;
 
   return (
-    <div className="settings-container flex flex-row w-full gap-loose">
-      <InputModeSelector />
-      <div className="presets-container flex-1">
+    <div className="settings-container flex flex-row w-full h-full gap-loose">
+      <div className="w-1/3 h-full flex items-center justify-center">
+        <InputModeSelector />
+      </div>
+      <div className="presets-container w-2/3 h-full flex items-center justify-center">
         {showPresets && <PresetsSelector />}
       </div>
     </div>
