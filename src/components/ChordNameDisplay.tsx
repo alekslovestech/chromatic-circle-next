@@ -9,6 +9,8 @@ import { ChordUtils } from "@/utils/ChordUtils";
 import { DEBUG_BORDER, TYPOGRAPHY } from "@/lib/design";
 import { LAYOUT_PATTERNS } from "@/lib/design/LayoutPatterns";
 
+const MAX_CHORD_NAME_LENGTH = 7;
+const BREAK_CHARACTER = "\u200B";
 export const ChordNameDisplay: React.FC = () => {
   const { selectedNoteIndices, selectedMusicalKey } = useMusical();
   const { chordDisplayMode, setChordDisplayMode } = useDisplay();
@@ -34,15 +36,22 @@ export const ChordNameDisplay: React.FC = () => {
         chordDisplayMode,
         selectedMusicalKey
       );
+
+    const chordNameDisplay =
+      chordName.length > MAX_CHORD_NAME_LENGTH && chordName.includes("/")
+        ? chordName.replace("/", `${BREAK_CHARACTER}/`)
+        : chordName;
     return (
       <div
         className={`chord-name-description flex flex-col items-center ${LAYOUT_PATTERNS.fullSize}`}
       >
-        <div className={`${TYPOGRAPHY.controlLabel} mb-normal`}>
+        <div className={`${TYPOGRAPHY.controlLabel} mb-tight`}>
           {`${noteGroupingString}:`}
         </div>
-        <div className={`chord-name-value ${TYPOGRAPHY.displayText} mb-normal`}>
-          {chordName}
+        <div
+          className={`chord-name-value ${TYPOGRAPHY.displayText} mb-normal max-w-full text-center break-words`}
+        >
+          {chordNameDisplay}
         </div>
       </div>
     );
