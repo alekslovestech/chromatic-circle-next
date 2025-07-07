@@ -1,5 +1,4 @@
 import { LAYOUT_PATTERNS } from "./LayoutPatterns";
-import { TYPOGRAPHY } from "./Typography";
 
 export const DEBUG_BORDER =
   process.env.NODE_ENV === "development"
