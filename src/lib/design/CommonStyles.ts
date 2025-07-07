@@ -15,7 +15,7 @@ export const COMMON_STYLES = {
   circularContainer: `p-snug overflow-hidden max-h-full rounded ${DEBUG_BORDER}`,
   circularInner: `p-snug ${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex} ${TYPOGRAPHY.keyboardText}`,
 
-  linearContainer: `w-full h-full flex items-center justify-center overflow-hidden rounded ${DEBUG_BORDER}`,
+  linearContainer: `${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex} overflow-hidden rounded ${DEBUG_BORDER}`,
   linearInner: `${LAYOUT_PATTERNS.fullSize} ${TYPOGRAPHY.keyboardText}`,
 
   settingsPanel: `flex overflow-hidden gap-snug p-snug h-full min-h-0 box-border rounded ${DEBUG_BORDER}`,
