@@ -8,6 +8,7 @@ import {
   ixOctaveOffset,
 } from "@/types/IndexTypes";
 import { useGlobalMode, GlobalMode } from "@/lib/hooks";
+import { TYPOGRAPHY } from "@/lib/design";
 
 import { ArcPathVisualizer } from "@/utils/Keyboard/Circular/ArcPathVisualizer";
 import { IndexUtils } from "@/utils/IndexUtils";
@@ -103,7 +104,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
         <text
           x={textPoint.x}
           y={textPoint.y}
-          className={`text-center pointer-events-none ${keyColors.text}`}
+          className={`text-center pointer-events-none ${keyColors.text} ${TYPOGRAPHY.keyboardText}`}
         >
           {noteText}
         </text>

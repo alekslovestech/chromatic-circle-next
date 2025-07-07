@@ -4,3 +4,4 @@ export * from "./SpacingTypes";
 export * from "./CommonStyles";
 export * from "./fonts";
 export * from "./LayoutConstants";
+export * from "./LayoutPatterns";

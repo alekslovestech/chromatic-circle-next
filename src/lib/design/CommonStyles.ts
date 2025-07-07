@@ -1,5 +1,4 @@
 import { LAYOUT_PATTERNS } from "./LayoutPatterns";
-import { TYPOGRAPHY } from "./Typography";
 
 export const DEBUG_BORDER =
   process.env.NODE_ENV === "development"
@@ -13,10 +12,10 @@ export const COMMON_STYLES = {
   keyboardLinear: `${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex} ${LAYOUT_PATTERNS.clippedContainer} rounded ${DEBUG_BORDER}`,
 
   circularContainer: `p-snug overflow-hidden max-h-full rounded ${DEBUG_BORDER}`,
-  circularInner: `p-snug ${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex} ${TYPOGRAPHY.keyboardText}`,
+  circularInner: `p-snug ${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex}`,
 
-  linearContainer: `w-full h-full flex items-center justify-center overflow-hidden rounded ${DEBUG_BORDER}`,
-  linearInner: `${LAYOUT_PATTERNS.fullSize} ${TYPOGRAPHY.keyboardText}`,
+  linearContainer: `${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex} overflow-hidden rounded ${DEBUG_BORDER}`,
+  linearInner: `${LAYOUT_PATTERNS.fullSize}`,
 
   settingsPanel: `flex overflow-hidden gap-snug p-snug h-full min-h-0 box-border rounded ${DEBUG_BORDER}`,
 

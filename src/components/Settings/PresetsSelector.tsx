@@ -15,7 +15,7 @@ import { useMusical } from "@/contexts/MusicalContext";
 import { SectionTitle } from "../Common/SectionTitle";
 import { InversionButton } from "../Buttons/InversionButton";
 import { PresetButton } from "./PresetButton";
-import { DEBUG_BORDER } from "@/lib/design";
+import { DEBUG_BORDER, LAYOUT_PATTERNS } from "@/lib/design";
 
 export const PresetsSelector: React.FC = () => {
   const {
@@ -101,7 +101,9 @@ export const PresetsSelector: React.FC = () => {
   };
 
   return (
-    <div className={`presets-selector ${DEBUG_BORDER} flex flex-col gap-snug`}>
+    <div
+      className={`presets-selector ${DEBUG_BORDER} flex flex-col gap-snug ${LAYOUT_PATTERNS.fullSize}`}
+    >
       {renderPresetButtons()}
       {inputMode === InputMode.ChordPresets && renderInversionButtons()}
     </div>

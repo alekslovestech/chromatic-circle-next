@@ -6,7 +6,7 @@ export const BASE_STYLES =
 
 export const VARIANTS: Record<ButtonVariant, string> = {
   option: "",
-  action: "text-default",
+  action: "max-w-24 text-default self-center",
   global: "border-buttons-border bg-gray-100 whitespace-normal",
   vis: "rounded-none border-buttons-border fill-none stroke-[2px] stroke-black text-buttons-textDefault text-font-bold",
 };

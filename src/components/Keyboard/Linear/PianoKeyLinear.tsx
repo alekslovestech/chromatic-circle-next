@@ -14,6 +14,7 @@ import { VisualStateUtils } from "@/utils/visual/VisualStateUtils";
 
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
+import { TYPOGRAPHY } from "@/lib/design/Typography";
 
 interface PianoKeyProps {
   actualIndex: ActualIndex;
@@ -63,7 +64,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
       id={id}
       className={`${baseClasses.join(" ")} ${keyColors.primary} ${
         keyColors.text
-      } !${keyColors.border}`}
+      } !${keyColors.border} ${TYPOGRAPHY.keyboardText}`}
       style={{ left }}
       onClick={() => onClick(actualIndex)}
     >

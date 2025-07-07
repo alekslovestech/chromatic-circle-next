@@ -1,7 +1,6 @@
 export const LAYOUT_PATTERNS = {
   // Common size patterns
   fullSize: "h-full w-full",
-  fillContainer: "h-full w-full flex-1",
 
   // Common flex patterns
   centerFlex: "flex items-center justify-center",

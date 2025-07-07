@@ -1,8 +1,6 @@
 /* Common base styles for both circular and linear keys */
 :is(.key-base, .key-base path) {
   cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: bold;
   border-width: 1px;
   border-style: solid;
 }
