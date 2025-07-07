@@ -104,7 +104,14 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
         <text
           x={textPoint.x}
           y={textPoint.y}
-          className={`text-center pointer-events-none ${keyColors.text} ${TYPOGRAPHY.keyboardText}`}
+          className={`text-center pointer-events-none ${keyColors.text}`}
+          // Use inline styles for SVG text to ensure consistency
+          style={{
+            fontSize: "1.2rem", // text-base
+            fontWeight: "bold",
+            textAnchor: "middle",
+            dominantBaseline: "middle",
+          }}
         >
           {noteText}
         </text>

@@ -4,7 +4,8 @@ export const TYPOGRAPHY = {
   buttonText: "text-sm font-medium",
   bodyText: "text-sm",
   displayText: "text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold",
-  keyboardText: "text-base sm:text-base md:text-2x1 lg:text-xl font-bold",
+  keyboardText:
+    "text-base font-medium sm:text-xl md:text-2xl md:font-bold lg:text-3xl",
 } as const;
 
 export type TypographyVariant = keyof typeof TYPOGRAPHY;
