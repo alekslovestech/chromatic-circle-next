@@ -15,6 +15,9 @@
   /* Flex Container */
   justify-content: center;
   align-items: center;
+
+  /* Container Query Setup */
+  container-type: inline-size;
 }
 
 /* Pie Slice Keys */
@@ -32,4 +35,23 @@
   text-anchor: middle;
   dominant-baseline: middle;
   pointer-events: none;
+}
+
+/* Container Queries for Font Sizing */
+@container (min-width: 200px) {
+  .pie-slice-key text {
+    font-size: 0.875rem; /* Small circular keyboard */
+  }
+}
+
+@container (min-width: 400px) {
+  .pie-slice-key text {
+    font-size: 1.25rem; /* Medium circular keyboard */
+  }
+}
+
+@container (min-width: 600px) {
+  .pie-slice-key text {
+    font-size: 1.75rem; /* Large circular keyboard */
+  }
 }

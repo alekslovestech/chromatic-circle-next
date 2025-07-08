@@ -82,7 +82,6 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   if (isAdvanced) baseClasses.push("disabled");
 
   const id = IndexUtils.StringWithPaddedIndex("circularKey", chromaticIndex);
-  const showText = true; //globalMode !== GlobalMode.Logo;
   const noteText = selectedMusicalKey.getDisplayString(
     chromaticIndex,
     keyTextMode
@@ -100,15 +99,13 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
         d={pathData}
         className={`${keyColors.primary} stroke-gray-400 stroke-1`}
       />
-      {showText && (
-        <text
-          x={textPoint.x}
-          y={textPoint.y}
-          className={`text-center pointer-events-none ${keyColors.text} ${TYPOGRAPHY.keyboardText}`}
-        >
-          {noteText}
-        </text>
-      )}
+      <text
+        x={textPoint.x}
+        y={textPoint.y}
+        className={`text-center pointer-events-none ${keyColors.text} ${TYPOGRAPHY.keyboardText}`}
+      >
+        {noteText}
+      </text>
     </g>
   );
 };

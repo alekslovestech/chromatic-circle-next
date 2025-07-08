@@ -53,6 +53,10 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   if (isShortKey) baseClasses.push("short");
   if (isAdvanced) baseClasses.push("disabled");
 
+  //short keys tend to be narrow and have accidentals on them
+  const textTypography = isShortKey
+    ? TYPOGRAPHY.shortKeyText
+    : TYPOGRAPHY.keyboardText;
   const id = IndexUtils.StringWithPaddedIndex("linearKey", actualIndex);
   const noteText = selectedMusicalKey.getDisplayString(
     chromaticIndex,
@@ -64,7 +68,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
       id={id}
       className={`${baseClasses.join(" ")} ${keyColors.primary} ${
         keyColors.text
-      } !${keyColors.border} ${TYPOGRAPHY.keyboardText}`}
+      } !${keyColors.border} ${textTypography}`}
       style={{ left }}
       onClick={() => onClick(actualIndex)}
     >

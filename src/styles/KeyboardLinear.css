@@ -15,6 +15,23 @@
   max-height: 100%;
   aspect-ratio: calc(1 / var(--h2wratio));
   padding: var(--keyboard-padding);
+  container-type: inline-size;
+}
+
+@container (min-width: 300px) {
+  .piano-key {
+    font-size: 1rem;
+  }
+}
+@container (min-width: 600px) {
+  .piano-key {
+    font-size: 1.5rem;
+  }
+}
+@container (min-width: 900px) {
+  .piano-key {
+    font-size: 2rem;
+  }
 }
 
 .keyboard-inner {
