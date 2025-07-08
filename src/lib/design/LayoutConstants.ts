@@ -1,6 +1,7 @@
 import { GlobalMode } from "../hooks";
 
 export const STAFF_HEIGHT_PX = "90px";
+export const MIN_SETTINGS_HEIGHT = "220px";
 
 export const LAYOUT_CONSTRAINTS = {
   mobile: { maxWidth: "100vw", maxHeight: "100vh" },
@@ -30,7 +31,7 @@ export const LAYOUT_CONFIGS = {
   [GlobalMode.Default]: {
     mobile: {
       portrait: {
-        gridRows: `${STAFF_HEIGHT_PX} minmax(200px, 2fr) 2fr 1.5fr`,
+        gridRows: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 2.5fr) 2fr 1.5fr`,
         gridAreas: `'staff' 
                     'settings'
                     'circular'
@@ -45,7 +46,7 @@ export const LAYOUT_CONFIGS = {
     },
     tablet: {
       portrait: {
-        gridRows: `${STAFF_HEIGHT_PX} minmax(220px, 2.5fr) 2.5fr 1.8fr`,
+        gridRows: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 2.5fr) 2.5fr 1.8fr`,
         gridAreas: `'staff staff' 
                     'settings settings'
                     'circular circular'
@@ -60,7 +61,7 @@ export const LAYOUT_CONFIGS = {
     },
     desktop: {
       portrait: {
-        gridRows: `${STAFF_HEIGHT_PX} minmax(250px, 3fr) 3fr 2fr`,
+        gridRows: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 2.5fr) 2.5fr 2fr`,
         gridAreas: `'staff staff staff' 
                     'settings settings settings'
                     'circular circular circular'
@@ -77,7 +78,7 @@ export const LAYOUT_CONFIGS = {
   [GlobalMode.Advanced]: {
     mobile: {
       portrait: {
-        gridRows: `${STAFF_HEIGHT_PX} 1.2fr 2fr 1fr`,
+        gridRows: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 1.5fr) 2fr 1fr`,
         gridAreas: `'staff'
                     'sidebar'
                     'circular'                      
@@ -92,7 +93,7 @@ export const LAYOUT_CONFIGS = {
     },
     tablet: {
       portrait: {
-        gridRows: `${STAFF_HEIGHT_PX} 1.3fr 2fr 1fr`,
+        gridRows: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 1.5fr) 2fr 1fr`,
         gridAreas: `'staff staff'
                     'sidebar sidebar'
                     'circular circular'                      
@@ -107,7 +108,7 @@ export const LAYOUT_CONFIGS = {
     },
     desktop: {
       portrait: {
-        gridRows: `${STAFF_HEIGHT_PX} 1.5fr 2fr 1fr`,
+        gridRows: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 1.5fr) 2fr 1fr`,
         gridAreas: `'staff staff staff'
                     'sidebar sidebar sidebar'
                     'circular circular circular'                      

@@ -64,7 +64,9 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
       id={id}
       className={`${baseClasses.join(" ")} ${keyColors.primary} ${
         keyColors.text
-      } !${keyColors.border} ${TYPOGRAPHY.keyboardText}`}
+      } !${keyColors.border} ${TYPOGRAPHY.keyboardText} ${
+        isShortKey ? "!font-normal" : ""
+      }`}
       style={{ left }}
       onClick={() => onClick(actualIndex)}
     >
