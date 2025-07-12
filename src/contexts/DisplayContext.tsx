@@ -32,30 +32,22 @@ const DisplayContext = createContext<DisplaySettings | null>(null);
 export const DisplayProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  // Get globalMode from hook
+  const globalMode = useGlobalMode();
+  const isAdvanced = globalMode === GlobalMode.Advanced;
+
   const [circularVisMode, setCircularVisMode] = useState<CircularVisMode>(
-    CircularVisMode.None
+    isAdvanced ? CircularVisMode.Polygon : CircularVisMode.None
   );
-  const [monochromeMode, setMonochromeMode] = useState<boolean>(false);
-  const [scalePreviewMode, setScalePreviewMode] = useState<boolean>(false);
+  const [scalePreviewMode, setScalePreviewMode] = useState<boolean>(isAdvanced);
   const [keyTextMode, setKeyTextMode] = useState<KeyDisplayMode>(
-    KeyDisplayMode.NoteNames
+    isAdvanced ? KeyDisplayMode.ScaleDegree : KeyDisplayMode.NoteNames
   );
   const [chordDisplayMode, setChordDisplayMode] = useState<ChordDisplayMode>(
     ChordDisplayMode.Letters_Short
   );
 
-  // Get globalMode from hook
-  const globalMode = useGlobalMode();
-
-  // Use useEffect to update display settings when globalMode changes
-  useEffect(() => {
-    if (globalMode === GlobalMode.Advanced) {
-      setMonochromeMode(true);
-      setKeyTextMode(KeyDisplayMode.ScaleDegree);
-      setCircularVisMode(CircularVisMode.Polygon);
-      //setScalePreviewMode(true);
-    }
-  }, [globalMode]);
+  const [monochromeMode, setMonochromeMode] = useState<boolean>(isAdvanced);
 
   const value: DisplaySettings = {
     circularVisMode,

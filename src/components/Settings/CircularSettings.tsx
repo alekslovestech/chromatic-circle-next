@@ -32,7 +32,7 @@ export const CircularSettings = () => {
             <MusicalKeySelector useDropdownSelector={true} />
             <TransposeWidget target="key" />
           </div>
-          <ScalePreviewToggle />
+          {/*<ScalePreviewToggle />*/}
           <KeyTextModeSelect />
           <div className="max-w-xs self-center">
             <PlayScaleButton />
@@ -54,7 +54,7 @@ export const CircularSettings = () => {
         <MusicalKeySelector useDropdownSelector={false} />
         <TransposeWidget target="notes" />
       </div>
-      <MonochromeModeToggle />
+      {/*<MonochromeModeToggle />*/}
       <div className="max-w-xs self-center">
         <ClearButton />
       </div>
