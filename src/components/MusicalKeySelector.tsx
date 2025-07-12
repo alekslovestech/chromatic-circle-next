@@ -19,21 +19,9 @@ export const MusicalKeySelector = ({
   useDropdownSelector: boolean;
 }) => {
   const { selectedMusicalKey, setSelectedMusicalKey } = useMusical();
-  const { scalePreviewMode, keyTextMode } = useDisplay();
-  const { isAudioInitialized, startScalePlayback, stopScalePlayback } =
-    useAudio();
+  const { keyTextMode } = useDisplay();
 
-  useEffect(() => {
-    if (scalePreviewMode && isAudioInitialized) {
-      startScalePlayback(keyTextMode);
-    } else {
-      stopScalePlayback();
-    }
-
-    return () => {
-      stopScalePlayback();
-    };
-  }, [scalePreviewMode, isAudioInitialized, selectedMusicalKey, keyTextMode]); // eslint-disable-line react-hooks/exhaustive-deps
+  // Remove the useEffect - AudioContext handles auto-playback now
 
   //C / C# / Db / D / D# / Eb / E / F / F# / Gb / G / G# / Ab / A / A# / Bb / B
   const handleTonicNameChange = (

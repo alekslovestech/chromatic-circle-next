@@ -13,16 +13,16 @@ export const RootProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const globalMode = useGlobalMode();
 
-  //keys are used to force re-renders of the children when the global mode changes
   return (
     <MusicalProvider key={`musical-${globalMode}`}>
-      <AudioProvider key={`audio-${globalMode}`}>
-        <DisplayProvider key={`display-${globalMode}`}>
+      <DisplayProvider key={`display-${globalMode}`}>
+        <AudioProvider>
+          {/* Remove the key - don't reset audio */}
           <PresetProvider key={`preset-${globalMode}`}>
             {children}
           </PresetProvider>
-        </DisplayProvider>
-      </AudioProvider>
+        </AudioProvider>
+      </DisplayProvider>
     </MusicalProvider>
   );
 };
