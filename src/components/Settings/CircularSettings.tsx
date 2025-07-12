@@ -7,10 +7,8 @@ import { DEBUG_BORDER } from "@/lib/design";
 // Components
 import { MusicalKeySelector } from "@/components/MusicalKeySelector";
 import { TransposeWidget } from "@/components/TransposeWidget";
-import { MonochromeModeToggle } from "@/components/Settings/MonochromeModeToggle";
 import { ClearButton } from "@/components/Buttons/ClearButton";
 import { KeyTextModeSelect } from "@/components/Settings/NoteDisplayModeSelect";
-import { ScalePreviewToggle } from "@/components/Settings/ScalePreviewToggle";
 import { PlayScaleButton } from "@/components/Buttons/PlayScaleButton";
 
 import { CircularVisModeSelect } from "../Keyboard/Circular/CircularVisModeSelect";
