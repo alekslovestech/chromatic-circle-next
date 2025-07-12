@@ -18,29 +18,9 @@
   container-type: inline-size;
 }
 
-@container (min-width: 300px) {
-  .piano-key {
-    font-size: 1rem;
-  }
-}
-@container (min-width: 600px) {
-  .piano-key {
-    font-size: 1.5rem;
-  }
-}
-@container (min-width: 900px) {
-  .piano-key {
-    font-size: 2rem;
-  }
-}
-
-.keyboard-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
+/* Handle both font-size and font-weight */
 .piano-key {
+  font-weight: bold; /* Default for normal keys */
   position: absolute;
   box-sizing: border-box;
   width: var(--white-key-width);
@@ -57,6 +37,7 @@
 }
 
 .piano-key.short {
+  font-weight: normal; /* Lighter weight for narrow black keys */
   align-items: center;
   width: var(--black-key-width);
   height: 60%;
@@ -66,4 +47,38 @@
   transform: translateX(-50%);
 
   z-index: 2;
+}
+
+/* Container queries with proportional scaling */
+@container (min-width: 300px) {
+  .piano-key {
+    font-size: 1rem;
+  }
+  .piano-key.short {
+    font-size: 0.7rem; /* 70% of normal keys */
+  }
+}
+
+@container (min-width: 600px) {
+  .piano-key {
+    font-size: 2rem;
+  }
+  .piano-key.short {
+    font-size: 1.4rem; /* 70% of normal keys */
+  }
+}
+
+@container (min-width: 900px) {
+  .piano-key {
+    font-size: 3rem;
+  }
+  .piano-key.short {
+    font-size: 2.1rem; /* 70% of normal keys */
+  }
+}
+
+.keyboard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }

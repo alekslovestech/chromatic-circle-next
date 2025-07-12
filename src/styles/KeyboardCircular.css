@@ -32,26 +32,30 @@
 
 /* Text Styles */
 .pie-slice-key text {
+  font-weight: bold; /* All circular keys use bold */
   text-anchor: middle;
   dominant-baseline: middle;
   pointer-events: none;
 }
 
-/* Container Queries for Font Sizing */
+/* Container Queries for Font Sizing - Optimized for more text */
 @container (min-width: 200px) {
   .pie-slice-key text {
-    font-size: 0.875rem; /* Small circular keyboard */
+    font-size: 0.625rem; /* 10px - very small for tight spaces */
   }
 }
-
 @container (min-width: 400px) {
   .pie-slice-key text {
-    font-size: 1.25rem; /* Medium circular keyboard */
+    font-size: 0.75rem; /* 12px - small but readable */
   }
 }
-
 @container (min-width: 600px) {
   .pie-slice-key text {
-    font-size: 1.75rem; /* Large circular keyboard */
+    font-size: 0.875rem; /* 14px - medium */
+  }
+}
+@container (min-width: 800px) {
+  .pie-slice-key text {
+    font-size: 1rem; /* 16px - large containers */
   }
 }
