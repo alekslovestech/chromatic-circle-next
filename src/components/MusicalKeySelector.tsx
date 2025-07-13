@@ -3,7 +3,7 @@ import React from "react";
 
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { GreekModeType } from "@/types/GreekModes/GreekModeType";
-import { KeyType } from "@/types/Keys/KeyType";
+import { isMajor } from "@/types/Keys/KeyType";
 import { KeySignature } from "@/types/Keys/KeySignature";
 
 import { useMusical } from "@/contexts/MusicalContext";
@@ -92,12 +92,11 @@ export const MusicalKeySelector = ({
             id="major-minor-toggle"
             variant="action"
             size="sm"
+            //selected={true}
             title="Toggle between major and minor"
             onClick={handleMajorMinorToggle}
           >
-            {selectedMusicalKey.classicalMode === KeyType.Major
-              ? "Major"
-              : "Minor"}
+            {isMajor(selectedMusicalKey.classicalMode) ? "Major" : "Minor"}
           </Button>
         </div>
       )}

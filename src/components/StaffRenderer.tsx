@@ -8,7 +8,7 @@ import {
   actualIndexToChromaticAndOctave,
 } from "@/types/IndexTypes";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
-import { KeyType } from "@/types/Keys/KeyType";
+import { isMajor } from "@/types/Keys/KeyType";
 import { KeyNoteResolver } from "@/types/Keys/KeyNoteResolver";
 
 import { COMMON_STYLES, DEBUG_BORDER } from "@/lib/design";
@@ -56,7 +56,7 @@ const EasyScoreFromNotes = (
 
 const getKeySignatureForVex = (musicalKey: MusicalKey) => {
   const pureKey = musicalKey.tonicString;
-  const majorMinor = musicalKey.classicalMode === KeyType.Major ? "" : "m";
+  const majorMinor = isMajor(musicalKey.classicalMode) ? "" : "m";
   return pureKey + majorMinor;
 };
 
