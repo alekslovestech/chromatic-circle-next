@@ -55,12 +55,14 @@ const TransposeButton: React.FC<TransposeButtonProps> = ({
 };
 
 // This component is used to transpose the selected notes OR the musical key.
-export const TransposeWidget: React.FC<{ target: TransposeTarget }> = ({
-  target,
-}) => {
-  const flexDirection = target === "notes" ? "flex-col" : "flex-row";
+export const TransposeWidget: React.FC<{
+  target: TransposeTarget;
+  label?: string;
+}> = ({ target, label }) => {
+  const flexDirection = /*target === "notes" ? "flex-col" : */ "flex-row";
   return (
     <div>
+      {label && <div className="text-sm font-medium">{label}</div>}
       <div
         className={`transpose-buttons-container flex ${flexDirection} gap-2`}
       >

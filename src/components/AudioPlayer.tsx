@@ -14,13 +14,14 @@ const BASE_FREQUENCY = 440;
 // A4 is at index 69 in MIDI notation
 const A4_MIDI_INDEX = 69;
 
-export const AudioPlayer: React.FC = () => {
+// Custom hook for audio player functionality
+export const useAudioPlayer = () => {
   const synthRef = useRef<Tone.PolySynth | null>(null);
   const { isAudioInitialized, setAudioInitialized } = useAudio();
   const { selectedNoteIndices } = useMusical();
   const globalMode = useGlobalMode();
 
-  // In AudioPlayer component, check if Tone.js is already running
+  // Check if Tone.js is already running and set up user interaction
   useEffect(() => {
     const checkExistingAudio = async () => {
       if (Tone.getContext().state === "running") {
@@ -125,14 +126,19 @@ export const AudioPlayer: React.FC = () => {
     [getFrequencyFromIndex, isAudioInitialized]
   );
 
-  // Handle note changes based on mode
-  useEffect(() => {
+  // Play all selected notes (for manual triggering)
+  const playSelectedNotes = useCallback(() => {
     if (!synthRef.current || !isAudioInitialized) return;
 
     selectedNoteIndices.forEach((index) => {
       playNote(index);
     });
-  }, [selectedNoteIndices, playNote, isAudioInitialized, globalMode]);
+  }, [selectedNoteIndices, playNote, isAudioInitialized]);
+
+  // Handle note changes based on mode (auto-playback)
+  useEffect(() => {
+    playSelectedNotes();
+  }, [selectedNoteIndices, globalMode, playSelectedNotes]);
 
   // Clean up on unmount
   useEffect(() => {
@@ -143,26 +149,15 @@ export const AudioPlayer: React.FC = () => {
     };
   }, []);
 
-  // Show a visual indicator when audio is not initialized
-  if (!isAudioInitialized) {
-    return (
-      <div
-        style={{
-          position: "fixed",
-          bottom: "10px",
-          right: "10px",
-          background: "#ff4444",
-          color: "white",
-          padding: "5px 10px",
-          borderRadius: "4px",
-          fontSize: "12px",
-          zIndex: 1000,
-        }}
-      >
-        Tap anywhere to enable sound
-      </div>
-    );
-  }
+  return {
+    playNote,
+    playSelectedNotes,
+    isAudioInitialized,
+  };
+};
 
+// Minimal component just for auto-playback - no UI
+export const AudioPlayer: React.FC = () => {
+  useAudioPlayer(); // This ensures auto-playback happens
   return null;
 };
