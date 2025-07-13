@@ -8,7 +8,6 @@ import React, {
   useCallback,
   useEffect,
 } from "react";
-import { KeyDisplayMode } from "@/types/SettingModes";
 import {
   ixScaleDegreeIndex,
   ScaleDegreeIndex,
@@ -28,12 +27,15 @@ export enum PlaybackState {
 
 const PLAYBACK_INTERVAL_SINGLE_NOTE = 300;
 const PLAYBACK_INTERVAL_CHORD = 500;
+
 interface AudioContextType {
   isAudioInitialized: boolean;
   playbackState: PlaybackState;
-  startScalePlayback: (keyTextMode: KeyDisplayMode) => void;
+  scalePlaybackMode: ScalePlaybackMode;
+  startScalePlayback: () => void;
   stopScalePlayback: () => void;
   setAudioInitialized: (initialized: boolean) => void;
+  setScalePlaybackMode: (mode: ScalePlaybackMode) => void;
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -53,23 +55,16 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
   const [playbackState, setPlaybackState] = useState<PlaybackState>(
     PlaybackState.ScaleComplete
   );
+  const [scalePlaybackMode, setScalePlaybackMode] = useState<ScalePlaybackMode>(
+    ScalePlaybackMode.SingleNote
+  );
   const { selectedMusicalKey, setSelectedNoteIndices } = useMusical();
-  const { scalePreviewMode, keyTextMode } = useDisplay();
+  const { scalePreviewMode } = useDisplay();
   const globalMode = useGlobalMode();
 
   const scaleDegreeIndexRef = useRef<ScaleDegreeIndex>(ixScaleDegreeIndex(0));
   const playbackTimerIdRef = useRef<NodeJS.Timeout | null>(null);
   const landingNoteRef = useRef(false);
-  const scalePlaybackModeRef = useRef<ScalePlaybackMode>(
-    ScalePlaybackMode.SingleNote
-  );
-
-  const getScalePlaybackMode = useCallback((keyDisplayMode: KeyDisplayMode) => {
-    if (keyDisplayMode === KeyDisplayMode.Roman) {
-      return ScalePlaybackMode.Triad;
-    }
-    return ScalePlaybackMode.SingleNote;
-  }, []);
 
   const stopScalePlayback = useCallback(() => {
     console.log("AudioContext: Stopping scale playback");
@@ -104,7 +99,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const noteIndices = selectedMusicalKey.getNoteIndicesForScaleDegree(
       currentScaleDegreeIndex,
-      scalePlaybackModeRef.current
+      scalePlaybackMode
     );
     setSelectedNoteIndices(noteIndices);
 
@@ -121,45 +116,46 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
     scaleDegreeIndexRef.current = ixScaleDegreeIndex(
       currentScaleDegreeIndex + 1
     );
-  }, [selectedMusicalKey, setSelectedNoteIndices, stopScalePlayback]);
+  }, [
+    selectedMusicalKey,
+    setSelectedNoteIndices,
+    stopScalePlayback,
+    scalePlaybackMode,
+  ]);
 
-  const startScalePlayback = useCallback(
-    (keyTextMode: KeyDisplayMode) => {
-      console.log("Starting scale playback");
+  const startScalePlayback = useCallback(() => {
+    console.log("Starting scale playback");
 
-      if (!isAudioInitialized) {
-        console.log("Audio not initialized yet, cannot start scale playback");
-        return;
-      }
+    if (!isAudioInitialized) {
+      console.log("Audio not initialized yet, cannot start scale playback");
+      return;
+    }
 
-      if (!selectedMusicalKey) {
-        throw new Error(
-          "selectedMusicalKey is missing! This indicates a context initialization problem."
-        );
-      }
-
-      if (playbackTimerIdRef.current) {
-        clearInterval(playbackTimerIdRef.current);
-      }
-
-      scalePlaybackModeRef.current = getScalePlaybackMode(keyTextMode);
-      const intervalDuration =
-        scalePlaybackModeRef.current === ScalePlaybackMode.SingleNote
-          ? PLAYBACK_INTERVAL_SINGLE_NOTE
-          : PLAYBACK_INTERVAL_CHORD;
-      playbackTimerIdRef.current = setInterval(
-        () => playScaleStep(),
-        intervalDuration
+    if (!selectedMusicalKey) {
+      throw new Error(
+        "selectedMusicalKey is missing! This indicates a context initialization problem."
       );
-      setPlaybackState(PlaybackState.ScalePlaying);
-    },
-    [
-      selectedMusicalKey,
-      isAudioInitialized,
-      getScalePlaybackMode,
-      playScaleStep,
-    ]
-  );
+    }
+
+    if (playbackTimerIdRef.current) {
+      clearInterval(playbackTimerIdRef.current);
+    }
+
+    const intervalDuration =
+      scalePlaybackMode === ScalePlaybackMode.SingleNote
+        ? PLAYBACK_INTERVAL_SINGLE_NOTE
+        : PLAYBACK_INTERVAL_CHORD;
+    playbackTimerIdRef.current = setInterval(
+      () => playScaleStep(),
+      intervalDuration
+    );
+    setPlaybackState(PlaybackState.ScalePlaying);
+  }, [
+    selectedMusicalKey,
+    isAudioInitialized,
+    playScaleStep,
+    scalePlaybackMode,
+  ]);
 
   // Stop playback when mode changes
   useEffect(() => {
@@ -170,16 +166,14 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
   // Auto-start scale playback when conditions are met
   useEffect(() => {
     console.log(
-      "AudioContext: useEffect" +
-        scalePreviewMode +
-        " " +
-        isAudioInitialized +
-        " " +
-        keyTextMode
+      "AudioContext: useEffect scalePreviewMode:",
+      scalePreviewMode,
+      "isAudioInitialized:",
+      isAudioInitialized
     );
     if (scalePreviewMode && isAudioInitialized) {
       console.log("🎵 Auto-starting scale playback");
-      startScalePlayback(keyTextMode);
+      startScalePlayback();
     } else {
       console.log("⏹️ Auto-stopping scale playback");
       stopScalePlayback();
@@ -187,7 +181,6 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [
     scalePreviewMode,
     isAudioInitialized,
-    keyTextMode,
     startScalePlayback,
     stopScalePlayback,
   ]);
@@ -195,9 +188,11 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
   const value = {
     isAudioInitialized,
     playbackState,
+    scalePlaybackMode,
     startScalePlayback,
     stopScalePlayback,
     setAudioInitialized: setIsAudioInitialized,
+    setScalePlaybackMode,
   };
 
   return (
