@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { DEBUG_BORDER } from "@/lib/design";
-import { NoteDisplayModeSelect } from "./NoteDisplayModeSelect";
 import { PlaybackModeSelect } from "./PlaybackModeSelect";
 import { MusicalKeySelector } from "../MusicalKeySelector";
 import { TransposeWidget } from "../TransposeWidget";
@@ -23,6 +22,7 @@ export const CircularSettingsAdvanced = () => {
           <MusicalKeySelector useDropdownSelector={true} />
           <TransposeWidget target="key" />
         </div>
+        {/* currently disabled for simplicity */}
         {/*<NoteDisplayModeSelect />*/}
       </div>
 
