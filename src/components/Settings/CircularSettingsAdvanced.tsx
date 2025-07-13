@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { DEBUG_BORDER } from "@/lib/design";
+import { DEBUG_BORDER, LAYOUT_PATTERNS } from "@/lib/design";
 import { PlaybackModeSelect } from "./PlaybackModeSelect";
 import { MusicalKeySelector } from "../MusicalKeySelector";
 import { TransposeWidget } from "../TransposeWidget";
@@ -14,20 +14,22 @@ export const CircularSettingsAdvanced = () => {
   return (
     <div
       id="circular-settings-advanced"
-      className={`flex ${outerGapVertical} ${outerGapHorizontal} ${DEBUG_BORDER}`}
+      className={`flex justify-between ${outerGapVertical} ${outerGapHorizontal} ${DEBUG_BORDER} ${LAYOUT_PATTERNS.fullSize}`}
     >
       {/* Left Column - Musical Context */}
-      <div className={`flex flex-col ${settingsGap} border rounded p-2`}>
-        <div className={`flex ${settingsGap}`}>
-          <MusicalKeySelector useDropdownSelector={true} />
-          <TransposeWidget target="key" />
-        </div>
+      <div
+        className={`flex flex-col rounded p-2 flex-1 ${settingsGap} ${DEBUG_BORDER}`}
+      >
+        <TransposeWidget target="key" />
+        <MusicalKeySelector useDropdownSelector={true} />
         {/* currently disabled for simplicity */}
         {/*<NoteDisplayModeSelect />*/}
       </div>
 
       {/* Right Column - Playback Settings */}
-      <div className={`flex flex-col ${settingsGap} border rounded p-2`}>
+      <div
+        className={`flex flex-col ${settingsGap} rounded p-2 flex-1 ${DEBUG_BORDER}`}
+      >
         <PlaybackModeSelect />
         <div className="max-w-xs self-center">
           <PlayScaleButton />

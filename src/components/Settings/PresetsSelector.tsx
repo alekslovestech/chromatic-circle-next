@@ -2,7 +2,7 @@
 import React from "react";
 
 import { InputMode } from "@/types/SettingModes";
-import { ixInversion } from "@/types/IndexTypes";
+import { ixActual, ixInversion } from "@/types/IndexTypes";
 import { NoteGroupingId } from "@/types/NoteGroupingTypes";
 import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
 
@@ -37,10 +37,15 @@ export const PresetsSelector: React.FC = () => {
   const handlePresetChange = (newPresetId: NoteGroupingId) => {
     setSelectedChordType(newPresetId);
     setSelectedInversionIndex(ixInversion(0));
-    const rootNote = IndexUtils.rootNoteAtInversion(
-      selectedNoteIndices,
-      selectedInversionIndex
-    );
+
+    const rootNote =
+      selectedNoteIndices.length > 0
+        ? IndexUtils.rootNoteAtInversion(
+            selectedNoteIndices,
+            selectedInversionIndex
+          )
+        : ixActual(7);
+
     const updatedIndices = ChordUtils.calculateChordNotesFromIndex(
       rootNote,
       newPresetId,
