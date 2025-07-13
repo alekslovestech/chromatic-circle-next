@@ -26,7 +26,6 @@ const DisplayContext = createContext<DisplaySettings | null>(null);
 export const DisplayProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  // Get globalMode from hook
   const globalMode = useGlobalMode();
   const isAdvanced = globalMode === GlobalMode.Advanced;
 

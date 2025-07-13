@@ -18,8 +18,6 @@ export const MusicalKeySelector = ({
 }) => {
   const { selectedMusicalKey, setSelectedMusicalKey } = useMusical();
 
-  // Remove the useEffect - AudioContext handles auto-playback now
-
   //C / C# / Db / D / D# / Eb / E / F / F# / Gb / G / G# / Ab / A / A# / Bb / B
   const handleTonicNameChange = (
     event: React.ChangeEvent<HTMLSelectElement>
