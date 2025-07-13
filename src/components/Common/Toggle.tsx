@@ -6,8 +6,6 @@ interface ToggleProps {
   checked: boolean;
   onChange: (checked: boolean) => void;
   label: string;
-  padding?: SpacingSize;
-  disabled?: boolean;
 }
 
 export const Toggle: React.FC<ToggleProps> = ({
@@ -15,10 +13,8 @@ export const Toggle: React.FC<ToggleProps> = ({
   checked,
   onChange,
   label,
-  padding = "tight",
-  disabled = false,
 }) => {
-  const paddingClass = `gap-${padding}`;
+  const paddingClass = `gap-tight`;
 
   const checkboxStyles = [
     // Base styles
@@ -28,25 +24,17 @@ export const Toggle: React.FC<ToggleProps> = ({
     "bg-buttons-bgDefault",
     // Checked state
     checked ? "bg-buttons-bgSelected border-buttons-borderSelected" : "",
-    // Hover state (only if not disabled)
-    !disabled && !checked ? "hover:bg-buttons-bgHover" : "",
+    // Hover state
+    !checked ? "hover:bg-buttons-bgHover" : "",
     // Focus state
     "focus:ring-2 focus:ring-buttons-bgSelected focus:ring-opacity-50",
-    // Disabled state
-    disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
-  ]
-    .filter(Boolean)
-    .join(" ");
+    "cursor-pointer",
+  ].join(" ");
 
-  // ✅ Use the same font constants as SectionTitle
   const labelStyles = [
-    "text-sm text-labels-textDefault font-medium transition-colors duration-200", // Same pattern as SectionTitle
-    !disabled
-      ? "hover:text-buttons-textSelected cursor-pointer"
-      : "cursor-not-allowed opacity-50",
-  ]
-    .filter(Boolean)
-    .join(" ");
+    "text-sm text-labels-textDefault font-medium transition-colors duration-200",
+    "hover:text-buttons-textSelected cursor-pointer",
+  ].join(" ");
 
   return (
     <div className={`flex items-center ${paddingClass}`}>
@@ -54,8 +42,7 @@ export const Toggle: React.FC<ToggleProps> = ({
         type="checkbox"
         id={id}
         checked={checked}
-        onChange={(e) => !disabled && onChange(e.target.checked)}
-        disabled={disabled}
+        onChange={(e) => onChange(e.target.checked)}
         className={`${checkboxStyles} mr-tight`}
       />
       <label htmlFor={id} className={labelStyles}>
