@@ -46,11 +46,16 @@ export const MusicalKeySelector = ({
   };
 
   //Major / Minor
-  const handleMajorMinorToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    const newKey = selectedMusicalKey.getOppositeKey();
-    setSelectedMusicalKey(newKey);
+  const handleMajorMinorToggle = (isMajorSelected: boolean) => {
+    const currentIsMajor = isMajor(selectedMusicalKey.classicalMode);
+    // Only toggle if we're selecting a different mode
+    if (isMajorSelected !== currentIsMajor) {
+      const newKey = selectedMusicalKey.getOppositeKey();
+      setSelectedMusicalKey(newKey);
+    }
   };
+
+  const currentIsMajor = isMajor(selectedMusicalKey.classicalMode);
 
   const TonicSelector = () => (
     <Select
@@ -88,16 +93,28 @@ export const MusicalKeySelector = ({
       ) : (
         <div className="flex flex-col gap-2">
           <TonicSelector />
-          <Button
-            id="major-minor-toggle"
-            variant="action"
-            size="sm"
-            //selected={true}
-            title="Toggle between major and minor"
-            onClick={handleMajorMinorToggle}
-          >
-            {isMajor(selectedMusicalKey.classicalMode) ? "Major" : "Minor"}
-          </Button>
+          <div className="major-minor-selector flex gap-2">
+            <Button
+              id="major-button"
+              variant="option"
+              size="sm"
+              selected={currentIsMajor}
+              onClick={() => handleMajorMinorToggle(true)}
+              title="Select major mode"
+            >
+              Major
+            </Button>
+            <Button
+              id="minor-button"
+              variant="option"
+              size="sm"
+              selected={!currentIsMajor}
+              onClick={() => handleMajorMinorToggle(false)}
+              title="Select minor mode"
+            >
+              Minor
+            </Button>
+          </div>
         </div>
       )}
     </div>
