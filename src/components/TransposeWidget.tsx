@@ -10,13 +10,11 @@ export type TransposeTarget = "key" | "notes";
 interface TransposeButtonProps {
   direction: TransposeDirection;
   target: TransposeTarget;
-  label?: string;
 }
 
 const TransposeButton: React.FC<TransposeButtonProps> = ({
   direction,
   target,
-  label,
 }) => {
   const arrow = direction === "up" ? "↑" : "↓";
   const amount = direction === "up" ? 1 : -1;
