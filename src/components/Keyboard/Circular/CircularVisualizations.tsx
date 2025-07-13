@@ -51,7 +51,7 @@ export class CircularVisualizations {
     );
     return (
       <circle
-        className="base-note-dot"
+        className={`base-note-dot fill-keys-bgRootNote`}
         key="base-note"
         cx={innerPoint.x}
         cy={innerPoint.y}
