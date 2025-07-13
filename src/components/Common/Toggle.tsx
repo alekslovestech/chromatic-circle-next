@@ -1,5 +1,4 @@
 import React from "react";
-import { SpacingSize } from "@/lib/design";
 
 interface ToggleProps {
   id: string;
