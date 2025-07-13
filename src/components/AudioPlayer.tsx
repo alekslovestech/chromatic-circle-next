@@ -20,31 +20,40 @@ export const AudioPlayer: React.FC = () => {
   const { selectedNoteIndices } = useMusical();
   const globalMode = useGlobalMode();
 
-  // Handle user interaction for audio initialization
+  // In AudioPlayer component, check if Tone.js is already running
   useEffect(() => {
-    const handleUserInteraction = async () => {
-      try {
-        if (Tone.getContext().state !== "running") {
-          await Tone.start();
-          console.log("Tone.js context started");
-        }
+    const checkExistingAudio = async () => {
+      if (Tone.getContext().state === "running") {
         setAudioInitialized(true);
-        // Remove event listeners after successful initialization
+        return;
+      }
+
+      // Otherwise, set up the click handlers as before
+      const handleUserInteraction = async () => {
+        try {
+          if (Tone.getContext().state !== "running") {
+            await Tone.start();
+            console.log("Tone.js context started");
+          }
+          setAudioInitialized(true);
+          // Remove event listeners after successful initialization
+          document.removeEventListener("click", handleUserInteraction);
+          document.removeEventListener("touchstart", handleUserInteraction);
+        } catch (error) {
+          console.error("Failed to initialize audio:", error);
+        }
+      };
+
+      document.addEventListener("click", handleUserInteraction);
+      document.addEventListener("touchstart", handleUserInteraction);
+
+      return () => {
         document.removeEventListener("click", handleUserInteraction);
         document.removeEventListener("touchstart", handleUserInteraction);
-      } catch (error) {
-        console.error("Failed to initialize audio:", error);
-      }
+      };
     };
 
-    // Add event listeners for both click and touch events
-    document.addEventListener("click", handleUserInteraction);
-    document.addEventListener("touchstart", handleUserInteraction);
-
-    return () => {
-      document.removeEventListener("click", handleUserInteraction);
-      document.removeEventListener("touchstart", handleUserInteraction);
-    };
+    checkExistingAudio();
   }, [setAudioInitialized]);
 
   // Initialize Tone.js synth

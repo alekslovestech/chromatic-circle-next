@@ -1,7 +1,10 @@
 // src/types/KeySignature.ts
 import { AccidentalType } from "../AccidentalType";
-import { KeyType } from "./KeyType";
-import { MAJOR_KEY_SIGNATURES, MINOR_KEY_SIGNATURES } from "./KeySignatureConstants";
+import { isMajor, KeyType } from "./KeyType";
+import {
+  MAJOR_KEY_SIGNATURES,
+  MINOR_KEY_SIGNATURES,
+} from "./KeySignatureConstants";
 import { NoteConverter } from "../NoteConverter";
 
 export class KeySignature {
@@ -16,7 +19,9 @@ export class KeySignature {
     //this.accidentals = this.calculateAccidentals();
   }
   getAccidentals(): string[] {
-    const keyMap = this.mode === KeyType.Major ? MAJOR_KEY_SIGNATURES : MINOR_KEY_SIGNATURES;
+    const keyMap = isMajor(this.mode)
+      ? MAJOR_KEY_SIGNATURES
+      : MINOR_KEY_SIGNATURES;
     return keyMap[this.tonicString] || [];
   }
 
@@ -27,9 +32,12 @@ export class KeySignature {
       : AccidentalType.Flat;
   }
 
-  applyToNote(noteName: string, noteAccidental: AccidentalType): AccidentalType {
+  applyToNote(
+    noteName: string,
+    noteAccidental: AccidentalType
+  ): AccidentalType {
     const accidentalsWithoutSigns = this.getAccidentals().map((note) =>
-      NoteConverter.stripAccidentals(note),
+      NoteConverter.stripAccidentals(note)
     );
     const defaultAccidental = this.getDefaultAccidental();
 
@@ -41,9 +49,10 @@ export class KeySignature {
   }
 
   static getKeyList(mode: KeyType): string[] {
-    const keyMap = mode === KeyType.Major ? MAJOR_KEY_SIGNATURES : MINOR_KEY_SIGNATURES;
+    const keyMap = isMajor(mode) ? MAJOR_KEY_SIGNATURES : MINOR_KEY_SIGNATURES;
     return Object.keys(keyMap).sort(
-      (a, b) => NoteConverter.toChromaticIndex(a) - NoteConverter.toChromaticIndex(b),
+      (a, b) =>
+        NoteConverter.toChromaticIndex(a) - NoteConverter.toChromaticIndex(b)
     );
   }
 }

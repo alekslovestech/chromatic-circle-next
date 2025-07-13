@@ -9,7 +9,7 @@ import { GreekModeType } from "../GreekModes/GreekModeType";
 import { ScaleDegreeInfo } from "../GreekModes/ScaleDegreeInfo";
 import { ActualIndex, ixActualArray } from "../IndexTypes";
 import { KeySignature } from "../Keys/KeySignature";
-import { KeyType } from "../Keys/KeyType";
+import { isMajor, KeyType } from "../Keys/KeyType";
 import { KeyNoteResolver } from "./KeyNoteResolver";
 import { TWELVE } from "../NoteConstants";
 import { NoteConverter } from "../NoteConverter";
@@ -79,10 +79,9 @@ export class MusicalKey {
     tonicAsString: string,
     classicalMode: KeyType
   ): MusicalKey {
-    const greekMode =
-      classicalMode === KeyType.Major
-        ? GreekModeType.Ionian
-        : GreekModeType.Aeolian;
+    const greekMode = isMajor(classicalMode)
+      ? GreekModeType.Ionian
+      : GreekModeType.Aeolian;
     return new MusicalKey(tonicAsString, classicalMode, greekMode);
   }
 
@@ -101,8 +100,7 @@ export class MusicalKey {
   }
 
   getOppositeKey(): MusicalKey {
-    const newMode =
-      this.classicalMode === KeyType.Major ? KeyType.Minor : KeyType.Major;
+    const newMode = isMajor(this.classicalMode) ? KeyType.Minor : KeyType.Major;
     const newTonicAsString = this.findKeyWithTonicIndex(
       this.tonicIndex,
       newMode

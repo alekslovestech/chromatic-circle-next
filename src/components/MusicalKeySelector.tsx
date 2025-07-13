@@ -1,14 +1,12 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { GreekModeType } from "@/types/GreekModes/GreekModeType";
-import { KeyType } from "@/types/Keys/KeyType";
+import { isMajor } from "@/types/Keys/KeyType";
 import { KeySignature } from "@/types/Keys/KeySignature";
 
 import { useMusical } from "@/contexts/MusicalContext";
-import { useDisplay } from "@/contexts/DisplayContext";
-import { useAudio } from "@/contexts/AudioContext";
 
 import { Button } from "./Common/Button";
 import { Select } from "./Common/Select";
@@ -19,21 +17,6 @@ export const MusicalKeySelector = ({
   useDropdownSelector: boolean;
 }) => {
   const { selectedMusicalKey, setSelectedMusicalKey } = useMusical();
-  const { scalePreviewMode, keyTextMode } = useDisplay();
-  const { isAudioInitialized, startScalePlayback, stopScalePlayback } =
-    useAudio();
-
-  useEffect(() => {
-    if (scalePreviewMode && isAudioInitialized) {
-      startScalePlayback(keyTextMode);
-    } else {
-      stopScalePlayback();
-    }
-
-    return () => {
-      stopScalePlayback();
-    };
-  }, [scalePreviewMode, isAudioInitialized, selectedMusicalKey, keyTextMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
   //C / C# / Db / D / D# / Eb / E / F / F# / Gb / G / G# / Ab / A / A# / Bb / B
   const handleTonicNameChange = (
@@ -63,11 +46,16 @@ export const MusicalKeySelector = ({
   };
 
   //Major / Minor
-  const handleMajorMinorToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    const newKey = selectedMusicalKey.getOppositeKey();
-    setSelectedMusicalKey(newKey);
+  const handleMajorMinorToggle = (isMajorSelected: boolean) => {
+    const currentIsMajor = isMajor(selectedMusicalKey.classicalMode);
+    // Only toggle if we're selecting a different mode
+    if (isMajorSelected !== currentIsMajor) {
+      const newKey = selectedMusicalKey.getOppositeKey();
+      setSelectedMusicalKey(newKey);
+    }
   };
+
+  const currentIsMajor = isMajor(selectedMusicalKey.classicalMode);
 
   const TonicSelector = () => (
     <Select
@@ -105,17 +93,28 @@ export const MusicalKeySelector = ({
       ) : (
         <div className="flex flex-col gap-2">
           <TonicSelector />
-          <Button
-            id="major-minor-toggle"
-            variant="action"
-            size="sm"
-            title="Toggle between major and minor"
-            onClick={handleMajorMinorToggle}
-          >
-            {selectedMusicalKey.classicalMode === KeyType.Major
-              ? "Major"
-              : "Minor"}
-          </Button>
+          <div className="major-minor-selector flex gap-2">
+            <Button
+              id="major-button"
+              variant="option"
+              size="sm"
+              selected={currentIsMajor}
+              onClick={() => handleMajorMinorToggle(true)}
+              title="Select major mode"
+            >
+              Major
+            </Button>
+            <Button
+              id="minor-button"
+              variant="option"
+              size="sm"
+              selected={!currentIsMajor}
+              onClick={() => handleMajorMinorToggle(false)}
+              title="Select minor mode"
+            >
+              Minor
+            </Button>
+          </div>
         </div>
       )}
     </div>
