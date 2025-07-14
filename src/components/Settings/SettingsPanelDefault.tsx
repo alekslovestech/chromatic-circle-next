@@ -1,20 +1,21 @@
-import { DEBUG_BORDER } from "@/lib/design";
+import { DEBUG_BORDER, LAYOUT_PATTERNS } from "@/lib/design";
 import { ClearButton } from "../Buttons/ClearButton";
 import { PlayNotesButton } from "../Buttons/PlayNotesButton";
 import { TransposeWidget } from "../TransposeWidget";
 import { MusicalKeySelector } from "../MusicalKeySelector";
-import { CircularVisModeSelect } from "../Keyboard/Circular/CircularVisModeSelect";
+//import {MonochromeModeToggle} from "../MonochromeModeToggle";
+//import { CircularVisModeSelect } from "../Keyboard/Circular/CircularVisModeSelect";
 
-export const CircularSettingsDefault = () => {
+export const SettingsPanelDefault = () => {
   const settingsGap = "gap-tight";
   return (
     <div
-      id="keyboardcircular-settings-default"
-      className={`flex flex-col ${settingsGap} ${DEBUG_BORDER}`}
+      id="settings-panel-default"
+      className={`${LAYOUT_PATTERNS.centerFlexCol} ${settingsGap} ${DEBUG_BORDER}`}
     >
-      <CircularVisModeSelect />
+      {/*<CircularVisModeSelect />*/}
 
-      <div className={`key-selector flex ${settingsGap} mb-spacious`}>
+      <div className={`key-selector flex ${settingsGap} mb-normal`}>
         <MusicalKeySelector useDropdownSelector={false} />
       </div>
 

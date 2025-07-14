@@ -54,16 +54,36 @@ export const PresetsSelector: React.FC = () => {
     setSelectedNoteIndices(updatedIndices);
   };
 
-  const renderPresetButtons = () => {
-    const presets = NoteGroupingLibrary.IntervalOrChordIds(
-      inputMode === InputMode.IntervalPresets
-    );
-    const numColumns = inputMode === InputMode.IntervalPresets ? 2 : 4;
-
+  const renderIntervalPresetButtons = () => {
+    const presets = NoteGroupingLibrary.IntervalOrChordIds(true);
     return (
       <div
         className={`preset-buttons-grid grid gap-tight w-full ${DEBUG_BORDER}`}
-        style={{ gridTemplateColumns: `repeat(${numColumns}, 1fr)` }}
+        style={{ gridTemplateColumns: "repeat(2, 1fr)" }}
+      >
+        {presets
+          .filter(
+            (preset) =>
+              NoteGroupingLibrary.getGroupingById(preset).isVisiblePreset
+          )
+          .map((presetId) => (
+            <PresetButton
+              key={presetId}
+              presetId={presetId}
+              selected={presetId === selectedChordType}
+              onClick={handlePresetChange}
+            />
+          ))}
+      </div>
+    );
+  };
+
+  const renderChordPresetButtons = () => {
+    const presets = NoteGroupingLibrary.IntervalOrChordIds(false);
+    return (
+      <div
+        className={`preset-buttons-grid grid gap-tight w-full ${DEBUG_BORDER}`}
+        style={{ gridTemplateColumns: "repeat(4, 1fr)" }}
       >
         {presets
           .filter(
@@ -109,7 +129,9 @@ export const PresetsSelector: React.FC = () => {
     <div
       className={`presets-selector ${DEBUG_BORDER} flex flex-col gap-snug ${LAYOUT_PATTERNS.fullSize}`}
     >
-      {renderPresetButtons()}
+      {inputMode === InputMode.IntervalPresets
+        ? renderIntervalPresetButtons()
+        : renderChordPresetButtons()}
       {inputMode === InputMode.ChordPresets && renderInversionButtons()}
     </div>
   );

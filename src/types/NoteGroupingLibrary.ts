@@ -78,18 +78,18 @@ class NoteGroupingLibrarySingleton {
     ),
 
     // Intervals
-    NoteGrouping.createInterval(IntervalType.Minor2, 2, "m2", "Minor 2nd", 1),
+    NoteGrouping.createInterval(IntervalType.Minor2, 1, "m2", "Minor 2nd", 1),
+    NoteGrouping.createInterval(IntervalType.Major7, 2, "M7", "Major 7th", 11),
     NoteGrouping.createInterval(IntervalType.Major2, 3, "M2", "Major 2nd", 2),
-    NoteGrouping.createInterval(IntervalType.Minor3, 4, "m3", "Minor 3rd", 3),
-    NoteGrouping.createInterval(IntervalType.Major3, 5, "M3", "Major 3rd", 4),
-    NoteGrouping.createInterval(IntervalType.Fourth, 6, "P4", "Perfect 4th", 5),
-    NoteGrouping.createInterval(IntervalType.Tritone, 7, "TT", "Tritone", 6),
-    NoteGrouping.createInterval(IntervalType.Fifth, 8, "P5", "Perfect 5th", 7),
-    NoteGrouping.createInterval(IntervalType.Minor6, 9, "m6", "Minor 6th", 8),
-    NoteGrouping.createInterval(IntervalType.Major6, 10, "M6", "Major 6th", 9),
-    NoteGrouping.createInterval(IntervalType.Minor7, 11, "m7", "Minor 7th", 10),
-    NoteGrouping.createInterval(IntervalType.Major7, 12, "M7", "Major 7th", 11),
-    NoteGrouping.createInterval(IntervalType.Octave, 13, "Oct", "Octave", 12),
+    NoteGrouping.createInterval(IntervalType.Minor7, 4, "m7", "Minor 7th", 10),
+    NoteGrouping.createInterval(IntervalType.Minor3, 5, "m3", "Minor 3rd", 3),
+    NoteGrouping.createInterval(IntervalType.Major6, 6, "M6", "Major 6th", 9),
+    NoteGrouping.createInterval(IntervalType.Major3, 7, "M3", "Major 3rd", 4),
+    NoteGrouping.createInterval(IntervalType.Minor6, 8, "m6", "Minor 6th", 8),
+    NoteGrouping.createInterval(IntervalType.Fourth, 9, "P4", "Perfect 4th", 5),
+    NoteGrouping.createInterval(IntervalType.Fifth, 10, "P5", "Perfect 5th", 7),
+    NoteGrouping.createInterval(IntervalType.Tritone, 11, "TT", "Tritone", 6),
+    NoteGrouping.createInterval(IntervalType.Octave, 12, "Oct", "Octave", 12),
 
     // Triads
     NoteGrouping.createChord(
