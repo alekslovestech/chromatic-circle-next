@@ -69,7 +69,7 @@ module.exports = {
         },
         canvas: {
           bgDefault: "rgb(247, 248, 250)", //"#F7F8FA",
-          bgAdvanced: "rgb(107, 114, 128)", //"#6B7280",
+          bgAdvanced: "rgb(220, 220, 220)", //"#F0F2F5",
         },
       },
       spacing: {

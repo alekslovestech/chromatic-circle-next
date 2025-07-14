@@ -46,6 +46,7 @@ export enum ChordType {
   Sus4 = "Chord_Sus4",
   Sus2 = "Chord_Sus2",
   Add9 = "Chord_Add9",
+  Add2 = "Chord_Add2",
   Six = "Chord_Six",
   Minor6 = "Chord_Min6",
   Seven13 = "Chord_7Add13",

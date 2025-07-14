@@ -1,18 +1,28 @@
 import { CHORD_OFFSET_PATTERNS } from "./ChordOffsetPatterns";
 import { ixOffsetArray } from "./IndexTypes";
 import { NoteGrouping } from "./NoteGrouping";
-import { ChordType, IntervalType, NoteGroupingId, SpecialType } from "./NoteGroupingTypes";
+import {
+  ChordType,
+  IntervalType,
+  NoteGroupingId,
+  SpecialType,
+} from "./NoteGroupingTypes";
 import { ChordDisplayMode } from "./SettingModes";
 class NoteGroupingLibrarySingleton {
   public getGroupingById(id: NoteGroupingId): NoteGrouping {
-    const found = NoteGroupingLibrarySingleton.library.find((grouping) => grouping.id === id);
+    const found = NoteGroupingLibrarySingleton.library.find(
+      (grouping) => grouping.id === id
+    );
     if (!found) {
       throw new Error(`NoteGrouping not found for id: ${id}`);
     }
     return found;
   }
 
-  public getId(key: NoteGroupingId, chordDisplayMode: ChordDisplayMode): string {
+  public getId(
+    key: NoteGroupingId,
+    chordDisplayMode: ChordDisplayMode
+  ): string {
     const grouping = this.getGroupingById(key);
     switch (chordDisplayMode) {
       case ChordDisplayMode.Letters_Long:
@@ -38,12 +48,16 @@ class NoteGroupingLibrarySingleton {
   }
 
   public getAllIds(): NoteGroupingId[] {
-    return NoteGroupingLibrarySingleton.library.map((grouping) => grouping.id) as NoteGroupingId[];
+    return NoteGroupingLibrarySingleton.library.map(
+      (grouping) => grouping.id
+    ) as NoteGroupingId[];
   }
 
   public IntervalOrChordIds(isInterval: boolean): NoteGroupingId[] {
     return NoteGroupingLibrarySingleton.library
-      .filter((grouping) => (isInterval ? grouping.numNotes === 2 : grouping.numNotes > 2))
+      .filter((grouping) =>
+        isInterval ? grouping.numNotes === 2 : grouping.numNotes > 2
+      )
       .sort((a, b) => a.orderId - b.orderId)
       .map((grouping) => grouping.id);
   }
@@ -54,7 +68,14 @@ class NoteGroupingLibrarySingleton {
 
   private static library: NoteGrouping[] = [
     new NoteGrouping(SpecialType.None, "Ø", "Ø", "None", 0, []),
-    new NoteGrouping(SpecialType.Note, "", "", "Single Note", 1, ixOffsetArray([0])),
+    new NoteGrouping(
+      SpecialType.Note,
+      "",
+      "",
+      "Single Note",
+      1,
+      ixOffsetArray([0])
+    ),
 
     // Intervals
     NoteGrouping.createInterval(IntervalType.Minor2, 2, "m2", "Minor 2nd", 1),
@@ -77,7 +98,7 @@ class NoteGroupingLibrarySingleton {
       "Maj",
       "",
       "Major Chord",
-      CHORD_OFFSET_PATTERNS.MAJOR,
+      CHORD_OFFSET_PATTERNS.MAJOR
     ),
     NoteGrouping.createChord(
       ChordType.Minor,
@@ -85,7 +106,7 @@ class NoteGroupingLibrarySingleton {
       "min",
       "m",
       "Minor Chord",
-      CHORD_OFFSET_PATTERNS.MINOR,
+      CHORD_OFFSET_PATTERNS.MINOR
     ),
     NoteGrouping.createChord(
       ChordType.Diminished,
@@ -93,7 +114,7 @@ class NoteGroupingLibrarySingleton {
       "dim",
       "°",
       "Diminished Chord",
-      CHORD_OFFSET_PATTERNS.DIMINISHED,
+      CHORD_OFFSET_PATTERNS.DIMINISHED
     ),
     NoteGrouping.createChord(
       ChordType.Augmented,
@@ -101,7 +122,7 @@ class NoteGroupingLibrarySingleton {
       "Aug",
       "+",
       "Augmented Chord",
-      CHORD_OFFSET_PATTERNS.AUGMENTED,
+      CHORD_OFFSET_PATTERNS.AUGMENTED
     ),
     NoteGrouping.createChord(
       ChordType.Sus4,
@@ -109,7 +130,7 @@ class NoteGroupingLibrarySingleton {
       "sus4",
       "sus",
       "Suspended 4th Chord",
-      CHORD_OFFSET_PATTERNS.SUS4,
+      CHORD_OFFSET_PATTERNS.SUS4
     ),
     NoteGrouping.createChord(
       ChordType.Sus2,
@@ -117,7 +138,7 @@ class NoteGroupingLibrarySingleton {
       "sus2",
       "sus2",
       "Suspended 2nd Chord",
-      CHORD_OFFSET_PATTERNS.SUS2,
+      CHORD_OFFSET_PATTERNS.SUS2
     ),
 
     // Seventh Chords
@@ -127,17 +148,31 @@ class NoteGroupingLibrarySingleton {
       "7",
       "7",
       "7th (Dominant) Chord",
-      [0, 4, 7, 10],
+      [0, 4, 7, 10]
     ),
-    NoteGrouping.createChord(ChordType.Major7, 21, "Maj7", "Δ7", "Major 7th Chord", [0, 4, 7, 11]),
-    NoteGrouping.createChord(ChordType.Minor7, 22, "min7", "m7", "Minor 7th Chord", [0, 3, 7, 10]),
+    NoteGrouping.createChord(
+      ChordType.Major7,
+      21,
+      "Maj7",
+      "Δ7",
+      "Major 7th Chord",
+      [0, 4, 7, 11]
+    ),
+    NoteGrouping.createChord(
+      ChordType.Minor7,
+      22,
+      "min7",
+      "m7",
+      "Minor 7th Chord",
+      [0, 3, 7, 10]
+    ),
     NoteGrouping.createChord(
       ChordType.HalfDiminished,
       23,
       "m7♭5",
       "ø7",
       "Half Diminished Chord",
-      [0, 3, 6, 10],
+      [0, 3, 6, 10]
     ),
     NoteGrouping.createChord(
       ChordType.MinorMajor7,
@@ -145,7 +180,7 @@ class NoteGroupingLibrarySingleton {
       "mMaj7",
       "mΔ7",
       "Minor Major 7th Chord",
-      [0, 3, 7, 11],
+      [0, 3, 7, 11]
     ),
 
     NoteGrouping.createChord(
@@ -154,21 +189,52 @@ class NoteGroupingLibrarySingleton {
       "dim7",
       "°7",
       "Diminished 7th Chord",
-      [0, 3, 6, 9],
+      [0, 3, 6, 9]
     ),
-    NoteGrouping.createChord(ChordType.Six, 26, "6", "6", "Major 6th Chord", [0, 4, 7, 9]),
-    NoteGrouping.createChord(ChordType.Minor6, 27, "min6", "m6", "Minor 6th Chord", [0, 3, 7, 9]),
+    NoteGrouping.createChord(
+      ChordType.Six,
+      26,
+      "6",
+      "6",
+      "Major 6th Chord",
+      [0, 4, 7, 9]
+    ),
+    NoteGrouping.createChord(
+      ChordType.Minor6,
+      27,
+      "min6",
+      "m6",
+      "Minor 6th Chord",
+      [0, 3, 7, 9]
+    ),
     NoteGrouping.createChord(
       ChordType.AugMajor7,
       28,
       "+Maj7",
       "+Δ7",
       "Augmented Major 7th Chord",
-      [0, 4, 8, 11],
+      [0, 4, 8, 11]
     ),
 
     // Extended Chords
-    NoteGrouping.createChord(ChordType.Add9, 29, "add9", "add9", "Add 9th Chord", [0, 4, 7, 14]),
+    NoteGrouping.createChord(
+      ChordType.Add9,
+      29,
+      "add9",
+      "add9",
+      "Add 9th Chord",
+      [0, 4, 7, 14]
+    ),
+    NoteGrouping.createChord(
+      ChordType.Add2,
+      29,
+      "add2",
+      "add2",
+      "add2 Chord",
+      [0, 2, 4, 7],
+      false,
+      false
+    ),
 
     //"hidden" chords (not visible in the presets list, but can be detected by the app)
     NoteGrouping.createChord(
@@ -179,7 +245,7 @@ class NoteGroupingLibrarySingleton {
       "Dominant 7th Add 13th Chord",
       [0, 4, 7, 10, 13],
       false,
-      false,
+      false
     ),
     NoteGrouping.createChord(
       ChordType.SpreadMajor,
@@ -189,7 +255,7 @@ class NoteGroupingLibrarySingleton {
       "Spread Major Chord",
       [0, 7, 16],
       false,
-      false,
+      false
     ),
     NoteGrouping.createChord(
       ChordType.SpreadMinor,
@@ -199,7 +265,7 @@ class NoteGroupingLibrarySingleton {
       "Spread Minor Chord",
       [0, 7, 15],
       false,
-      false,
+      false
     ),
     NoteGrouping.createChord(
       ChordType.SpreadAugmented,
@@ -209,7 +275,7 @@ class NoteGroupingLibrarySingleton {
       "Spread Augmented Chord",
       [0, 8, 16],
       false,
-      false,
+      false
     ),
     NoteGrouping.createChord(
       ChordType.SpreadDiminished,
@@ -219,7 +285,7 @@ class NoteGroupingLibrarySingleton {
       "Spread Diminished Chord",
       [0, 6, 15],
       false,
-      false,
+      false
     ),
 
     //Narrow Chords
@@ -232,7 +298,7 @@ class NoteGroupingLibrarySingleton {
       "Narrow 23 Chord",
       [0, 2, 4], //C D E
       false,
-      false,
+      false
     ),
     NoteGrouping.createChord(
       ChordType.Narrow24,
@@ -242,7 +308,7 @@ class NoteGroupingLibrarySingleton {
       "Narrow 24 Chord",
       [0, 2, 5], //C D F
       false,
-      false,
+      false
     ),
     NoteGrouping.createChord(
       ChordType.Narrow34,
@@ -252,7 +318,7 @@ class NoteGroupingLibrarySingleton {
       "Narrow 34 Chord",
       [0, 4, 5], //C E F
       false,
-      false,
+      false
     ),
 
     NoteGrouping.createChord(
@@ -263,7 +329,7 @@ class NoteGroupingLibrarySingleton {
       "Narrow 24 Sharp Chord",
       [0, 2, 6], //C D F#
       false,
-      false,
+      false
     ),
     NoteGrouping.createChord(
       ChordType.Narrow34sharp,
@@ -273,7 +339,7 @@ class NoteGroupingLibrarySingleton {
       "Major chord with ♭5",
       [0, 4, 6], //C E G♭
       false,
-      false,
+      false
     ),
     NoteGrouping.createChord(
       ChordType.Narrow3flat4,
@@ -283,7 +349,7 @@ class NoteGroupingLibrarySingleton {
       "Narrow 3 Flat 4 Chord",
       [0, 3, 5], //C Eb F
       false,
-      false,
+      false
     ),
   ];
 

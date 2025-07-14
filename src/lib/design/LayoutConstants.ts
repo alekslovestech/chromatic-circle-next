@@ -126,6 +126,6 @@ export const LAYOUT_CONFIGS = {
 } as const;
 
 export const NOTATION_LAYOUT = {
-  gridTemplateColumns: "60% 40%",
+  gridTemplateColumns: "55% 45%",
   gap: "0.5rem",
 } as const;
