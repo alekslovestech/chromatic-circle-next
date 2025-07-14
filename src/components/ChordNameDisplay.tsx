@@ -43,7 +43,7 @@ export const ChordNameDisplay: React.FC = () => {
         : chordName;
     return (
       <div
-        className={`chord-name-description flex flex-col items-center ${LAYOUT_PATTERNS.fullSize}`}
+        className={`chord-name-description ${LAYOUT_PATTERNS.centerFlexCol} ${LAYOUT_PATTERNS.fullSize}`}
       >
         <div className={`${TYPOGRAPHY.controlLabel} mb-tight`}>
           {`${noteGroupingString}:`}

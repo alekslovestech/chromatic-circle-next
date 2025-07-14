@@ -4,6 +4,7 @@ import { IndexUtils } from "@/utils/IndexUtils";
 import { useMusical } from "@/contexts/MusicalContext";
 
 import { Button } from "./Common/Button";
+import { TYPOGRAPHY } from "@/lib/design";
 
 type TransposeDirection = "up" | "down";
 export type TransposeTarget = "key" | "notes";
@@ -45,7 +46,7 @@ const TransposeButton: React.FC<TransposeButtonProps> = ({
     <Button
       id={`transpose-${direction}-button`}
       variant="action"
-      size="sm"
+      size="md"
       onClick={onClick}
       title={title}
     >
@@ -62,7 +63,7 @@ export const TransposeWidget: React.FC<{
   const flexDirection = /*target === "notes" ? "flex-col" : */ "flex-row";
   return (
     <div>
-      {label && <div className="text-sm font-medium">{label}</div>}
+      {label && <div className={`${TYPOGRAPHY.displayText}`}>{label}</div>}
       <div
         className={`transpose-buttons-container flex ${flexDirection} gap-2`}
       >

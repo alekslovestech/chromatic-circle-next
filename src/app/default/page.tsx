@@ -8,7 +8,7 @@ import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 import { ChordNameDisplay } from "@/components/ChordNameDisplay";
 import { StaffRenderer } from "@/components/StaffRenderer";
 import { InputSettings } from "@/components/Settings/InputSettings";
-import { CircularSettings } from "@/components/Settings/CircularSettings";
+import { SettingsPanelDefault } from "@/components/Settings/SettingsPanelDefault";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
 
@@ -49,7 +49,7 @@ export default function Home() {
           >
             <KeyboardCircular />
             <div className="flex-1">
-              <CircularSettings />
+              <SettingsPanelDefault />
             </div>
           </div>
           <div

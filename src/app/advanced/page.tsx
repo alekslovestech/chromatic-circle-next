@@ -8,7 +8,7 @@ import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 import { StaffRenderer } from "@/components/StaffRenderer";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
-import { CircularSettings } from "@/components/Settings/CircularSettings";
+import { SettingsPanelAdvanced } from "@/components/Settings/SettingsPanelAdvanced";
 import { ChordNameDisplay } from "@/components/ChordNameDisplay";
 
 export default function AdvancedPage() {
@@ -64,7 +64,7 @@ export default function AdvancedPage() {
           className={`AdvancedPage-settings-container ${COMMON_STYLES.settingsPanel}`}
           style={{ gridArea: "sidebar" }}
         >
-          <CircularSettings />
+          <SettingsPanelAdvanced />
         </div>
 
         <div className="AdvancedPage-global-mode-switch fixed bottom-normal right-normal">

@@ -6,19 +6,19 @@ import { MusicalKeySelector } from "../MusicalKeySelector";
 import { TransposeWidget } from "../TransposeWidget";
 import { PlayScaleButton } from "../Buttons/PlayScaleButton";
 
-export const CircularSettingsAdvanced = () => {
+export const SettingsPanelAdvanced = () => {
   const settingsGap = "gap-tight";
   const outerGapVertical = "gap-tight";
   const outerGapHorizontal = "gap-normal";
 
   return (
     <div
-      id="circular-settings-advanced"
+      id="settings-panel-advanced"
       className={`flex justify-between ${outerGapVertical} ${outerGapHorizontal} ${DEBUG_BORDER} ${LAYOUT_PATTERNS.fullSize}`}
     >
       {/* Left Column - Musical Context */}
       <div
-        className={`flex flex-col rounded p-2 flex-1 ${settingsGap} ${DEBUG_BORDER}`}
+        className={`${LAYOUT_PATTERNS.centerFlexCol} rounded p-2 flex-1 ${settingsGap} ${DEBUG_BORDER}`}
       >
         <TransposeWidget target="key" />
         <MusicalKeySelector useDropdownSelector={true} />
@@ -28,7 +28,7 @@ export const CircularSettingsAdvanced = () => {
 
       {/* Right Column - Playback Settings */}
       <div
-        className={`flex flex-col ${settingsGap} rounded p-2 flex-1 ${DEBUG_BORDER}`}
+        className={`${LAYOUT_PATTERNS.centerFlexCol} ${settingsGap} rounded p-2 flex-1 ${DEBUG_BORDER}`}
       >
         <PlaybackModeSelect />
         <div className="max-w-xs self-center">
