@@ -13,16 +13,17 @@ export const CircularSettingsDefault = () => {
       className={`flex flex-col ${settingsGap} ${DEBUG_BORDER}`}
     >
       <CircularVisModeSelect />
-      <div className="transpose-widget-container">
-        <TransposeWidget target="notes" />
-      </div>
-      <div className={`key-selector flex ${settingsGap}`}>
+
+      <div className={`key-selector flex ${settingsGap} mb-spacious`}>
         <MusicalKeySelector useDropdownSelector={false} />
       </div>
 
       {/*<MonochromeModeToggle />*/}
-      <div className="max-w-xs self-center">
+      <div className="flex flex-col max-w-xs self-center">
         <PlayNotesButton />
+        <div className="transpose-widget-container">
+          <TransposeWidget target="notes" />
+        </div>
         <ClearButton />
       </div>
     </div>
