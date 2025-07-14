@@ -88,7 +88,7 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
     const stave = factory.Stave({
       x: 5,
       y: -20, // VexFlow internal offset compensation
-      width: 200,
+      width: containerWidth - 10, // Ensure stave stays within container bounds
     });
 
     const canonicalIonianKey = selectedMusicalKey.getCanonicalIonianKey();
@@ -109,7 +109,11 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
     voice.setStrict(false);
     voice.addTickables(notes);
 
-    factory.Formatter().joinVoices([voice]).format([voice], 200);
+    // Use container width minus margins for formatting
+    factory
+      .Formatter()
+      .joinVoices([voice])
+      .format([voice], containerWidth - 20);
     voice.draw(context, stave);
   }, [selectedNoteIndices, selectedMusicalKey]);
 
@@ -126,6 +130,7 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
         style={{
           width: "100%",
           height: "100%",
+          overflow: "hidden", // Ensure content cuts off at container boundaries
         }}
       />
     </div>
