@@ -9,12 +9,12 @@ function verifyDisplayInfo(
   expectedNoteGrouping: string,
   expectedChordName: string,
   indices: number[],
-  musicalKey: MusicalKey = DEFAULT_MUSICAL_KEY,
+  musicalKey: MusicalKey = DEFAULT_MUSICAL_KEY
 ) {
   const result = ChordUtils.getDisplayInfoFromIndices(
     ixActualArray(indices),
     ChordDisplayMode.Letters_Short,
-    musicalKey,
+    musicalKey
   );
   expect(result.noteGroupingString).toBe(expectedNoteGrouping);
   expect(result.chordName).toBe(expectedChordName);
@@ -24,7 +24,7 @@ describe("getDisplayPropertiesFromIndices", () => {
   const testCases = [
     { noteGrouping: "Chord", chordName: "C", indices: [0, 4, 7] },
     { noteGrouping: "None", chordName: "Ø", indices: [] },
-    { noteGrouping: "Chord", chordName: "C-", indices: [0, 1, 2] },
+    { noteGrouping: "Chord", chordName: "C(?)", indices: [0, 1, 2] },
     { noteGrouping: "Chord", chordName: "C23", indices: [0, 2, 4] },
     { noteGrouping: "Chord", chordName: "G23", indices: [7, 9, 11] },
     { noteGrouping: "Chord", chordName: "B23", indices: [11, 13, 15] },
