@@ -30,7 +30,7 @@ export const InversionButton: React.FC<{ inversionIndex: InversionIndex }> = ({
     <Button
       id={`inversion-${inversionIndex}`}
       key={inversionIndex}
-      size="md"
+      size="sm"
       variant="option"
       onClick={() => handleInversionChange(inversionIndex)}
       selected={selectedInversionIndex === inversionIndex}

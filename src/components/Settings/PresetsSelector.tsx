@@ -113,7 +113,7 @@ export const PresetsSelector: React.FC = () => {
         >
           <SectionTitle centered={true}>Inversion</SectionTitle>
           <div
-            className={`inversion-button-container flex flex-row gap-snug justify-center ${DEBUG_BORDER}`}
+            className={`inversion-button-container flex flex-row gap-snug justify-center`}
           >
             {Array.from({ length: inversionCount }, (_, i) => (
               <InversionButton key={i} inversionIndex={ixInversion(i)} />
