@@ -1,10 +1,8 @@
 "use client";
-import Link from "next/link";
 
 import { COMMON_STYLES, NOTATION_LAYOUT } from "@/lib/design";
 import { usePageLayout } from "@/lib/hooks/usePageLayout";
 
-import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 import { ChordNameDisplay } from "@/components/ChordNameDisplay";
 import { StaffRenderer } from "@/components/StaffRenderer";
 import { InputSettings } from "@/components/Settings/InputSettings";
@@ -21,7 +19,6 @@ export default function Home() {
     >
       <div
         className={`DefaultPage-grid ${COMMON_STYLES.pageGrid}`}
-        //NB using Styles instead of tailwind classes for grid areas
         style={{
           gridTemplateColumns: gridColumns,
           gridTemplateRows: gridRows,
@@ -78,12 +75,6 @@ export default function Home() {
           style={{ gridArea: "settings" }}
         >
           <InputSettings />
-        </div>
-
-        <div className="DefaultPage-global-mode-switch fixed bottom-normal right-normal">
-          <Link href="/advanced">
-            <GlobalModeButton text="Switch to Scale Preview Mode" />
-          </Link>
         </div>
       </div>
     </div>
