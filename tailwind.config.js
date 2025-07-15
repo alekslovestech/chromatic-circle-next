@@ -36,6 +36,13 @@ module.exports = {
           border: "rgba(45, 45, 45, 0.1)", // Added border style matching serenity-transparent1
           borderSelected: "rgba(192, 42, 42, 0.2)",
           bgDisabled: "rgb(229, 231, 235)", // #e5e7eb - Tailwind gray-200
+
+          // New action button colors
+          actionBgDefault: "rgb(240, 242, 245)", // Slightly lighter, more "pressable"
+          actionBgHover: "rgb(220, 225, 230)", // Darker on hover for press effect
+          actionBgActive: "rgb(200, 210, 220)", // Even darker when actively pressed
+          actionBorder: "rgba(60, 60, 60, 0.2)", // Stronger border for definition
+          actionText: "rgb(50, 50, 50)", // Slightly different text color
         },
         labels: {
           textDefault: "rgb(31, 31, 31)", //"#1f1f1f",
@@ -64,7 +71,7 @@ module.exports = {
           scaleBoundaryColor: "rgb(60, 60, 60)", //"#3C3C3C",
         },
         containers: {
-          border: "rgba(0,0,0, 0.1)", // Default container border
+          border: "rgba(0,0, 128, 0.1)", // Default container border
           borderDebug: "rgba(0,0,0, 0.8)", // Default container border
         },
         canvas: {

@@ -5,7 +5,7 @@ export const PlayNotesButton: React.FC = () => {
   const { playSelectedNotes } = useAudioPlayer();
 
   return (
-    <Button size="md" variant="action" onClick={playSelectedNotes}>
+    <Button size="sm" variant="action" onClick={playSelectedNotes}>
       Play
     </Button>
   );
