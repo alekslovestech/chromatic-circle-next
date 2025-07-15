@@ -41,7 +41,7 @@ export const SettingsPanelAdvanced = () => {
       </div>
 
       {/* Mode switch at bottom */}
-      <div className="mt-tight pt-tight border-t border-gray-300 text-center">
+      <div className=" border-t border-gray-300 text-center">
         <Link href="/default">
           <GlobalModeButton text="Basic Mode" />
         </Link>
