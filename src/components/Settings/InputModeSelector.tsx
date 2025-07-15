@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 
 import { DEBUG_BORDER, LAYOUT_PATTERNS } from "@/lib/design";
 import { InputMode } from "@/types/SettingModes";
@@ -8,6 +9,7 @@ import { useGlobalMode, GlobalMode } from "@/lib/hooks";
 
 import { Button } from "@/components/Common/Button";
 import { SectionTitle } from "@/components/Common/SectionTitle";
+import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 
 import { usePreset } from "@/contexts/PresetContext";
 
@@ -49,6 +51,8 @@ export const InputModeSelector: React.FC = () => {
 
   const gapSize = "gap-snug";
   const isAdvancedMode = globalMode === GlobalMode.Advanced;
+  const isDefaultMode = globalMode === GlobalMode.Default;
+
   return (
     <div
       className={`input-mode-selector text-center space-y-2 ${DEBUG_BORDER} ${LAYOUT_PATTERNS.fullSize}`}
@@ -79,6 +83,17 @@ export const InputModeSelector: React.FC = () => {
           );
         })}
       </div>
+
+      {/* Add mode switch for default mode only */}
+      {isDefaultMode && (
+        <div className="mt-normal pt-tight border-t border-gray-300 text-center">
+          <Link href="/advanced">
+            <div className="scale-75">
+              <GlobalModeButton text="Scale Preview" />
+            </div>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
