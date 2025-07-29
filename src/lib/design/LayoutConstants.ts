@@ -11,15 +11,15 @@ export const LAYOUT_CONSTRAINTS = {
 
 export const GRID_COLUMNS = {
   mobile: {
-    landscape: "1fr 1fr", // Already 50/50
+    landscape: "1fr 1fr",
     portrait: "1fr",
   },
   tablet: {
-    landscape: "1fr 1fr", // Changed from "1fr 2fr 1fr" to "1fr 1fr" for clean 50/50
+    landscape: "1fr 1fr",
     portrait: "1fr 1fr",
   },
   desktop: {
-    landscape: "1fr 1fr", // Changed from "1fr 2fr 2fr 1fr" to "1fr 1fr" for clean 50/50
+    landscape: "1fr 1fr",
     portrait: "1fr 1fr 1fr",
   },
 } as const;
@@ -88,7 +88,7 @@ export const LAYOUT_CONFIGS = {
         gridRows: `${STAFF_HEIGHT_PX} 1.5fr 1fr`,
         gridAreas: `'circular staff'
                     'circular sidebar'
-                    'circular linear'`, // 50/50 split
+                    'circular linear'`,
       },
     },
     tablet: {
@@ -103,7 +103,7 @@ export const LAYOUT_CONFIGS = {
         gridRows: `${STAFF_HEIGHT_PX} 1.5fr 1fr`,
         gridAreas: `'circular staff'
                     'circular sidebar'
-                    'circular linear'`, // 50/50 split with 2 columns
+                    'circular linear'`,
       },
     },
     desktop: {
@@ -118,7 +118,7 @@ export const LAYOUT_CONFIGS = {
         gridRows: `${STAFF_HEIGHT_PX} 1.5fr 1fr`,
         gridAreas: `'circular staff'
                     'circular sidebar'
-                    'circular linear'`, // 50/50 split with 2 columns
+                    'circular linear'`,
       },
     },
   },
