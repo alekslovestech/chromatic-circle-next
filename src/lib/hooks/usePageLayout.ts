@@ -1,11 +1,7 @@
 import { useIsLandscape } from "./useIsLandscape";
 import { useGlobalMode } from "./useGlobalMode";
 import { useBreakpoint } from "./useBreakpoint";
-import {
-  LAYOUT_CONFIGS,
-  GRID_COLUMNS,
-  OrientationType,
-} from "@/lib/design/LayoutConstants";
+import { LAYOUT_CONFIGS, OrientationType } from "@/lib/design/LayoutConstants";
 
 // Single return type for the hook
 export interface PageLayout {
@@ -15,6 +11,8 @@ export interface PageLayout {
   orientation: OrientationType;
   breakpoint: string;
 }
+
+const GRID_COLUMNS = "1fr 1fr";
 
 export function usePageLayout(): PageLayout {
   const mode = useGlobalMode();
@@ -27,7 +25,7 @@ export function usePageLayout(): PageLayout {
   return {
     gridRows: config.gridRows,
     gridAreas: config.gridAreas,
-    gridColumns: GRID_COLUMNS[breakpoint][orientation],
+    gridColumns: GRID_COLUMNS,
     orientation,
     breakpoint,
   };

@@ -49,10 +49,7 @@ export default function Home() {
               <SettingsPanelDefault />
             </div>
           </div>
-          <div
-            className="DefaultPage-chord-sidebar self-end mb-normal flex flex-col justify-end text-right max-w-[120px] p-2"
-            style={{ gridArea: "sidebar" }}
-          >
+          <div className="DefaultPage-chord-sidebar self-end mb-normal flex flex-col justify-end text-right max-w-[120px] p-2">
             <div className="DefaultPage-chord-display w-full h-full flex items-center justify-center text-2xl break-words">
               <ChordNameDisplay />
             </div>

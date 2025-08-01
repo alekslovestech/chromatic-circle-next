@@ -14,11 +14,7 @@ export class CircularVisualizations {
   ): JSX.Element[] {
     if (selectedNoteIndices.length <= 1) return [];
 
-    const realInnerRadius =
-      circularVisMode === CircularVisMode.Polygon
-        ? innerRadius * 0.95
-        : innerRadius;
-    const visualizer = new NoteIndexVisualizer(realInnerRadius);
+    const visualizer = new NoteIndexVisualizer(innerRadius);
 
     const baseNoteDot = this.drawBaseNoteDot(selectedNoteIndices, innerRadius);
     const polyPoints = visualizer.getVisualization(
