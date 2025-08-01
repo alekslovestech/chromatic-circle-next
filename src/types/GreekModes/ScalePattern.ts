@@ -11,12 +11,16 @@ export class ScalePattern {
 
   constructor(pattern: number[]) {
     if (pattern.length !== this.SCALE_LENGTH) {
-      throw new Error(`Scale pattern must have exactly ${this.SCALE_LENGTH} notes`);
+      throw new Error(
+        `Scale pattern must have exactly ${this.SCALE_LENGTH} notes`
+      );
     }
     this.pattern = [...pattern];
   }
 
-  public getScaleDegreeInfoFromPosition(scaleDegreeIndex: ScaleDegreeIndex): ScaleDegreeInfo {
+  public getScaleDegreeInfoFromPosition(
+    scaleDegreeIndex: ScaleDegreeIndex
+  ): ScaleDegreeInfo {
     const currentNote = this.pattern[scaleDegreeIndex];
     const ionianNote = GREEK_MODE_PATTERNS.IONIAN[scaleDegreeIndex];
     const accidental =
@@ -32,7 +36,13 @@ export class ScalePattern {
     return [this.pattern[scaleDegreeIndex]];
   }
 
-  public getOffsets135(scaleDegreeIndex: ScaleDegreeIndex): [number, number, number] {
+  public getTonicDroneWithRootOffset(
+    scaleDegreeIndex: ScaleDegreeIndex
+  ): number[] {
+    return [this.pattern[0], this.pattern[scaleDegreeIndex]];
+  }
+
+  public getOffsets135(scaleDegreeIndex: ScaleDegreeIndex): number[] {
     const rootOffset = this.pattern[scaleDegreeIndex];
     let thirdOffset = this.pattern[(scaleDegreeIndex + 2) % this.SCALE_LENGTH];
     let fifthOffset = this.pattern[(scaleDegreeIndex + 4) % this.SCALE_LENGTH];
@@ -43,9 +53,11 @@ export class ScalePattern {
     return [rootOffset, thirdOffset, fifthOffset];
   }
 
-  public getOffsets1357(scaleDegreeIndex: ScaleDegreeIndex): [number, number, number, number] {
-    const [rootOffset, thirdOffset, fifthOffset] = this.getOffsets135(scaleDegreeIndex);
-    let seventhOffset = this.pattern[(scaleDegreeIndex + 6) % this.SCALE_LENGTH];
+  public getOffsets1357(scaleDegreeIndex: ScaleDegreeIndex): number[] {
+    const [rootOffset, thirdOffset, fifthOffset] =
+      this.getOffsets135(scaleDegreeIndex);
+    let seventhOffset =
+      this.pattern[(scaleDegreeIndex + 6) % this.SCALE_LENGTH];
     seventhOffset += seventhOffset < rootOffset ? TWELVE : 0;
     return [rootOffset, thirdOffset, fifthOffset, seventhOffset];
   }
@@ -66,7 +78,9 @@ export class ScalePattern {
   public findPositionInScale(relativeOffset: number): ScaleDegreeIndex {
     // Normalize the offset to be within 0-11
     const normalizedOffset = ((relativeOffset % 12) + 12) % 12;
-    return ixScaleDegreeIndex(this.pattern.findIndex((offset) => offset === normalizedOffset));
+    return ixScaleDegreeIndex(
+      this.pattern.findIndex((offset) => offset === normalizedOffset)
+    );
   }
 
   /**
