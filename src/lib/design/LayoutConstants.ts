@@ -12,51 +12,58 @@ export const LAYOUT_CONSTRAINTS = {
 export type OrientationType = "landscape" | "portrait";
 
 // Use the existing GlobalMode concept - layout is derived from app mode
+const DEFAULT_GRID_AREAS = {
+  portrait: `'staff staff' 
+             'settings settings'
+             'circular circular'
+             'linear linear'`,
+
+  landscape: `'circular staff'
+              'circular settings'
+              'linear settings'`,
+};
+
+const ADVANCED_GRID_AREAS = {
+  portrait: `'staff staff'
+             'sidebar sidebar'
+             'circular circular'                      
+             'linear linear'`,
+
+  landscape: `'circular staff'
+              'circular sidebar'
+              'circular linear'`,
+};
+
 export const LAYOUT_CONFIGS = {
   [GlobalMode.Default]: {
     mobile: {
       portrait: {
         gridRows: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 3fr) 2fr 1fr`,
-        gridAreas: `'staff' 
-                    'settings'
-                    'circular'
-                    'linear'`,
+        gridAreas: DEFAULT_GRID_AREAS.portrait,
       },
       landscape: {
         gridRows: `${STAFF_HEIGHT_PX} 1.5fr 0.8fr`,
-        gridAreas: `'circular staff'
-                    'circular settings'
-                    'linear settings'`,
+        gridAreas: DEFAULT_GRID_AREAS.landscape,
       },
     },
     tablet: {
       portrait: {
         gridRows: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 3fr) 2.5fr 1.2fr`,
-        gridAreas: `'staff staff' 
-                    'settings settings'
-                    'circular circular'
-                    'linear linear'`,
+        gridAreas: DEFAULT_GRID_AREAS.portrait,
       },
       landscape: {
         gridRows: `${STAFF_HEIGHT_PX} 1.5fr 0.8fr`,
-        gridAreas: `'circular staff'
-                    'circular settings'
-                    'linear settings'`,
+        gridAreas: DEFAULT_GRID_AREAS.landscape,
       },
     },
     desktop: {
       portrait: {
         gridRows: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 3fr) 2.5fr 1.5fr`,
-        gridAreas: `'staff staff' 
-                    'settings settings'
-                    'circular circular'
-                    'linear linear'`,
+        gridAreas: DEFAULT_GRID_AREAS.portrait,
       },
       landscape: {
         gridRows: `${STAFF_HEIGHT_PX} 1.5fr 0.8fr`,
-        gridAreas: `'circular staff'
-                    'circular settings'
-                    'linear settings'`,
+        gridAreas: DEFAULT_GRID_AREAS.landscape,
       },
     },
   },
@@ -64,46 +71,31 @@ export const LAYOUT_CONFIGS = {
     mobile: {
       portrait: {
         gridRows: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 2fr) 2fr 0.8fr`,
-        gridAreas: `'staff'
-                    'sidebar'
-                    'circular'                      
-                    'linear'`,
+        gridAreas: ADVANCED_GRID_AREAS.portrait,
       },
       landscape: {
         gridRows: `${STAFF_HEIGHT_PX} 1.5fr 1fr`,
-        gridAreas: `'circular staff'
-                    'circular sidebar'
-                    'circular linear'`,
+        gridAreas: ADVANCED_GRID_AREAS.landscape,
       },
     },
     tablet: {
       portrait: {
         gridRows: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 2fr) 2fr 0.8fr`,
-        gridAreas: `'staff staff'
-                    'sidebar sidebar'
-                    'circular circular'                      
-                    'linear linear'`,
+        gridAreas: ADVANCED_GRID_AREAS.portrait,
       },
       landscape: {
         gridRows: `${STAFF_HEIGHT_PX} 1.5fr 1fr`,
-        gridAreas: `'circular staff'
-                    'circular sidebar'
-                    'circular linear'`,
+        gridAreas: ADVANCED_GRID_AREAS.landscape,
       },
     },
     desktop: {
       portrait: {
         gridRows: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 2fr) 2fr 1fr`,
-        gridAreas: `'staff staff'
-                    'sidebar sidebar'
-                    'circular circular'                      
-                    'linear linear'`,
+        gridAreas: ADVANCED_GRID_AREAS.portrait,
       },
       landscape: {
         gridRows: `${STAFF_HEIGHT_PX} 1.5fr 1fr`,
-        gridAreas: `'circular staff'
-                    'circular sidebar'
-                    'circular linear'`,
+        gridAreas: ADVANCED_GRID_AREAS.landscape,
       },
     },
   },

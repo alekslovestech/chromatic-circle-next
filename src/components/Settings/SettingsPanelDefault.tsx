@@ -3,7 +3,7 @@ import { ClearButton } from "../Buttons/ClearButton";
 import { PlayNotesButton } from "../Buttons/PlayNotesButton";
 import { TransposeWidget } from "../TransposeWidget";
 import { MusicalKeySelector } from "../MusicalKeySelector";
-//import {MonochromeModeToggle} from "../MonochromeModeToggle";
+//import {MonochromeM odeToggle} from "../MonochromeModeToggle";
 //import { CircularVisModeSelect } from "../Keyboard/Circular/CircularVisModeSelect";
 
 export const SettingsPanelDefault = () => {
@@ -11,7 +11,7 @@ export const SettingsPanelDefault = () => {
   return (
     <div
       id="settings-panel-default"
-      className={`${LAYOUT_PATTERNS.centerFlexCol} ${settingsGap} ${DEBUG_BORDER}`}
+      className={`${LAYOUT_PATTERNS.centerFlexCol} ${settingsGap} ${DEBUG_BORDER} h-full`}
     >
       {/*<CircularVisModeSelect />*/}
 

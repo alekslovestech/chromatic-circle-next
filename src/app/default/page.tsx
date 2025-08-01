@@ -45,7 +45,7 @@ export default function Home() {
             className={`DefaultPage-circular-inner ${COMMON_STYLES.circularInner}`}
           >
             <KeyboardCircular />
-            <div className="flex-1">
+            <div className="flex-1 h-full">
               <SettingsPanelDefault />
             </div>
           </div>
