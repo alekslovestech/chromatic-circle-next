@@ -7,13 +7,13 @@ export class NoteGrouping {
 
   constructor(
     public readonly id: NoteGroupingId,
-    public readonly lettersId: string,
-    public readonly symbolsId: string,
-    public readonly displayName: string,
+    public readonly shortForm: string,
+    public readonly symbolForm: string,
+    public readonly longForm: string,
     public readonly orderId: number,
     public readonly offsets: OffsetIndex[],
     public readonly hasInversions: boolean = false,
-    public readonly isVisiblePreset: boolean = true, //is this in the presets list?
+    public readonly isVisiblePreset: boolean = true //is this in the presets list?
   ) {
     // Calculate all possible inversions if this grouping supports them
     this.inversions = this.calculateInversions();
@@ -23,7 +23,9 @@ export class NoteGrouping {
     const inversions: OffsetIndex[][] = [this.offsets];
     let currentInversion = [...this.offsets];
     for (let i = 1; i < this.offsets.length; i++) {
-      let newInversion = ixOffsetArray(IndexUtils.firstNoteToLast(currentInversion));
+      let newInversion = ixOffsetArray(
+        IndexUtils.firstNoteToLast(currentInversion)
+      );
 
       inversions.push(newInversion);
       currentInversion = newInversion;
@@ -49,39 +51,39 @@ export class NoteGrouping {
   public static createInterval(
     id: NoteGroupingId,
     orderId: number,
-    shortName: string,
-    displayName: string,
-    semitones: number,
+    shortForm: string,
+    longForm: string,
+    semitones: number
   ): NoteGrouping {
     return new NoteGrouping(
       id,
-      shortName,
-      shortName,
-      displayName,
+      shortForm,
+      shortForm, // symbolForm same as shortForm for intervals
+      longForm,
       orderId,
-      ixOffsetArray([0, semitones]),
+      ixOffsetArray([0, semitones])
     );
   }
 
   public static createChord(
     id: NoteGroupingId,
     orderId: number,
-    lettersId: string,
-    symbolsId: string,
-    displayName: string,
+    shortForm: string,
+    symbolForm: string,
+    longForm: string,
     offsets: number[],
     hasInversions: boolean = true,
-    isVisiblePreset: boolean = true,
+    isVisiblePreset: boolean = true
   ): NoteGrouping {
     return new NoteGrouping(
       id,
-      lettersId,
-      symbolsId,
-      displayName,
+      shortForm,
+      symbolForm,
+      longForm,
       orderId,
       ixOffsetArray(offsets),
       hasInversions,
-      isVisiblePreset,
+      isVisiblePreset
     );
   }
 }

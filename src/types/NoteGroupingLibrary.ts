@@ -5,6 +5,7 @@ import {
   ChordType,
   IntervalType,
   NoteGroupingId,
+  NoteGroupingType,
   SpecialType,
 } from "./NoteGroupingTypes";
 import { ChordDisplayMode } from "./SettingModes";
@@ -26,20 +27,23 @@ class NoteGroupingLibrarySingleton {
     const grouping = this.getGroupingById(key);
     switch (chordDisplayMode) {
       case ChordDisplayMode.Letters_Long:
-        return grouping.lettersId;
+        // For intervals: use longForm ("Major 3rd"), for chords: use shortForm ("Maj")
+        return grouping.getNoteGroupingType() === NoteGroupingType.Interval
+          ? grouping.longForm
+          : grouping.shortForm;
       case ChordDisplayMode.Symbols:
-        return grouping.symbolsId;
+        return grouping.symbolForm;
       case ChordDisplayMode.Letters_Short:
-        const lettersId = grouping.lettersId;
+        const shortForm = grouping.shortForm;
         const displayId =
-          lettersId.toLowerCase() === "min"
+          shortForm.toLowerCase() === "min"
             ? "m"
-            : lettersId.toLowerCase() === "maj"
+            : shortForm.toLowerCase() === "maj"
             ? ""
-            : lettersId;
+            : shortForm;
         return displayId;
       case ChordDisplayMode.DisplayName:
-        return grouping.displayName;
+        return grouping.longForm;
       case ChordDisplayMode.ElementId:
         return `${grouping.id}`;
       default:
@@ -97,7 +101,7 @@ class NoteGroupingLibrarySingleton {
       14,
       "Maj",
       "",
-      "Major Chord",
+      "Major Triad",
       CHORD_OFFSET_PATTERNS.MAJOR
     ),
     NoteGrouping.createChord(
@@ -105,7 +109,7 @@ class NoteGroupingLibrarySingleton {
       15,
       "min",
       "m",
-      "Minor Chord",
+      "Minor Triad",
       CHORD_OFFSET_PATTERNS.MINOR
     ),
     NoteGrouping.createChord(
@@ -113,7 +117,7 @@ class NoteGroupingLibrarySingleton {
       16,
       "dim",
       "°",
-      "Diminished Chord",
+      "Diminished Triad",
       CHORD_OFFSET_PATTERNS.DIMINISHED
     ),
     NoteGrouping.createChord(
@@ -121,7 +125,7 @@ class NoteGroupingLibrarySingleton {
       17,
       "Aug",
       "+",
-      "Augmented Chord",
+      "Augmented Triad",
       CHORD_OFFSET_PATTERNS.AUGMENTED
     ),
     NoteGrouping.createChord(
@@ -147,7 +151,7 @@ class NoteGroupingLibrarySingleton {
       20,
       "7",
       "7",
-      "7th (Dominant) Chord",
+      "Dominant 7th Chord",
       [0, 4, 7, 10]
     ),
     NoteGrouping.createChord(
@@ -171,7 +175,7 @@ class NoteGroupingLibrarySingleton {
       23,
       "m7♭5",
       "ø7",
-      "Half Diminished Chord",
+      "Half Diminished 7th Chord",
       [0, 3, 6, 10]
     ),
     NoteGrouping.createChord(
@@ -230,7 +234,7 @@ class NoteGroupingLibrarySingleton {
       29,
       "add2",
       "add2",
-      "add2 Chord",
+      "Add 2nd Chord",
       [0, 2, 4, 7],
       false,
       false
@@ -326,7 +330,7 @@ class NoteGroupingLibrarySingleton {
       38,
       "2♯4",
       "2♯4",
-      "Narrow 24 Sharp Chord",
+      "Narrow 2-♯4 Chord",
       [0, 2, 6], //C D F#
       false,
       false
@@ -336,7 +340,7 @@ class NoteGroupingLibrarySingleton {
       39,
       "♭5",
       "♭5",
-      "Major chord with ♭5",
+      "Major Chord with ♭5",
       [0, 4, 6], //C E G♭
       false,
       false
@@ -346,7 +350,7 @@ class NoteGroupingLibrarySingleton {
       40,
       "♭34",
       "♭34",
-      "Narrow 3 Flat 4 Chord",
+      "Narrow ♭3-4 Chord",
       [0, 3, 5], //C Eb F
       false,
       false
