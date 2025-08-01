@@ -142,7 +142,8 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
     }
 
     const intervalDuration =
-      scalePlaybackMode === ScalePlaybackMode.SingleNote
+      scalePlaybackMode === ScalePlaybackMode.SingleNote /*||
+      scalePlaybackMode === ScalePlaybackMode.DronedSingleNote*/
         ? PLAYBACK_INTERVAL_SINGLE_NOTE
         : PLAYBACK_INTERVAL_CHORD;
     playbackTimerIdRef.current = setInterval(

@@ -57,6 +57,10 @@ export class MusicalKey {
         return this.greekModeInfo.scalePattern.getOffsets135(scaleDegreeIndex);
       case ScalePlaybackMode.Seventh:
         return this.greekModeInfo.scalePattern.getOffsets1357(scaleDegreeIndex);
+      case ScalePlaybackMode.DronedSingleNote:
+        return this.greekModeInfo.scalePattern.getTonicDroneWithRootOffset(
+          scaleDegreeIndex
+        );
       default:
         return this.greekModeInfo.scalePattern.getRootOffset(scaleDegreeIndex);
     }

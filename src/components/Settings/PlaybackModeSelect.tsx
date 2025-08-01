@@ -20,16 +20,16 @@ const PLAYBACK_MODE_OPTIONS: PlaybackModeOption[] = [
     description: "Play single notes",
   },
   {
+    id: "droned-single-note",
+    mode: ScalePlaybackMode.DronedSingleNote,
+    label: "♩_ ♪",
+    description: "Play single notes with a tonic drone",
+  },
+  {
     id: "triad",
     mode: ScalePlaybackMode.Triad,
     label: "♪♪♪",
     description: "Play triads (3-note chords)",
-  },
-  {
-    id: "seventh",
-    mode: ScalePlaybackMode.Seventh,
-    label: "♪♪♪♪",
-    description: "Play seventh chords (4-note chords)",
   },
 ];
 
