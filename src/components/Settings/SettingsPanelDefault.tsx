@@ -3,7 +3,7 @@ import { ClearButton } from "../Buttons/ClearButton";
 import { PlayNotesButton } from "../Buttons/PlayNotesButton";
 import { TransposeWidget } from "../TransposeWidget";
 import { MusicalKeySelector } from "../MusicalKeySelector";
-//import {MonochromeM odeToggle} from "../MonochromeModeToggle";
+//import {MonochromeModeToggle} from "../MonochromeModeToggle";
 //import { CircularVisModeSelect } from "../Keyboard/Circular/CircularVisModeSelect";
 
 export const SettingsPanelDefault = () => {

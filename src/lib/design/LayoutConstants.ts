@@ -12,7 +12,12 @@ export const LAYOUT_CONSTRAINTS = {
 export type OrientationType = "landscape" | "portrait";
 
 // Use the existing GlobalMode concept - layout is derived from app mode
-const DEFAULT_GRID_AREAS = {
+type GridAreaConfig = {
+  portrait: string;
+  landscape: string;
+};
+
+const DEFAULT_GRID_AREAS: GridAreaConfig = {
   portrait: `'staff staff' 
              'settings settings'
              'circular circular'
@@ -23,7 +28,7 @@ const DEFAULT_GRID_AREAS = {
               'linear settings'`,
 };
 
-const ADVANCED_GRID_AREAS = {
+const ADVANCED_GRID_AREAS: GridAreaConfig = {
   portrait: `'staff staff'
              'sidebar sidebar'
              'circular circular'                      
@@ -34,69 +39,28 @@ const ADVANCED_GRID_AREAS = {
               'circular linear'`,
 };
 
+const UNIVERSAL_LANDSCAPE_ROWS = `${STAFF_HEIGHT_PX} 1.5fr 1fr`;
+const UNIVERSAL_PORTRAIT_ROWS = `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 1.5fr) 1fr`;
+
 export const LAYOUT_CONFIGS = {
   [GlobalMode.Default]: {
-    mobile: {
-      portrait: {
-        gridRows: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 3fr) 2fr 1fr`,
-        gridAreas: DEFAULT_GRID_AREAS.portrait,
-      },
-      landscape: {
-        gridRows: `${STAFF_HEIGHT_PX} 1.5fr 0.8fr`,
-        gridAreas: DEFAULT_GRID_AREAS.landscape,
-      },
+    portrait: {
+      gridRows: UNIVERSAL_PORTRAIT_ROWS,
+      gridAreas: DEFAULT_GRID_AREAS.portrait,
     },
-    tablet: {
-      portrait: {
-        gridRows: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 3fr) 2.5fr 1.2fr`,
-        gridAreas: DEFAULT_GRID_AREAS.portrait,
-      },
-      landscape: {
-        gridRows: `${STAFF_HEIGHT_PX} 1.5fr 0.8fr`,
-        gridAreas: DEFAULT_GRID_AREAS.landscape,
-      },
-    },
-    desktop: {
-      portrait: {
-        gridRows: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 3fr) 2.5fr 1.5fr`,
-        gridAreas: DEFAULT_GRID_AREAS.portrait,
-      },
-      landscape: {
-        gridRows: `${STAFF_HEIGHT_PX} 1.5fr 0.8fr`,
-        gridAreas: DEFAULT_GRID_AREAS.landscape,
-      },
+    landscape: {
+      gridRows: UNIVERSAL_LANDSCAPE_ROWS,
+      gridAreas: DEFAULT_GRID_AREAS.landscape,
     },
   },
   [GlobalMode.Advanced]: {
-    mobile: {
-      portrait: {
-        gridRows: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 2fr) 2fr 0.8fr`,
-        gridAreas: ADVANCED_GRID_AREAS.portrait,
-      },
-      landscape: {
-        gridRows: `${STAFF_HEIGHT_PX} 1.5fr 1fr`,
-        gridAreas: ADVANCED_GRID_AREAS.landscape,
-      },
+    portrait: {
+      gridRows: UNIVERSAL_PORTRAIT_ROWS,
+      gridAreas: ADVANCED_GRID_AREAS.portrait,
     },
-    tablet: {
-      portrait: {
-        gridRows: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 2fr) 2fr 0.8fr`,
-        gridAreas: ADVANCED_GRID_AREAS.portrait,
-      },
-      landscape: {
-        gridRows: `${STAFF_HEIGHT_PX} 1.5fr 1fr`,
-        gridAreas: ADVANCED_GRID_AREAS.landscape,
-      },
-    },
-    desktop: {
-      portrait: {
-        gridRows: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 2fr) 2fr 1fr`,
-        gridAreas: ADVANCED_GRID_AREAS.portrait,
-      },
-      landscape: {
-        gridRows: `${STAFF_HEIGHT_PX} 1.5fr 1fr`,
-        gridAreas: ADVANCED_GRID_AREAS.landscape,
-      },
+    landscape: {
+      gridRows: UNIVERSAL_LANDSCAPE_ROWS,
+      gridAreas: ADVANCED_GRID_AREAS.landscape,
     },
   },
 } as const;

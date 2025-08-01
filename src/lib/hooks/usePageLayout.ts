@@ -20,7 +20,7 @@ export function usePageLayout(): PageLayout {
   const breakpoint = useBreakpoint();
 
   const orientation: OrientationType = isLandscape ? "landscape" : "portrait";
-  const config = LAYOUT_CONFIGS[mode][breakpoint][orientation];
+  const config = LAYOUT_CONFIGS[mode][orientation]; // No more [breakpoint]!
 
   return {
     gridRows: config.gridRows,
