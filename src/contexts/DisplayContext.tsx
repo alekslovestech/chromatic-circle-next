@@ -37,7 +37,7 @@ export const DisplayProvider: React.FC<{ children: ReactNode }> = ({
     isAdvanced ? KeyDisplayMode.ScaleDegree : KeyDisplayMode.NoteNames
   );
   const [chordDisplayMode, setChordDisplayMode] = useState<ChordDisplayMode>(
-    ChordDisplayMode.Letters_Short
+    ChordDisplayMode.Letters_Long
   );
 
   const [monochromeMode, setMonochromeMode] = useState<boolean>(isAdvanced);

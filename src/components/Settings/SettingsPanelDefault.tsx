@@ -11,7 +11,7 @@ export const SettingsPanelDefault = () => {
   return (
     <div
       id="settings-panel-default"
-      className={`${LAYOUT_PATTERNS.centerFlexCol} ${settingsGap} ${DEBUG_BORDER}`}
+      className={`${LAYOUT_PATTERNS.centerFlexCol} ${settingsGap} ${DEBUG_BORDER} h-full`}
     >
       {/*<CircularVisModeSelect />*/}
 
