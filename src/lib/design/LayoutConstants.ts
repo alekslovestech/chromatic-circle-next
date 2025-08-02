@@ -1,18 +1,16 @@
 import { GlobalMode } from "../hooks";
 
-export const STAFF_HEIGHT_PX = "90px";
-export const MIN_SETTINGS_HEIGHT = "220px";
-
-export const LAYOUT_CONSTRAINTS = {
-  mobile: { maxWidth: "100vw", maxHeight: "100vh" },
-  tablet: { maxWidth: "100vw", maxHeight: "100vh" },
-  desktop: { maxWidth: "1400px", maxHeight: "100vh" },
-} as const;
-
-export type OrientationType = "landscape" | "portrait";
+const STAFF_HEIGHT_PX = "90px";
+const MIN_SETTINGS_HEIGHT_DEFAULT = "220px";
+const MIN_SETTINGS_HEIGHT_ADVANCED = "140px";
 
 // Use the existing GlobalMode concept - layout is derived from app mode
 type GridAreaConfig = {
+  portrait: string;
+  landscape: string;
+};
+
+type GridRowsConfig = {
   portrait: string;
   landscape: string;
 };
@@ -39,27 +37,34 @@ const ADVANCED_GRID_AREAS: GridAreaConfig = {
               'circular linear'`,
 };
 
-const UNIVERSAL_LANDSCAPE_ROWS = `${STAFF_HEIGHT_PX} 1.5fr 1fr`;
-const UNIVERSAL_PORTRAIT_ROWS = `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT}, 1.5fr) 1fr`;
+const DEFAULT_ROWS: GridRowsConfig = {
+  portrait: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT_DEFAULT}, 1.5fr) 1fr`,
+  landscape: `${STAFF_HEIGHT_PX} 2.4fr 1fr`,
+};
+
+const ADVANCED_ROWS: GridRowsConfig = {
+  portrait: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT_ADVANCED}, 1fr) 1fr`,
+  landscape: `${STAFF_HEIGHT_PX} 3fr 1fr`,
+};
 
 export const LAYOUT_CONFIGS = {
   [GlobalMode.Default]: {
     portrait: {
-      gridRows: UNIVERSAL_PORTRAIT_ROWS,
+      gridRows: DEFAULT_ROWS.portrait,
       gridAreas: DEFAULT_GRID_AREAS.portrait,
     },
     landscape: {
-      gridRows: UNIVERSAL_LANDSCAPE_ROWS,
+      gridRows: DEFAULT_ROWS.landscape,
       gridAreas: DEFAULT_GRID_AREAS.landscape,
     },
   },
   [GlobalMode.Advanced]: {
     portrait: {
-      gridRows: UNIVERSAL_PORTRAIT_ROWS,
+      gridRows: ADVANCED_ROWS.portrait,
       gridAreas: ADVANCED_GRID_AREAS.portrait,
     },
     landscape: {
-      gridRows: UNIVERSAL_LANDSCAPE_ROWS,
+      gridRows: ADVANCED_ROWS.landscape,
       gridAreas: ADVANCED_GRID_AREAS.landscape,
     },
   },
