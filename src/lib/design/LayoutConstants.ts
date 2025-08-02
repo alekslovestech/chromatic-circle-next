@@ -9,8 +9,6 @@ export const LAYOUT_CONSTRAINTS = {
   desktop: { maxWidth: "1400px", maxHeight: "100vh" },
 } as const;
 
-export type OrientationType = "landscape" | "portrait";
-
 // Use the existing GlobalMode concept - layout is derived from app mode
 type GridAreaConfig = {
   portrait: string;
