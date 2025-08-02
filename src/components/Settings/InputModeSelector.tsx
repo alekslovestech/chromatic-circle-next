@@ -88,9 +88,7 @@ export const InputModeSelector: React.FC = () => {
       {isDefaultMode && (
         <div className="mt-normal pt-tight border-t border-gray-300 text-center">
           <Link href="/advanced">
-            <div className="scale-75">
-              <GlobalModeButton text="Scale Preview" />
-            </div>
+            <GlobalModeButton text="Scale Preview" />
           </Link>
         </div>
       )}
