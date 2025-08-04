@@ -8,7 +8,7 @@ export const viewport: Viewport = {
 
 // Base metadata shared across the application
 export const baseMetadata: Metadata = {
-  title: "Chromatic Circle App",
+  title: "Music Wheel App",
   keywords: [
     "music theory",
     "chromatic circle",
@@ -25,7 +25,7 @@ export const baseMetadata: Metadata = {
     icon: "/favicon.ico",
   },
   openGraph: {
-    title: "Chromatic Circle",
+    title: "Music Wheel",
     description:
       "Interactive music theory application for exploring the chromatic circle",
     type: "website",
@@ -35,13 +35,13 @@ export const baseMetadata: Metadata = {
         url: "https://chromatic-circle-next.vercel.app/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: "Chromatic Circle Icon",
+        alt: "Music Wheel Icon",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Chromatic Circle",
+    title: "Music Wheel",
     description:
       "Interactive music theory application for exploring the chromatic circle",
   },
@@ -50,17 +50,17 @@ export const baseMetadata: Metadata = {
 // Default view metadata
 export const defaultViewMetadata: Metadata = {
   ...baseMetadata,
-  title: "Chromatic Circle App - Intervals and Chords",
+  title: "Music Wheel App - Intervals and Chords",
   keywords: ["black and white keys", "intervals", "chord presets"],
   description: "Exploring intervals and chords on the chromatic circle",
   openGraph: {
     ...baseMetadata.openGraph,
-    title: "Default View - Chromatic Circle",
+    title: "Default View - Music Wheel",
     description: "Exploring intervals and chords on the chromatic circle",
   },
   twitter: {
     ...baseMetadata.twitter,
-    title: "Default View - Chromatic Circle",
+    title: "Default View - Music Wheel",
     description:
       "Basic features for exploring music theory with the chromatic circle",
   },
@@ -69,7 +69,7 @@ export const defaultViewMetadata: Metadata = {
 // Advanced view metadata
 export const advancedViewMetadata: Metadata = {
   ...baseMetadata,
-  title: "Chromatic Circle App - Musical Modes and Scales",
+  title: "Music Wheel App - Musical Modes and Scales",
   keywords: [
     "ionian, dorian, phrygian, lydian, mixolydian, aeolian, locrian",
     "hungarian minor",
@@ -86,12 +86,12 @@ export const advancedViewMetadata: Metadata = {
     "Advanced features for exploring music theory with the chromatic circle",
   openGraph: {
     ...baseMetadata.openGraph,
-    title: "Chromatic Circle App - Musical Modes and Scales",
+    title: "Music Wheel App - Musical Modes and Scales",
     description: "Exploring musical modes and scales on the chromatic circle",
   },
   twitter: {
     ...baseMetadata.twitter,
-    title: "Chromatic Circle App - Musical Modes and Scales",
+    title: "Music Wheel App - Musical Modes and Scales",
     description: "Exploring musical modes and scales on the chromatic circle",
   },
 };
