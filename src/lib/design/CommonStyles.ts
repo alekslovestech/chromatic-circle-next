@@ -17,8 +17,8 @@ export const COMMON_STYLES = {
   linearContainer: `${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex} overflow-hidden rounded ${DEBUG_BORDER}`,
   linearInner: `${LAYOUT_PATTERNS.fullSize}`,
 
-  settingsPanel: `flex overflow-hidden gap-snug p-snug h-full min-h-0 box-border rounded ${DEBUG_BORDER}`,
+  settingsPanel: `flex overflow-hidden gap-snug h-full min-h-0 box-border rounded ${DEBUG_BORDER}`,
 
   pageContainer: `${LAYOUT_PATTERNS.fullSize} flex flex-col px-snug md:px-loose lg:px-spacious`,
-  pageGrid: `grid p-snug gap-tight ${LAYOUT_PATTERNS.clippedContainer} flex-1 ${DEBUG_BORDER}`,
+  pageGrid: `grid gap-tight ${LAYOUT_PATTERNS.clippedContainer} flex-1 ${DEBUG_BORDER}`,
 } as const;
