@@ -71,7 +71,7 @@ module.exports = {
           scaleBoundaryColor: "rgb(60, 60, 60)", //"#3C3C3C",
         },
         containers: {
-          border: "rgba(0,0, 128, 0.1)", // Default container border
+          border: "rgba(0,0, 128, 0.05)", // Default container border
           borderDebug: "rgba(0,0,0, 0.8)", // Default container border
         },
         canvas: {
@@ -91,18 +91,6 @@ module.exports = {
         "button-sm": "1.75rem",
         "button-md": "2.25rem",
         "button-lg": "2.75rem",
-      },
-      gridTemplateAreas: {
-        default: [
-          "staff staff staff staff",
-          "circular circular settings settings",
-          "linear linear settings settings",
-        ],
-        advanced: [
-          "staff staff staff staff",
-          "circular circular sidebar sidebar",
-          "circular circular linear linear",
-        ],
       },
     },
   },
