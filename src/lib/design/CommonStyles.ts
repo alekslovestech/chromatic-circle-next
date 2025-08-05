@@ -12,7 +12,7 @@ export const COMMON_STYLES = {
   keyboardLinear: `${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex} ${LAYOUT_PATTERNS.clippedContainer} rounded ${DEBUG_BORDER}`,
 
   circularContainer: `relative p-snug overflow-hidden max-h-full rounded ${DEBUG_BORDER}`,
-  circularInner: `p-snug ${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex}`,
+  circularInner: `${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex}`,
 
   linearContainer: `${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex} overflow-hidden rounded ${DEBUG_BORDER}`,
   linearInner: `${LAYOUT_PATTERNS.fullSize}`,
