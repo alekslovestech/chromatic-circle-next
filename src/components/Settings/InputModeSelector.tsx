@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 
 import { DEBUG_BORDER, LAYOUT_PATTERNS } from "@/lib/design";
 import { InputMode } from "@/types/SettingModes";
@@ -9,7 +8,6 @@ import { useGlobalMode, GlobalMode } from "@/lib/hooks";
 
 import { Button } from "@/components/Common/Button";
 import { SectionTitle } from "@/components/Common/SectionTitle";
-import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 
 import { usePreset } from "@/contexts/PresetContext";
 
@@ -51,7 +49,6 @@ export const InputModeSelector: React.FC = () => {
 
   const gapSize = "gap-snug";
   const isAdvancedMode = globalMode === GlobalMode.Advanced;
-  const isDefaultMode = globalMode === GlobalMode.Default;
 
   return (
     <div
@@ -83,8 +80,6 @@ export const InputModeSelector: React.FC = () => {
           );
         })}
       </div>
-
-      {/* Remove the GlobalModeButton section entirely */}
     </div>
   );
 };

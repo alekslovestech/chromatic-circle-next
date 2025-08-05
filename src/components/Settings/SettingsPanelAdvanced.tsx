@@ -1,12 +1,10 @@
 "use client";
 import React from "react";
-import Link from "next/link";
 import { DEBUG_BORDER, LAYOUT_PATTERNS } from "@/lib/design";
 import { PlaybackModeSelect } from "./PlaybackModeSelect";
 import { MusicalKeySelector } from "../MusicalKeySelector";
 import { TransposeWidget } from "../TransposeWidget";
 import { PlayScaleButton } from "../Buttons/PlayScaleButton";
-import { GlobalModeButton } from "../Buttons/GlobalModeButton";
 
 export const SettingsPanelAdvanced = () => {
   const settingsGap = "gap-tight";
@@ -39,8 +37,6 @@ export const SettingsPanelAdvanced = () => {
           </div>
         </div>
       </div>
-
-      {/* Remove the mode switch section entirely */}
     </div>
   );
 };
