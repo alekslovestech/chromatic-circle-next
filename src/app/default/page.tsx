@@ -9,6 +9,8 @@ import { InputSettings } from "@/components/Settings/InputSettings";
 import { SettingsPanelDefault } from "@/components/Settings/SettingsPanelDefault";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
+import Link from "next/link";
+import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 
 export default function Home() {
   const { gridRows, gridAreas, gridColumns } = usePageLayout();
@@ -41,6 +43,13 @@ export default function Home() {
           className={`DefaultPage-circular-container ${COMMON_STYLES.circularContainer}`}
           style={{ gridArea: "circular" }}
         >
+          {/* Add GlobalModeButton positioned in top-left corner */}
+          <div className="absolute top-1 left-1 z-10">
+            <Link href="/advanced">
+              <GlobalModeButton text="Scales Mode" />
+            </Link>
+          </div>
+
           <div
             className={`DefaultPage-circular-inner ${COMMON_STYLES.circularInner}`}
           >

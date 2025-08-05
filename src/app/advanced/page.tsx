@@ -8,6 +8,8 @@ import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
 import { SettingsPanelAdvanced } from "@/components/Settings/SettingsPanelAdvanced";
 import { ChordNameDisplay } from "@/components/ChordNameDisplay";
+import Link from "next/link";
+import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 
 export default function AdvancedPage() {
   const { gridRows, gridAreas, gridColumns } = usePageLayout();
@@ -39,6 +41,13 @@ export default function AdvancedPage() {
           className={`AdvancedPage-circular ${COMMON_STYLES.circularContainer}`}
           style={{ gridArea: "circular" }}
         >
+          {/* Add GlobalModeButton positioned in top-left corner */}
+          <div className="absolute top-2 left-2 z-10">
+            <Link href="/default">
+              <GlobalModeButton text="Basic Mode" />
+            </Link>
+          </div>
+
           <div
             className={`AdvancedPage-circular-inner ${COMMON_STYLES.circularInner}`}
           >

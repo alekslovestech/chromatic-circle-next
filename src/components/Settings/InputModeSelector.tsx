@@ -84,14 +84,7 @@ export const InputModeSelector: React.FC = () => {
         })}
       </div>
 
-      {/* Add mode switch for default mode only */}
-      {isDefaultMode && (
-        <div className="mt-normal pt-tight border-t border-gray-300 text-center">
-          <Link href="/advanced">
-            <GlobalModeButton text="Scale Preview" />
-          </Link>
-        </div>
-      )}
+      {/* Remove the GlobalModeButton section entirely */}
     </div>
   );
 };

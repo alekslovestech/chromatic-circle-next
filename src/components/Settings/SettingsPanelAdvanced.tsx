@@ -40,12 +40,7 @@ export const SettingsPanelAdvanced = () => {
         </div>
       </div>
 
-      {/* Mode switch at bottom */}
-      <div className=" border-t border-gray-300 text-center">
-        <Link href="/default">
-          <GlobalModeButton text="Basic Mode" />
-        </Link>
-      </div>
+      {/* Remove the mode switch section entirely */}
     </div>
   );
 };
