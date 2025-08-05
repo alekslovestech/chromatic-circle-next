@@ -25,7 +25,7 @@ export const InputSettings: React.FC = () => {
       <div
         className={`presets-container w-2/3 h-full ${LAYOUT_PATTERNS.centerFlex}`}
       >
-        {showPresets && <PresetsSelector />}
+        {showPresets ? <PresetsSelector /> : <div className="h-full" />}
       </div>
     </div>
   );
