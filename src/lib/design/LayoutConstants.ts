@@ -39,12 +39,12 @@ const ADVANCED_GRID_AREAS: GridAreaConfig = {
 
 const DEFAULT_ROWS: GridRowsConfig = {
   portrait: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT_DEFAULT}, 1.5fr) 1fr`,
-  landscape: `${STAFF_HEIGHT_PX} 2.4fr 1fr`,
+  landscape: `${STAFF_HEIGHT_PX} 2.2fr 1fr`,
 };
 
 const ADVANCED_ROWS: GridRowsConfig = {
   portrait: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT_ADVANCED}, 1fr) 1fr`,
-  landscape: `${STAFF_HEIGHT_PX} 3fr 1fr`,
+  landscape: `${STAFF_HEIGHT_PX} 2.2fr 1fr`,
 };
 
 export const LAYOUT_CONFIGS = {
