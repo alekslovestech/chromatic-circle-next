@@ -23,6 +23,7 @@ import { useDisplay } from "./DisplayContext";
 export enum PlaybackState {
   ScaleComplete, //sound does not necessarily stop, but we're not playing a scale
   ScalePlaying, //sound is playing
+  ScalePaused, //scale playback is paused, can be resumed
 }
 
 const PLAYBACK_INTERVAL_SINGLE_NOTE = 300;
@@ -34,6 +35,8 @@ interface AudioContextType {
   scalePlaybackMode: ScalePlaybackMode;
   startScalePlayback: () => void;
   stopScalePlayback: () => void;
+  pauseScalePlayback: () => void;
+  resumeScalePlayback: () => void;
   setAudioInitialized: (initialized: boolean) => void;
   setScalePlaybackMode: (mode: ScalePlaybackMode) => void;
 }
@@ -158,6 +161,50 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
     scalePlaybackMode,
   ]);
 
+  const pauseScalePlayback = useCallback(() => {
+    console.log("AudioContext: Pausing scale playback");
+    if (playbackTimerIdRef.current) {
+      clearInterval(playbackTimerIdRef.current);
+      playbackTimerIdRef.current = null;
+    }
+    setPlaybackState(PlaybackState.ScalePaused);
+  }, []);
+
+  const resumeScalePlayback = useCallback(() => {
+    console.log("AudioContext: Resuming scale playback");
+
+    if (!isAudioInitialized) {
+      console.log("Audio not initialized yet, cannot resume scale playback");
+      return;
+    }
+
+    if (!selectedMusicalKey) {
+      throw new Error(
+        "selectedMusicalKey is missing! This indicates a context initialization problem."
+      );
+    }
+
+    if (playbackTimerIdRef.current) {
+      clearInterval(playbackTimerIdRef.current);
+    }
+
+    const intervalDuration =
+      scalePlaybackMode === ScalePlaybackMode.SingleNote
+        ? PLAYBACK_INTERVAL_SINGLE_NOTE
+        : PLAYBACK_INTERVAL_CHORD;
+
+    playbackTimerIdRef.current = setInterval(
+      () => playScaleStep(),
+      intervalDuration
+    );
+    setPlaybackState(PlaybackState.ScalePlaying);
+  }, [
+    selectedMusicalKey,
+    isAudioInitialized,
+    playScaleStep,
+    scalePlaybackMode,
+  ]);
+
   // Stop playback when mode changes
   useEffect(() => {
     console.log("🔄 Mode changed, stopping any ongoing playback");
@@ -172,9 +219,13 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
       "isAudioInitialized:",
       isAudioInitialized
     );
+
     if (scalePreviewMode && isAudioInitialized) {
-      console.log("🎵 Auto-starting scale playback");
-      startScalePlayback();
+      // Only start if completely stopped (not playing or paused)
+      if (playbackState === PlaybackState.ScaleComplete) {
+        console.log("🎵 Auto-starting scale playback");
+        startScalePlayback();
+      }
     } else {
       console.log("⏹️ Auto-stopping scale playback");
       stopScalePlayback();
@@ -192,6 +243,8 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
     scalePlaybackMode,
     startScalePlayback,
     stopScalePlayback,
+    pauseScalePlayback,
+    resumeScalePlayback,
     setAudioInitialized: setIsAudioInitialized,
     setScalePlaybackMode,
   };

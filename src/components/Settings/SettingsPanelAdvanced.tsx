@@ -5,6 +5,7 @@ import { PlaybackModeSelect } from "./PlaybackModeSelect";
 import { MusicalKeySelector } from "../MusicalKeySelector";
 import { TransposeWidget } from "../TransposeWidget";
 import { PlayScaleButton } from "../Buttons/PlayScaleButton";
+import { PauseScaleButton } from "../Buttons/PauseScaleButton";
 
 export const SettingsPanelAdvanced = () => {
   const settingsGap = "gap-tight";
@@ -34,6 +35,7 @@ export const SettingsPanelAdvanced = () => {
           <PlaybackModeSelect />
           <div className="max-w-xs self-center">
             <PlayScaleButton />
+            <PauseScaleButton />
           </div>
         </div>
       </div>
