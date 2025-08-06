@@ -6,14 +6,16 @@ import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
 
 import { ChordUtils } from "@/utils/ChordUtils";
-import { DEBUG_BORDER, TYPOGRAPHY } from "@/lib/design";
+import { TYPOGRAPHY } from "@/lib/design";
 import { LAYOUT_PATTERNS } from "@/lib/design/LayoutPatterns";
+import { useBorder } from "@/lib/hooks/useBorder";
 
 const MAX_CHORD_NAME_LENGTH = 7;
 const BREAK_CHARACTER = "\u200B";
 export const ChordNameDisplay: React.FC = () => {
   const { selectedNoteIndices, selectedMusicalKey } = useMusical();
   const { chordDisplayMode, setChordDisplayMode } = useDisplay();
+  const border = useBorder();
 
   const getOppositeDisplayMode = (
     prevDisplayMode: ChordDisplayMode
@@ -33,7 +35,7 @@ export const ChordNameDisplay: React.FC = () => {
     const { noteGroupingString, chordName } =
       ChordUtils.getDisplayInfoFromIndices(
         selectedNoteIndices,
-        chordDisplayMode,
+        ChordDisplayMode.Symbols,
         selectedMusicalKey
       );
 
@@ -45,11 +47,11 @@ export const ChordNameDisplay: React.FC = () => {
       <div
         className={`chord-name-description ${LAYOUT_PATTERNS.centerFlexCol} ${LAYOUT_PATTERNS.fullSize}`}
       >
-        <div className={`${TYPOGRAPHY.controlLabel} mb-tight`}>
+        <div className={`${TYPOGRAPHY.controlLabel}`}>
           {`${noteGroupingString}:`}
         </div>
         <div
-          className={`chord-name-value ${TYPOGRAPHY.displayText} mb-normal max-w-full text-center break-words`}
+          className={`chord-name-value ${TYPOGRAPHY.displayText} max-w-full text-center break-words`}
         >
           {chordNameDisplay}
         </div>
@@ -58,12 +60,10 @@ export const ChordNameDisplay: React.FC = () => {
   };
 
   return (
-    <div
-      className={`chord-display ${LAYOUT_PATTERNS.fullSize} ${DEBUG_BORDER}`}
-    >
+    <div className={`chord-display ${LAYOUT_PATTERNS.fullSize} ${border}`}>
       <div
         onClick={toggleChordDisplayMode}
-        className="cursor-pointer hover:text-buttons-textSelected transition-colors duration-200"
+        className={`cursor-pointer hover:text-buttons-textSelected transition-colors duration-200 ${LAYOUT_PATTERNS.fullSize}`}
       >
         {renderNoteGrouping()}
       </div>

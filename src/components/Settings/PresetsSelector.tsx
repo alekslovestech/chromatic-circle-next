@@ -15,7 +15,8 @@ import { useMusical } from "@/contexts/MusicalContext";
 import { SectionTitle } from "../Common/SectionTitle";
 import { InversionButton } from "../Buttons/InversionButton";
 import { PresetButton } from "./PresetButton";
-import { DEBUG_BORDER, LAYOUT_PATTERNS } from "@/lib/design";
+import { LAYOUT_PATTERNS } from "@/lib/design";
+import { useBorder } from "@/lib/hooks/useBorder";
 
 export const PresetsSelector: React.FC = () => {
   const {
@@ -27,7 +28,7 @@ export const PresetsSelector: React.FC = () => {
   } = usePreset();
 
   const { selectedNoteIndices, setSelectedNoteIndices } = useMusical();
-
+  const border = useBorder();
   if (
     inputMode !== InputMode.ChordPresets &&
     inputMode !== InputMode.IntervalPresets
@@ -58,7 +59,7 @@ export const PresetsSelector: React.FC = () => {
     const presets = NoteGroupingLibrary.IntervalOrChordIds(true);
     return (
       <div
-        className={`preset-buttons-grid grid gap-tight w-full ${DEBUG_BORDER}`}
+        className={`preset-buttons-grid grid gap-tight w-full ${border}`}
         style={{ gridTemplateColumns: "repeat(2, 1fr)" }}
       >
         {presets
@@ -82,7 +83,7 @@ export const PresetsSelector: React.FC = () => {
     const presets = NoteGroupingLibrary.IntervalOrChordIds(false);
     return (
       <div
-        className={`preset-buttons-grid grid gap-tight w-full ${DEBUG_BORDER}`}
+        className={`preset-buttons-grid grid gap-tight w-full ${border}`}
         style={{ gridTemplateColumns: "repeat(4, 1fr)" }}
       >
         {presets
@@ -108,9 +109,7 @@ export const PresetsSelector: React.FC = () => {
     if (presetDefinition && presetDefinition.hasInversions) {
       const inversionCount = presetDefinition.inversions.length;
       return (
-        <div
-          className={`inversion-controls flex flex-col gap-tight ${DEBUG_BORDER}`}
-        >
+        <div className={`inversion-controls flex flex-col gap-tight ${border}`}>
           <SectionTitle centered={true}>Inversion</SectionTitle>
           <div
             className={`inversion-button-container flex flex-row gap-snug justify-center`}
@@ -127,7 +126,7 @@ export const PresetsSelector: React.FC = () => {
 
   return (
     <div
-      className={`presets-selector ${DEBUG_BORDER} flex flex-col gap-snug ${LAYOUT_PATTERNS.fullSize}`}
+      className={`presets-selector ${border} flex flex-col gap-snug ${LAYOUT_PATTERNS.fullSize}`}
     >
       {inputMode === InputMode.IntervalPresets
         ? renderIntervalPresetButtons()

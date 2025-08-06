@@ -2,9 +2,10 @@
 
 import React from "react";
 
-import { DEBUG_BORDER, LAYOUT_PATTERNS } from "@/lib/design";
+import { LAYOUT_PATTERNS } from "@/lib/design";
 import { InputMode } from "@/types/SettingModes";
 import { useGlobalMode, GlobalMode } from "@/lib/hooks";
+import { useBorder } from "@/lib/hooks/useBorder";
 
 import { Button } from "@/components/Common/Button";
 import { SectionTitle } from "@/components/Common/SectionTitle";
@@ -43,6 +44,7 @@ const AVAILABLE_MODES: ModeSelectorButton[] = [
 export const InputModeSelector: React.FC = () => {
   const { inputMode, setInputMode } = usePreset();
   const globalMode = useGlobalMode();
+  const border = useBorder();
   const handleModeChange = (newMode: InputMode) => {
     setInputMode(newMode);
   };
@@ -52,7 +54,7 @@ export const InputModeSelector: React.FC = () => {
 
   return (
     <div
-      className={`input-mode-selector text-center space-y-2 ${DEBUG_BORDER} ${LAYOUT_PATTERNS.fullSize}`}
+      className={`input-mode-selector text-center space-y-2 ${border} ${LAYOUT_PATTERNS.fullSize}`}
     >
       <SectionTitle>Input Mode</SectionTitle>
       <div

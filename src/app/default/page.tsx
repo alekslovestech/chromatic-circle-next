@@ -2,6 +2,7 @@
 
 import { COMMON_STYLES, NOTATION_LAYOUT } from "@/lib/design";
 import { usePageLayout } from "@/lib/hooks/usePageLayout";
+import { useBorder } from "@/lib/hooks/useBorder";
 
 import { ChordNameDisplay } from "@/components/ChordNameDisplay";
 import { StaffRenderer } from "@/components/StaffRenderer";
@@ -14,13 +15,14 @@ import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 
 export default function Home() {
   const { gridRows, gridAreas, gridColumns } = usePageLayout();
+  const border = useBorder();
 
   return (
     <div
-      className={`DefaultPage-container ${COMMON_STYLES.pageContainer} bg-canvas-bgDefault`}
+      className={`DefaultPage-container ${COMMON_STYLES.pageContainer} bg-canvas-bgDefault ${border}`}
     >
       <div
-        className={`DefaultPage-grid ${COMMON_STYLES.pageGrid}`}
+        className={`DefaultPage-grid ${COMMON_STYLES.pageGrid} ${border}`}
         style={{
           gridTemplateColumns: gridColumns,
           gridTemplateRows: gridRows,
@@ -40,7 +42,7 @@ export default function Home() {
         </div>
 
         <div
-          className={`DefaultPage-circular-container ${COMMON_STYLES.circularContainer}`}
+          className={`DefaultPage-circular-container ${COMMON_STYLES.circularContainer} ${border}`}
           style={{ gridArea: "circular" }}
         >
           {/* Add GlobalModeButton positioned in top-left corner */}
@@ -51,7 +53,7 @@ export default function Home() {
           </div>
 
           <div
-            className={`DefaultPage-circular-inner ${COMMON_STYLES.circularInner}`}
+            className={`DefaultPage-circular-inner ${COMMON_STYLES.circularInner} ${border}`}
           >
             <KeyboardCircular />
             <div className="flex-1 h-full">
@@ -66,18 +68,18 @@ export default function Home() {
         </div>
 
         <div
-          className={`DefaultPage-linear-container ${COMMON_STYLES.linearContainer}`}
+          className={`DefaultPage-linear-container ${COMMON_STYLES.linearContainer} ${border}`}
           style={{ gridArea: "linear" }}
         >
           <div
-            className={`DefaultPage-linear-inner ${COMMON_STYLES.linearInner}`}
+            className={`DefaultPage-linear-inner ${COMMON_STYLES.linearInner} ${border}`}
           >
             <KeyboardLinear />
           </div>
         </div>
 
         <div
-          className={`DefaultPage-settings-container ${COMMON_STYLES.settingsPanel}`}
+          className={`DefaultPage-settings-container ${COMMON_STYLES.settingsPanel} ${border}`}
           style={{ gridArea: "settings" }}
         >
           <InputSettings />

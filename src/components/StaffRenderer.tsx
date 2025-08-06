@@ -11,7 +11,8 @@ import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { isMajor } from "@/types/Keys/KeyType";
 import { KeyNoteResolver } from "@/types/Keys/KeyNoteResolver";
 
-import { COMMON_STYLES, DEBUG_BORDER } from "@/lib/design";
+import { COMMON_STYLES } from "@/lib/design";
+import { useBorder } from "@/lib/hooks/useBorder";
 import { useMusical } from "@/contexts/MusicalContext";
 
 interface StaffRendererProps {
@@ -64,7 +65,7 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
   const staffDivRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const { selectedNoteIndices, selectedMusicalKey } = useMusical();
-
+  const border = useBorder();
   useEffect(() => {
     if (!staffDivRef.current || !containerRef.current) return;
 
@@ -119,7 +120,7 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
 
   return (
     <div
-      className={`staff-container ${COMMON_STYLES.staff} ${DEBUG_BORDER}`}
+      className={`staff-container ${COMMON_STYLES.staff} ${border}`}
       style={style}
       ref={containerRef}
     >
