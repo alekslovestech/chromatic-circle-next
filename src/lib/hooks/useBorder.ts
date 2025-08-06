@@ -1,15 +1,21 @@
 "use client";
+import { useEffect, useState } from "react";
 import { useGlobalMode, GlobalMode } from "./useGlobalMode";
 
 export const useBorder = () => {
   const globalMode = useGlobalMode();
-  const isDemo = globalMode === GlobalMode.Demo;
+  const [isClient, setIsClient] = useState(false);
 
-  if (isDemo) {
-    return "border border-transparent";
-  }
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
-  return process.env.NODE_ENV === "development"
-    ? "border border-containers-borderDebug"
-    : "border border-containers-border";
+  // During SSR, return the default border to avoid hydration mismatch
+  if (!isClient) return "border border-containers-border";
+
+  return globalMode === GlobalMode.Demo
+    ? "border border-transparent"
+    : `border border-containers-${
+        process.env.NODE_ENV === "development" ? "borderDebug" : "border"
+      }`;
 };
