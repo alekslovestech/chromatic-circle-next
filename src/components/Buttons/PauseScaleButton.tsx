@@ -7,10 +7,10 @@ export const PauseScaleButton: React.FC = () => {
   const handleClick = () => {
     if (playbackState === PlaybackState.ScalePlaying) {
       console.log("PauseScaleButton: Pausing scale playback...");
-      pauseScalePlayback(); // Pauses at current position
+      pauseScalePlayback();
     } else if (playbackState === PlaybackState.ScalePaused) {
       console.log("PauseScaleButton: Resuming scale playback...");
-      resumeScalePlayback(); // Resumes from current position
+      resumeScalePlayback();
     }
   };
 
@@ -21,7 +21,6 @@ export const PauseScaleButton: React.FC = () => {
     return "Pause";
   };
 
-  // Only show the button when scale is playing or paused
   if (playbackState === PlaybackState.ScaleComplete) {
     return null;
   }
