@@ -5,6 +5,7 @@ export const LAYOUT_PATTERNS = {
   // Common flex patterns
   centerFlex: "flex items-center justify-center",
   centerFlexCol: "flex flex-col items-center justify-center",
+  centerFlexRowGap: "flex flex-row items-center justify-center gap-snug",
   spaceBetween: "flex items-center justify-between",
 
   // Common overflow patterns

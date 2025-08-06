@@ -4,11 +4,12 @@ import { Button } from "../Common/Button";
 export const PlayScaleButton: React.FC = () => {
   const { playbackState, startScalePlayback, stopScalePlayback } = useAudio();
 
+  const isPLayingOrPaused = () =>
+    playbackState === PlaybackState.ScalePlaying ||
+    playbackState === PlaybackState.ScalePaused;
+
   const handleClick = () => {
-    if (
-      playbackState === PlaybackState.ScalePlaying ||
-      playbackState === PlaybackState.ScalePaused
-    ) {
+    if (isPLayingOrPaused()) {
       console.log("PlayScaleButton: Stopping scale playback...");
       stopScalePlayback(); // This resets to beginning
     } else {
@@ -18,18 +19,12 @@ export const PlayScaleButton: React.FC = () => {
   };
 
   const getButtonText = () => {
-    if (
-      playbackState === PlaybackState.ScalePlaying ||
-      playbackState === PlaybackState.ScalePaused
-    ) {
-      return "Stop Scale";
-    }
-    return "Play Scale";
+    return isPLayingOrPaused() ? "■ Stop" : "▶ Play";
   };
 
   return (
     <Button size="md" variant="action" onClick={handleClick}>
-      {getButtonText()}
+      <span style={{ color: "inherit" }}>{getButtonText()}</span>
     </Button>
   );
 };

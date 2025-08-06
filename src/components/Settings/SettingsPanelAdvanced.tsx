@@ -33,7 +33,9 @@ export const SettingsPanelAdvanced = () => {
           className={`${LAYOUT_PATTERNS.centerFlexCol} ${settingsGap} rounded p-2 flex-1 ${DEBUG_BORDER}`}
         >
           <PlaybackModeSelect />
-          <div className="max-w-xs self-center">
+          <div
+            className={`${LAYOUT_PATTERNS.centerFlexRowGap} max-w-xs self-center`}
+          >
             <PlayScaleButton />
             <PauseScaleButton />
           </div>
