@@ -5,19 +5,31 @@ export const PlayScaleButton: React.FC = () => {
   const { playbackState, startScalePlayback, stopScalePlayback } = useAudio();
 
   const handleClick = () => {
-    if (playbackState === PlaybackState.ScalePlaying) {
+    if (
+      playbackState === PlaybackState.ScalePlaying ||
+      playbackState === PlaybackState.ScalePaused
+    ) {
       console.log("PlayScaleButton: Stopping scale playback...");
-      stopScalePlayback();
+      stopScalePlayback(); // This resets to beginning
     } else {
-      startScalePlayback();
+      console.log("PlayScaleButton: Starting scale playback...");
+      startScalePlayback(); // This starts from beginning
     }
+  };
+
+  const getButtonText = () => {
+    if (
+      playbackState === PlaybackState.ScalePlaying ||
+      playbackState === PlaybackState.ScalePaused
+    ) {
+      return "Stop Scale";
+    }
+    return "Play Scale";
   };
 
   return (
     <Button size="md" variant="action" onClick={handleClick}>
-      {playbackState === PlaybackState.ScalePlaying
-        ? "Stop Scale"
-        : "Play Scale"}
+      {getButtonText()}
     </Button>
   );
 };
