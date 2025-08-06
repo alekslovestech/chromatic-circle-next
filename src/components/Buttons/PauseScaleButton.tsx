@@ -15,19 +15,14 @@ export const PauseScaleButton: React.FC = () => {
   };
 
   const getButtonText = () => {
-    if (playbackState === PlaybackState.ScalePaused) {
-      return "Resume";
-    }
-    return "Pause";
+    return playbackState === PlaybackState.ScalePaused ? "▶ Resume" : "⏸ Pause";
   };
 
-  if (playbackState === PlaybackState.ScaleComplete) {
-    return null;
-  }
+  if (playbackState === PlaybackState.ScaleComplete) return null;
 
   return (
     <Button size="md" variant="action" onClick={handleClick}>
-      {getButtonText()}
+      <span style={{ color: "inherit" }}>{getButtonText()}</span>
     </Button>
   );
 };
