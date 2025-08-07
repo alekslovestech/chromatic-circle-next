@@ -4,7 +4,7 @@ import * as Tone from "tone";
 
 import { TWELVE } from "@/types/NoteConstants";
 import { ActualIndex } from "@/types/IndexTypes";
-import { useGlobalMode } from "@/lib/hooks";
+import { useIsDemoMode } from "@/lib/hooks/useGlobalMode";
 
 import { useAudio } from "@/contexts/AudioContext";
 import { useMusical } from "@/contexts/MusicalContext";
@@ -19,7 +19,10 @@ export const useAudioPlayer = () => {
   const synthRef = useRef<Tone.PolySynth | null>(null);
   const { isAudioInitialized, setAudioInitialized } = useAudio();
   const { selectedNoteIndices } = useMusical();
-  const globalMode = useGlobalMode();
+  const isDemoMode = useIsDemoMode();
+
+  //4n=500ms at default tempo
+  const noteDuration = isDemoMode ? "4n" : "8n.";
 
   // Check if Tone.js is already running and set up user interaction
   useEffect(() => {
@@ -33,6 +36,10 @@ export const useAudioPlayer = () => {
       const handleUserInteraction = async () => {
         try {
           if (Tone.getContext().state !== "running") {
+            // Set better audio context settings before starting
+            Tone.getContext().lookAhead = 0.05;
+            Tone.getContext().latencyHint = "interactive";
+
             await Tone.start();
             console.log("Tone.js context started");
           }
@@ -63,21 +70,30 @@ export const useAudioPlayer = () => {
 
     const initSynth = async () => {
       try {
+        const envelope = isDemoMode
+          ? {
+              attack: 0.05, // Slower attack to reduce clicks
+              decay: 0.2,
+              sustain: 0.7,
+              release: 1.5,
+            }
+          : {
+              attack: 0.03, // Slower attack to reduce clicks
+              decay: 0.1,
+              sustain: 0.3,
+              release: 0.8,
+            };
+
         // Create a polyphonic synth
         const synth = new Tone.PolySynth(Tone.Synth, {
           oscillator: {
             type: "fatsine2",
           },
-          envelope: {
-            attack: 0.02,
-            decay: 0.1,
-            sustain: 0.3,
-            release: 0.8,
-          },
+          envelope,
         }).toDestination();
 
         // Set initial volume
-        Tone.getDestination().volume.value = -5; // -12 dB (quieter)
+        Tone.getDestination().volume.value = -8; // Even quieter to reduce clipping
 
         if (isActive) {
           synthRef.current = synth;
@@ -118,12 +134,12 @@ export const useAudioPlayer = () => {
 
       try {
         const frequency = getFrequencyFromIndex(index);
-        synthRef.current.triggerAttackRelease(frequency, "8n.");
+        synthRef.current.triggerAttackRelease(frequency, noteDuration);
       } catch (error) {
         console.error("Failed to play note:", error);
       }
     },
-    [getFrequencyFromIndex, isAudioInitialized]
+    [getFrequencyFromIndex, isAudioInitialized, noteDuration]
   );
 
   // Play all selected notes (for manual triggering)
@@ -138,7 +154,7 @@ export const useAudioPlayer = () => {
   // Handle note changes based on mode (auto-playback)
   useEffect(() => {
     playSelectedNotes();
-  }, [selectedNoteIndices, globalMode, playSelectedNotes]);
+  }, [selectedNoteIndices, playSelectedNotes]);
 
   // Clean up on unmount
   useEffect(() => {
