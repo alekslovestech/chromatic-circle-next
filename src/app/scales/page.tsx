@@ -7,7 +7,7 @@ import { useBorder } from "@/lib/hooks/useBorder";
 import { StaffRenderer } from "@/components/StaffRenderer";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
-import { SettingsPanelAdvanced } from "@/components/Settings/SettingsPanelAdvanced";
+import { SettingsPanelScales } from "@/components/Settings/SettingsPanelScales";
 import { ChordNameDisplay } from "@/components/ChordNameDisplay";
 import Link from "next/link";
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
@@ -18,10 +18,10 @@ export default function ScalesdPage() {
 
   return (
     <div
-      className={`AdvancedPage-container ${COMMON_STYLES.pageContainer} bg-canvas-bgAdvanced ${border}`}
+      className={`ScalesPage-container ${COMMON_STYLES.pageContainer} bg-canvas-bgScales ${border}`}
     >
       <div
-        className={`AdvancedPage-grid ${COMMON_STYLES.pageGrid} ${border}`}
+        className={`ScalesPage-grid ${COMMON_STYLES.pageGrid} ${border}`}
         style={{
           gridTemplateColumns: gridColumns,
           gridTemplateRows: gridRows,
@@ -40,7 +40,7 @@ export default function ScalesdPage() {
           <ChordNameDisplay />
         </div>
         <div
-          className={`AdvancedPage-circular ${COMMON_STYLES.circularContainer} ${border}`}
+          className={`ScalesPage-circular ${COMMON_STYLES.circularContainer} ${border}`}
           style={{ gridArea: "circular" }}
         >
           {/* Add GlobalModeButton positioned in top-left corner */}
@@ -51,28 +51,28 @@ export default function ScalesdPage() {
           </div>
 
           <div
-            className={`AdvancedPage-circular-inner ${COMMON_STYLES.circularInner} ${border}`}
+            className={`ScalesPage-circular-inner ${COMMON_STYLES.circularInner} ${border}`}
           >
             <KeyboardCircular />
           </div>
         </div>
 
         <div
-          className={`AdvancedPage-linear-container ${COMMON_STYLES.linearContainer} ${border}`}
+          className={`ScalesPage-linear-container ${COMMON_STYLES.linearContainer} ${border}`}
           style={{ gridArea: "linear" }}
         >
           <div
-            className={`AdvancedPage-linear-inner ${COMMON_STYLES.linearInner} ${border}`}
+            className={`ScalesPage-linear-inner ${COMMON_STYLES.linearInner} ${border}`}
           >
             <KeyboardLinear />
           </div>
         </div>
 
         <div
-          className={`AdvancedPage-settings-container ${COMMON_STYLES.settingsPanel} ${border}`}
+          className={`ScalesPage-settings-container ${COMMON_STYLES.settingsPanel} ${border}`}
           style={{ gridArea: "sidebar" }}
         >
-          <SettingsPanelAdvanced />
+          <SettingsPanelScales />
         </div>
       </div>
     </div>

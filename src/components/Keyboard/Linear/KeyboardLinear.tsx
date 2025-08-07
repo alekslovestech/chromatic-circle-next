@@ -14,10 +14,10 @@ export const KeyboardLinear = () => {
   const { selectedMusicalKey } = useMusical();
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const isAdvanced = useIsScalePreviewMode();
+  const isScales = useIsScalePreviewMode();
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const renderScaleBoundary = () => {
-    if (!isAdvanced) return null;
+    if (!isScales) return null;
 
     const { x1, x2 } = LinearKeyboardUtils.calculateScaleBoundaryPercentages(
       selectedMusicalKey.tonicIndex

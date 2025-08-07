@@ -8,7 +8,7 @@ import { TransposeWidget } from "../TransposeWidget";
 import { PlayScaleButton } from "../Buttons/PlayScaleButton";
 import { PauseScaleButton } from "../Buttons/PauseScaleButton";
 
-export const SettingsPanelAdvanced = () => {
+export const SettingsPanelScales = () => {
   const settingsGap = "gap-tight";
   const outerGapVertical = "gap-tight";
   const outerGapHorizontal = "gap-normal";
@@ -16,7 +16,7 @@ export const SettingsPanelAdvanced = () => {
 
   return (
     <div
-      id="settings-panel-advanced"
+      id="settings-panel-scales"
       className={`flex flex-col ${outerGapVertical} ${border} ${LAYOUT_PATTERNS.fullSize}`}
     >
       <div className={`flex justify-between ${outerGapHorizontal} flex-1`}>

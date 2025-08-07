@@ -60,7 +60,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     chromaticIndex,
     selectedNoteIndices
   );
-  const isAdvanced = useIsScalePreviewMode();
+  const isScales = useIsScalePreviewMode();
   const isBlack = isBlackKey(
     chromaticToActual(chromaticIndex, ixOctaveOffset(0))
   );
@@ -68,7 +68,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   // Add color classes based on visual state and selection
   const keyColors = VisualStateUtils.getKeyColors(
     chromaticIndex,
-    isAdvanced,
+    isScales,
     selectedMusicalKey,
     monochromeMode,
     false,
@@ -77,7 +77,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     true
   );
 
-  if (isAdvanced) baseClasses.push("disabled");
+  if (isScales) baseClasses.push("disabled");
 
   const id = IndexUtils.StringWithPaddedIndex("circularKey", chromaticIndex);
   const noteText = selectedMusicalKey.getDisplayString(

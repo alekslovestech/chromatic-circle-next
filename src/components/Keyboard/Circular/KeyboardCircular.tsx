@@ -29,7 +29,7 @@ export const KeyboardCircular = () => {
       : numNotes === 2
       ? CircularVisMode.Radial
       : CircularVisMode.None;
-  const isAdvanced = useIsScalePreviewMode();
+  const isScales = useIsScalePreviewMode();
   const coords = [-MAX_RADIUS, -MAX_RADIUS, MAX_RADIUS * 2, MAX_RADIUS * 2];
   const chordColor = ColorUtils.getChordColor(selectedNoteIndices);
 
@@ -57,7 +57,7 @@ export const KeyboardCircular = () => {
   };
 
   const renderScaleBoundary = () => {
-    if (!isAdvanced) return null;
+    if (!isScales) return null;
     const [point_start, point_end] = getLineCartesianPoints(
       selectedMusicalKey.tonicIndex,
       INNER_RADIUS,

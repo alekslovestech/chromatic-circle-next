@@ -17,9 +17,9 @@ const MusicalContext = createContext<MusicalSettings | null>(null);
 export const MusicalProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const isAdvanced = useIsScalePreviewMode();
+  const isScales = useIsScalePreviewMode();
   const [selectedNoteIndices, setSelectedNoteIndices] = useState<ActualIndex[]>(
-    isAdvanced ? [] : ixActualArray([7])
+    isScales ? [] : ixActualArray([7])
   );
   const [selectedMusicalKey, setSelectedMusicalKey] =
     useState<MusicalKey>(DEFAULT_MUSICAL_KEY);

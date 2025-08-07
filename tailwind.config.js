@@ -76,7 +76,7 @@ module.exports = {
         },
         canvas: {
           bgDefault: "rgb(247, 248, 250)", //"#F7F8FA",
-          bgAdvanced: "rgb(220, 220, 220)", //"#F0F2F5",
+          bgScales: "rgb(220, 220, 220)", //"#F0F2F5",
         },
       },
       spacing: {

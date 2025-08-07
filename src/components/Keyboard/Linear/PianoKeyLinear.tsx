@@ -35,11 +35,11 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
 
   const baseClasses = ["key-base", "piano-key"];
   const isSelected = selectedNoteIndices.includes(actualIndex);
-  const isAdvanced = useIsScalePreviewMode();
+  const isScales = useIsScalePreviewMode();
 
   const keyColors = VisualStateUtils.getKeyColors(
     chromaticIndex,
-    isAdvanced,
+    isScales,
     selectedMusicalKey,
     monochromeMode,
     isRootNote,
@@ -49,7 +49,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   );
 
   if (isShortKey) baseClasses.push("short");
-  if (isAdvanced) baseClasses.push("disabled");
+  if (isScales) baseClasses.push("disabled");
 
   const id = IndexUtils.StringWithPaddedIndex("linearKey", actualIndex);
   const noteText = selectedMusicalKey.getDisplayString(

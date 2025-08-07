@@ -26,20 +26,20 @@ const DisplayContext = createContext<DisplaySettings | null>(null);
 export const DisplayProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const isAdvanced = useIsScalePreviewMode();
+  const isScales = useIsScalePreviewMode();
 
   const [circularVisMode, setCircularVisMode] = useState<CircularVisMode>(
-    isAdvanced ? CircularVisMode.Polygon : CircularVisMode.None
+    isScales ? CircularVisMode.Polygon : CircularVisMode.None
   );
-  const [scalePreviewMode, setScalePreviewMode] = useState<boolean>(isAdvanced);
+  const [scalePreviewMode, setScalePreviewMode] = useState<boolean>(isScales);
   const [keyTextMode, setKeyTextMode] = useState<KeyDisplayMode>(
-    isAdvanced ? KeyDisplayMode.ScaleDegree : KeyDisplayMode.NoteNames
+    isScales ? KeyDisplayMode.ScaleDegree : KeyDisplayMode.NoteNames
   );
   const [chordDisplayMode, setChordDisplayMode] = useState<ChordDisplayMode>(
     ChordDisplayMode.Letters_Long
   );
 
-  const [monochromeMode, setMonochromeMode] = useState<boolean>(isAdvanced);
+  const [monochromeMode, setMonochromeMode] = useState<boolean>(isScales);
 
   const value: DisplaySettings = {
     circularVisMode,

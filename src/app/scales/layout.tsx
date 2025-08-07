@@ -1,8 +1,8 @@
-import { advancedViewMetadata } from "@/lib/metadata";
+import { scalesViewMetadata } from "@/lib/metadata";
 
-export const metadata = advancedViewMetadata;
+export const metadata = scalesViewMetadata;
 
-export default function AdvancedLayout({
+export default function ScalesLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
