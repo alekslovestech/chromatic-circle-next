@@ -2,7 +2,7 @@ import { GlobalMode } from "../hooks";
 
 const STAFF_HEIGHT_PX = "90px";
 const MIN_SETTINGS_HEIGHT_DEFAULT = "220px";
-const MIN_SETTINGS_HEIGHT_ADVANCED = "140px";
+const MIN_SETTINGS_HEIGHT_SCALES = "140px";
 
 // Use the existing GlobalMode concept - layout is derived from app mode
 type GridAreaConfig = {
@@ -26,7 +26,7 @@ const DEFAULT_GRID_AREAS: GridAreaConfig = {
               'linear settings'`,
 };
 
-const ADVANCED_GRID_AREAS: GridAreaConfig = {
+const SCALES_GRID_AREAS: GridAreaConfig = {
   portrait: `'staff staff'
              'sidebar sidebar'
              'circular circular'                      
@@ -42,8 +42,8 @@ const DEFAULT_ROWS: GridRowsConfig = {
   landscape: `${STAFF_HEIGHT_PX} 1.8fr 1.2fr`, // More balanced: 60% vs 40%
 };
 
-const ADVANCED_ROWS: GridRowsConfig = {
-  portrait: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT_ADVANCED}, 1fr) 1fr`,
+const SCALES_ROWS: GridRowsConfig = {
+  portrait: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT_SCALES}, 1fr) 1fr`,
   landscape: `${STAFF_HEIGHT_PX} 1.8fr 1.2fr`, // Same ratio for consistency
 };
 
@@ -58,14 +58,14 @@ export const LAYOUT_CONFIGS = {
       gridAreas: DEFAULT_GRID_AREAS.landscape,
     },
   },
-  [GlobalMode.Advanced]: {
+  [GlobalMode.Scales]: {
     portrait: {
-      gridRows: ADVANCED_ROWS.portrait,
-      gridAreas: ADVANCED_GRID_AREAS.portrait,
+      gridRows: SCALES_ROWS.portrait,
+      gridAreas: SCALES_GRID_AREAS.portrait,
     },
     landscape: {
-      gridRows: ADVANCED_ROWS.landscape,
-      gridAreas: ADVANCED_GRID_AREAS.landscape,
+      gridRows: SCALES_ROWS.landscape,
+      gridAreas: SCALES_GRID_AREAS.landscape,
     },
   },
   [GlobalMode.Demo]: {

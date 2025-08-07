@@ -49,7 +49,7 @@ export const InputModeSelector: React.FC = () => {
   };
 
   const gapSize = "gap-snug";
-  const isAdvancedMode = useIsScalePreviewMode();
+  const isScalesMode = useIsScalePreviewMode();
 
   return (
     <div
@@ -61,7 +61,7 @@ export const InputModeSelector: React.FC = () => {
       >
         {AVAILABLE_MODES.map(({ id, mode, description }) => {
           const isHidden =
-            isAdvancedMode &&
+            isScalesMode &&
             (mode === InputMode.IntervalPresets ||
               mode === InputMode.ChordPresets);
 

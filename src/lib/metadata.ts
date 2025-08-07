@@ -66,8 +66,8 @@ export const defaultViewMetadata: Metadata = {
   },
 };
 
-// Advanced view metadata
-export const advancedViewMetadata: Metadata = {
+// Scales view metadata
+export const scalesViewMetadata: Metadata = {
   ...baseMetadata,
   title: "Music Wheel App - Musical Modes and Scales",
   keywords: [
@@ -82,8 +82,7 @@ export const advancedViewMetadata: Metadata = {
     "chords",
     "progressions",
   ],
-  description:
-    "Advanced features for exploring music theory with the chromatic circle",
+  description: "Scales Preview with the chromatic circle",
   openGraph: {
     ...baseMetadata.openGraph,
     title: "Music Wheel App - Musical Modes and Scales",
