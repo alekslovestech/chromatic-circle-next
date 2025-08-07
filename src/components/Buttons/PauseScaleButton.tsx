@@ -1,6 +1,7 @@
 import { PlaybackState, useAudio } from "@/contexts/AudioContext";
 import { Button } from "../Common/Button";
 import { PauseIcon, ResumeIcon } from "../Icons";
+import { PLAYBACK_BUTTON_STYLES } from "@/lib/design/PlaybackButtonStyles";
 
 export const PauseScaleButton: React.FC = () => {
   const { playbackState, pauseScalePlayback, resumeScalePlayback } = useAudio();
@@ -18,9 +19,9 @@ export const PauseScaleButton: React.FC = () => {
   return (
     <Button size="md" variant="action" onClick={handleClick}>
       {playbackState === PlaybackState.ScalePaused ? (
-        <ResumeIcon className="text-playback-scalesMode" />
+        <ResumeIcon className={PLAYBACK_BUTTON_STYLES.scalesMode} />
       ) : (
-        <PauseIcon className="text-playback-scalesMode" />
+        <PauseIcon className={PLAYBACK_BUTTON_STYLES.scalesMode} />
       )}
     </Button>
   );
