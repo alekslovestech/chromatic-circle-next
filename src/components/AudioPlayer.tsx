@@ -38,7 +38,6 @@ export const useAudioPlayer = () => {
           if (Tone.getContext().state !== "running") {
             // Set better audio context settings before starting
             Tone.getContext().lookAhead = 0.05;
-            Tone.getContext().latencyHint = "interactive";
 
             await Tone.start();
             console.log("Tone.js context started");
