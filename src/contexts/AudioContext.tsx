@@ -26,8 +26,8 @@ export enum PlaybackState {
   ScalePaused, //scale playback is paused, can be resumed
 }
 
-const PLAYBACK_INTERVAL_SINGLE_NOTE = 300;
-const PLAYBACK_INTERVAL_CHORD = 500;
+const PLAYBACK_DURATION_SINGLE_NOTE = 300;
+const PLAYBACK_DURATION_CHORD = 500;
 
 interface AudioContextType {
   isAudioInitialized: boolean;
@@ -147,8 +147,8 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
     const intervalDuration =
       scalePlaybackMode === ScalePlaybackMode.SingleNote /*||
       scalePlaybackMode === ScalePlaybackMode.DronedSingleNote*/
-        ? PLAYBACK_INTERVAL_SINGLE_NOTE
-        : PLAYBACK_INTERVAL_CHORD;
+        ? PLAYBACK_DURATION_SINGLE_NOTE
+        : PLAYBACK_DURATION_CHORD;
     playbackTimerIdRef.current = setInterval(
       () => playScaleStep(),
       intervalDuration
@@ -190,8 +190,8 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const intervalDuration =
       scalePlaybackMode === ScalePlaybackMode.SingleNote
-        ? PLAYBACK_INTERVAL_SINGLE_NOTE
-        : PLAYBACK_INTERVAL_CHORD;
+        ? PLAYBACK_DURATION_SINGLE_NOTE
+        : PLAYBACK_DURATION_CHORD;
 
     playbackTimerIdRef.current = setInterval(
       () => playScaleStep(),
