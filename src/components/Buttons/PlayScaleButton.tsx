@@ -1,5 +1,6 @@
 import { PlaybackState, useAudio } from "@/contexts/AudioContext";
 import { Button } from "../Common/Button";
+import { PlayIcon, StopIcon } from "../Icons";
 
 export const PlayScaleButton: React.FC = () => {
   const { playbackState, startScalePlayback, stopScalePlayback } = useAudio();
@@ -10,21 +11,19 @@ export const PlayScaleButton: React.FC = () => {
 
   const handleClick = () => {
     if (isPLayingOrPaused()) {
-      console.log("PlayScaleButton: Stopping scale playback...");
-      stopScalePlayback(); // This resets to beginning
+      stopScalePlayback();
     } else {
-      console.log("PlayScaleButton: Starting scale playback...");
-      startScalePlayback(); // This starts from beginning
+      startScalePlayback();
     }
-  };
-
-  const getButtonText = () => {
-    return isPLayingOrPaused() ? "■ Stop" : "▶ Play";
   };
 
   return (
     <Button size="md" variant="action" onClick={handleClick}>
-      <span style={{ color: "inherit" }}>{getButtonText()}</span>
+      {isPLayingOrPaused() ? (
+        <StopIcon className="text-playback-scalesMode" />
+      ) : (
+        <PlayIcon className="text-playback-scalesMode" />
+      )}
     </Button>
   );
 };

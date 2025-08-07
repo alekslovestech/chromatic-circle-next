@@ -20,6 +20,10 @@ module.exports = {
     {
       pattern: /border-containers-border*/,
     },
+    // Add playback button colors to safelist
+    {
+      pattern: /text-playback-*/,
+    },
   ],
   theme: {
     extend: {
@@ -44,6 +48,13 @@ module.exports = {
           actionBorder: "rgba(60, 60, 60, 0.2)", // Stronger border for definition
           actionText: "rgb(50, 50, 50)", // Slightly different text color
         },
+
+        // New playback button colors
+        playback: {
+          scalesMode: "rgb(37, 99, 235)", // blue-600
+          defaultMode: "rgb(16, 185, 129)", // emerald-500
+        },
+
         labels: {
           textDefault: "rgb(31, 31, 31)", //"#1f1f1f",
         },
