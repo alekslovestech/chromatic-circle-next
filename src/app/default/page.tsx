@@ -47,7 +47,7 @@ export default function Home() {
         >
           {/* Add GlobalModeButton positioned in top-left corner */}
           <div className="absolute top-1 left-1 z-10">
-            <Link href="/advanced">
+            <Link href="/scales">
               <GlobalModeButton text="Scales Mode" />
             </Link>
           </div>

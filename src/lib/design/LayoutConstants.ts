@@ -58,7 +58,7 @@ export const LAYOUT_CONFIGS = {
       gridAreas: DEFAULT_GRID_AREAS.landscape,
     },
   },
-  [GlobalMode.Advanced]: {
+  [GlobalMode.Scales]: {
     portrait: {
       gridRows: ADVANCED_ROWS.portrait,
       gridAreas: ADVANCED_GRID_AREAS.portrait,

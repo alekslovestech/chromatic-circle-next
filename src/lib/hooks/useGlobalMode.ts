@@ -3,14 +3,14 @@ import { usePathname } from "next/navigation";
 
 export enum GlobalMode {
   Default = "Default",
-  Advanced = "Advanced",
+  Scales = "Scales",
   Demo = "Demo",
 }
 
 export const useGlobalMode = () => {
   const pathname = usePathname();
-  return pathname === "/advanced"
-    ? GlobalMode.Advanced
+  return pathname === "/scales"
+    ? GlobalMode.Scales
     : pathname === "/demo"
     ? GlobalMode.Demo
     : GlobalMode.Default;
@@ -23,5 +23,5 @@ export const useIsDemoMode = () => {
 
 export const useIsScalePreviewMode = () => {
   const globalMode = useGlobalMode();
-  return globalMode === GlobalMode.Advanced;
+  return globalMode === GlobalMode.Scales;
 };

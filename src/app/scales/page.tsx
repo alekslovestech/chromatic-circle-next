@@ -12,7 +12,7 @@ import { ChordNameDisplay } from "@/components/ChordNameDisplay";
 import Link from "next/link";
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 
-export default function AdvancedPage() {
+export default function ScalesdPage() {
   const { gridRows, gridAreas, gridColumns } = usePageLayout();
   const border = useBorder();
 
