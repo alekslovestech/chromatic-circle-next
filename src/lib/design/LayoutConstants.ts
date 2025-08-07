@@ -68,6 +68,16 @@ export const LAYOUT_CONFIGS = {
       gridAreas: ADVANCED_GRID_AREAS.landscape,
     },
   },
+  [GlobalMode.Demo]: {
+    portrait: {
+      gridRows: DEFAULT_ROWS.portrait,
+      gridAreas: DEFAULT_GRID_AREAS.portrait,
+    },
+    landscape: {
+      gridRows: DEFAULT_ROWS.landscape,
+      gridAreas: DEFAULT_GRID_AREAS.landscape,
+    },
+  },
 } as const;
 
 export const NOTATION_LAYOUT = {

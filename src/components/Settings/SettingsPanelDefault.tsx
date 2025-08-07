@@ -1,4 +1,5 @@
-import { DEBUG_BORDER, LAYOUT_PATTERNS } from "@/lib/design";
+import { LAYOUT_PATTERNS } from "@/lib/design";
+import { useBorder } from "@/lib/hooks/useBorder";
 import { ClearButton } from "../Buttons/ClearButton";
 import { PlayNotesButton } from "../Buttons/PlayNotesButton";
 import { TransposeWidget } from "../TransposeWidget";
@@ -8,10 +9,11 @@ import { MusicalKeySelector } from "../MusicalKeySelector";
 
 export const SettingsPanelDefault = () => {
   const settingsGap = "gap-tight";
+  const border = useBorder();
   return (
     <div
       id="settings-panel-default"
-      className={`${LAYOUT_PATTERNS.centerFlexCol} ${settingsGap} ${DEBUG_BORDER} h-full`}
+      className={`${LAYOUT_PATTERNS.centerFlexCol} ${settingsGap} ${border} h-full`}
     >
       {/*<CircularVisModeSelect />*/}
 

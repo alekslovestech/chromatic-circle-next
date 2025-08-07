@@ -6,7 +6,7 @@ import {
   ChordDisplayMode,
   KeyDisplayMode,
 } from "@/types/SettingModes";
-import { useGlobalMode, GlobalMode } from "@/lib/hooks";
+import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 
 export interface DisplaySettings {
   circularVisMode: CircularVisMode;
@@ -26,8 +26,7 @@ const DisplayContext = createContext<DisplaySettings | null>(null);
 export const DisplayProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const globalMode = useGlobalMode();
-  const isAdvanced = globalMode === GlobalMode.Advanced;
+  const isAdvanced = useIsScalePreviewMode();
 
   const [circularVisMode, setCircularVisMode] = useState<CircularVisMode>(
     isAdvanced ? CircularVisMode.Polygon : CircularVisMode.None

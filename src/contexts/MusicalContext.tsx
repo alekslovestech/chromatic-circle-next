@@ -3,7 +3,7 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
 import { ActualIndex, ixActualArray } from "@/types/IndexTypes";
 import { DEFAULT_MUSICAL_KEY, MusicalKey } from "@/types/Keys/MusicalKey";
-import { useGlobalMode, GlobalMode } from "@/lib/hooks";
+import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 
 export interface MusicalSettings {
   selectedNoteIndices: ActualIndex[];
@@ -17,9 +17,9 @@ const MusicalContext = createContext<MusicalSettings | null>(null);
 export const MusicalProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const globalMode = useGlobalMode();
+  const isAdvanced = useIsScalePreviewMode();
   const [selectedNoteIndices, setSelectedNoteIndices] = useState<ActualIndex[]>(
-    globalMode === GlobalMode.Advanced ? [] : ixActualArray([7])
+    isAdvanced ? [] : ixActualArray([7])
   );
   const [selectedMusicalKey, setSelectedMusicalKey] =
     useState<MusicalKey>(DEFAULT_MUSICAL_KEY);

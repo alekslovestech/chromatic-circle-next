@@ -2,6 +2,7 @@
 
 import { COMMON_STYLES, NOTATION_LAYOUT } from "@/lib/design";
 import { usePageLayout } from "@/lib/hooks/usePageLayout";
+import { useBorder } from "@/lib/hooks/useBorder";
 
 import { StaffRenderer } from "@/components/StaffRenderer";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
@@ -13,13 +14,14 @@ import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 
 export default function AdvancedPage() {
   const { gridRows, gridAreas, gridColumns } = usePageLayout();
+  const border = useBorder();
 
   return (
     <div
-      className={`AdvancedPage-container ${COMMON_STYLES.pageContainer} bg-canvas-bgAdvanced`}
+      className={`AdvancedPage-container ${COMMON_STYLES.pageContainer} bg-canvas-bgAdvanced ${border}`}
     >
       <div
-        className={`AdvancedPage-grid ${COMMON_STYLES.pageGrid}`}
+        className={`AdvancedPage-grid ${COMMON_STYLES.pageGrid} ${border}`}
         style={{
           gridTemplateColumns: gridColumns,
           gridTemplateRows: gridRows,
@@ -38,7 +40,7 @@ export default function AdvancedPage() {
           <ChordNameDisplay />
         </div>
         <div
-          className={`AdvancedPage-circular ${COMMON_STYLES.circularContainer}`}
+          className={`AdvancedPage-circular ${COMMON_STYLES.circularContainer} ${border}`}
           style={{ gridArea: "circular" }}
         >
           {/* Add GlobalModeButton positioned in top-left corner */}
@@ -49,25 +51,25 @@ export default function AdvancedPage() {
           </div>
 
           <div
-            className={`AdvancedPage-circular-inner ${COMMON_STYLES.circularInner}`}
+            className={`AdvancedPage-circular-inner ${COMMON_STYLES.circularInner} ${border}`}
           >
             <KeyboardCircular />
           </div>
         </div>
 
         <div
-          className={`AdvancedPage-linear-container ${COMMON_STYLES.linearContainer}`}
+          className={`AdvancedPage-linear-container ${COMMON_STYLES.linearContainer} ${border}`}
           style={{ gridArea: "linear" }}
         >
           <div
-            className={`AdvancedPage-linear-inner ${COMMON_STYLES.linearInner}`}
+            className={`AdvancedPage-linear-inner ${COMMON_STYLES.linearInner} ${border}`}
           >
             <KeyboardLinear />
           </div>
         </div>
 
         <div
-          className={`AdvancedPage-settings-container ${COMMON_STYLES.settingsPanel}`}
+          className={`AdvancedPage-settings-container ${COMMON_STYLES.settingsPanel} ${border}`}
           style={{ gridArea: "sidebar" }}
         >
           <SettingsPanelAdvanced />

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
-import { DEBUG_BORDER, LAYOUT_PATTERNS } from "@/lib/design";
+import { LAYOUT_PATTERNS } from "@/lib/design";
+import { useBorder } from "@/lib/hooks/useBorder";
 import { PlaybackModeSelect } from "./PlaybackModeSelect";
 import { MusicalKeySelector } from "../MusicalKeySelector";
 import { TransposeWidget } from "../TransposeWidget";
@@ -11,16 +12,17 @@ export const SettingsPanelAdvanced = () => {
   const settingsGap = "gap-tight";
   const outerGapVertical = "gap-tight";
   const outerGapHorizontal = "gap-normal";
+  const border = useBorder();
 
   return (
     <div
       id="settings-panel-advanced"
-      className={`flex flex-col ${outerGapVertical} ${DEBUG_BORDER} ${LAYOUT_PATTERNS.fullSize}`}
+      className={`flex flex-col ${outerGapVertical} ${border} ${LAYOUT_PATTERNS.fullSize}`}
     >
       <div className={`flex justify-between ${outerGapHorizontal} flex-1`}>
         {/* Left Column - Musical Context */}
         <div
-          className={`${LAYOUT_PATTERNS.centerFlexCol} rounded p-2 flex-1 ${settingsGap} ${DEBUG_BORDER}`}
+          className={`${LAYOUT_PATTERNS.centerFlexCol} rounded p-2 flex-1 ${settingsGap} ${border}`}
         >
           <TransposeWidget target="key" />
           <MusicalKeySelector useDropdownSelector={true} />
@@ -30,7 +32,7 @@ export const SettingsPanelAdvanced = () => {
 
         {/* Right Column - Playback Settings */}
         <div
-          className={`${LAYOUT_PATTERNS.centerFlexCol} ${settingsGap} rounded p-2 flex-1 ${DEBUG_BORDER}`}
+          className={`${LAYOUT_PATTERNS.centerFlexCol} ${settingsGap} rounded p-2 flex-1 ${border}`}
         >
           <PlaybackModeSelect />
           <div

@@ -7,11 +7,8 @@ import { useBorder } from "@/lib/hooks/useBorder";
 import { ChordNameDisplay } from "@/components/ChordNameDisplay";
 import { StaffRenderer } from "@/components/StaffRenderer";
 import { InputSettings } from "@/components/Settings/InputSettings";
-import { SettingsPanelDefault } from "@/components/Settings/SettingsPanelDefault";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
-import Link from "next/link";
-import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 
 export default function Home() {
   const { gridRows, gridAreas, gridColumns } = usePageLayout();
@@ -19,10 +16,10 @@ export default function Home() {
 
   return (
     <div
-      className={`DefaultPage-container ${COMMON_STYLES.pageContainer} bg-canvas-bgDefault ${border}`}
+      className={`DemoPage-container ${COMMON_STYLES.pageContainer} bg-canvas-bgDefault`}
     >
       <div
-        className={`DefaultPage-grid ${COMMON_STYLES.pageGrid} ${border}`}
+        className={`DemoPage-grid ${COMMON_STYLES.pageGrid} ${border}`}
         style={{
           gridTemplateColumns: gridColumns,
           gridTemplateRows: gridRows,
@@ -38,48 +35,36 @@ export default function Home() {
           }}
         >
           <StaffRenderer />
-          <ChordNameDisplay />
+          <div className="w-full h-full"></div>
         </div>
 
         <div
-          className={`DefaultPage-circular-container ${COMMON_STYLES.circularContainer} ${border}`}
+          className={`DemoPage-circular-container ${COMMON_STYLES.circularContainer} ${border}`}
           style={{ gridArea: "circular" }}
         >
-          {/* Add GlobalModeButton positioned in top-left corner */}
-          <div className="absolute top-1 left-1 z-10">
-            <Link href="/advanced">
-              <GlobalModeButton text="Scales Mode" />
-            </Link>
-          </div>
-
           <div
-            className={`DefaultPage-circular-inner ${COMMON_STYLES.circularInner} ${border}`}
+            className={`DemoPage-circular-inner ${COMMON_STYLES.circularInner}`}
           >
-            <KeyboardCircular />
-            <div className="flex-1 h-full">
-              <SettingsPanelDefault />
+            <div className="w-[70%]">
+              <KeyboardCircular />
             </div>
-          </div>
-          <div className="DefaultPage-chord-sidebar self-end mb-normal flex flex-col justify-end text-right max-w-[120px] p-2">
-            <div className="DefaultPage-chord-display w-full h-full flex items-center justify-center text-2xl break-words">
+            <div className="w-[30%] h-full flex items-center justify-center">
               <ChordNameDisplay />
             </div>
           </div>
         </div>
 
         <div
-          className={`DefaultPage-linear-container ${COMMON_STYLES.linearContainer} ${border}`}
+          className={`DemoPage-linear-container ${COMMON_STYLES.linearContainer} ${border}`}
           style={{ gridArea: "linear" }}
         >
-          <div
-            className={`DefaultPage-linear-inner ${COMMON_STYLES.linearInner} ${border}`}
-          >
+          <div className={`DemoPage-linear-inner ${COMMON_STYLES.linearInner}`}>
             <KeyboardLinear />
           </div>
         </div>
 
         <div
-          className={`DefaultPage-settings-container ${COMMON_STYLES.settingsPanel} ${border}`}
+          className={`DemoPage-settings-container ${COMMON_STYLES.settingsPanel} ${border}`}
           style={{ gridArea: "settings" }}
         >
           <InputSettings />
