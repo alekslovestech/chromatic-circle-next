@@ -15,3 +15,13 @@ export const useGlobalMode = () => {
     ? GlobalMode.Demo
     : GlobalMode.Default;
 };
+
+export const useIsDemoMode = () => {
+  const globalMode = useGlobalMode();
+  return globalMode === GlobalMode.Demo;
+};
+
+export const useIsScalePreviewMode = () => {
+  const globalMode = useGlobalMode();
+  return globalMode === GlobalMode.Advanced;
+};
