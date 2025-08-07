@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { TWENTY4 } from "@/types/NoteConstants";
 import { ActualIndex } from "@/types/IndexTypes";
 import { LinearKeyboardUtils } from "@/utils/Keyboard/Linear/LinearKeyboardUtils";
-import { useGlobalMode, GlobalMode } from "@/lib/hooks";
+import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 
 import { useKeyboardHandlers } from "@/components/Keyboard/KeyboardBase";
 import { PianoKeyLinear } from "@/components/Keyboard/Linear/PianoKeyLinear";
@@ -11,11 +11,10 @@ import { useMusical } from "@/contexts/MusicalContext";
 
 export const KeyboardLinear = () => {
   const { handleKeyClick, checkIsRootNote } = useKeyboardHandlers();
-  const globalMode = useGlobalMode();
   const { selectedMusicalKey } = useMusical();
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const isAdvanced = globalMode === GlobalMode.Advanced;
+  const isAdvanced = useIsScalePreviewMode();
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const renderScaleBoundary = () => {
     if (!isAdvanced) return null;

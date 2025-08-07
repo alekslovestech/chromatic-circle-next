@@ -117,7 +117,7 @@ export const useAudioPlayer = () => {
         synthRef.current = null;
       }
     };
-  }, [isAudioInitialized]);
+  }, [isAudioInitialized, isDemoMode]);
 
   // Convert note index to frequency
   const getFrequencyFromIndex = useCallback((index: ActualIndex): number => {

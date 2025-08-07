@@ -1,6 +1,5 @@
 import { TWELVE } from "@/types/NoteConstants";
 import { ChromaticIndex, ixChromatic } from "@/types/ChromaticIndex";
-import { useGlobalMode, GlobalMode } from "@/lib/hooks";
 
 import { ColorUtils } from "@/utils/visual/ColorUtils";
 import { CartesianPoint, PolarMath } from "@/utils/Keyboard/Circular/PolarMath";
@@ -13,13 +12,13 @@ import { CIRCLE_RADIUS, useKeyboardHandlers } from "../KeyboardBase";
 import { CircularVisualizations } from "./CircularVisualizations";
 import { PianoKeyCircular } from "./PianoKeyCircular";
 import { CircularVisMode } from "@/types/SettingModes";
+import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 
 const MAX_RADIUS = 100;
 const OUTER_RADIUS = 0.9 * MAX_RADIUS;
 const INNER_RADIUS = 0.5 * MAX_RADIUS;
 
 export const KeyboardCircular = () => {
-  const globalMode = useGlobalMode();
   const { handleKeyClick } = useKeyboardHandlers();
   const { selectedNoteIndices, selectedMusicalKey } = useMusical();
   //const { circularVisMode } = useDisplay();
@@ -30,7 +29,7 @@ export const KeyboardCircular = () => {
       : numNotes === 2
       ? CircularVisMode.Radial
       : CircularVisMode.None;
-  const isAdvanced = globalMode === GlobalMode.Advanced;
+  const isAdvanced = useIsScalePreviewMode();
   const coords = [-MAX_RADIUS, -MAX_RADIUS, MAX_RADIUS * 2, MAX_RADIUS * 2];
   const chordColor = ColorUtils.getChordColor(selectedNoteIndices);
 

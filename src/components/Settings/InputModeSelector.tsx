@@ -4,7 +4,7 @@ import React from "react";
 
 import { LAYOUT_PATTERNS } from "@/lib/design";
 import { InputMode } from "@/types/SettingModes";
-import { useGlobalMode, GlobalMode } from "@/lib/hooks";
+import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 import { useBorder } from "@/lib/hooks/useBorder";
 
 import { Button } from "@/components/Common/Button";
@@ -43,14 +43,13 @@ const AVAILABLE_MODES: ModeSelectorButton[] = [
 
 export const InputModeSelector: React.FC = () => {
   const { inputMode, setInputMode } = usePreset();
-  const globalMode = useGlobalMode();
   const border = useBorder();
   const handleModeChange = (newMode: InputMode) => {
     setInputMode(newMode);
   };
 
   const gapSize = "gap-snug";
-  const isAdvancedMode = globalMode === GlobalMode.Advanced;
+  const isAdvancedMode = useIsScalePreviewMode();
 
   return (
     <div
