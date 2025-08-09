@@ -5,9 +5,14 @@ import { TWELVE } from "../types/NoteConstants";
 import { KeyDisplayMode } from "../types/SettingModes";
 import { GreekTestConstants } from "./utils/GreekTestConstants";
 
-function verifyRomanDisplayStrings(greekMode: GreekModeType, expectedNotes: string[]) {
+function verifyRomanDisplayStrings(
+  greekMode: GreekModeType,
+  expectedNotes: string[]
+) {
   const greekModeInfo = GreekModeDictionary.getModeInfo(greekMode);
-  const romanDisplayStrings = greekModeInfo.getDisplayStrings(KeyDisplayMode.Roman);
+  const romanDisplayStrings = greekModeInfo.getDisplayStrings(
+    KeyDisplayMode.Roman
+  );
 
   expect(romanDisplayStrings).toEqual(expectedNotes);
 }
@@ -33,11 +38,11 @@ describe("Roman Mode Index Arrays", () => {
       expected: ["i", "♭II", "♭III", "iv", "v°", "♭VI", "♭vii"],
     },
     {
-      mode: GreekModeType.Spanish,
+      mode: GreekModeType.PhrygianDominant,
       expected: ["I", "♭II", "iii°", "iv", "v°", "♭VI+", "♭vii"],
     },
     {
-      mode: GreekModeType.Arabic,
+      mode: GreekModeType.Byzantine,
       expected: ["I", "♭II", "iii", "iv", "V", "♭VI+", "VII"],
     },
     {
@@ -81,12 +86,38 @@ describe("getScaleDegreeDisplayString", () => {
         {
           key: "C Ionian",
           musicalKey: () => constants.C_IONIAN_KEY,
-          expected: ["I", "", "ii", "", "iii", "IV", "", "V", "", "vi", "", "vii°"],
+          expected: [
+            "I",
+            "",
+            "ii",
+            "",
+            "iii",
+            "IV",
+            "",
+            "V",
+            "",
+            "vi",
+            "",
+            "vii°",
+          ],
         },
         {
           key: "D Ionian",
           musicalKey: () => constants.D_IONIAN_KEY,
-          expected: ["", "vii°", "I", "", "ii", "", "iii", "IV", "", "V", "", "vi"],
+          expected: [
+            "",
+            "vii°",
+            "I",
+            "",
+            "ii",
+            "",
+            "iii",
+            "IV",
+            "",
+            "V",
+            "",
+            "vi",
+          ],
         },
       ],
     },
@@ -96,12 +127,38 @@ describe("getScaleDegreeDisplayString", () => {
         {
           key: "C Dorian",
           musicalKey: () => constants.C_DORIAN_KEY,
-          expected: ["i", "", "ii", "♭III", "", "IV", "", "v", "", "vi°", "♭VII", ""],
+          expected: [
+            "i",
+            "",
+            "ii",
+            "♭III",
+            "",
+            "IV",
+            "",
+            "v",
+            "",
+            "vi°",
+            "♭VII",
+            "",
+          ],
         },
         {
           key: "D Dorian",
           musicalKey: () => constants.D_DORIAN_KEY,
-          expected: ["♭VII", "", "i", "", "ii", "♭III", "", "IV", "", "v", "", "vi°"],
+          expected: [
+            "♭VII",
+            "",
+            "i",
+            "",
+            "ii",
+            "♭III",
+            "",
+            "IV",
+            "",
+            "v",
+            "",
+            "vi°",
+          ],
         },
       ],
     },
