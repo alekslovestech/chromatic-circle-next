@@ -7,11 +7,9 @@ import { useBorder } from "@/lib/hooks/useBorder";
 import { ChordNameDisplay } from "@/components/ChordNameDisplay";
 import { StaffRenderer } from "@/components/StaffRenderer";
 import { InputSettings } from "@/components/Settings/InputSettings";
-import { SettingsPanelDefault } from "@/components/Settings/SettingsPanelDefault";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
-import Link from "next/link";
-import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
+import { SettingsPanelChordProgressions } from "@/components/Settings/SettingsPanelChordProgressions";
 
 export default function ChordProgressionsPage() {
   const { gridRows, gridAreas, gridColumns } = usePageLayout();
@@ -45,19 +43,12 @@ export default function ChordProgressionsPage() {
           className={`ChordProgressionsPage-circular-container ${COMMON_STYLES.circularContainer} ${border}`}
           style={{ gridArea: "circular" }}
         >
-          {/* Add GlobalModeButton positioned in top-left corner */}
-          <div className="absolute top-1 left-1 z-10">
-            <Link href="/scales">
-              <GlobalModeButton text="Scales Mode" />
-            </Link>
-          </div>
-
           <div
             className={`ChordProgressionsPage-circular-inner ${COMMON_STYLES.circularInner} ${border}`}
           >
             <KeyboardCircular />
             <div className="flex-1 h-full">
-              <SettingsPanelDefault />
+              <SettingsPanelChordProgressions />
             </div>
           </div>
           <div className="ChordProgressionsPage-chord-sidebar self-end mb-normal flex flex-col justify-end text-right max-w-[120px] p-2">
