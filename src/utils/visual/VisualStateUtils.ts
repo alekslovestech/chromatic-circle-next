@@ -17,7 +17,7 @@ export class VisualStateUtils {
   // Step 1: Pure business logic (8 parameters → semantic colors)
   static getPureColors(
     chromaticIndex: ChromaticIndex,
-    isAdvanced: boolean,
+    isScales: boolean,
     musicalKey: MusicalKey,
     monochromeMode: boolean,
     isRootNote: boolean,
@@ -29,7 +29,7 @@ export class VisualStateUtils {
       musicalKey.tonicIndex
     );
 
-    const stateColor = isAdvanced
+    const stateColor = isScales
       ? isDiatonic
         ? "Highlighted"
         : "Muted"
@@ -61,7 +61,7 @@ export class VisualStateUtils {
   // Convenience method: Maintains existing API
   static getKeyColors(
     chromaticIndex: ChromaticIndex,
-    isAdvanced: boolean,
+    isScales: boolean,
     musicalKey: MusicalKey,
     monochromeMode: boolean,
     isRootNote: boolean,
@@ -71,7 +71,7 @@ export class VisualStateUtils {
   ): KeyColors {
     const pureColors = this.getPureColors(
       chromaticIndex,
-      isAdvanced,
+      isScales,
       musicalKey,
       monochromeMode,
       isRootNote,

@@ -107,7 +107,7 @@ describe("MusicalKey transforms", () => {
       },
       {
         desc: "C Arabic => Ab Ionian",
-        input: MusicalKey.fromGreekMode("C", GreekModeType.Arabic),
+        input: MusicalKey.fromGreekMode("C", GreekModeType.Byzantine),
         expected: "Ab",
       },
     ];

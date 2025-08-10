@@ -94,3 +94,11 @@ export const scalesViewMetadata: Metadata = {
     description: "Exploring musical modes and scales on the chromatic circle",
   },
 };
+
+// Chord Progressions view metadata
+export const chordProgressionViewMetadata: Metadata = {
+  ...baseMetadata,
+  title: "Music Wheel App - Chord Progressions",
+  keywords: ["chord progressions", "cadences"],
+  description: "Exploring chord progressions on the chromatic circle",
+};

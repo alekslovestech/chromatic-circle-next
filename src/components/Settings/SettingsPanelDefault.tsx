@@ -4,12 +4,16 @@ import { ClearButton } from "../Buttons/ClearButton";
 import { PlayNotesButton } from "../Buttons/PlayNotesButton";
 import { TransposeWidget } from "../TransposeWidget";
 import { MusicalKeySelector } from "../MusicalKeySelector";
+import { usePreset } from "@/contexts/PresetContext";
+import { InputMode } from "@/types/SettingModes";
 //import {MonochromeModeToggle} from "../MonochromeModeToggle";
 //import { CircularVisModeSelect } from "../Keyboard/Circular/CircularVisModeSelect";
 
 export const SettingsPanelDefault = () => {
   const settingsGap = "gap-tight";
   const border = useBorder();
+  const { inputMode } = usePreset();
+  const isFreeformMode = inputMode === InputMode.Toggle;
   return (
     <div
       id="settings-panel-default"
@@ -27,7 +31,7 @@ export const SettingsPanelDefault = () => {
         <div className="transpose-widget-container">
           <TransposeWidget target="notes" />
         </div>
-        <ClearButton />
+        {isFreeformMode && <ClearButton />}
       </div>
     </div>
   );

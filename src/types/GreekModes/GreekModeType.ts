@@ -1,10 +1,10 @@
 export enum GreekModeType {
   Ionian = "Ionian",
   Dorian = "Dorian",
-  UkrainianDorian = "Ukrainian",
+  UkrainianDorian = "Ukrainian Dorian",
   Phrygian = "Phrygian",
-  Spanish = "Spanish", //aka Phrygian Dominant
-  Arabic = "Arabic",
+  PhrygianDominant = "Phrygian Dominant",
+  Byzantine = "Byzantine",
   Lydian = "Lydian",
   Mixolydian = "Mixolydian",
   Aeolian = "Aeolian",

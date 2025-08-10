@@ -14,11 +14,14 @@ import {
 } from "@/types/GreekModes/ScaleDegreeType";
 import { chromaticToActual, ixOctaveOffset } from "@/types/IndexTypes";
 import { ScalePlaybackMode } from "@/types/ScalePlaybackMode";
+import { ChordProgressionType } from "@/types/ChordProgressionType";
 
 import { useGlobalMode } from "@/lib/hooks";
 
 import { useMusical } from "./MusicalContext";
 import { useDisplay } from "./DisplayContext";
+import { ChordProgressionLibrary } from "@/types/ChordProgressionLibrary";
+import { AbsoluteChord } from "@/types/AbsoluteChord";
 
 export enum PlaybackState {
   ScaleComplete, //sound does not necessarily stop, but we're not playing a scale
@@ -39,6 +42,17 @@ interface AudioContextType {
   resumeScalePlayback: () => void;
   setAudioInitialized: (initialized: boolean) => void;
   setScalePlaybackMode: (mode: ScalePlaybackMode) => void;
+
+  // Add chord progression playback:
+  selectedProgression: ChordProgressionType | null;
+  progressionPlaybackState: PlaybackState; // or reuse the same playbackState
+  currentChordIndex: number;
+
+  // Methods:
+  startProgressionPlayback: () => void;
+  pauseProgressionPlayback: () => void;
+  stopProgressionPlayback: () => void;
+  setSelectedProgression: (progression: ChordProgressionType | null) => void;
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -68,6 +82,11 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
   const scaleDegreeIndexRef = useRef<ScaleDegreeIndex>(ixScaleDegreeIndex(0));
   const playbackTimerIdRef = useRef<NodeJS.Timeout | null>(null);
   const landingNoteRef = useRef(false);
+
+  const [selectedProgression, setSelectedProgression] =
+    useState<ChordProgressionType | null>(null);
+  const chordIndexRef = useRef<number>(0);
+  const progressionTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const stopScalePlayback = useCallback(() => {
     console.log("AudioContext: Stopping scale playback");
@@ -205,6 +224,38 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
     scalePlaybackMode,
   ]);
 
+  const playProgressionStep = useCallback(() => {
+    if (!selectedProgression || !selectedMusicalKey) return;
+
+    const progression =
+      ChordProgressionLibrary.getProgression(selectedProgression);
+    const currentChord: AbsoluteChord = progression.getChordAtIndex(
+      chordIndexRef.current,
+      selectedMusicalKey
+    );
+
+    // Update the visual selection (just like scale playback does)
+    setSelectedNoteIndices([
+      chromaticToActual(currentChord.chromaticIndex, ixOctaveOffset(0)),
+    ]);
+
+    // Move to next chord (or loop back to start)
+    chordIndexRef.current = (chordIndexRef.current + 1) % progression.length;
+  }, [selectedProgression, selectedMusicalKey, setSelectedNoteIndices]);
+
+  const startProgressionPlayback = useCallback(() => {
+    if (!selectedProgression) return;
+
+    chordIndexRef.current = 0;
+    playProgressionStep(); // Play first chord immediately
+
+    progressionTimerRef.current = setInterval(
+      () => playProgressionStep(),
+      PLAYBACK_DURATION_CHORD // e.g., 2000ms per chord
+    );
+    setPlaybackState(PlaybackState.ScalePlaying);
+  }, [selectedProgression, playProgressionStep]);
+
   // Stop playback when mode changes
   useEffect(() => {
     console.log("🔄 Mode changed, stopping any ongoing playback");
@@ -247,6 +298,15 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
     resumeScalePlayback,
     setAudioInitialized: setIsAudioInitialized,
     setScalePlaybackMode,
+
+    // Add chord progression playback:
+    selectedProgression,
+    progressionPlaybackState: playbackState,
+    setSelectedProgression,
+    currentChordIndex: chordIndexRef.current,
+    startProgressionPlayback,
+    pauseProgressionPlayback: pauseScalePlayback, // Reusing pauseScalePlayback
+    stopProgressionPlayback: stopScalePlayback, // Reusing stopScalePlayback
   };
 
   return (
