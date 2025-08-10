@@ -1,6 +1,6 @@
-import { ChromaticIndex } from "../../../types/ChromaticIndex";
-import { ActualIndex } from "../../../types/IndexTypes";
-import { TWELVE } from "../../../types/NoteConstants";
+import { ChromaticIndex } from "@/types/ChromaticIndex";
+import { ActualIndex } from "@/types/IndexTypes";
+import { TWELVE } from "@/types/NoteConstants";
 
 const TWO_PI = 2 * Math.PI;
 const INIT_ANGLE = -Math.PI / 2; //vertical up
@@ -16,7 +16,7 @@ export class PolarMath {
   static getCartesianFromPolar(
     radius: number,
     angle: number,
-    isRounded: boolean = false,
+    isRounded: boolean = false
   ): CartesianPoint {
     const x = radius * Math.cos(angle);
     const y = radius * Math.sin(angle);
