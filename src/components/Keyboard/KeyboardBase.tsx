@@ -17,7 +17,7 @@ export const useKeyboardHandlers = () => {
     (newIndex: ActualIndex) => {
       const updatedIndices = ChordUtils.calculateUpdatedIndices(
         newIndex,
-        inputMode === InputMode.Toggle,
+        inputMode === InputMode.Freeform,
         selectedNoteIndices,
         selectedChordType,
         selectedInversionIndex
@@ -36,7 +36,7 @@ export const useKeyboardHandlers = () => {
   const checkIsRootNote = useCallback(
     (index: ActualIndex) => {
       if (
-        inputMode === InputMode.Toggle ||
+        inputMode === InputMode.Freeform ||
         !ChordUtils.hasInversions(selectedChordType)
       ) {
         return false;

@@ -22,7 +22,7 @@ export const CircularVisModeSelect: React.FC = () => {
       case InputMode.ChordPresets:
         setCircularVisMode(CircularVisMode.Polygon);
         break;
-      case InputMode.Toggle:
+      case InputMode.Freeform:
         setCircularVisMode(CircularVisMode.Polygon);
         break;
     }

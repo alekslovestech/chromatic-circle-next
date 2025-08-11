@@ -14,10 +14,26 @@ import { KeyNoteResolver } from "@/types/Keys/KeyNoteResolver";
 import { COMMON_STYLES } from "@/lib/design";
 import { useBorder } from "@/lib/hooks/useBorder";
 import { useMusical } from "@/contexts/MusicalContext";
+import {
+  useChordPresets,
+  useIsChordsOrIntervals,
+} from "@/contexts/ChordPresetContext";
+import { ChordType, SpecialType } from "@/types/NoteGroupingTypes";
 
 interface StaffRendererProps {
   style?: React.CSSProperties;
 }
+
+const isChordPresetKnown = (): boolean => {
+  const { selectedChordType } = useChordPresets();
+  return (
+    useIsChordsOrIntervals() &&
+    selectedChordType !== SpecialType.None &&
+    selectedChordType !== SpecialType.Note &&
+    selectedChordType !== SpecialType.Freeform &&
+    selectedChordType !== ChordType.Unknown
+  );
+};
 
 const EasyScoreFromNotes = (
   actualIndices: ActualIndex[],
