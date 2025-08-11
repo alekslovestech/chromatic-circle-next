@@ -1,5 +1,3 @@
-import { IndexUtils } from "../../utils/IndexUtils";
-
 import { AccidentalType } from "../AccidentalType";
 import { addChromatic, ChromaticIndex, ixChromatic } from "../ChromaticIndex";
 import { GreekModeDictionary } from "../GreekModes/GreekModeDictionary";
@@ -16,6 +14,7 @@ import { NoteConverter } from "../NoteConverter";
 import { NoteInfo } from "../NoteInfo";
 import { KeyDisplayMode } from "../SettingModes";
 import { ScalePlaybackMode } from "../ScalePlaybackMode";
+import { IndexUtils } from "@/utils/IndexUtils";
 
 export class MusicalKey {
   public readonly tonicString: string; // Root note (e.g., "C", "A")

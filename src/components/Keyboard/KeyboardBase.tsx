@@ -1,14 +1,16 @@
 import { useCallback } from "react";
-import { useMusical } from "../../contexts/MusicalContext";
-import { usePreset } from "../../contexts/PresetContext";
-import { ActualIndex } from "../../types/IndexTypes";
-import { ChordUtils } from "../../utils/ChordUtils";
-import { InputMode } from "../../types/SettingModes";
-import { IndexUtils } from "../../utils/IndexUtils";
+import { ActualIndex } from "@/types/IndexTypes";
+
+import { InputMode } from "@/types/SettingModes";
+import { IndexUtils } from "@/utils/IndexUtils";
+import { ChordUtils } from "@/utils/ChordUtils";
+import { useMusical } from "@/contexts/MusicalContext";
+import { useChordPresets } from "@/contexts/ChordPresetContext";
 
 export const CIRCLE_RADIUS = 5;
 export const useKeyboardHandlers = () => {
-  const { selectedInversionIndex, selectedChordType, inputMode } = usePreset();
+  const { selectedInversionIndex, selectedChordType, inputMode } =
+    useChordPresets();
   const { selectedNoteIndices, setSelectedNoteIndices } = useMusical();
 
   const handleKeyClick = useCallback(
@@ -18,7 +20,7 @@ export const useKeyboardHandlers = () => {
         inputMode === InputMode.Toggle,
         selectedNoteIndices,
         selectedChordType,
-        selectedInversionIndex,
+        selectedInversionIndex
       );
       setSelectedNoteIndices(updatedIndices);
     },
@@ -28,18 +30,24 @@ export const useKeyboardHandlers = () => {
       selectedChordType,
       selectedInversionIndex,
       setSelectedNoteIndices,
-    ],
+    ]
   );
 
   const checkIsRootNote = useCallback(
     (index: ActualIndex) => {
-      if (inputMode === InputMode.Toggle || !ChordUtils.hasInversions(selectedChordType)) {
+      if (
+        inputMode === InputMode.Toggle ||
+        !ChordUtils.hasInversions(selectedChordType)
+      ) {
         return false;
       }
-      const rootNote = IndexUtils.rootNoteAtInversion(selectedNoteIndices, selectedInversionIndex);
+      const rootNote = IndexUtils.rootNoteAtInversion(
+        selectedNoteIndices,
+        selectedInversionIndex
+      );
       return index === rootNote;
     },
-    [selectedNoteIndices, selectedInversionIndex, inputMode, selectedChordType],
+    [selectedNoteIndices, selectedInversionIndex, inputMode, selectedChordType]
   );
 
   return {

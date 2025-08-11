@@ -5,7 +5,7 @@ import { useGlobalMode } from "@/lib/hooks";
 
 import { DisplayProvider } from "./DisplayContext";
 import { MusicalProvider } from "./MusicalContext";
-import { PresetProvider } from "./PresetContext";
+import { ChordPresetProvider } from "./ChordPresetContext";
 import { AudioProvider } from "./AudioContext";
 
 export const RootProvider: React.FC<{ children: ReactNode }> = ({
@@ -18,9 +18,9 @@ export const RootProvider: React.FC<{ children: ReactNode }> = ({
       <DisplayProvider key={`display-${globalMode}`}>
         <AudioProvider>
           {/* Remove the key - don't reset audio */}
-          <PresetProvider key={`preset-${globalMode}`}>
+          <ChordPresetProvider key={`chord-preset-${globalMode}`}>
             {children}
-          </PresetProvider>
+          </ChordPresetProvider>
         </AudioProvider>
       </DisplayProvider>
     </MusicalProvider>

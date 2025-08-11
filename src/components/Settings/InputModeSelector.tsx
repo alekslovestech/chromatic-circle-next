@@ -10,7 +10,7 @@ import { useBorder } from "@/lib/hooks/useBorder";
 import { Button } from "@/components/Common/Button";
 import { SectionTitle } from "@/components/Common/SectionTitle";
 
-import { usePreset } from "@/contexts/PresetContext";
+import { useChordPresets } from "@/contexts/ChordPresetContext";
 
 interface ModeSelectorButton {
   id: string;
@@ -42,7 +42,7 @@ const AVAILABLE_MODES: ModeSelectorButton[] = [
 ];
 
 export const InputModeSelector: React.FC = () => {
-  const { inputMode, setInputMode } = usePreset();
+  const { inputMode, setInputMode } = useChordPresets();
   const border = useBorder();
   const handleModeChange = (newMode: InputMode) => {
     setInputMode(newMode);

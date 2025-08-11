@@ -1,4 +1,4 @@
-import { ChromaticIndex } from "../../../types/ChromaticIndex";
+import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { CartesianPoint, PolarMath } from "./PolarMath";
 
 export class ArcPathVisualizer {
@@ -7,21 +7,24 @@ export class ArcPathVisualizer {
   public static getTextPoint(
     chromaticIndex: ChromaticIndex,
     outerRadius: number,
-    innerRadius: number,
+    innerRadius: number
   ): CartesianPoint {
     const middleAngle = PolarMath.NoteIndexToMiddleAngle(chromaticIndex);
-    return PolarMath.getCartesianFromPolar((innerRadius + outerRadius) * 0.5, middleAngle);
+    return PolarMath.getCartesianFromPolar(
+      (innerRadius + outerRadius) * 0.5,
+      middleAngle
+    );
   }
 
   public static getArcPathData(
     chromaticIndex: ChromaticIndex,
     outerRadius: number,
-    innerRadius: number,
+    innerRadius: number
   ): string {
     const [outerStart, outerEnd, innerEnd, innerStart] = this.getArcPoints(
       chromaticIndex,
       outerRadius,
-      innerRadius,
+      innerRadius
     );
 
     // Create SVG path: move to outer start, arc to outer end, line to inner end, arc to inner start, close path
@@ -37,14 +40,31 @@ export class ArcPathVisualizer {
   private static getArcPoints(
     chromaticIndex: ChromaticIndex,
     outerRadius: number,
-    innerRadius: number,
+    innerRadius: number
   ): CartesianPoint[] {
-    const { startAngle, endAngle } = PolarMath.NoteIndexToAngleRange(chromaticIndex);
+    const { startAngle, endAngle } =
+      PolarMath.NoteIndexToAngleRange(chromaticIndex);
     // Convert angles to cartesian coordinates
-    const outerStart = PolarMath.getCartesianFromPolar(outerRadius, startAngle, true);
-    const outerEnd = PolarMath.getCartesianFromPolar(outerRadius, endAngle, true);
-    const innerStart = PolarMath.getCartesianFromPolar(innerRadius, startAngle, true);
-    const innerEnd = PolarMath.getCartesianFromPolar(innerRadius, endAngle, true);
+    const outerStart = PolarMath.getCartesianFromPolar(
+      outerRadius,
+      startAngle,
+      true
+    );
+    const outerEnd = PolarMath.getCartesianFromPolar(
+      outerRadius,
+      endAngle,
+      true
+    );
+    const innerStart = PolarMath.getCartesianFromPolar(
+      innerRadius,
+      startAngle,
+      true
+    );
+    const innerEnd = PolarMath.getCartesianFromPolar(
+      innerRadius,
+      endAngle,
+      true
+    );
 
     return [outerStart, outerEnd, innerEnd, innerStart];
   }

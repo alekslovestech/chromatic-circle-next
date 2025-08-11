@@ -2,12 +2,12 @@
 import { useEffect } from "react";
 import { CircularVisMode, InputMode } from "@/types/SettingModes";
 import { useDisplay } from "@/contexts/DisplayContext";
-import { usePreset } from "@/contexts/PresetContext";
+import { useChordPresets } from "@/contexts/ChordPresetContext";
 
-import { CircularVisModeButton } from "../../Buttons/CircularVisModeButton";
+import { CircularVisModeButton } from "@/components/Buttons/CircularVisModeButton";
 
 export const CircularVisModeSelect: React.FC = () => {
-  const { inputMode } = usePreset();
+  const { inputMode } = useChordPresets();
   const { setCircularVisMode } = useDisplay();
 
   useEffect(() => {

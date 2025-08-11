@@ -4,7 +4,7 @@ import { ClearButton } from "../Buttons/ClearButton";
 import { PlayNotesButton } from "../Buttons/PlayNotesButton";
 import { TransposeWidget } from "../TransposeWidget";
 import { MusicalKeySelector } from "../MusicalKeySelector";
-import { usePreset } from "@/contexts/PresetContext";
+import { useChordPresets } from "@/contexts/ChordPresetContext";
 import { InputMode } from "@/types/SettingModes";
 //import {MonochromeModeToggle} from "../MonochromeModeToggle";
 //import { CircularVisModeSelect } from "../Keyboard/Circular/CircularVisModeSelect";
@@ -12,7 +12,7 @@ import { InputMode } from "@/types/SettingModes";
 export const SettingsPanelDefault = () => {
   const settingsGap = "gap-tight";
   const border = useBorder();
-  const { inputMode } = usePreset();
+  const { inputMode } = useChordPresets();
   const isFreeformMode = inputMode === InputMode.Toggle;
   return (
     <div

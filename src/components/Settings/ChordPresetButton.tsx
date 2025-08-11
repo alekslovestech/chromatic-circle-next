@@ -11,7 +11,7 @@ interface PresetButtonProps {
   onClick: (presetId: NoteGroupingId) => void;
 }
 
-export const PresetButton: React.FC<PresetButtonProps> = ({
+export const ChordPresetButton: React.FC<PresetButtonProps> = ({
   presetId,
   selected,
   onClick,

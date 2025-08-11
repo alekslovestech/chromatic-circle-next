@@ -1,15 +1,15 @@
 "use client";
 import React from "react";
 
-import { usePreset } from "@/contexts/PresetContext";
+import { useChordPresets } from "@/contexts/ChordPresetContext";
 import { InputMode } from "@/types/SettingModes";
 
 import { InputModeSelector } from "./InputModeSelector";
-import { PresetsSelector } from "./PresetsSelector";
+import { ChordPresetSelector } from "./ChordPresetsSelector";
 import { LAYOUT_PATTERNS } from "@/lib/design/LayoutPatterns";
 
 export const InputSettings: React.FC = () => {
-  const { inputMode } = usePreset();
+  const { inputMode } = useChordPresets();
 
   const showPresets =
     inputMode === InputMode.ChordPresets ||
@@ -25,7 +25,7 @@ export const InputSettings: React.FC = () => {
       <div
         className={`presets-container w-2/3 h-full ${LAYOUT_PATTERNS.centerFlex}`}
       >
-        {showPresets ? <PresetsSelector /> : <div className="h-full" />}
+        {showPresets ? <ChordPresetSelector /> : <div className="h-full" />}
       </div>
     </div>
   );

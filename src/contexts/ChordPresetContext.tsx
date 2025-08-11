@@ -9,7 +9,7 @@ import { ChordUtils } from "@/utils/ChordUtils";
 
 import { useMusical } from "./MusicalContext";
 
-export interface PresetSettings {
+export interface ChordPresetSettings {
   inputMode: InputMode;
   selectedChordType: NoteGroupingId;
   selectedInversionIndex: InversionIndex;
@@ -18,9 +18,9 @@ export interface PresetSettings {
   setSelectedInversionIndex: (index: InversionIndex) => void;
 }
 
-const PresetContext = createContext<PresetSettings | null>(null);
+const ChordPresetContext = createContext<ChordPresetSettings | null>(null);
 
-export const PresetProvider: React.FC<{ children: ReactNode }> = ({
+export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [inputMode, setInputMode] = useState<InputMode>(InputMode.SingleNote);
@@ -61,7 +61,7 @@ export const PresetProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
-  const value: PresetSettings = {
+  const value: ChordPresetSettings = {
     inputMode,
     selectedChordType,
     selectedInversionIndex,
@@ -71,14 +71,16 @@ export const PresetProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <PresetContext.Provider value={value}>{children}</PresetContext.Provider>
+    <ChordPresetContext.Provider value={value}>
+      {children}
+    </ChordPresetContext.Provider>
   );
 };
 
-export const usePreset = () => {
-  const context = useContext(PresetContext);
+export const useChordPresets = () => {
+  const context = useContext(ChordPresetContext);
   if (!context) {
-    throw new Error("usePreset must be used within a PresetProvider");
+    throw new Error("useChordPreset must be used within a ChordPresetProvider");
   }
   return context;
 };

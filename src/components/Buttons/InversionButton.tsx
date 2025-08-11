@@ -1,5 +1,5 @@
 import { useMusical } from "@/contexts/MusicalContext";
-import { usePreset } from "@/contexts/PresetContext";
+import { useChordPresets } from "@/contexts/ChordPresetContext";
 import { InversionIndex } from "@/types/IndexTypes";
 import { ChordUtils } from "@/utils/ChordUtils";
 import { IndexUtils } from "@/utils/IndexUtils";
@@ -9,8 +9,9 @@ export const InversionButton: React.FC<{ inversionIndex: InversionIndex }> = ({
   inversionIndex,
 }) => {
   const { selectedNoteIndices, setSelectedNoteIndices } = useMusical();
-  const { selectedChordType } = usePreset();
-  const { selectedInversionIndex, setSelectedInversionIndex } = usePreset();
+  const { selectedChordType } = useChordPresets();
+  const { selectedInversionIndex, setSelectedInversionIndex } =
+    useChordPresets();
 
   const handleInversionChange = (newInversionIndex: InversionIndex) => {
     const originalRootIndex = IndexUtils.rootNoteAtInversion(

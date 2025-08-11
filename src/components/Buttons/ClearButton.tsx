@@ -1,11 +1,11 @@
 import { useMusical } from "@/contexts/MusicalContext";
 import { Button } from "../Common/Button";
 import { ixInversion } from "@/types/IndexTypes";
-import { usePreset } from "@/contexts/PresetContext";
+import { useChordPresets } from "@/contexts/ChordPresetContext";
 
 export const ClearButton: React.FC = () => {
   const { setSelectedNoteIndices } = useMusical();
-  const { setSelectedInversionIndex } = usePreset();
+  const { setSelectedInversionIndex } = useChordPresets();
 
   const handleClear = () => {
     setSelectedNoteIndices([]);
