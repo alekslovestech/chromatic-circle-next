@@ -53,6 +53,7 @@ export const InputModeSelector: React.FC = () => {
 
   const gapSize = "gap-snug";
   const isScalesMode = useIsScalePreviewMode();
+  const isChordsOrIntervals = useIsChordsOrIntervals(); // Move hook call here
 
   return (
     <div
@@ -63,7 +64,7 @@ export const InputModeSelector: React.FC = () => {
         className={`mode-selector-buttons ${LAYOUT_PATTERNS.centerFlexCol} ${gapSize}`}
       >
         {AVAILABLE_MODES.map(({ id, mode, description }) => {
-          const isHidden = isScalesMode && useIsChordsOrIntervals();
+          const isHidden = isScalesMode && isChordsOrIntervals; // Use the variable instead of calling the hook
 
           return (
             <Button

@@ -286,6 +286,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
     isAudioInitialized,
     startScalePlayback,
     stopScalePlayback,
+    playbackState,
   ]);
 
   const value = {

@@ -5,7 +5,11 @@ import { KeyType } from "../types/Keys/KeyType";
 import { NoteConverter } from "../types/NoteConverter";
 import { KeyNoteResolver } from "../types/Keys/KeyNoteResolver";
 
-function verifyResolvedNote(musicalKey: MusicalKey, noteText: string, expectedNote: NoteInfo) {
+function verifyResolvedNote(
+  musicalKey: MusicalKey,
+  noteText: string,
+  expectedNote: NoteInfo
+) {
   const chromaticIndex = NoteConverter.toChromaticIndex(noteText);
   const note = KeyNoteResolver.resolveNoteInKey(musicalKey, chromaticIndex);
   expect(note).toEqual(expectedNote);
@@ -14,7 +18,7 @@ function verifyResolvedNote(musicalKey: MusicalKey, noteText: string, expectedNo
 describe("Note resolution in keys", () => {
   const testCases = [
     {
-      desc: "C major",
+      desc: "C major: default is sharp based",
       key: DEFAULT_MUSICAL_KEY,
       cases: [
         { note: "D", expected: new NoteInfo("D", AccidentalType.None) },
@@ -23,7 +27,7 @@ describe("Note resolution in keys", () => {
       ],
     },
     {
-      desc: "D major",
+      desc: "D major: F# is in the key signature, F is not",
       key: MusicalKey.fromClassicalMode("D", KeyType.Major),
       cases: [
         { note: "F#", expected: new NoteInfo("F", AccidentalType.None) },
@@ -31,7 +35,7 @@ describe("Note resolution in keys", () => {
       ],
     },
     {
-      desc: "D minor",
+      desc: "D minor: Bb is in the key signature, B is not",
       key: MusicalKey.fromClassicalMode("D", KeyType.Minor),
       cases: [
         { note: "Bb", expected: new NoteInfo("B", AccidentalType.None) },
