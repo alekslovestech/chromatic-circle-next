@@ -1,5 +1,5 @@
 import { useDisplay } from "@/contexts/DisplayContext";
-import { usePreset } from "@/contexts/PresetContext";
+import { useChordPresets } from "@/contexts/ChordPresetContext";
 import { CircularVisMode, InputMode } from "@/types/SettingModes";
 import { CircularVisIcons } from "@/utils/Keyboard/Circular/CircularVisIcons";
 import { Button } from "../Common/Button";
@@ -9,7 +9,7 @@ export const CircularVisModeButton: React.FC<{
   label: string;
 }> = ({ mode, label }) => {
   const { circularVisMode, setCircularVisMode } = useDisplay(); //vis mode currently selected
-  const { inputMode } = usePreset();
+  const { inputMode } = useChordPresets();
   const visIcons = new CircularVisIcons(12, 10);
 
   const isDisabled =

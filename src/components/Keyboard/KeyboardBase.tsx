@@ -5,11 +5,12 @@ import { InputMode } from "@/types/SettingModes";
 import { IndexUtils } from "@/utils/IndexUtils";
 import { ChordUtils } from "@/utils/ChordUtils";
 import { useMusical } from "@/contexts/MusicalContext";
-import { usePreset } from "@/contexts/PresetContext";
+import { useChordPresets } from "@/contexts/ChordPresetContext";
 
 export const CIRCLE_RADIUS = 5;
 export const useKeyboardHandlers = () => {
-  const { selectedInversionIndex, selectedChordType, inputMode } = usePreset();
+  const { selectedInversionIndex, selectedChordType, inputMode } =
+    useChordPresets();
   const { selectedNoteIndices, setSelectedNoteIndices } = useMusical();
 
   const handleKeyClick = useCallback(

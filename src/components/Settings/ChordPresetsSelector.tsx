@@ -9,23 +9,23 @@ import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
 import { IndexUtils } from "@/utils/IndexUtils";
 import { ChordUtils } from "@/utils/ChordUtils";
 
-import { usePreset } from "@/contexts/PresetContext";
+import { useChordPresets } from "@/contexts/ChordPresetContext";
 import { useMusical } from "@/contexts/MusicalContext";
 
 import { SectionTitle } from "../Common/SectionTitle";
 import { InversionButton } from "../Buttons/InversionButton";
-import { PresetButton } from "./PresetButton";
+import { ChordPresetButton } from "./ChordPresetButton";
 import { LAYOUT_PATTERNS } from "@/lib/design";
 import { useBorder } from "@/lib/hooks/useBorder";
 
-export const PresetsSelector: React.FC = () => {
+export const ChordPresetSelector: React.FC = () => {
   const {
     selectedChordType,
     setSelectedChordType,
     selectedInversionIndex,
     setSelectedInversionIndex,
     inputMode,
-  } = usePreset();
+  } = useChordPresets();
 
   const { selectedNoteIndices, setSelectedNoteIndices } = useMusical();
   const border = useBorder();
@@ -68,7 +68,7 @@ export const PresetsSelector: React.FC = () => {
               NoteGroupingLibrary.getGroupingById(preset).isVisiblePreset
           )
           .map((presetId) => (
-            <PresetButton
+            <ChordPresetButton
               key={presetId}
               presetId={presetId}
               selected={presetId === selectedChordType}
@@ -92,7 +92,7 @@ export const PresetsSelector: React.FC = () => {
               NoteGroupingLibrary.getGroupingById(preset).isVisiblePreset
           )
           .map((presetId) => (
-            <PresetButton
+            <ChordPresetButton
               key={presetId}
               presetId={presetId}
               selected={presetId === selectedChordType}
