@@ -4,7 +4,7 @@ import { useCallback, useRef, useEffect, useState } from "react";
 import {
   ixScaleDegreeIndex,
   ScaleDegreeIndex,
-} from "@/types/GreekModes/ScaleDegreeType";
+} from "@/types/ScaleModes/ScaleDegreeType";
 import { chromaticToActual, ixOctaveOffset } from "@/types/IndexTypes";
 import { ScalePlaybackMode } from "@/types/ScalePlaybackMode";
 import { PlaybackState } from "@/contexts/AudioContext";

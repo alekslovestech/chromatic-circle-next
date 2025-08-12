@@ -1,6 +1,6 @@
 import { AccidentalType } from "../types/AccidentalType";
-import { ixScaleDegree } from "../types/GreekModes/ScaleDegreeType";
-import { ScaleDegreeInfo } from "../types/GreekModes/ScaleDegreeInfo";
+import { ixScaleDegree } from "../types/ScaleModes/ScaleDegreeType";
+import { ScaleDegreeInfo } from "../types/ScaleModes/ScaleDegreeInfo";
 
 describe("Scale Degree Info", () => {
   const testCases = [
@@ -32,7 +32,10 @@ describe("Scale Degree Info", () => {
 
   testCases.forEach(({ desc, degree, accidental, expected }) => {
     test(desc, () => {
-      const scaleDegreeInfo = new ScaleDegreeInfo(ixScaleDegree(degree), accidental);
+      const scaleDegreeInfo = new ScaleDegreeInfo(
+        ixScaleDegree(degree),
+        accidental
+      );
       expect(scaleDegreeInfo.getDisplayString()).toEqual(expected);
     });
   });

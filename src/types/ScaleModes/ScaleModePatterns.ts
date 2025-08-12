@@ -1,4 +1,4 @@
-export const GREEK_MODE_PATTERNS = {
+export const SCALE_MODE_PATTERNS = {
   IONIAN: [0, 2, 4, 5, 7, 9, 11],
   DORIAN: [0, 2, 3, 5, 7, 9, 10],
   UKRAINIAN_DORIAN: [0, 2, 3, 6, 7, 9, 10],

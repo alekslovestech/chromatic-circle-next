@@ -2,7 +2,7 @@ import { CHORD_OFFSET_PATTERNS } from "../ChordOffsetPatterns";
 import { addChromatic, ChromaticIndex } from "../ChromaticIndex";
 import { ChordType } from "../NoteGroupingTypes";
 import { RomanChord } from "../RomanChord";
-import { GreekModeType } from "./GreekModeType";
+import { ScaleModeType } from "./ScaleModeType";
 import { ScalePattern } from "./ScalePattern";
 import { ScaleDegreeInfo } from "./ScaleDegreeInfo";
 import { ScaleDegreeIndex } from "./ScaleDegreeType";
@@ -10,7 +10,7 @@ import { ixScaleDegreeIndex } from "./ScaleDegreeType";
 import { IScalePatternForRomanChords } from "../IScalePatternForRomanChords";
 import { KeyDisplayMode } from "../SettingModes";
 
-export class GreekModeInfo implements IScalePatternForRomanChords {
+export class ScaleModeInfo implements IScalePatternForRomanChords {
   /**
    * The scale pattern for this mode.
    * For most use cases, you can access this directly to use ScalePattern methods.
@@ -19,7 +19,7 @@ export class GreekModeInfo implements IScalePatternForRomanChords {
   public readonly scalePattern: ScalePattern;
 
   constructor(
-    public readonly type: GreekModeType,
+    public readonly type: ScaleModeType,
     pattern: number[], // The pattern of the mode, typically 7 notes. e.g. [0, 2, 4, 5, 7, 9, 10] for Mixolydian
     public readonly modeNumber: number // The number of the mode, typically 1-7. e.g. 1 for Ionian, 2 for Dorian, etc.
   ) {
