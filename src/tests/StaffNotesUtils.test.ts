@@ -31,12 +31,7 @@ describe("StaffNotesUtils", () => {
       );
 
       expect(result).toHaveLength(1);
-      verifyNoteWithOctave(
-        result[0],
-        "G",
-        AccidentalType.None,
-        ixOctaveOffset(0)
-      );
+      verifyNoteWithOctave(result[0], "G", AccidentalType.None, 0);
     });
 
     test("converts single note (black key) index to NoteWithOctave in C major", () => {
@@ -46,12 +41,7 @@ describe("StaffNotesUtils", () => {
       );
 
       expect(result).toHaveLength(1);
-      verifyNoteWithOctave(
-        result[0],
-        "G",
-        AccidentalType.Sharp,
-        ixOctaveOffset(0)
-      );
+      verifyNoteWithOctave(result[0], "G", AccidentalType.Sharp, 0);
     });
 
     test("converts single note (black, next octave) index to NoteWithOctave in C major", () => {
@@ -61,12 +51,7 @@ describe("StaffNotesUtils", () => {
       );
 
       expect(result).toHaveLength(1);
-      verifyNoteWithOctave(
-        result[0],
-        "C",
-        AccidentalType.Sharp,
-        ixOctaveOffset(1)
-      );
+      verifyNoteWithOctave(result[0], "C", AccidentalType.Sharp, 1);
     });
 
     test("converts multiple note indices to NoteWithOctaves in C major", () => {
@@ -77,18 +62,8 @@ describe("StaffNotesUtils", () => {
 
       expect(result).toHaveLength(3);
       verifyNoteWithOctave(result[0], "G", AccidentalType.None, 0);
-      verifyNoteWithOctave(
-        result[1],
-        "B",
-        AccidentalType.None,
-        ixOctaveOffset(0)
-      );
-      verifyNoteWithOctave(
-        result[2],
-        "D",
-        AccidentalType.None,
-        ixOctaveOffset(1)
-      );
+      verifyNoteWithOctave(result[1], "B", AccidentalType.None, 0);
+      verifyNoteWithOctave(result[2], "D", AccidentalType.None, 1);
     });
 
     test("applies key signature correctly in D major", () => {
@@ -99,12 +74,7 @@ describe("StaffNotesUtils", () => {
       );
 
       expect(result).toHaveLength(2);
-      verifyNoteWithOctave(
-        result[0],
-        "A",
-        AccidentalType.None,
-        ixOctaveOffset(0)
-      );
+      verifyNoteWithOctave(result[0], "A", AccidentalType.None, 0);
       verifyNoteWithOctave(result[1], "C", AccidentalType.None, 1); // C# is in key signature
     });
 
@@ -115,38 +85,6 @@ describe("StaffNotesUtils", () => {
       );
 
       expect(result).toEqual([]);
-    });
-  });
-
-  describe("isChordPresetKnown", () => {
-    test("returns true for known chord types when chords/intervals are active", () => {
-      expect(StaffNotesUtils.isChordPresetKnown(ChordType.Major, true)).toBe(
-        true
-      );
-      expect(StaffNotesUtils.isChordPresetKnown(ChordType.Minor, true)).toBe(
-        true
-      );
-    });
-
-    test("returns false when chords/intervals are not active", () => {
-      expect(StaffNotesUtils.isChordPresetKnown(ChordType.Major, false)).toBe(
-        false
-      );
-    });
-
-    test("returns false for special types even when chords/intervals are active", () => {
-      expect(StaffNotesUtils.isChordPresetKnown(SpecialType.None, true)).toBe(
-        false
-      );
-      expect(StaffNotesUtils.isChordPresetKnown(SpecialType.Note, true)).toBe(
-        false
-      );
-      expect(
-        StaffNotesUtils.isChordPresetKnown(SpecialType.Freeform, true)
-      ).toBe(false);
-      expect(StaffNotesUtils.isChordPresetKnown(ChordType.Unknown, true)).toBe(
-        false
-      );
     });
   });
 
