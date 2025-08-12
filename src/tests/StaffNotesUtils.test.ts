@@ -8,7 +8,6 @@ import {
   ixActualArray,
   ixInversion,
   ixOctaveOffset,
-  OctaveOffset,
 } from "../types/IndexTypes";
 
 function verifyNoteWithOctave(
