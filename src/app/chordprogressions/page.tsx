@@ -1,8 +1,7 @@
 "use client";
 
 import { COMMON_STYLES, NOTATION_LAYOUT } from "@/lib/design";
-import { usePageLayout } from "@/lib/hooks/usePageLayout";
-import { useBorder } from "@/lib/hooks/useBorder";
+import { usePageLayout, useBorder } from "@/lib/hooks";
 
 import { ChordNameDisplay } from "@/components/ChordNameDisplay";
 import { StaffRenderer } from "@/components/StaffRenderer";

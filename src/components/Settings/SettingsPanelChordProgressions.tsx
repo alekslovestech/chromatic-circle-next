@@ -1,11 +1,13 @@
 "use client";
 import React from "react";
+
 import { LAYOUT_PATTERNS } from "@/lib/design";
-import { useBorder } from "@/lib/hooks/useBorder";
-import { PlaybackModeSelect } from "./PlaybackModeSelect";
-import { PlayScaleButton } from "../Buttons/PlayScaleButton";
+import { useBorder } from "@/lib/hooks";
+
 import { PauseScaleButton } from "../Buttons/PauseScaleButton";
+import { PlayScaleButton } from "../Buttons/PlayScaleButton";
 import { ChordProgressionSelector } from "../ChordProgressionSelector";
+import { PlaybackModeSelect } from "./PlaybackModeSelect";
 
 export const SettingsPanelChordProgressions = () => {
   const settingsGap = "gap-tight";

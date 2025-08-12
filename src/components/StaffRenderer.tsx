@@ -8,7 +8,7 @@ import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { isMajor } from "@/types/Keys/KeyType";
 
 import { COMMON_STYLES } from "@/lib/design";
-import { useBorder } from "@/lib/hooks/useBorder";
+import { useBorder } from "@/lib/hooks";
 import { useMusical } from "@/contexts/MusicalContext";
 import {
   useChordPresets,

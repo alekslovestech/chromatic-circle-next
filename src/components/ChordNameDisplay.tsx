@@ -8,7 +8,7 @@ import { useDisplay } from "@/contexts/DisplayContext";
 import { ChordUtils } from "@/utils/ChordUtils";
 import { TYPOGRAPHY } from "@/lib/design";
 import { LAYOUT_PATTERNS } from "@/lib/design/LayoutPatterns";
-import { useBorder } from "@/lib/hooks/useBorder";
+import { useBorder } from "@/lib/hooks";
 
 const MAX_CHORD_NAME_LENGTH = 7;
 const BREAK_CHARACTER = "\u200B";

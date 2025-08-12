@@ -3,7 +3,7 @@ import { useGlobalMode } from "./useGlobalMode";
 import { LAYOUT_CONFIGS } from "@/lib/design/LayoutConstants";
 
 type OrientationType = "landscape" | "portrait";
-export interface PageLayout {
+interface PageLayout {
   gridRows: string;
   gridAreas: string;
   gridColumns: string;

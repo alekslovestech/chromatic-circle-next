@@ -10,7 +10,7 @@ import { ScalePlaybackMode } from "@/types/ScalePlaybackMode";
 import { PlaybackState } from "@/contexts/AudioContext";
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
-import { useGlobalMode } from "@/lib/hooks";
+import { useGlobalMode } from "./useGlobalMode";
 
 const PLAYBACK_DURATION_SINGLE_NOTE = 300;
 const PLAYBACK_DURATION_CHORD = 500;

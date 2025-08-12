@@ -3,10 +3,11 @@
 import { useCallback, useRef, useState } from "react";
 import { chromaticToActual, ixOctaveOffset } from "@/types/IndexTypes";
 import { ChordProgressionType } from "@/types/ChordProgressionType";
-import { PlaybackState } from "@/contexts/AudioContext";
-import { useMusical } from "@/contexts/MusicalContext";
 import { ChordProgressionLibrary } from "@/types/ChordProgressionLibrary";
 import { AbsoluteChord } from "@/types/AbsoluteChord";
+
+import { PlaybackState } from "@/contexts/AudioContext";
+import { useMusical } from "@/contexts/MusicalContext";
 
 const PLAYBACK_DURATION_CHORD = 500;
 
