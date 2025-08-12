@@ -1,19 +1,14 @@
 "use client";
 import React from "react";
 
-import { useChordPresets } from "@/contexts/ChordPresetContext";
-import { InputMode } from "@/types/SettingModes";
+import { useIsChordsOrIntervals } from "@/contexts/ChordPresetContext";
 
 import { InputModeSelector } from "./InputModeSelector";
 import { ChordPresetSelector } from "./ChordPresetsSelector";
 import { LAYOUT_PATTERNS } from "@/lib/design/LayoutPatterns";
 
 export const InputSettings: React.FC = () => {
-  const { inputMode } = useChordPresets();
-
-  const showPresets =
-    inputMode === InputMode.ChordPresets ||
-    inputMode === InputMode.IntervalPresets;
+  const showPresets = useIsChordsOrIntervals();
 
   return (
     <div

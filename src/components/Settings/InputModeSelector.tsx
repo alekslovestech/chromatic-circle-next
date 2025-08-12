@@ -10,7 +10,10 @@ import { useBorder } from "@/lib/hooks/useBorder";
 import { Button } from "@/components/Common/Button";
 import { SectionTitle } from "@/components/Common/SectionTitle";
 
-import { useChordPresets } from "@/contexts/ChordPresetContext";
+import {
+  useChordPresets,
+  useIsChordsOrIntervals,
+} from "@/contexts/ChordPresetContext";
 
 interface ModeSelectorButton {
   id: string;
@@ -21,7 +24,7 @@ interface ModeSelectorButton {
 const AVAILABLE_MODES: ModeSelectorButton[] = [
   {
     id: "mode-freeform",
-    mode: InputMode.Toggle,
+    mode: InputMode.Freeform,
     description: "Click notes to toggle them on/off",
   },
   {
@@ -50,6 +53,7 @@ export const InputModeSelector: React.FC = () => {
 
   const gapSize = "gap-snug";
   const isScalesMode = useIsScalePreviewMode();
+  const isChordsOrIntervals = useIsChordsOrIntervals(); // Move hook call here
 
   return (
     <div
@@ -60,10 +64,7 @@ export const InputModeSelector: React.FC = () => {
         className={`mode-selector-buttons ${LAYOUT_PATTERNS.centerFlexCol} ${gapSize}`}
       >
         {AVAILABLE_MODES.map(({ id, mode, description }) => {
-          const isHidden =
-            isScalesMode &&
-            (mode === InputMode.IntervalPresets ||
-              mode === InputMode.ChordPresets);
+          const isHidden = isScalesMode && isChordsOrIntervals; // Use the variable instead of calling the hook
 
           return (
             <Button

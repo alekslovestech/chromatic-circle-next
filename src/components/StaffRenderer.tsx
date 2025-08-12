@@ -3,40 +3,34 @@ import React, { useEffect, useRef } from "react";
 import { Factory, StaveNote } from "vexflow";
 
 import { getAccidentalSignForEasyScore } from "@/types/AccidentalType";
-import {
-  ActualIndex,
-  actualIndexToChromaticAndOctave,
-} from "@/types/IndexTypes";
+import { NoteWithOctave } from "@/types/NoteInfo";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { isMajor } from "@/types/Keys/KeyType";
-import { KeyNoteResolver } from "@/types/Keys/KeyNoteResolver";
 
 import { COMMON_STYLES } from "@/lib/design";
 import { useBorder } from "@/lib/hooks/useBorder";
 import { useMusical } from "@/contexts/MusicalContext";
+import {
+  useChordPresets,
+  useIsChordsOrIntervals,
+} from "@/contexts/ChordPresetContext";
+
+import { StaffNotesUtils } from "@/utils/StaffNotesUtils";
 
 interface StaffRendererProps {
   style?: React.CSSProperties;
 }
 
-const EasyScoreFromNotes = (
-  actualIndices: ActualIndex[],
-  selectedMusicalKey: MusicalKey,
+// Only VexFlow-specific functions stay here
+const createVexFlowNotesFromNoteWithOctaves = (
+  notesWithOctaves: NoteWithOctave[],
   factory: Factory
 ): StaveNote[] => {
-  const keys = actualIndices.map((actualIndex) => {
-    const { chromaticIndex, octaveOffset } =
-      actualIndexToChromaticAndOctave(actualIndex);
-    const noteInfo = KeyNoteResolver.resolveNoteInKey(
-      selectedMusicalKey,
-      chromaticIndex
-    );
-    return {
-      key: `${noteInfo.noteName}/${4 + octaveOffset}`,
-      accidentalSign: getAccidentalSignForEasyScore(noteInfo.accidental),
-      index: actualIndices.indexOf(actualIndex),
-    };
-  });
+  const keys = notesWithOctaves.map((noteWithOctave, index) => ({
+    key: noteWithOctave.formatForVexFlow(),
+    accidentalSign: getAccidentalSignForEasyScore(noteWithOctave.accidental),
+    index,
+  }));
 
   const chordNote = factory.StaveNote({
     keys: keys.map((k) => k.key),
@@ -65,7 +59,10 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
   const staffDivRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const { selectedNoteIndices, selectedMusicalKey } = useMusical();
+  const { selectedChordType, selectedInversionIndex } = useChordPresets();
+  const isChordsOrIntervals = useIsChordsOrIntervals();
   const border = useBorder();
+
   useEffect(() => {
     if (!staffDivRef.current || !containerRef.current) return;
 
@@ -85,11 +82,10 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
 
     const context = factory.getContext();
 
-    // Let VexFlow determine the appropriate width based on content
     const stave = factory.Stave({
       x: 5,
-      y: -20, // VexFlow internal offset compensation
-      width: containerWidth - 10, // Ensure stave stays within container bounds
+      y: -20,
+      width: containerWidth - 10,
     });
 
     const canonicalIonianKey = selectedMusicalKey.getCanonicalIonianKey();
@@ -101,22 +97,37 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
 
     if (selectedNoteIndices.length === 0) return;
 
-    const notes = EasyScoreFromNotes(
+    // Step 1: Compute NoteWithOctave[] - all context values passed as parameters
+    const notesWithOctaves = StaffNotesUtils.computeStaffNotes(
       selectedNoteIndices,
       canonicalIonianKey,
+      selectedChordType,
+      selectedInversionIndex,
+      isChordsOrIntervals
+    );
+
+    // Step 2: Render NoteWithOctave[] to VexFlow - pure rendering logic
+    const notes = createVexFlowNotesFromNoteWithOctaves(
+      notesWithOctaves,
       factory
     );
+
     const voice = factory.Voice({ time: "4/4" });
     voice.setStrict(false);
     voice.addTickables(notes);
 
-    // Use container width minus margins for formatting
     factory
       .Formatter()
       .joinVoices([voice])
       .format([voice], containerWidth - 20);
     voice.draw(context, stave);
-  }, [selectedNoteIndices, selectedMusicalKey]);
+  }, [
+    selectedNoteIndices,
+    selectedMusicalKey,
+    selectedChordType,
+    selectedInversionIndex,
+    isChordsOrIntervals,
+  ]);
 
   return (
     <div
@@ -131,7 +142,7 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
         style={{
           width: "100%",
           height: "100%",
-          overflow: "hidden", // Ensure content cuts off at container boundaries
+          overflow: "hidden",
         }}
       />
     </div>

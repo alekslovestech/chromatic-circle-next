@@ -38,18 +38,26 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
     const rootNoteIndex = selectedNoteIndices[0] || null;
     let newChordType: NoteGroupingId;
 
-    newChordType =
-      newMode === InputMode.IntervalPresets
-        ? ("Interval_Maj3" as NoteGroupingId)
-        : newMode === InputMode.ChordPresets
-        ? ("Chord_Maj" as NoteGroupingId)
-        : newMode === InputMode.SingleNote
-        ? ("Note" as NoteGroupingId)
-        : selectedChordType;
+    switch (newMode) {
+      case InputMode.IntervalPresets:
+        newChordType = "Interval_Maj3" as NoteGroupingId;
+        break;
+      case InputMode.ChordPresets:
+        newChordType = "Chord_Maj" as NoteGroupingId;
+        break;
+      case InputMode.SingleNote:
+        newChordType = "Note" as NoteGroupingId;
+        break;
+      case InputMode.Freeform:
+        newChordType = "Freeform" as NoteGroupingId;
+        break;
+      default:
+        newChordType = selectedChordType;
+    }
     setSelectedChordType(newChordType);
     setSelectedInversionIndex(ixInversion(0));
 
-    if (newMode !== InputMode.Toggle) {
+    if (newMode !== InputMode.Freeform) {
       const updatedIndices = ChordUtils.calculateUpdatedIndices(
         rootNoteIndex!,
         false,
@@ -74,6 +82,14 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
     <ChordPresetContext.Provider value={value}>
       {children}
     </ChordPresetContext.Provider>
+  );
+};
+
+export const useIsChordsOrIntervals = () => {
+  const { inputMode } = useChordPresets();
+  return (
+    inputMode === InputMode.ChordPresets ||
+    inputMode === InputMode.IntervalPresets
   );
 };
 

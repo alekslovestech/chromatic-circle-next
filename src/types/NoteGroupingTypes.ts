@@ -8,6 +8,7 @@ export enum NoteGroupingType {
 export enum SpecialType {
   None = "None",
   Note = "Note",
+  Freeform = "Freeform", // NEW
 }
 
 export enum IntervalType {

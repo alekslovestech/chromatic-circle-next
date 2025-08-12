@@ -13,7 +13,7 @@ export const SettingsPanelDefault = () => {
   const settingsGap = "gap-tight";
   const border = useBorder();
   const { inputMode } = useChordPresets();
-  const isFreeformMode = inputMode === InputMode.Toggle;
+  const isFreeformMode = inputMode === InputMode.Freeform;
   return (
     <div
       id="settings-panel-default"
