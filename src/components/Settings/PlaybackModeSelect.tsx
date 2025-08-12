@@ -19,12 +19,12 @@ const PLAYBACK_MODE_OPTIONS: PlaybackModeOption[] = [
     label: "♪",
     description: "Play single notes",
   },
-  {
+  /*{
     id: "droned-single-note",
     mode: ScalePlaybackMode.DronedSingleNote,
     label: "♩_ ♪",
     description: "Play single notes with a tonic drone",
-  },
+  },*/
   {
     id: "triad",
     mode: ScalePlaybackMode.Triad,
@@ -43,7 +43,7 @@ export const PlaybackModeSelect: React.FC = () => {
   return (
     <div className="playback-mode-select">
       <SectionTitle>Playback Mode</SectionTitle>
-      <div className="flex gap-2">
+      <div className="flex gap-2 justify-center">
         {PLAYBACK_MODE_OPTIONS.map(({ id, mode, label, description }) => (
           <Button
             key={id}
