@@ -82,6 +82,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
   const scaleDegreeIndexRef = useRef<ScaleDegreeIndex>(ixScaleDegreeIndex(0));
   const playbackTimerIdRef = useRef<NodeJS.Timeout | null>(null);
   const landingNoteRef = useRef(false);
+  const userStoppedPlaybackRef = useRef(false);
 
   const [selectedProgression, setSelectedProgression] =
     useState<ChordProgressionType | null>(null);
@@ -96,6 +97,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
     }
     setPlaybackState(PlaybackState.ScaleComplete);
     scaleDegreeIndexRef.current = ixScaleDegreeIndex(0);
+    userStoppedPlaybackRef.current = true; // Mark as user-stopped
   }, []);
 
   const playScaleStep = useCallback(() => {
@@ -147,6 +149,8 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const startScalePlayback = useCallback(() => {
     console.log("Starting scale playback");
+
+    userStoppedPlaybackRef.current = false; // Reset the flag when starting
 
     if (!isAudioInitialized) {
       console.log("Audio not initialized yet, cannot start scale playback");
@@ -272,8 +276,11 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
     );
 
     if (scalePreviewMode && isAudioInitialized) {
-      // Only start if completely stopped (not playing or paused)
-      if (playbackState === PlaybackState.ScaleComplete) {
+      // Only auto-start if not manually stopped by user
+      if (
+        playbackState === PlaybackState.ScaleComplete &&
+        !userStoppedPlaybackRef.current
+      ) {
         console.log("🎵 Auto-starting scale playback");
         startScalePlayback();
       }
@@ -287,6 +294,24 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
     startScalePlayback,
     stopScalePlayback,
     playbackState,
+  ]);
+
+  // Separate effect to handle musical key changes
+  useEffect(() => {
+    // Reset user-stopped flag when musical key changes
+    userStoppedPlaybackRef.current = false;
+    console.log("Musical key changed, resetting user-stopped flag");
+
+    // Auto-start playback for the new scale if conditions are met
+    if (scalePreviewMode && isAudioInitialized) {
+      console.log("🎵 Auto-starting playback for new musical key");
+      startScalePlayback();
+    }
+  }, [
+    selectedMusicalKey,
+    scalePreviewMode,
+    isAudioInitialized,
+    startScalePlayback,
   ]);
 
   const value = {
