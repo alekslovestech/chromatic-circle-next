@@ -3,6 +3,8 @@
 import React, { createContext, useContext, useState } from "react";
 import { useScalePlayback } from "@/lib/hooks/useScalePlayback";
 import { useChordProgressionPlayback } from "@/lib/hooks/useChordProgressionPlayback";
+import { ScalePlaybackMode } from "@/types/ScalePlaybackMode";
+import { ChordProgressionType } from "@/types/ChordProgressionType";
 
 export enum PlaybackState {
   ScaleComplete,
@@ -16,16 +18,16 @@ interface AudioContextType {
   setAudioInitialized: (initialized: boolean) => void;
 
   // Scale playback
-  scalePlaybackMode: any;
-  setScalePlaybackMode: (mode: any) => void;
+  scalePlaybackMode: ScalePlaybackMode;
+  setScalePlaybackMode: (mode: ScalePlaybackMode) => void;
   startScalePlayback: () => void;
   stopScalePlayback: () => void;
   pauseScalePlayback: () => void;
   resumeScalePlayback: () => void;
 
   // Chord progression playback
-  selectedProgression: any;
-  setSelectedProgression: (progression: any) => void;
+  selectedProgression: ChordProgressionType | null;
+  setSelectedProgression: (progression: ChordProgressionType | null) => void;
   currentChordIndex: number;
   startProgressionPlayback: () => void;
   pauseProgressionPlayback: () => void;
