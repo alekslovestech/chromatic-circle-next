@@ -8,7 +8,7 @@ export enum GreekModeType {
   Lydian = "Lydian",
   Mixolydian = "Mixolydian",
   Aeolian = "Aeolian",
-  HarmonicMinor = "Harmonic",
-  HungarianMinor = "Hungarian",
+  HarmonicMinor = "Harmonic Minor",
+  HungarianMinor = "Hungarian Minor",
   Locrian = "Locrian",
 }
