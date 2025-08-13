@@ -32,22 +32,21 @@ export class StaffNotesUtils {
   };
 
   static computeNotesFromChordPreset = (
-    selectedNoteIndices: ActualIndex[],
+    baseIndex: ActualIndex, //the lowest index of the chord
     selectedChordType: NoteGroupingId,
     selectedInversionIndex: InversionIndex,
     selectedMusicalKey: MusicalKey
   ): NoteWithOctave[] => {
-    if (selectedNoteIndices.length === 0) return [];
-
+    /*
     // Get the root note (considering current inversion)
     const rootNote = IndexUtils.rootNoteAtInversion(
       selectedNoteIndices,
       selectedInversionIndex
-    );
+    ); */
 
     // Calculate chord notes from the root
     const chordIndices = ChordUtils.calculateChordNotesFromIndex(
-      rootNote,
+      baseIndex,
       selectedChordType,
       selectedInversionIndex
     );
@@ -82,7 +81,7 @@ export class StaffNotesUtils {
 
     return this.isChordPresetKnown(selectedChordType, isChordsOrIntervals)
       ? this.computeNotesFromChordPreset(
-          selectedNoteIndices,
+          selectedNoteIndices[0],
           selectedChordType,
           selectedInversionIndex,
           selectedMusicalKey

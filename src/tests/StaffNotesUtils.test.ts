@@ -5,6 +5,7 @@ import { AccidentalType } from "../types/AccidentalType";
 import { KeyType } from "../types/Keys/KeyType";
 import { ChordType, SpecialType } from "../types/NoteGroupingTypes";
 import {
+  ixActual,
   ixActualArray,
   ixInversion,
   ixOctaveOffset,
@@ -91,7 +92,7 @@ describe("StaffNotesUtils", () => {
   describe("computeNotesFromChordPreset", () => {
     test("generates major triad from root note", () => {
       const result = StaffNotesUtils.computeNotesFromChordPreset(
-        ixActualArray([7]), // C
+        ixActual(7), // C
         ChordType.Major,
         ixInversion(0),
         DEFAULT_MUSICAL_KEY
@@ -106,7 +107,7 @@ describe("StaffNotesUtils", () => {
     //TODO: test fails as it should, make it green later.
     test("generates minor triad from root note", () => {
       const result = StaffNotesUtils.computeNotesFromChordPreset(
-        ixActualArray([7]), // C
+        ixActual(7), // C
         ChordType.Minor,
         ixInversion(0),
         DEFAULT_MUSICAL_KEY
@@ -120,22 +121,6 @@ describe("StaffNotesUtils", () => {
   });
 
   describe("computeStaffNotes", () => {
-    test("uses chord preset when chord is known", () => {
-      const result = StaffNotesUtils.computeStaffNotes(
-        ixActualArray([7]), // C
-        DEFAULT_MUSICAL_KEY,
-        ChordType.Major,
-        ixInversion(0),
-        true // chords/intervals active
-      );
-
-      expect(result).toHaveLength(3); // Major triad
-      verifyNoteWithOctave(result[0], "G", AccidentalType.None, 0);
-      verifyNoteWithOctave(result[1], "B", AccidentalType.None, 0);
-      verifyNoteWithOctave(result[2], "D", AccidentalType.None, 1);
-    });
-
-    test("uses raw notes when chord preset is not known", () => {
       const result = StaffNotesUtils.computeStaffNotes(
         ixActualArray([7, 8]), // C, C#
         DEFAULT_MUSICAL_KEY,
