@@ -110,7 +110,7 @@ describe("StaffNotesUtils", () => {
   });
 
   describe("computeNotesFromChordPreset", () => {
-    test("generates major triad from root note", () => {
+    test("generates major triad from G", () => {
       const result = StaffNotesUtils.computeNotesFromChordPreset(
         ixActual(7), // G
         ChordType.Major,
@@ -125,7 +125,7 @@ describe("StaffNotesUtils", () => {
       ]);
     });
 
-    test("generates minor triad from root note", () => {
+    test("generates minor triad from G", () => {
       const result = StaffNotesUtils.computeNotesFromChordPreset(
         ixActual(7), // G
         ChordType.Minor,
@@ -140,7 +140,7 @@ describe("StaffNotesUtils", () => {
       ]);
     });
 
-    test("generates diminished triad from root note", () => {
+    test("generates diminished triad from G", () => {
       const result = StaffNotesUtils.computeNotesFromChordPreset(
         ixActual(7), // G
         ChordType.Diminished,
@@ -155,7 +155,7 @@ describe("StaffNotesUtils", () => {
       ]);
     });
 
-    test("generates augmented triad from root note", () => {
+    test("generates augmented triad from G", () => {
       const result = StaffNotesUtils.computeNotesFromChordPreset(
         ixActual(7), // G
         ChordType.Augmented,
@@ -167,6 +167,69 @@ describe("StaffNotesUtils", () => {
         makeNoteWithOctave("G", AccidentalType.None, 0),
         makeNoteWithOctave("B", AccidentalType.None, 0),
         makeNoteWithOctave("D", AccidentalType.Sharp, 1),
+      ]);
+    });
+
+    test("generates major triad from G#/Ab", () => {
+      const result = StaffNotesUtils.computeNotesFromChordPreset(
+        ixActual(8), // G#/Ab
+        ChordType.Major,
+        ixInversion(0)
+      );
+
+      //should be Ab major
+      expect(result).toHaveLength(3);
+      verifyNoteWithOctaveArray(result, [
+        makeNoteWithOctave("A", AccidentalType.Flat, 0),
+        makeNoteWithOctave("C", AccidentalType.None, 1),
+        makeNoteWithOctave("E", AccidentalType.Flat, 1),
+      ]);
+    });
+
+    test("generates minor triad from G#/Ab", () => {
+      const result = StaffNotesUtils.computeNotesFromChordPreset(
+        ixActual(8), // G#/Ab
+        ChordType.Minor,
+        ixInversion(0)
+      );
+
+      expect(result).toHaveLength(3);
+      verifyNoteWithOctaveArray(result, [
+        makeNoteWithOctave("G", AccidentalType.Sharp, 0),
+        makeNoteWithOctave("B", AccidentalType.None, 0),
+        makeNoteWithOctave("D", AccidentalType.Sharp, 1),
+      ]);
+    });
+
+    test("generates diminished triad from G#/Ab", () => {
+      const result = StaffNotesUtils.computeNotesFromChordPreset(
+        ixActual(8), // G#/Ab
+        ChordType.Diminished,
+        ixInversion(0)
+      );
+
+      //G# dim
+      expect(result).toHaveLength(3);
+      verifyNoteWithOctaveArray(result, [
+        makeNoteWithOctave("G", AccidentalType.Sharp, 0),
+        makeNoteWithOctave("B", AccidentalType.None, 0),
+        makeNoteWithOctave("D", AccidentalType.None, 1),
+      ]);
+    });
+
+    test("generates augmented triad from G#/Ab", () => {
+      const result = StaffNotesUtils.computeNotesFromChordPreset(
+        ixActual(8), // G#/Ab
+        ChordType.Augmented,
+        ixInversion(0)
+      );
+
+      //Ab aug
+      expect(result).toHaveLength(3);
+      verifyNoteWithOctaveArray(result, [
+        makeNoteWithOctave("A", AccidentalType.Flat, 0),
+        makeNoteWithOctave("C", AccidentalType.None, 1),
+        makeNoteWithOctave("E", AccidentalType.None, 1),
       ]);
     });
   });
