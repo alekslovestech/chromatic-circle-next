@@ -38,6 +38,19 @@ export class ChordUtils {
     return definition?.offsets.length > 1;
   };
 
+  static isMinorQualityChord(chordType: NoteGroupingId): boolean {
+    return [
+      ChordType.Minor,
+      ChordType.Diminished,
+      ChordType.Minor7,
+      ChordType.HalfDiminished,
+      ChordType.Diminished7,
+      ChordType.Minor6,
+      ChordType.SpreadMinor,
+      ChordType.SpreadDiminished,
+    ].includes(chordType as ChordType);
+  }
+
   static getDisplayInfoFromIndices(
     indices: ActualIndex[],
     chordDisplayMode: ChordDisplayMode,

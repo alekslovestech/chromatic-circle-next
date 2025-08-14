@@ -3,6 +3,7 @@ import {
   actualIndexToChromaticAndOctave,
   InversionIndex,
 } from "@/types/IndexTypes";
+import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { KeyNoteResolver } from "@/types/Keys/KeyNoteResolver";
 import { NoteWithOctave } from "@/types/NoteInfo";
@@ -13,6 +14,7 @@ import {
 } from "@/types/NoteGroupingTypes";
 import { ChordUtils } from "@/utils/ChordUtils";
 import { AccidentalType } from "@/types/AccidentalType";
+import { isBlackKey } from "./Keyboard/KeyboardUtils";
 
 export class StaffNotesUtils {
   static computeNotesWithOctaves = (
@@ -30,52 +32,27 @@ export class StaffNotesUtils {
     });
   };
 
-  /**
-   * Creates NoteWithOctave[] using chord-aware spelling that ignores musical key context.
-   * Uses consistent chord spelling rules (e.g., minor thirds always use flats).
-   */
-  private static computeNotesWithChordSpelling = (
-    actualIndices: ActualIndex[],
-    chordType: NoteGroupingId
-  ): NoteWithOctave[] => {
-    return actualIndices.map((actualIndex) => {
-      const { chromaticIndex, octaveOffset } =
-        actualIndexToChromaticAndOctave(actualIndex);
+  private static getChordSpellingPreferenceForRoot(
+    chordType: NoteGroupingId,
+    rootChromaticIndex: ChromaticIndex
+  ): AccidentalType {
+    // For white key roots, use the general chord spelling preference
+    if (!isBlackKey(rootChromaticIndex)) {
+      return this.getChordSpellingPreference(chordType);
+    }
 
-      // Use chord-specific spelling rules instead of key context
-      const accidentalPreference = this.getChordSpellingPreference(chordType);
-      const noteInfo = KeyNoteResolver.resolveAbsoluteNote(
-        chromaticIndex,
-        accidentalPreference
-      );
-      return new NoteWithOctave(noteInfo, octaveOffset);
-    });
-  };
+    // For black key roots, major-quality chords prefer flats, minor/diminished prefer sharps
+    return ChordUtils.isMinorQualityChord(chordType)
+      ? AccidentalType.Sharp
+      : AccidentalType.Flat;
+  }
 
-  /**
-   * Determines the accidental preference for chord spelling based on chord type.
-   * Minor-quality chords prefer flats, major-quality chords prefer sharps/naturals.
-   */
   private static getChordSpellingPreference(
     chordType: NoteGroupingId
   ): AccidentalType {
-    // For chord spelling, prefer flats for minor-quality chords
-    // This ensures Gm = G-Bb-D instead of G-A#-D
-    switch (chordType) {
-      case ChordType.Minor:
-      case ChordType.Diminished:
-      case ChordType.Minor7:
-      case ChordType.HalfDiminished:
-      case ChordType.Diminished7:
-      case ChordType.Minor6:
-      case ChordType.SpreadMinor:
-      case ChordType.SpreadDiminished:
-        return AccidentalType.Flat;
-
-      // Major-quality and other chords can use sharp preference
-      default:
-        return AccidentalType.Sharp;
-    }
+    return ChordUtils.isMinorQualityChord(chordType)
+      ? AccidentalType.Flat
+      : AccidentalType.Sharp;
   }
 
   static computeNotesFromChordPreset = (
@@ -90,9 +67,15 @@ export class StaffNotesUtils {
       selectedInversionIndex
     );
 
-    // Use chord-specific spelling instead of key-based spelling
-    const accidentalPreference =
-      this.getChordSpellingPreference(selectedChordType);
+    // Get the root chromatic index to determine spelling preference
+    const { chromaticIndex: rootChromaticIndex } =
+      actualIndexToChromaticAndOctave(baseIndex);
+
+    // Use root-note-aware spelling logic for black keys
+    const accidentalPreference = this.getChordSpellingPreferenceForRoot(
+      selectedChordType,
+      rootChromaticIndex
+    );
 
     return chordIndices.map((actualIndex) => {
       const { chromaticIndex, octaveOffset } =
