@@ -1,4 +1,3 @@
-// src/utils/StaffNotesUtils.ts
 import {
   ActualIndex,
   actualIndexToChromaticAndOctave,

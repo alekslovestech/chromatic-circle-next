@@ -1,6 +1,6 @@
 import { StaffNotesUtils } from "../utils/StaffNotesUtils";
 import { DEFAULT_MUSICAL_KEY, MusicalKey } from "../types/Keys/MusicalKey";
-import { NoteWithOctave } from "../types/NoteInfo";
+import { NoteInfo, NoteWithOctave } from "../types/NoteInfo";
 import { AccidentalType } from "../types/AccidentalType";
 import { KeyType } from "../types/Keys/KeyType";
 import { ChordType, SpecialType } from "../types/NoteGroupingTypes";
@@ -11,16 +11,26 @@ import {
   ixOctaveOffset,
 } from "../types/IndexTypes";
 
-function verifyNoteWithOctave(
-  actual: NoteWithOctave,
-  expectedNoteName: string,
-  expectedAccidental: AccidentalType,
-  expectedOctaveOffset: number
+function makeNoteWithOctave(
+  noteName: string,
+  accidental: AccidentalType,
+  octaveOffsetAsNumber: number
+): NoteWithOctave {
+  const octaveOffset = ixOctaveOffset(octaveOffsetAsNumber);
+  const noteInfo = new NoteInfo(noteName, accidental);
+  return new NoteWithOctave(noteInfo, octaveOffset);
+}
+
+function verifyNoteWithOctaveArray(
+  actual: NoteWithOctave[],
+  expected: NoteWithOctave[]
 ) {
-  const octaveOffset = ixOctaveOffset(expectedOctaveOffset);
-  expect(actual.noteName).toBe(expectedNoteName);
-  expect(actual.accidental).toBe(expectedAccidental);
-  expect(actual.octaveOffset).toBe(octaveOffset);
+  expect(actual).toHaveLength(expected.length);
+  for (let i = 0; i < actual.length; i++) {
+    expect(actual[i].noteName).toBe(expected[i].noteName);
+    expect(actual[i].accidental).toBe(expected[i].accidental);
+    expect(actual[i].octaveOffset).toBe(expected[i].octaveOffset);
+  }
 }
 
 describe("StaffNotesUtils", () => {
@@ -32,7 +42,9 @@ describe("StaffNotesUtils", () => {
       );
 
       expect(result).toHaveLength(1);
-      verifyNoteWithOctave(result[0], "G", AccidentalType.None, 0);
+      verifyNoteWithOctaveArray(result, [
+        makeNoteWithOctave("G", AccidentalType.None, 0),
+      ]);
     });
 
     test("converts single note (black key) index to NoteWithOctave in C major", () => {
@@ -42,7 +54,9 @@ describe("StaffNotesUtils", () => {
       );
 
       expect(result).toHaveLength(1);
-      verifyNoteWithOctave(result[0], "G", AccidentalType.Sharp, 0);
+      verifyNoteWithOctaveArray(result, [
+        makeNoteWithOctave("G", AccidentalType.Sharp, 0),
+      ]);
     });
 
     test("converts single note (black, next octave) index to NoteWithOctave in C major", () => {
@@ -52,7 +66,9 @@ describe("StaffNotesUtils", () => {
       );
 
       expect(result).toHaveLength(1);
-      verifyNoteWithOctave(result[0], "C", AccidentalType.Sharp, 1);
+      verifyNoteWithOctaveArray(result, [
+        makeNoteWithOctave("C", AccidentalType.Sharp, 1),
+      ]);
     });
 
     test("converts multiple note indices to NoteWithOctaves in C major", () => {
@@ -62,9 +78,11 @@ describe("StaffNotesUtils", () => {
       );
 
       expect(result).toHaveLength(3);
-      verifyNoteWithOctave(result[0], "G", AccidentalType.None, 0);
-      verifyNoteWithOctave(result[1], "B", AccidentalType.None, 0);
-      verifyNoteWithOctave(result[2], "D", AccidentalType.None, 1);
+      verifyNoteWithOctaveArray(result, [
+        makeNoteWithOctave("G", AccidentalType.None, 0),
+        makeNoteWithOctave("B", AccidentalType.None, 0),
+        makeNoteWithOctave("D", AccidentalType.None, 1),
+      ]);
     });
 
     test("applies key signature correctly in D major", () => {
@@ -75,8 +93,10 @@ describe("StaffNotesUtils", () => {
       );
 
       expect(result).toHaveLength(2);
-      verifyNoteWithOctave(result[0], "A", AccidentalType.None, 0);
-      verifyNoteWithOctave(result[1], "C", AccidentalType.None, 1); // C# is in key signature
+      verifyNoteWithOctaveArray(result, [
+        makeNoteWithOctave("A", AccidentalType.None, 0),
+        makeNoteWithOctave("C", AccidentalType.None, 1),
+      ]);
     });
 
     test("returns empty array for empty input", () => {
@@ -98,9 +118,11 @@ describe("StaffNotesUtils", () => {
       );
 
       expect(result).toHaveLength(3);
-      verifyNoteWithOctave(result[0], "G", AccidentalType.None, 0); // G
-      verifyNoteWithOctave(result[1], "B", AccidentalType.None, 0); // B
-      verifyNoteWithOctave(result[2], "D", AccidentalType.None, 1); // D
+      verifyNoteWithOctaveArray(result, [
+        makeNoteWithOctave("G", AccidentalType.None, 0),
+        makeNoteWithOctave("B", AccidentalType.None, 0),
+        makeNoteWithOctave("D", AccidentalType.None, 1),
+      ]);
     });
 
     test("generates minor triad from root note", () => {
@@ -111,9 +133,11 @@ describe("StaffNotesUtils", () => {
       );
 
       expect(result).toHaveLength(3);
-      verifyNoteWithOctave(result[0], "G", AccidentalType.None, 0); // G
-      verifyNoteWithOctave(result[1], "B", AccidentalType.Flat, 0); // Bb
-      verifyNoteWithOctave(result[2], "D", AccidentalType.None, 1); // D
+      verifyNoteWithOctaveArray(result, [
+        makeNoteWithOctave("G", AccidentalType.None, 0),
+        makeNoteWithOctave("B", AccidentalType.Flat, 0),
+        makeNoteWithOctave("D", AccidentalType.None, 1),
+      ]);
     });
 
     test("generates diminished triad from root note", () => {
@@ -124,9 +148,11 @@ describe("StaffNotesUtils", () => {
       );
 
       expect(result).toHaveLength(3);
-      verifyNoteWithOctave(result[0], "G", AccidentalType.None, 0); // G
-      verifyNoteWithOctave(result[1], "B", AccidentalType.Flat, 0); // Bb
-      verifyNoteWithOctave(result[2], "D", AccidentalType.Flat, 1); // Db
+      verifyNoteWithOctaveArray(result, [
+        makeNoteWithOctave("G", AccidentalType.None, 0),
+        makeNoteWithOctave("B", AccidentalType.Flat, 0),
+        makeNoteWithOctave("D", AccidentalType.Flat, 1),
+      ]);
     });
 
     test("generates augmented triad from root note", () => {
@@ -137,9 +163,11 @@ describe("StaffNotesUtils", () => {
       );
 
       expect(result).toHaveLength(3);
-      verifyNoteWithOctave(result[0], "G", AccidentalType.None, 0); // G
-      verifyNoteWithOctave(result[1], "B", AccidentalType.None, 0); // B
-      verifyNoteWithOctave(result[2], "D", AccidentalType.Sharp, 1); // D#
+      verifyNoteWithOctaveArray(result, [
+        makeNoteWithOctave("G", AccidentalType.None, 0),
+        makeNoteWithOctave("B", AccidentalType.None, 0),
+        makeNoteWithOctave("D", AccidentalType.Sharp, 1),
+      ]);
     });
   });
 
@@ -153,8 +181,10 @@ describe("StaffNotesUtils", () => {
     );
 
     expect(result).toHaveLength(2); // Raw notes
-    verifyNoteWithOctave(result[0], "G", AccidentalType.None, 0);
-    verifyNoteWithOctave(result[1], "G", AccidentalType.Sharp, 0);
+    verifyNoteWithOctaveArray(result, [
+      makeNoteWithOctave("G", AccidentalType.None, 0),
+      makeNoteWithOctave("G", AccidentalType.Sharp, 0),
+    ]);
   });
 
   test("uses raw notes when chords/intervals are not active", () => {
@@ -167,7 +197,9 @@ describe("StaffNotesUtils", () => {
     );
 
     expect(result).toHaveLength(1); // Just the raw note
-    verifyNoteWithOctave(result[0], "G", AccidentalType.None, 0);
+    verifyNoteWithOctaveArray(result, [
+      makeNoteWithOctave("G", AccidentalType.None, 0),
+    ]);
   });
 
   test("returns empty array for empty input", () => {
