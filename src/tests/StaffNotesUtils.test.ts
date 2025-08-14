@@ -92,10 +92,9 @@ describe("StaffNotesUtils", () => {
   describe("computeNotesFromChordPreset", () => {
     test("generates major triad from root note", () => {
       const result = StaffNotesUtils.computeNotesFromChordPreset(
-        ixActual(7), // C
+        ixActual(7), // G
         ChordType.Major,
-        ixInversion(0),
-        DEFAULT_MUSICAL_KEY
+        ixInversion(0)
       );
 
       expect(result).toHaveLength(3);
@@ -104,80 +103,103 @@ describe("StaffNotesUtils", () => {
       verifyNoteWithOctave(result[2], "D", AccidentalType.None, 1); // D
     });
 
-    //TODO: test fails as it should, make it green later.
     test("generates minor triad from root note", () => {
       const result = StaffNotesUtils.computeNotesFromChordPreset(
-        ixActual(7), // C
+        ixActual(7), // G
         ChordType.Minor,
-        ixInversion(0),
-        DEFAULT_MUSICAL_KEY
+        ixInversion(0)
       );
 
       expect(result).toHaveLength(3);
       verifyNoteWithOctave(result[0], "G", AccidentalType.None, 0); // G
       verifyNoteWithOctave(result[1], "B", AccidentalType.Flat, 0); // Bb
-      verifyNoteWithOctave(result[2], "D", AccidentalType.None, 0); // D
+      verifyNoteWithOctave(result[2], "D", AccidentalType.None, 1); // D
+    });
+
+    test("generates diminished triad from root note", () => {
+      const result = StaffNotesUtils.computeNotesFromChordPreset(
+        ixActual(7), // G
+        ChordType.Diminished,
+        ixInversion(0)
+      );
+
+      expect(result).toHaveLength(3);
+      verifyNoteWithOctave(result[0], "G", AccidentalType.None, 0); // G
+      verifyNoteWithOctave(result[1], "B", AccidentalType.Flat, 0); // Bb
+      verifyNoteWithOctave(result[2], "D", AccidentalType.Flat, 1); // Db
+    });
+
+    test("generates augmented triad from root note", () => {
+      const result = StaffNotesUtils.computeNotesFromChordPreset(
+        ixActual(7), // G
+        ChordType.Augmented,
+        ixInversion(0)
+      );
+
+      expect(result).toHaveLength(3);
+      verifyNoteWithOctave(result[0], "G", AccidentalType.None, 0); // G
+      verifyNoteWithOctave(result[1], "B", AccidentalType.None, 0); // B
+      verifyNoteWithOctave(result[2], "D", AccidentalType.Sharp, 1); // D#
     });
   });
 
   describe("computeStaffNotes", () => {
-      const result = StaffNotesUtils.computeStaffNotes(
-        ixActualArray([7, 8]), // C, C#
-        DEFAULT_MUSICAL_KEY,
-        SpecialType.Freeform, // Not a known chord
-        ixInversion(0),
-        true
-      );
+    const result = StaffNotesUtils.computeStaffNotes(
+      ixActualArray([7, 8]), // C, C#
+      DEFAULT_MUSICAL_KEY,
+      SpecialType.Freeform, // Not a known chord
+      ixInversion(0),
+      true
+    );
 
-      expect(result).toHaveLength(2); // Raw notes
-      verifyNoteWithOctave(result[0], "G", AccidentalType.None, 0);
-      verifyNoteWithOctave(result[1], "G", AccidentalType.Sharp, 0);
-    });
-
-    test("uses raw notes when chords/intervals are not active", () => {
-      const result = StaffNotesUtils.computeStaffNotes(
-        ixActualArray([7]), // C
-        DEFAULT_MUSICAL_KEY,
-        ChordType.Major,
-        ixInversion(0),
-        false // chords/intervals not active
-      );
-
-      expect(result).toHaveLength(1); // Just the raw note
-      verifyNoteWithOctave(result[0], "G", AccidentalType.None, 0);
-    });
-
-    test("returns empty array for empty input", () => {
-      const result = StaffNotesUtils.computeStaffNotes(
-        ixActualArray([]),
-        DEFAULT_MUSICAL_KEY,
-        ChordType.Major,
-        ixInversion(0),
-        true
-      );
-
-      expect(result).toEqual([]);
-    });
+    expect(result).toHaveLength(2); // Raw notes
+    verifyNoteWithOctave(result[0], "G", AccidentalType.None, 0);
+    verifyNoteWithOctave(result[1], "G", AccidentalType.Sharp, 0);
   });
 
-  describe("VexFlow formatting", () => {
-    test("NoteWithOctave formats correctly for VexFlow", () => {
-      const result = StaffNotesUtils.computeNotesWithOctaves(
-        ixActualArray([7]), // C
-        DEFAULT_MUSICAL_KEY
-      );
+  test("uses raw notes when chords/intervals are not active", () => {
+    const result = StaffNotesUtils.computeStaffNotes(
+      ixActualArray([7]), // C
+      DEFAULT_MUSICAL_KEY,
+      ChordType.Major,
+      ixInversion(0),
+      false // chords/intervals not active
+    );
 
-      expect(result[0].formatForVexFlow()).toBe("G/4");
-    });
+    expect(result).toHaveLength(1); // Just the raw note
+    verifyNoteWithOctave(result[0], "G", AccidentalType.None, 0);
+  });
 
-    test("NoteWithOctave with accidental formats correctly", () => {
-      const result = StaffNotesUtils.computeNotesWithOctaves(
-        ixActualArray([8]), // C#
-        DEFAULT_MUSICAL_KEY
-      );
+  test("returns empty array for empty input", () => {
+    const result = StaffNotesUtils.computeStaffNotes(
+      ixActualArray([]),
+      DEFAULT_MUSICAL_KEY,
+      ChordType.Major,
+      ixInversion(0),
+      true
+    );
 
-      expect(result[0].formatForVexFlow()).toBe("G/4");
-      expect(result[0].accidental).toBe(AccidentalType.Sharp);
-    });
+    expect(result).toEqual([]);
+  });
+});
+
+describe("VexFlow formatting", () => {
+  test("NoteWithOctave formats correctly for VexFlow", () => {
+    const result = StaffNotesUtils.computeNotesWithOctaves(
+      ixActualArray([7]), // C
+      DEFAULT_MUSICAL_KEY
+    );
+
+    expect(result[0].formatForVexFlow()).toBe("G/4");
+  });
+
+  test("NoteWithOctave with accidental formats correctly", () => {
+    const result = StaffNotesUtils.computeNotesWithOctaves(
+      ixActualArray([8]), // C#
+      DEFAULT_MUSICAL_KEY
+    );
+
+    expect(result[0].formatForVexFlow()).toBe("G/4");
+    expect(result[0].accidental).toBe(AccidentalType.Sharp);
   });
 });

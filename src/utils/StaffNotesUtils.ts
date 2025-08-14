@@ -12,8 +12,8 @@ import {
   ChordType,
   SpecialType,
 } from "@/types/NoteGroupingTypes";
-import { IndexUtils } from "@/utils/IndexUtils";
 import { ChordUtils } from "@/utils/ChordUtils";
+import { AccidentalType } from "@/types/AccidentalType";
 
 export class StaffNotesUtils {
   static computeNotesWithOctaves = (
@@ -31,19 +31,59 @@ export class StaffNotesUtils {
     });
   };
 
+  /**
+   * Creates NoteWithOctave[] using chord-aware spelling that ignores musical key context.
+   * Uses consistent chord spelling rules (e.g., minor thirds always use flats).
+   */
+  private static computeNotesWithChordSpelling = (
+    actualIndices: ActualIndex[],
+    chordType: NoteGroupingId
+  ): NoteWithOctave[] => {
+    return actualIndices.map((actualIndex) => {
+      const { chromaticIndex, octaveOffset } =
+        actualIndexToChromaticAndOctave(actualIndex);
+
+      // Use chord-specific spelling rules instead of key context
+      const accidentalPreference = this.getChordSpellingPreference(chordType);
+      const noteInfo = KeyNoteResolver.resolveAbsoluteNote(
+        chromaticIndex,
+        accidentalPreference
+      );
+      return new NoteWithOctave(noteInfo, octaveOffset);
+    });
+  };
+
+  /**
+   * Determines the accidental preference for chord spelling based on chord type.
+   * Minor-quality chords prefer flats, major-quality chords prefer sharps/naturals.
+   */
+  private static getChordSpellingPreference(
+    chordType: NoteGroupingId
+  ): AccidentalType {
+    // For chord spelling, prefer flats for minor-quality chords
+    // This ensures Gm = G-Bb-D instead of G-A#-D
+    switch (chordType) {
+      case ChordType.Minor:
+      case ChordType.Diminished:
+      case ChordType.Minor7:
+      case ChordType.HalfDiminished:
+      case ChordType.Diminished7:
+      case ChordType.Minor6:
+      case ChordType.SpreadMinor:
+      case ChordType.SpreadDiminished:
+        return AccidentalType.Flat;
+
+      // Major-quality and other chords can use sharp preference
+      default:
+        return AccidentalType.Sharp;
+    }
+  }
+
   static computeNotesFromChordPreset = (
     baseIndex: ActualIndex, //the lowest index of the chord
     selectedChordType: NoteGroupingId,
-    selectedInversionIndex: InversionIndex,
-    selectedMusicalKey: MusicalKey
+    selectedInversionIndex: InversionIndex
   ): NoteWithOctave[] => {
-    /*
-    // Get the root note (considering current inversion)
-    const rootNote = IndexUtils.rootNoteAtInversion(
-      selectedNoteIndices,
-      selectedInversionIndex
-    ); */
-
     // Calculate chord notes from the root
     const chordIndices = ChordUtils.calculateChordNotesFromIndex(
       baseIndex,
@@ -51,8 +91,20 @@ export class StaffNotesUtils {
       selectedInversionIndex
     );
 
-    // Convert to NoteWithOctave[] - reuse existing method
-    return this.computeNotesWithOctaves(chordIndices, selectedMusicalKey);
+    // Use chord-specific spelling instead of key-based spelling
+    const accidentalPreference =
+      this.getChordSpellingPreference(selectedChordType);
+
+    return chordIndices.map((actualIndex) => {
+      const { chromaticIndex, octaveOffset } =
+        actualIndexToChromaticAndOctave(actualIndex);
+
+      const noteInfo = KeyNoteResolver.resolveAbsoluteNote(
+        chromaticIndex,
+        accidentalPreference
+      );
+      return new NoteWithOctave(noteInfo, octaveOffset);
+    });
   };
 
   // Pure function - no context dependencies!
@@ -83,8 +135,7 @@ export class StaffNotesUtils {
       ? this.computeNotesFromChordPreset(
           selectedNoteIndices[0],
           selectedChordType,
-          selectedInversionIndex,
-          selectedMusicalKey
+          selectedInversionIndex
         )
       : this.computeNotesWithOctaves(selectedNoteIndices, selectedMusicalKey);
   };
