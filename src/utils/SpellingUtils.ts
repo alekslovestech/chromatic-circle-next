@@ -32,27 +32,15 @@ export class SpellingUtils {
     });
   };
 
-  private static getChordSpellingPreferenceForRoot(
+  private static getSpellingPreference(
     chordType: NoteGroupingId,
     rootChromaticIndex: ChromaticIndex
   ): AccidentalType {
-    // For white key roots, use the general chord spelling preference
-    if (!isBlackKey(rootChromaticIndex)) {
-      return this.getChordSpellingPreference(chordType);
-    }
-
-    // For black key roots, major-quality chords prefer flats, minor/diminished prefer sharps
-    return ChordUtils.isMinorQualityChord(chordType)
+    const isMinorQuality = ChordUtils.isMinorQualityChord(chordType);
+    const isBlackKeyRoot = isBlackKey(rootChromaticIndex);
+    return isBlackKeyRoot === isMinorQuality
       ? AccidentalType.Sharp
       : AccidentalType.Flat;
-  }
-
-  private static getChordSpellingPreference(
-    chordType: NoteGroupingId
-  ): AccidentalType {
-    return ChordUtils.isMinorQualityChord(chordType)
-      ? AccidentalType.Flat
-      : AccidentalType.Sharp;
   }
 
   static computeNotesFromChordPreset = (
@@ -71,8 +59,7 @@ export class SpellingUtils {
     const { chromaticIndex: rootChromaticIndex } =
       actualIndexToChromaticAndOctave(baseIndex);
 
-    // Use root-note-aware spelling logic for black keys
-    const accidentalPreference = this.getChordSpellingPreferenceForRoot(
+    const accidentalPreference = this.getSpellingPreference(
       selectedChordType,
       rootChromaticIndex
     );
