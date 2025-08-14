@@ -9,7 +9,7 @@ import { SpellingTestUtils } from "./utils/SpellingTestUtils";
 describe("SpellingChordPreset - Chord preset-based note spelling", () => {
   describe("computeNotesFromChordPreset", () => {
     describe("white key root (G)", () => {
-      test("generates major triad from G", () => {
+      test("generates major triad from G in root position", () => {
         const result = SpellingUtils.computeNotesFromChordPreset(
           ixActual(7), // G
           ChordType.Major,
@@ -24,7 +24,37 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         ]);
       });
 
-      test("generates minor triad from G", () => {
+      test("generates major triad from G in first inversion", () => {
+        const result = SpellingUtils.computeNotesFromChordPreset(
+          ixActual(7), // G
+          ChordType.Major,
+          ixInversion(1)
+        );
+
+        expect(result).toHaveLength(3);
+        SpellingTestUtils.verifyNoteWithOctaveArray(result, [
+          SpellingTestUtils.makeNoteWithOctave("B", AccidentalType.None, 0),
+          SpellingTestUtils.makeNoteWithOctave("D", AccidentalType.None, 1),
+          SpellingTestUtils.makeNoteWithOctave("G", AccidentalType.None, 1),
+        ]);
+      });
+
+      test("generates major triad from G in second inversion", () => {
+        const result = SpellingUtils.computeNotesFromChordPreset(
+          ixActual(7), // G
+          ChordType.Major,
+          ixInversion(2)
+        );
+
+        expect(result).toHaveLength(3);
+        SpellingTestUtils.verifyNoteWithOctaveArray(result, [
+          SpellingTestUtils.makeNoteWithOctave("D", AccidentalType.None, 0),
+          SpellingTestUtils.makeNoteWithOctave("G", AccidentalType.None, 0),
+          SpellingTestUtils.makeNoteWithOctave("B", AccidentalType.None, 0),
+        ]);
+      });
+
+      test("generates minor triad from G in root position", () => {
         const result = SpellingUtils.computeNotesFromChordPreset(
           ixActual(7), // G
           ChordType.Minor,
@@ -36,6 +66,36 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
           SpellingTestUtils.makeNoteWithOctave("G", AccidentalType.None, 0),
           SpellingTestUtils.makeNoteWithOctave("B", AccidentalType.Flat, 0),
           SpellingTestUtils.makeNoteWithOctave("D", AccidentalType.None, 1),
+        ]);
+      });
+
+      test("generates minor triad from G in first inversion", () => {
+        const result = SpellingUtils.computeNotesFromChordPreset(
+          ixActual(7), // G
+          ChordType.Minor,
+          ixInversion(1)
+        );
+
+        expect(result).toHaveLength(3);
+        SpellingTestUtils.verifyNoteWithOctaveArray(result, [
+          SpellingTestUtils.makeNoteWithOctave("B", AccidentalType.Flat, 0),
+          SpellingTestUtils.makeNoteWithOctave("D", AccidentalType.None, 1),
+          SpellingTestUtils.makeNoteWithOctave("G", AccidentalType.None, 1),
+        ]);
+      });
+
+      test("generates minor triad from G in second inversion", () => {
+        const result = SpellingUtils.computeNotesFromChordPreset(
+          ixActual(7), // G
+          ChordType.Minor,
+          ixInversion(2)
+        );
+
+        expect(result).toHaveLength(3);
+        SpellingTestUtils.verifyNoteWithOctaveArray(result, [
+          SpellingTestUtils.makeNoteWithOctave("D", AccidentalType.None, 0),
+          SpellingTestUtils.makeNoteWithOctave("G", AccidentalType.None, 0),
+          SpellingTestUtils.makeNoteWithOctave("B", AccidentalType.Flat, 0),
         ]);
       });
 
@@ -103,6 +163,36 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         ]);
       });
 
+      test("generates first inversion minor triad from G#/Ab", () => {
+        const result = SpellingUtils.computeNotesFromChordPreset(
+          ixActual(8), // G#/Ab
+          ChordType.Minor,
+          ixInversion(1)
+        );
+
+        expect(result).toHaveLength(3);
+        SpellingTestUtils.verifyNoteWithOctaveArray(result, [
+          SpellingTestUtils.makeNoteWithOctave("B", AccidentalType.None, 0),
+          SpellingTestUtils.makeNoteWithOctave("D", AccidentalType.Sharp, 1),
+          SpellingTestUtils.makeNoteWithOctave("G", AccidentalType.Sharp, 1),
+        ]);
+      });
+
+      test("generates second inversion minor triad from G#/Ab", () => {
+        const result = SpellingUtils.computeNotesFromChordPreset(
+          ixActual(8), // G#/Ab
+          ChordType.Minor,
+          ixInversion(2)
+        );
+
+        expect(result).toHaveLength(3);
+        SpellingTestUtils.verifyNoteWithOctaveArray(result, [
+          SpellingTestUtils.makeNoteWithOctave("D", AccidentalType.Sharp, 0),
+          SpellingTestUtils.makeNoteWithOctave("G", AccidentalType.Sharp, 0),
+          SpellingTestUtils.makeNoteWithOctave("B", AccidentalType.None, 0),
+        ]);
+      });
+
       test("generates diminished triad from G#/Ab", () => {
         const result = SpellingUtils.computeNotesFromChordPreset(
           ixActual(8), // G#/Ab
@@ -119,6 +209,36 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         ]);
       });
 
+      test("generates first inversion diminished triad from G#/Ab", () => {
+        const result = SpellingUtils.computeNotesFromChordPreset(
+          ixActual(8), // G#/Ab
+          ChordType.Diminished,
+          ixInversion(1)
+        );
+
+        expect(result).toHaveLength(3);
+        SpellingTestUtils.verifyNoteWithOctaveArray(result, [
+          SpellingTestUtils.makeNoteWithOctave("B", AccidentalType.None, 0),
+          SpellingTestUtils.makeNoteWithOctave("D", AccidentalType.None, 1),
+          SpellingTestUtils.makeNoteWithOctave("G", AccidentalType.Sharp, 1),
+        ]);
+      });
+
+      test("generates second inversion diminished triad from G#/Ab", () => {
+        const result = SpellingUtils.computeNotesFromChordPreset(
+          ixActual(8), // G#/Ab
+          ChordType.Diminished,
+          ixInversion(2)
+        );
+
+        expect(result).toHaveLength(3);
+        SpellingTestUtils.verifyNoteWithOctaveArray(result, [
+          SpellingTestUtils.makeNoteWithOctave("D", AccidentalType.None, 0),
+          SpellingTestUtils.makeNoteWithOctave("G", AccidentalType.Sharp, 0),
+          SpellingTestUtils.makeNoteWithOctave("B", AccidentalType.None, 0),
+        ]);
+      });
+
       test("generates augmented triad from G#/Ab", () => {
         const result = SpellingUtils.computeNotesFromChordPreset(
           ixActual(8), // G#/Ab
@@ -132,6 +252,21 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
           SpellingTestUtils.makeNoteWithOctave("A", AccidentalType.Flat, 0),
           SpellingTestUtils.makeNoteWithOctave("C", AccidentalType.None, 1),
           SpellingTestUtils.makeNoteWithOctave("E", AccidentalType.None, 1),
+        ]);
+      });
+
+      test("generates second inversion augmented triad from G#/Ab", () => {
+        const result = SpellingUtils.computeNotesFromChordPreset(
+          ixActual(8), // G#/Ab
+          ChordType.Augmented,
+          ixInversion(2)
+        );
+
+        expect(result).toHaveLength(3);
+        SpellingTestUtils.verifyNoteWithOctaveArray(result, [
+          SpellingTestUtils.makeNoteWithOctave("E", AccidentalType.None, 0),
+          SpellingTestUtils.makeNoteWithOctave("A", AccidentalType.Flat, 0),
+          SpellingTestUtils.makeNoteWithOctave("C", AccidentalType.None, 1),
         ]);
       });
     });

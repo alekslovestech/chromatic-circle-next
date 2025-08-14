@@ -182,8 +182,40 @@ export class ChordUtils {
         selectedNoteIndices,
         newIndex as ActualIndex
       );
-    return this.calculateChordNotesFromIndex(
+
+    // New behavior: treat newIndex as the desired bass note
+    return this.calculateChordNotesFromBassNote(
       newIndex,
+      chordType,
+      inversionIndex
+    );
+  }
+
+  /**
+   * Calculate chord notes where the clicked note becomes the bass note.
+   * This is more intuitive than clicking on the root note.
+   */
+  static calculateChordNotesFromBassNote(
+    bassIndex: ActualIndex,
+    chordType: NoteGroupingId,
+    inversionIndex: InversionIndex
+  ): ActualIndex[] {
+    // Get the offsets for this chord type and inversion
+    const chordOffsets = this.getOffsetsFromIdAndInversion(
+      chordType,
+      inversionIndex
+    );
+
+    // The bass note is the first offset in the inversion
+    const bassOffset = chordOffsets[0];
+
+    // Calculate what root note would produce this bass note
+    // bassIndex = rootIndex + bassOffset, so rootIndex = bassIndex - bassOffset
+    const rootIndex = ixActual(bassIndex - bassOffset);
+
+    // Now calculate the chord from this root, which will handle octave fitting
+    return this.calculateChordNotesFromIndex(
+      rootIndex,
       chordType,
       inversionIndex
     );
