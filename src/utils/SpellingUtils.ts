@@ -16,7 +16,7 @@ import { ChordUtils } from "@/utils/ChordUtils";
 import { AccidentalType } from "@/types/AccidentalType";
 import { isBlackKey } from "./Keyboard/KeyboardUtils";
 
-export class StaffNotesUtils {
+export class SpellingUtils {
   static computeNotesWithOctaves = (
     actualIndices: ActualIndex[],
     selectedMusicalKey: MusicalKey

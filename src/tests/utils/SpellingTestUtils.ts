@@ -5,7 +5,7 @@ import { ixOctaveOffset } from "../../types/IndexTypes";
 /**
  * Utility functions for testing note spelling and staff notation.
  */
-export class SpellingUtils {
+export class SpellingTestUtils {
   /**
    * Creates a NoteWithOctave for testing purposes.
    */

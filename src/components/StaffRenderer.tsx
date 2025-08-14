@@ -15,7 +15,7 @@ import {
   useIsChordsOrIntervals,
 } from "@/contexts/ChordPresetContext";
 
-import { StaffNotesUtils } from "@/utils/StaffNotesUtils";
+import { SpellingUtils } from "@/utils/SpellingUtils";
 
 interface StaffRendererProps {
   style?: React.CSSProperties;
@@ -98,7 +98,7 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
     if (selectedNoteIndices.length === 0) return;
 
     // Step 1: Compute NoteWithOctave[] - all context values passed as parameters
-    const notesWithOctaves = StaffNotesUtils.computeStaffNotes(
+    const notesWithOctaves = SpellingUtils.computeStaffNotes(
       selectedNoteIndices,
       canonicalIonianKey,
       selectedChordType,
