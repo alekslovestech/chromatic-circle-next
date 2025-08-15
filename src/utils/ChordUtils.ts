@@ -83,93 +83,6 @@ export class ChordUtils {
     return definition.inversions[inversionIndex];
   }
 
-  static getMatchFromIndices(indices: ActualIndex[]): IChordMatch {
-    if (indices.length === 0) {
-      return {
-        rootNote: ixActual(0),
-        definition: NoteGroupingLibrary.getGroupingById(SpecialType.None),
-        inversionIndex: ixInversion(0),
-      };
-    }
-
-    const normalizedIndices = IndexUtils.normalizeIndices(indices);
-    const allIds = NoteGroupingLibrary.getAllIds();
-
-    // Check all note grouping types in root position first
-    for (const id of allIds) {
-      const definition = NoteGroupingLibrary.getGroupingById(id);
-      const inversionIndices = IndexUtils.normalizeIndices(definition.offsets);
-
-      if (IndexUtils.areIndicesEqual(inversionIndices, normalizedIndices)) {
-        const rootNoteIndex = ixActual(
-          IndexUtils.rootNoteAtInversion(indices, ixInversion(0)) % TWELVE
-        );
-        return {
-          rootNote: rootNoteIndex,
-          definition,
-          inversionIndex: ixInversion(0),
-        };
-      }
-    }
-
-    // Then check all inversions for each type
-    for (const id of allIds) {
-      const definition = NoteGroupingLibrary.getGroupingById(id);
-      for (let i = 1 as InversionIndex; i < definition.inversions.length; i++) {
-        const inversionIndices = IndexUtils.normalizeIndices(
-          definition.inversions[i]
-        );
-        if (IndexUtils.areIndicesEqual(inversionIndices, normalizedIndices)) {
-          const rootNoteIndex = ixActual(
-            IndexUtils.rootNoteAtInversion(indices, i) % TWELVE
-          );
-          return { rootNote: rootNoteIndex, definition, inversionIndex: i };
-        }
-      }
-    }
-
-    return this.createUnknownChord(indices);
-  }
-
-  static deriveChordName(
-    chordMatch: IChordMatch,
-    displayMode: ChordDisplayMode,
-    selectedMusicalKey: MusicalKey
-  ): string {
-    const selectedAccidental = selectedMusicalKey.getDefaultAccidental();
-    const isUnknownChord = chordMatch.definition.id === ChordType.Unknown;
-    const bassNoteIndex = this.getBassNoteIndex(chordMatch, isUnknownChord);
-    const chordNameRoot = this.getChordNameRoot(
-      chordMatch,
-      selectedAccidental,
-      isUnknownChord,
-      displayMode
-    );
-    const noteGroupingType = this.getNoteGroupingType(
-      chordMatch,
-      isUnknownChord
-    );
-
-    // Format the chord name based on the note grouping type
-    switch (noteGroupingType) {
-      case NoteGroupingType.None:
-        return "Ø";
-      case NoteGroupingType.Note:
-        return chordNameRoot;
-      case NoteGroupingType.Interval:
-        return NoteGroupingLibrary.getId(chordMatch.definition.id, displayMode);
-      default:
-        if (bassNoteIndex !== chordMatch.rootNote) {
-          const bassNoteName = NoteConverter.getNoteTextFromActualIndex(
-            bassNoteIndex,
-            selectedAccidental
-          );
-          return `${chordNameRoot}/${bassNoteName}`;
-        }
-        return chordNameRoot;
-    }
-  }
-
   static calculateUpdatedIndices(
     newIndex: ActualIndex,
     isToggle: boolean,
@@ -283,6 +196,93 @@ export class ChordUtils {
       ? "(?)"
       : NoteGroupingLibrary.getId(chordMatch.definition.id, displayMode);
     return `${rootNoteName}${idWithoutRoot}`;
+  }
+
+  private static getMatchFromIndices(indices: ActualIndex[]): IChordMatch {
+    if (indices.length === 0) {
+      return {
+        rootNote: ixActual(0),
+        definition: NoteGroupingLibrary.getGroupingById(SpecialType.None),
+        inversionIndex: ixInversion(0),
+      };
+    }
+
+    const normalizedIndices = IndexUtils.normalizeIndices(indices);
+    const allIds = NoteGroupingLibrary.getAllIds();
+
+    // Check all note grouping types in root position first
+    for (const id of allIds) {
+      const definition = NoteGroupingLibrary.getGroupingById(id);
+      const inversionIndices = IndexUtils.normalizeIndices(definition.offsets);
+
+      if (IndexUtils.areIndicesEqual(inversionIndices, normalizedIndices)) {
+        const rootNoteIndex = ixActual(
+          IndexUtils.rootNoteAtInversion(indices, ixInversion(0)) % TWELVE
+        );
+        return {
+          rootNote: rootNoteIndex,
+          definition,
+          inversionIndex: ixInversion(0),
+        };
+      }
+    }
+
+    // Then check all inversions for each type
+    for (const id of allIds) {
+      const definition = NoteGroupingLibrary.getGroupingById(id);
+      for (let i = 1 as InversionIndex; i < definition.inversions.length; i++) {
+        const inversionIndices = IndexUtils.normalizeIndices(
+          definition.inversions[i]
+        );
+        if (IndexUtils.areIndicesEqual(inversionIndices, normalizedIndices)) {
+          const rootNoteIndex = ixActual(
+            IndexUtils.rootNoteAtInversion(indices, i) % TWELVE
+          );
+          return { rootNote: rootNoteIndex, definition, inversionIndex: i };
+        }
+      }
+    }
+
+    return this.createUnknownChord(indices);
+  }
+
+  private static deriveChordName(
+    chordMatch: IChordMatch,
+    displayMode: ChordDisplayMode,
+    selectedMusicalKey: MusicalKey
+  ): string {
+    const selectedAccidental = selectedMusicalKey.getDefaultAccidental();
+    const isUnknownChord = chordMatch.definition.id === ChordType.Unknown;
+    const bassNoteIndex = this.getBassNoteIndex(chordMatch, isUnknownChord);
+    const chordNameRoot = this.getChordNameRoot(
+      chordMatch,
+      selectedAccidental,
+      isUnknownChord,
+      displayMode
+    );
+    const noteGroupingType = this.getNoteGroupingType(
+      chordMatch,
+      isUnknownChord
+    );
+
+    // Format the chord name based on the note grouping type
+    switch (noteGroupingType) {
+      case NoteGroupingType.None:
+        return "Ø";
+      case NoteGroupingType.Note:
+        return chordNameRoot;
+      case NoteGroupingType.Interval:
+        return NoteGroupingLibrary.getId(chordMatch.definition.id, displayMode);
+      default:
+        if (bassNoteIndex !== chordMatch.rootNote) {
+          const bassNoteName = NoteConverter.getNoteTextFromActualIndex(
+            bassNoteIndex,
+            selectedAccidental
+          );
+          return `${chordNameRoot}/${bassNoteName}`;
+        }
+        return chordNameRoot;
+    }
   }
 
   private static getNoteGroupingType(

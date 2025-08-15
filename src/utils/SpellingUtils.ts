@@ -26,15 +26,12 @@ export class SpellingUtils {
     actualIndices: ActualIndex[],
     selectedMusicalKey: MusicalKey
   ): NoteWithOctave[] => {
-    return actualIndices.map((actualIndex) => {
-      const { chromaticIndex, octaveOffset } =
-        actualIndexToChromaticAndOctave(actualIndex);
-      const noteInfo = KeyNoteResolver.resolveNoteInKey(
+    return actualIndices.map((actualIndex) =>
+      KeyNoteResolver.resolveNoteInKeyWithOctave(
         selectedMusicalKey,
-        chromaticIndex
-      );
-      return new NoteWithOctave(noteInfo, octaveOffset);
-    });
+        actualIndex
+      )
+    );
   };
 
   private static getSpellingPreference(
@@ -67,15 +64,11 @@ export class SpellingUtils {
       rootChromaticIndex
     );
 
-    const { chromaticIndex, octaveOffset } = actualIndexToChromaticAndOctave(
-      chordIndices[0]
-    );
-
-    const noteInfo = KeyNoteResolver.resolveAbsoluteNote(
-      chromaticIndex,
+    const noteInfo = KeyNoteResolver.resolveAbsoluteNoteWithOctave(
+      chordIndices[0],
       accidentalPreference
     );
-    return new NoteWithOctave(noteInfo, octaveOffset);
+    return noteInfo;
   };
 
   static computeNotesFromChordPreset = (
@@ -99,16 +92,12 @@ export class SpellingUtils {
       rootChromaticIndex
     );
 
-    return chordIndices.map((actualIndex) => {
-      const { chromaticIndex, octaveOffset } =
-        actualIndexToChromaticAndOctave(actualIndex);
-
-      const noteInfo = KeyNoteResolver.resolveAbsoluteNote(
-        chromaticIndex,
+    return chordIndices.map((actualIndex) =>
+      KeyNoteResolver.resolveAbsoluteNoteWithOctave(
+        actualIndex,
         accidentalPreference
-      );
-      return new NoteWithOctave(noteInfo, octaveOffset);
-    });
+      )
+    );
   };
 
   /**
