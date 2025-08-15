@@ -1,15 +1,15 @@
-import { GreekModeDictionary } from "../types/GreekModes/GreekModeDictionary";
-import { GreekModeType } from "../types/GreekModes/GreekModeType";
+import { ScaleModeLibrary } from "../types/ScaleModes/ScaleModeLibrary";
+import { ScaleModeType } from "../types/ScaleModes/ScaleModeType";
 import { MusicalKey } from "../types/Keys/MusicalKey";
 import { TWELVE } from "../types/NoteConstants";
 import { KeyDisplayMode } from "../types/SettingModes";
 import { GreekTestConstants } from "./utils/GreekTestConstants";
 
 function verifyRomanDisplayStrings(
-  greekMode: GreekModeType,
+  greekMode: ScaleModeType,
   expectedNotes: string[]
 ) {
-  const greekModeInfo = GreekModeDictionary.getModeInfo(greekMode);
+  const greekModeInfo = ScaleModeLibrary.getModeInfo(greekMode);
   const romanDisplayStrings = greekModeInfo.getDisplayStrings(
     KeyDisplayMode.Roman
   );
@@ -26,39 +26,39 @@ function verifyRomanArray(musicalKey: MusicalKey, expectedArray: string[]) {
 describe("Roman Mode Index Arrays", () => {
   const modePatternCases = [
     {
-      mode: GreekModeType.Ionian,
+      mode: ScaleModeType.Ionian,
       expected: ["I", "ii", "iii", "IV", "V", "vi", "vii°"],
     },
     {
-      mode: GreekModeType.Dorian,
+      mode: ScaleModeType.Dorian,
       expected: ["i", "ii", "♭III", "IV", "v", "vi°", "♭VII"],
     },
     {
-      mode: GreekModeType.Phrygian,
+      mode: ScaleModeType.Phrygian,
       expected: ["i", "♭II", "♭III", "iv", "v°", "♭VI", "♭vii"],
     },
     {
-      mode: GreekModeType.PhrygianDominant,
+      mode: ScaleModeType.PhrygianDominant,
       expected: ["I", "♭II", "iii°", "iv", "v°", "♭VI+", "♭vii"],
     },
     {
-      mode: GreekModeType.Byzantine,
+      mode: ScaleModeType.Byzantine,
       expected: ["I", "♭II", "iii", "iv", "V", "♭VI+", "VII"],
     },
     {
-      mode: GreekModeType.Lydian,
+      mode: ScaleModeType.Lydian,
       expected: ["I", "II", "iii", "♯iv°", "V", "vi", "vii"],
     },
     {
-      mode: GreekModeType.Mixolydian,
+      mode: ScaleModeType.Mixolydian,
       expected: ["I", "ii", "iii°", "IV", "v", "vi", "♭VII"],
     },
     {
-      mode: GreekModeType.Aeolian,
+      mode: ScaleModeType.Aeolian,
       expected: ["i", "ii°", "♭III", "iv", "v", "♭VI", "♭VII"],
     },
     {
-      mode: GreekModeType.Locrian,
+      mode: ScaleModeType.Locrian,
       expected: ["i°", "♭II", "♭iii", "iv", "♭V", "♭VI", "♭vii"],
     },
   ];

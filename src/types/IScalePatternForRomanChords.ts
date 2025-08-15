@@ -1,5 +1,5 @@
 import { ChordType } from "./NoteGroupingTypes";
-import { ScaleDegreeInfo } from "./GreekModes/ScaleDegreeInfo";
+import { ScaleDegreeInfo } from "./ScaleModes/ScaleDegreeInfo";
 
 /**
  * Interface for creating Roman chords based on scale patterns.

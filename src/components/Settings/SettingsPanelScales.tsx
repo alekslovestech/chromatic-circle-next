@@ -1,12 +1,13 @@
 "use client";
 import React from "react";
 import { LAYOUT_PATTERNS } from "@/lib/design";
-import { useBorder } from "@/lib/hooks/useBorder";
-import { PlaybackModeSelect } from "./PlaybackModeSelect";
+import { useBorder } from "@/lib/hooks";
+
 import { MusicalKeySelector } from "../MusicalKeySelector";
 import { TransposeWidget } from "../TransposeWidget";
 import { PlayScaleButton } from "../Buttons/PlayScaleButton";
 import { PauseScaleButton } from "../Buttons/PauseScaleButton";
+import { PlaybackModeSelect } from "./PlaybackModeSelect";
 
 export const SettingsPanelScales = () => {
   const settingsGap = "gap-tight";

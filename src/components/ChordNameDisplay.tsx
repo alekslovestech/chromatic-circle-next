@@ -4,17 +4,24 @@ import { ChordDisplayMode } from "@/types/SettingModes";
 
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
+import {
+  useChordPresets,
+  useIsChordsOrIntervals,
+} from "@/contexts/ChordPresetContext";
 
-import { ChordUtils } from "@/utils/ChordUtils";
+import { ChordUtils, IChordDisplayInfo } from "@/utils/ChordUtils";
+import { SpellingUtils } from "@/utils/SpellingUtils";
 import { TYPOGRAPHY } from "@/lib/design";
 import { LAYOUT_PATTERNS } from "@/lib/design/LayoutPatterns";
-import { useBorder } from "@/lib/hooks/useBorder";
+import { useBorder } from "@/lib/hooks";
 
 const MAX_CHORD_NAME_LENGTH = 7;
 const BREAK_CHARACTER = "\u200B";
 export const ChordNameDisplay: React.FC = () => {
   const { selectedNoteIndices, selectedMusicalKey } = useMusical();
   const { chordDisplayMode, setChordDisplayMode } = useDisplay();
+  const { selectedChordType, selectedInversionIndex } = useChordPresets();
+  const isChordsOrIntervals = useIsChordsOrIntervals();
   const border = useBorder();
 
   const getOppositeDisplayMode = (
@@ -32,13 +39,30 @@ export const ChordNameDisplay: React.FC = () => {
   }
 
   const renderNoteGrouping = () => {
-    const { noteGroupingString, chordName } =
-      ChordUtils.getDisplayInfoFromIndices(
-        selectedNoteIndices,
-        ChordDisplayMode.Symbols,
-        selectedMusicalKey
-      );
+    const shouldUseChordPresetSpelling = SpellingUtils.isChordPresetKnown(
+      selectedChordType,
+      isChordsOrIntervals
+    );
 
+    const displayInfo =
+      shouldUseChordPresetSpelling && selectedNoteIndices.length > 0
+        ? SpellingUtils.getChordPresetDisplayInfo(
+            selectedNoteIndices,
+            selectedChordType,
+            selectedInversionIndex,
+            chordDisplayMode
+          )
+        : ChordUtils.getDisplayInfoFromIndices(
+            selectedNoteIndices,
+            chordDisplayMode,
+            selectedMusicalKey
+          );
+
+    return renderChordDisplay(displayInfo);
+  };
+
+  const renderChordDisplay = (displayInfo: IChordDisplayInfo) => {
+    const { chordName, noteGroupingString } = displayInfo;
     const chordNameDisplay =
       chordName.length > MAX_CHORD_NAME_LENGTH && chordName.includes("/")
         ? chordName.replace("/", `${BREAK_CHARACTER}/`)

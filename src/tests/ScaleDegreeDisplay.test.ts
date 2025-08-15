@@ -1,63 +1,73 @@
-import { GreekModeDictionary } from "../types/GreekModes/GreekModeDictionary";
-import { GreekModeType } from "../types/GreekModes/GreekModeType";
+import { ScaleModeLibrary } from "../types/ScaleModes/ScaleModeLibrary";
+import { ScaleModeType } from "../types/ScaleModes/ScaleModeType";
 import { MusicalKey } from "../types/Keys/MusicalKey";
 import { TWELVE } from "../types/NoteConstants";
 import { KeyDisplayMode } from "../types/SettingModes";
 import { GreekTestConstants } from "./utils/GreekTestConstants";
 
-function verifyScaleDegreeDisplayStrings(greekMode: GreekModeType, expectedNotes: string[]) {
-  const greekModeInfo = GreekModeDictionary.getModeInfo(greekMode);
-  const displayStrings = greekModeInfo.getDisplayStrings(KeyDisplayMode.ScaleDegree);
+function verifyScaleDegreeDisplayStrings(
+  greekMode: ScaleModeType,
+  expectedNotes: string[]
+) {
+  const greekModeInfo = ScaleModeLibrary.getModeInfo(greekMode);
+  const displayStrings = greekModeInfo.getDisplayStrings(
+    KeyDisplayMode.ScaleDegree
+  );
   expect(displayStrings).toEqual(expectedNotes);
 }
 
-function verifyScaleDegreesArray(musicalKey: MusicalKey, expectedArray: string[]) {
+function verifyScaleDegreesArray(
+  musicalKey: MusicalKey,
+  expectedArray: string[]
+) {
   expect(expectedArray.length).toBe(TWELVE);
 
-  const displayStrings = musicalKey.getDisplayStringArray(KeyDisplayMode.ScaleDegree);
+  const displayStrings = musicalKey.getDisplayStringArray(
+    KeyDisplayMode.ScaleDegree
+  );
   expect(displayStrings).toEqual(expectedArray);
 }
 describe("Scale Degree Display", () => {
   describe("Greek Mode Patterns", () => {
     const modePatternCases = [
       {
-        mode: GreekModeType.Ionian,
+        mode: ScaleModeType.Ionian,
         expected: ["1", "2", "3", "4", "5", "6", "7"],
       },
       {
-        mode: GreekModeType.Dorian,
+        mode: ScaleModeType.Dorian,
         expected: ["1", "2", "♭3", "4", "5", "6", "♭7"],
       },
       {
-        mode: GreekModeType.UkrainianDorian,
+        mode: ScaleModeType.UkrainianDorian,
         expected: ["1", "2", "♭3", "♯4", "5", "6", "♭7"],
       },
       {
-        mode: GreekModeType.Phrygian,
+        mode: ScaleModeType.Phrygian,
         expected: ["1", "♭2", "♭3", "4", "5", "♭6", "♭7"],
       },
       {
-        mode: GreekModeType.Lydian,
+        mode: ScaleModeType.Lydian,
         expected: ["1", "2", "3", "♯4", "5", "6", "7"],
       },
       {
-        mode: GreekModeType.Mixolydian,
+        mode: ScaleModeType.Mixolydian,
         expected: ["1", "2", "3", "4", "5", "6", "♭7"],
       },
       {
-        mode: GreekModeType.Aeolian,
+        mode: ScaleModeType.Aeolian,
         expected: ["1", "2", "♭3", "4", "5", "♭6", "♭7"],
       },
       {
-        mode: GreekModeType.HarmonicMinor,
+        mode: ScaleModeType.HarmonicMinor,
         expected: ["1", "2", "♭3", "4", "5", "♭6", "7"],
       },
       {
-        mode: GreekModeType.HungarianMinor,
+        mode: ScaleModeType.HungarianMinor,
         expected: ["1", "2", "♭3", "♯4", "5", "♭6", "7"],
       },
       {
-        mode: GreekModeType.Locrian,
+        mode: ScaleModeType.Locrian,
         expected: ["1", "♭2", "♭3", "4", "♭5", "♭6", "♭7"],
       },
     ];
