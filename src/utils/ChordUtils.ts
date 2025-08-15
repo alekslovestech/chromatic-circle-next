@@ -27,7 +27,7 @@ import { SpecialType } from "../types/NoteGroupingTypes";
 
 import { IndexUtils } from "./IndexUtils";
 
-interface DisplayInfo {
+export interface IChordDisplayInfo {
   noteGroupingString: string;
   chordName: string;
 }
@@ -55,7 +55,7 @@ export class ChordUtils {
     indices: ActualIndex[],
     chordDisplayMode: ChordDisplayMode,
     musicalKey: MusicalKey
-  ): DisplayInfo {
+  ): IChordDisplayInfo {
     const chordMatch = this.getMatchFromIndices(indices);
     const noteGrouping = NoteGrouping.getNoteGroupingTypeFromNumNotes(
       indices.length

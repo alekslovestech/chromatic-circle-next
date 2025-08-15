@@ -2,6 +2,7 @@ import {
   ActualIndex,
   actualIndexToChromaticAndOctave,
   InversionIndex,
+  ixInversion,
 } from "@/types/IndexTypes";
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
@@ -12,9 +13,13 @@ import {
   ChordType,
   SpecialType,
 } from "@/types/NoteGroupingTypes";
-import { ChordUtils } from "@/utils/ChordUtils";
+import { ChordUtils, IChordDisplayInfo } from "@/utils/ChordUtils";
 import { AccidentalType } from "@/types/AccidentalType";
 import { isBlackKey } from "./Keyboard/KeyboardUtils";
+import { NoteGrouping } from "@/types/NoteGrouping";
+import { ChordDisplayMode } from "@/types/SettingModes";
+import { IndexUtils } from "./IndexUtils";
+import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
 
 export class SpellingUtils {
   static computeNotesWithOctaves = (
@@ -43,8 +48,38 @@ export class SpellingUtils {
       : AccidentalType.Flat;
   }
 
+  private static computeFirstNoteFromChordPreset = (
+    baseIndex: ActualIndex,
+    selectedChordType: NoteGroupingId,
+    selectedInversionIndex: InversionIndex
+  ): NoteWithOctave => {
+    const chordIndices = ChordUtils.calculateChordNotesFromIndex(
+      baseIndex,
+      selectedChordType,
+      selectedInversionIndex
+    );
+
+    const { chromaticIndex: rootChromaticIndex } =
+      actualIndexToChromaticAndOctave(baseIndex);
+
+    const accidentalPreference = this.getSpellingPreference(
+      selectedChordType,
+      rootChromaticIndex
+    );
+
+    const { chromaticIndex, octaveOffset } = actualIndexToChromaticAndOctave(
+      chordIndices[0]
+    );
+
+    const noteInfo = KeyNoteResolver.resolveAbsoluteNote(
+      chromaticIndex,
+      accidentalPreference
+    );
+    return new NoteWithOctave(noteInfo, octaveOffset);
+  };
+
   static computeNotesFromChordPreset = (
-    baseIndex: ActualIndex, //the lowest index of the chord
+    baseIndex: ActualIndex,
     selectedChordType: NoteGroupingId,
     selectedInversionIndex: InversionIndex
   ): NoteWithOctave[] => {
@@ -75,6 +110,57 @@ export class SpellingUtils {
       return new NoteWithOctave(noteInfo, octaveOffset);
     });
   };
+
+  /**
+   * Get display info for chord presets using proper spelling
+   */
+  static getChordPresetDisplayInfo(
+    selectedNoteIndices: ActualIndex[],
+    selectedChordType: NoteGroupingId,
+    selectedInversionIndex: InversionIndex,
+    chordDisplayMode: ChordDisplayMode
+  ): IChordDisplayInfo {
+    if (selectedNoteIndices.length === 0) {
+      return { noteGroupingString: "None", chordName: "Ø" };
+    }
+
+    const rootNoteIndex = IndexUtils.rootNoteAtInversion(
+      selectedNoteIndices,
+      selectedInversionIndex
+    );
+
+    // Get spelled notes for root and bass using the new helper function
+    const rootSpelling = this.computeFirstNoteFromChordPreset(
+      rootNoteIndex,
+      selectedChordType,
+      ixInversion(0) // Root position
+    ).formatNoteNameForDisplay();
+
+    const bassSpelling = this.computeFirstNoteFromChordPreset(
+      rootNoteIndex,
+      selectedChordType,
+      selectedInversionIndex
+    ).formatNoteNameForDisplay();
+
+    // Build chord name using existing library function
+    const chordTypeName = NoteGroupingLibrary.getId(
+      selectedChordType,
+      chordDisplayMode
+    );
+    const chordName =
+      rootSpelling === bassSpelling
+        ? `${rootSpelling}${chordTypeName}`
+        : `${rootSpelling}${chordTypeName}/${bassSpelling}`;
+
+    const noteGrouping = NoteGrouping.getNoteGroupingTypeFromNumNotes(
+      selectedNoteIndices.length
+    );
+
+    return {
+      noteGroupingString: noteGrouping.toString(),
+      chordName,
+    };
+  }
 
   // Pure function - no context dependencies!
   static isChordPresetKnown = (
