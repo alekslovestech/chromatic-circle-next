@@ -2,13 +2,7 @@ import { NoteInfo, NoteWithOctave } from "../../types/NoteInfo";
 import { AccidentalType } from "../../types/AccidentalType";
 import { ixOctaveOffset } from "../../types/IndexTypes";
 
-/**
- * Utility functions for testing note spelling and staff notation.
- */
 export class SpellingTestUtils {
-  /**
-   * Creates a NoteWithOctave for testing purposes.
-   */
   static makeNoteWithOctave(
     noteName: string,
     accidental: AccidentalType,
@@ -19,10 +13,6 @@ export class SpellingTestUtils {
     return new NoteWithOctave(noteInfo, octaveOffset);
   }
 
-  /**
-   * Verifies that two arrays of NoteWithOctave are identical.
-   * Compares note name, accidental, and octave offset for each note.
-   */
   static verifyNoteWithOctaveArray(
     actual: NoteWithOctave[],
     expected: NoteWithOctave[]
