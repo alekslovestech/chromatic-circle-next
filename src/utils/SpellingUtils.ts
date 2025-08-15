@@ -34,43 +34,6 @@ export class SpellingUtils {
     );
   };
 
-  private static getSpellingPreference(
-    chordType: NoteGroupingId,
-    rootChromaticIndex: ChromaticIndex
-  ): AccidentalType {
-    const isMinorQuality = ChordUtils.isMinorQualityChord(chordType);
-    const isBlackKeyRoot = isBlackKey(rootChromaticIndex);
-    return isBlackKeyRoot === isMinorQuality
-      ? AccidentalType.Sharp
-      : AccidentalType.Flat;
-  }
-
-  private static computeFirstNoteFromChordPreset = (
-    baseIndex: ActualIndex,
-    selectedChordType: NoteGroupingId,
-    selectedInversionIndex: InversionIndex
-  ): NoteWithOctave => {
-    const chordIndices = ChordUtils.calculateChordNotesFromIndex(
-      baseIndex,
-      selectedChordType,
-      selectedInversionIndex
-    );
-
-    const { chromaticIndex: rootChromaticIndex } =
-      actualIndexToChromaticAndOctave(baseIndex);
-
-    const accidentalPreference = this.getSpellingPreference(
-      selectedChordType,
-      rootChromaticIndex
-    );
-
-    const noteInfo = KeyNoteResolver.resolveAbsoluteNoteWithOctave(
-      chordIndices[0],
-      accidentalPreference
-    );
-    return noteInfo;
-  };
-
   static computeNotesFromChordPreset = (
     baseIndex: ActualIndex,
     selectedChordType: NoteGroupingId,
@@ -182,5 +145,42 @@ export class SpellingUtils {
           selectedInversionIndex
         )
       : this.computeNotesWithOctaves(selectedNoteIndices, selectedMusicalKey);
+  };
+
+  private static getSpellingPreference(
+    chordType: NoteGroupingId,
+    rootChromaticIndex: ChromaticIndex
+  ): AccidentalType {
+    const isMinorQuality = ChordUtils.isMinorQualityChord(chordType);
+    const isBlackKeyRoot = isBlackKey(rootChromaticIndex);
+    return isBlackKeyRoot === isMinorQuality
+      ? AccidentalType.Sharp
+      : AccidentalType.Flat;
+  }
+
+  private static computeFirstNoteFromChordPreset = (
+    baseIndex: ActualIndex,
+    selectedChordType: NoteGroupingId,
+    selectedInversionIndex: InversionIndex
+  ): NoteWithOctave => {
+    const chordIndices = ChordUtils.calculateChordNotesFromIndex(
+      baseIndex,
+      selectedChordType,
+      selectedInversionIndex
+    );
+
+    const { chromaticIndex: rootChromaticIndex } =
+      actualIndexToChromaticAndOctave(baseIndex);
+
+    const accidentalPreference = this.getSpellingPreference(
+      selectedChordType,
+      rootChromaticIndex
+    );
+
+    const noteInfo = KeyNoteResolver.resolveAbsoluteNoteWithOctave(
+      chordIndices[0],
+      accidentalPreference
+    );
+    return noteInfo;
   };
 }
