@@ -10,7 +10,7 @@ import { SpellingTestUtils } from "./utils/SpellingTestUtils";
 describe("SpellingFreeform - Key-based note spelling", () => {
   describe("computeNotesWithOctaves", () => {
     test("converts single note (white key) index to NoteWithOctave in C major", () => {
-      const result = SpellingUtils.computeNotesWithOctaves(
+      const result = SpellingUtils.computeNotesFromMusicalKey(
         ixActualArray([7]), // G note
         DEFAULT_MUSICAL_KEY
       );
@@ -22,7 +22,7 @@ describe("SpellingFreeform - Key-based note spelling", () => {
     });
 
     test("converts single note (black key) index to NoteWithOctave in C major", () => {
-      const result = SpellingUtils.computeNotesWithOctaves(
+      const result = SpellingUtils.computeNotesFromMusicalKey(
         ixActualArray([8]), // G# note
         DEFAULT_MUSICAL_KEY
       );
@@ -34,7 +34,7 @@ describe("SpellingFreeform - Key-based note spelling", () => {
     });
 
     test("converts single note (black, next octave) index to NoteWithOctave in C major", () => {
-      const result = SpellingUtils.computeNotesWithOctaves(
+      const result = SpellingUtils.computeNotesFromMusicalKey(
         ixActualArray([13]), // C# note
         DEFAULT_MUSICAL_KEY
       );
@@ -46,7 +46,7 @@ describe("SpellingFreeform - Key-based note spelling", () => {
     });
 
     test("converts multiple note indices to NoteWithOctaves in C major", () => {
-      const result = SpellingUtils.computeNotesWithOctaves(
+      const result = SpellingUtils.computeNotesFromMusicalKey(
         ixActualArray([7, 11, 14]), // G, B, D (G major triad)
         DEFAULT_MUSICAL_KEY
       );
@@ -61,7 +61,7 @@ describe("SpellingFreeform - Key-based note spelling", () => {
 
     test("applies key signature correctly in D major", () => {
       const dMajor = MusicalKey.fromClassicalMode("D", KeyType.Major);
-      const result = SpellingUtils.computeNotesWithOctaves(
+      const result = SpellingUtils.computeNotesFromMusicalKey(
         ixActualArray([9, 13]), // A, C# in D major
         dMajor
       );
@@ -74,7 +74,7 @@ describe("SpellingFreeform - Key-based note spelling", () => {
     });
 
     test("returns empty array for empty input", () => {
-      const result = SpellingUtils.computeNotesWithOctaves(
+      const result = SpellingUtils.computeNotesFromMusicalKey(
         ixActualArray([]),
         DEFAULT_MUSICAL_KEY
       );
@@ -130,7 +130,7 @@ describe("SpellingFreeform - Key-based note spelling", () => {
 
   describe("VexFlow formatting", () => {
     test("NoteWithOctave formats correctly for VexFlow", () => {
-      const result = SpellingUtils.computeNotesWithOctaves(
+      const result = SpellingUtils.computeNotesFromMusicalKey(
         ixActualArray([7]), // G
         DEFAULT_MUSICAL_KEY
       );
@@ -139,7 +139,7 @@ describe("SpellingFreeform - Key-based note spelling", () => {
     });
 
     test("NoteWithOctave with accidental formats correctly", () => {
-      const result = SpellingUtils.computeNotesWithOctaves(
+      const result = SpellingUtils.computeNotesFromMusicalKey(
         ixActualArray([8]), // G#
         DEFAULT_MUSICAL_KEY
       );

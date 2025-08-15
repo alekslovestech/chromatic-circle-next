@@ -2,7 +2,6 @@ import {
   ActualIndex,
   actualIndexToChromaticAndOctave,
   InversionIndex,
-  ixInversion,
 } from "@/types/IndexTypes";
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
@@ -13,32 +12,28 @@ import {
   ChordType,
   SpecialType,
 } from "@/types/NoteGroupingTypes";
-import { ChordUtils, IChordDisplayInfo } from "@/utils/ChordUtils";
+import { ChordUtils } from "@/utils/ChordUtils";
 import { AccidentalType } from "@/types/AccidentalType";
 import { isBlackKey } from "./Keyboard/KeyboardUtils";
-import { NoteGrouping } from "@/types/NoteGrouping";
-import { ChordDisplayMode } from "@/types/SettingModes";
-import { IndexUtils } from "./IndexUtils";
-import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
 
 export class SpellingUtils {
-  static computeNotesWithOctaves = (
+  static computeNotesFromMusicalKey(
     actualIndices: ActualIndex[],
     selectedMusicalKey: MusicalKey
-  ): NoteWithOctave[] => {
+  ): NoteWithOctave[] {
     return actualIndices.map((actualIndex) =>
       KeyNoteResolver.resolveNoteInKeyWithOctave(
         selectedMusicalKey,
         actualIndex
       )
     );
-  };
+  }
 
-  static computeNotesFromChordPreset = (
+  static computeNotesFromChordPreset(
     baseIndex: ActualIndex,
     selectedChordType: NoteGroupingId,
     selectedInversionIndex: InversionIndex
-  ): NoteWithOctave[] => {
+  ): NoteWithOctave[] {
     // Calculate chord notes from the root
     const chordIndices = ChordUtils.calculateChordNotesFromIndex(
       baseIndex,
@@ -61,64 +56,12 @@ export class SpellingUtils {
         accidentalPreference
       )
     );
-  };
-
-  /**
-   * Get display info for chord presets using proper spelling
-   */
-  static getChordPresetDisplayInfo(
-    selectedNoteIndices: ActualIndex[],
-    selectedChordType: NoteGroupingId,
-    selectedInversionIndex: InversionIndex,
-    chordDisplayMode: ChordDisplayMode
-  ): IChordDisplayInfo {
-    if (selectedNoteIndices.length === 0) {
-      return { noteGroupingString: "None", chordName: "Ø" };
-    }
-
-    const rootNoteIndex = IndexUtils.rootNoteAtInversion(
-      selectedNoteIndices,
-      selectedInversionIndex
-    );
-
-    // Get spelled notes for root and bass using the new helper function
-    const rootSpelling = this.computeFirstNoteFromChordPreset(
-      rootNoteIndex,
-      selectedChordType,
-      ixInversion(0) // Root position
-    ).formatNoteNameForDisplay();
-
-    const bassSpelling = this.computeFirstNoteFromChordPreset(
-      rootNoteIndex,
-      selectedChordType,
-      selectedInversionIndex
-    ).formatNoteNameForDisplay();
-
-    // Build chord name using existing library function
-    const chordTypeName = NoteGroupingLibrary.getId(
-      selectedChordType,
-      chordDisplayMode
-    );
-    const chordName =
-      rootSpelling === bassSpelling
-        ? `${rootSpelling}${chordTypeName}`
-        : `${rootSpelling}${chordTypeName}/${bassSpelling}`;
-
-    const noteGrouping = NoteGrouping.getNoteGroupingTypeFromNumNotes(
-      selectedNoteIndices.length
-    );
-
-    return {
-      noteGroupingString: noteGrouping.toString(),
-      chordName,
-    };
   }
 
-  // Pure function - no context dependencies!
-  static isChordPresetKnown = (
+  static isChordPresetKnown(
     selectedChordType: NoteGroupingId,
     isChordsOrIntervals: boolean
-  ): boolean => {
+  ): boolean {
     return (
       isChordsOrIntervals &&
       selectedChordType !== SpecialType.None &&
@@ -126,16 +69,16 @@ export class SpellingUtils {
       selectedChordType !== SpecialType.Freeform &&
       selectedChordType !== ChordType.Unknown
     );
-  };
+  }
 
   // High-level orchestrator function that handles the logic flow
-  static computeStaffNotes = (
+  static computeStaffNotes(
     selectedNoteIndices: ActualIndex[],
     selectedMusicalKey: MusicalKey,
     selectedChordType: NoteGroupingId,
     selectedInversionIndex: InversionIndex,
     isChordsOrIntervals: boolean
-  ): NoteWithOctave[] => {
+  ): NoteWithOctave[] {
     if (selectedNoteIndices.length === 0) return [];
 
     return this.isChordPresetKnown(selectedChordType, isChordsOrIntervals)
@@ -144,10 +87,13 @@ export class SpellingUtils {
           selectedChordType,
           selectedInversionIndex
         )
-      : this.computeNotesWithOctaves(selectedNoteIndices, selectedMusicalKey);
-  };
+      : this.computeNotesFromMusicalKey(
+          selectedNoteIndices,
+          selectedMusicalKey
+        );
+  }
 
-  private static getSpellingPreference(
+  static getSpellingPreference(
     chordType: NoteGroupingId,
     rootChromaticIndex: ChromaticIndex
   ): AccidentalType {
@@ -157,30 +103,4 @@ export class SpellingUtils {
       ? AccidentalType.Sharp
       : AccidentalType.Flat;
   }
-
-  private static computeFirstNoteFromChordPreset = (
-    baseIndex: ActualIndex,
-    selectedChordType: NoteGroupingId,
-    selectedInversionIndex: InversionIndex
-  ): NoteWithOctave => {
-    const chordIndices = ChordUtils.calculateChordNotesFromIndex(
-      baseIndex,
-      selectedChordType,
-      selectedInversionIndex
-    );
-
-    const { chromaticIndex: rootChromaticIndex } =
-      actualIndexToChromaticAndOctave(baseIndex);
-
-    const accidentalPreference = this.getSpellingPreference(
-      selectedChordType,
-      rootChromaticIndex
-    );
-
-    const noteInfo = KeyNoteResolver.resolveAbsoluteNoteWithOctave(
-      chordIndices[0],
-      accidentalPreference
-    );
-    return noteInfo;
-  };
 }

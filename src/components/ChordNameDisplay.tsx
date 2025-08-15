@@ -46,7 +46,7 @@ export const ChordNameDisplay: React.FC = () => {
 
     const displayInfo =
       shouldUseChordPresetSpelling && selectedNoteIndices.length > 0
-        ? SpellingUtils.getChordPresetDisplayInfo(
+        ? ChordUtils.getChordPresetDisplayInfo(
             selectedNoteIndices,
             selectedChordType,
             selectedInversionIndex,
