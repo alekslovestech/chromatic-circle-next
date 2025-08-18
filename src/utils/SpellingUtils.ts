@@ -12,6 +12,9 @@ import { KeyNoteResolver } from "@/types/Keys/KeyNoteResolver";
 import { NoteWithOctave } from "@/types/NoteInfo";
 import { ChordUtils } from "@/utils/ChordUtils";
 import { AccidentalPreferenceResolver } from "@/utils/AccidentalPreferenceResolver";
+import { IndexUtils } from "@/utils/IndexUtils";
+import { MusicalDisplayFormatter } from "./MusicalDisplayFormatter";
+import { ChordMatch } from "@/types/interfaces/ChordMatch";
 
 export class SpellingUtils {
   static computeNotesFromMusicalKey(
@@ -54,24 +57,22 @@ export class SpellingUtils {
   }
 
   static computeNotesFromChordPreset(
-    baseIndex: ActualIndex,
-    selectedChordType: NoteGroupingId,
-    selectedInversionIndex: InversionIndex
+    chordIndices: ActualIndex[], // The chord indices we already have
+    chordMatch: ChordMatch
   ): NoteWithOctave[] {
-    // Calculate chord notes from the root
-    const chordIndices = ChordUtils.calculateChordNotesFromIndex(
-      baseIndex,
-      selectedChordType,
-      selectedInversionIndex
+    // Use the existing utility to find the root note from the chord indices
+    const rootIndex = IndexUtils.rootNoteAtInversion(
+      chordIndices,
+      chordMatch.inversionIndex
     );
 
     // Get the root chromatic index to determine spelling preference
     const { chromaticIndex: rootChromaticIndex } =
-      actualIndexToChromaticAndOctave(baseIndex);
+      actualIndexToChromaticAndOctave(rootIndex);
 
     const accidentalPreference =
       AccidentalPreferenceResolver.getChordPresetSpellingPreference(
-        selectedChordType,
+        chordMatch.definition.id,
         rootChromaticIndex
       );
 
@@ -101,16 +102,20 @@ export class SpellingUtils {
     selectedNoteIndices: ActualIndex[],
     selectedMusicalKey: MusicalKey,
     selectedChordType: NoteGroupingId,
-    selectedInversionIndex: InversionIndex,
     isChordsOrIntervals: boolean
   ): NoteWithOctave[] {
     if (selectedNoteIndices.length === 0) return [];
 
-    return this.isChordPresetKnown(selectedChordType, isChordsOrIntervals)
+    const isChordPresetKnown = this.isChordPresetKnown(
+      selectedChordType,
+      isChordsOrIntervals
+    );
+    const chordMatch =
+      MusicalDisplayFormatter.getMatchFromIndices(selectedNoteIndices);
+    return isChordPresetKnown
       ? this.computeNotesFromChordPreset(
-          selectedNoteIndices[0],
-          selectedChordType,
-          selectedInversionIndex
+          selectedNoteIndices, // Pass the chord indices we already have
+          chordMatch
         )
       : this.computeNotesFromMusicalKey(
           selectedNoteIndices,

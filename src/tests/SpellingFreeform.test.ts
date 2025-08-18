@@ -4,7 +4,7 @@ import { SpecialType } from "@/types/enums/SpecialType";
 
 import { DEFAULT_MUSICAL_KEY, MusicalKey } from "@/types/Keys/MusicalKey";
 import { KeyType } from "@/types/enums/KeyType";
-import { ixActualArray, ixInversion } from "@/types/IndexTypes";
+import { ixActualArray } from "@/types/IndexTypes";
 
 import { SpellingUtils } from "@/utils/SpellingUtils";
 import { SpellingTestUtils } from "./utils/SpellingTestUtils";
@@ -91,7 +91,6 @@ describe("SpellingFreeform - Key-based note spelling", () => {
         ixActualArray([7, 8]), // G, G#
         DEFAULT_MUSICAL_KEY,
         SpecialType.Freeform, // Not a known chord
-        ixInversion(0),
         true
       );
 
@@ -107,7 +106,6 @@ describe("SpellingFreeform - Key-based note spelling", () => {
         ixActualArray([7]), // G
         DEFAULT_MUSICAL_KEY,
         ChordType.Major,
-        ixInversion(0),
         false // chords/intervals not active
       );
 
@@ -122,7 +120,6 @@ describe("SpellingFreeform - Key-based note spelling", () => {
         ixActualArray([]),
         DEFAULT_MUSICAL_KEY,
         ChordType.Major,
-        ixInversion(0),
         true
       );
 

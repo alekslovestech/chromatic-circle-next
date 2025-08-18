@@ -102,9 +102,10 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
       selectedNoteIndices,
       canonicalIonianKey,
       selectedChordType,
-      selectedInversionIndex,
       isChordsOrIntervals
     );
+
+    console.log("notesWithOctaves", notesWithOctaves);
 
     // Step 2: Render NoteWithOctave[] to VexFlow - pure rendering logic
     const notes = createVexFlowNotesFromNoteWithOctaves(
