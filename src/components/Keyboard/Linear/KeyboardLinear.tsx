@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-import { TWENTY4 } from "@/types/NoteConstants";
+import { TWENTY4 } from "@/types/constants/NoteConstants";
 import { ActualIndex } from "@/types/IndexTypes";
 import { LinearKeyboardUtils } from "@/utils/Keyboard/Linear/LinearKeyboardUtils";
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";

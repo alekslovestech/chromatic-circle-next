@@ -1,5 +1,5 @@
-import { ScaleModeType } from "@/types/ScaleModes/ScaleModeType";
-import { KeyType } from "@/types/Keys/KeyType";
+import { ScaleModeType } from "@/types/enums/ScaleModeType";
+import { KeyType } from "@/types/enums/KeyType";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 
 export class GreekTestConstants {

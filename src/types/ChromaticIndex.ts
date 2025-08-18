@@ -1,4 +1,4 @@
-import { TWELVE } from "./NoteConstants";
+import { TWELVE } from "./constants/NoteConstants";
 type Branded<K, T> = K & { __brand: T };
 
 export type ChromaticIndex = Branded<number, "ChromaticIndex">;

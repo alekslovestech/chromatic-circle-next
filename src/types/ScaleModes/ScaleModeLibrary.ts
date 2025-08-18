@@ -1,6 +1,8 @@
-import { ScaleModeType } from "./ScaleModeType";
+import { SCALE_MODE_PATTERNS } from "@/types/constants/ScaleModePatterns";
+
+import { ScaleModeType } from "@/types/enums/ScaleModeType";
+
 import { ScaleModeInfo } from "./ScaleModeInfo";
-import { SCALE_MODE_PATTERNS } from "./ScaleModePatterns";
 
 export class ScaleModeLibrary {
   private static instance: ScaleModeLibrary;

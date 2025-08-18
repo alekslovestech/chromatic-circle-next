@@ -1,6 +1,6 @@
 import { MusicalKey } from "../types/Keys/MusicalKey";
-import { KeyType } from "../types/Keys/KeyType";
-import { ScaleModeType } from "../types/ScaleModes/ScaleModeType";
+import { KeyType } from "../types/enums/KeyType";
+import { ScaleModeType } from "../types/enums/ScaleModeType";
 import { GreekTestConstants } from "../tests/utils/GreekTestConstants";
 
 const greekTestConstants = GreekTestConstants.getInstance();

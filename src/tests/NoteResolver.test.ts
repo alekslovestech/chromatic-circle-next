@@ -2,7 +2,7 @@ import { AccidentalType } from "@/types/enums/AccidentalType";
 
 import { DEFAULT_MUSICAL_KEY, MusicalKey } from "@/types/Keys/MusicalKey";
 import { NoteInfo } from "@/types/NoteInfo";
-import { KeyType } from "@/types/Keys/KeyType";
+import { KeyType } from "@/types/enums/KeyType";
 import { NoteConverter } from "@/types/NoteConverter";
 import { KeyNoteResolver } from "@/types/Keys/KeyNoteResolver";
 

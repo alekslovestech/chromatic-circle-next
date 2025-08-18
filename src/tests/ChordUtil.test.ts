@@ -5,7 +5,7 @@ import {
   ixActualArray,
   ixInversion,
 } from "../types/IndexTypes";
-import { KeyType } from "../types/Keys/KeyType";
+import { KeyType } from "../types/enums/KeyType";
 import { DEFAULT_MUSICAL_KEY } from "../types/Keys/MusicalKey";
 
 import { MusicalKey } from "../types/Keys/MusicalKey";

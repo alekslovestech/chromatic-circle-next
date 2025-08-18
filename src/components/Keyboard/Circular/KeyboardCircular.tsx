@@ -1,4 +1,4 @@
-import { TWELVE } from "@/types/NoteConstants";
+import { TWELVE } from "@/types/constants/NoteConstants";
 import { ChromaticIndex, ixChromatic } from "@/types/ChromaticIndex";
 
 import { ColorUtils } from "@/utils/visual/ColorUtils";

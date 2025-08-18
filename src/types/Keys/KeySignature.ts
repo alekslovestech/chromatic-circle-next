@@ -1,11 +1,11 @@
-// src/types/KeySignature.ts
 import { AccidentalType } from "@/types/enums/AccidentalType";
 
-import { isMajor, KeyType } from "./KeyType";
 import {
   MAJOR_KEY_SIGNATURES,
   MINOR_KEY_SIGNATURES,
-} from "./KeySignatureConstants";
+} from "../constants/KeySignatureConstants";
+
+import { isMajor, KeyType } from "../enums/KeyType";
 import { NoteConverter } from "../NoteConverter";
 
 export class KeySignature {

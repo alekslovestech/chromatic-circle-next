@@ -1,9 +1,11 @@
-import { ChordType } from "@/types/enums/ChordType";
+import { CHORD_OFFSET_PATTERNS } from "@/types/constants/ChordOffsetPatterns";
 
-import { CHORD_OFFSET_PATTERNS } from "../ChordOffsetPatterns";
-import { addChromatic, ChromaticIndex } from "../ChromaticIndex";
-import { RomanChord } from "../RomanChord";
-import { ScaleModeType } from "./ScaleModeType";
+import { ChordType } from "@/types/enums/ChordType";
+import { ScaleModeType } from "@/types/enums/ScaleModeType";
+
+import { addChromatic, ChromaticIndex } from "@/types/ChromaticIndex";
+import { RomanChord } from "@/types/RomanChord";
+
 import { ScalePattern } from "./ScalePattern";
 import { ScaleDegreeInfo } from "./ScaleDegreeInfo";
 import { ScaleDegreeIndex } from "./ScaleDegreeType";

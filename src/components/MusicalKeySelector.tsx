@@ -2,8 +2,8 @@
 import React from "react";
 
 import { MusicalKey } from "@/types/Keys/MusicalKey";
-import { ScaleModeType } from "@/types/ScaleModes/ScaleModeType";
-import { isMajor } from "@/types/Keys/KeyType";
+import { ScaleModeType } from "@/types/enums/ScaleModeType";
+import { isMajor } from "@/types/enums/KeyType";
 import { KeySignature } from "@/types/Keys/KeySignature";
 
 import { useMusical } from "@/contexts/MusicalContext";

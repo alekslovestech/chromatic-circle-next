@@ -1,7 +1,7 @@
 import { ScaleModeLibrary } from "../types/ScaleModes/ScaleModeLibrary";
-import { ScaleModeType } from "../types/ScaleModes/ScaleModeType";
+import { ScaleModeType } from "../types/enums/ScaleModeType";
 import { MusicalKey } from "../types/Keys/MusicalKey";
-import { TWELVE } from "../types/NoteConstants";
+import { TWELVE } from "../types/constants/NoteConstants";
 import { KeyDisplayMode } from "../types/SettingModes";
 import { GreekTestConstants } from "./utils/GreekTestConstants";
 

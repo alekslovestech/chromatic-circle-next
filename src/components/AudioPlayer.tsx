@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useCallback } from "react";
 import * as Tone from "tone";
 
-import { TWELVE } from "@/types/NoteConstants";
+import { TWELVE } from "@/types/constants/NoteConstants";
 import { ActualIndex } from "@/types/IndexTypes";
 import { useIsDemoMode } from "@/lib/hooks/useGlobalMode";
 

@@ -1,21 +1,29 @@
-import { AccidentalType } from "@/types/enums/AccidentalType";
+import { TWELVE } from "@/types/constants/NoteConstants";
 
-import { addChromatic, ChromaticIndex, ixChromatic } from "../ChromaticIndex";
-import { ScaleModeLibrary } from "../ScaleModes/ScaleModeLibrary";
-import { ScaleModeInfo } from "../ScaleModes/ScaleModeInfo";
-import { ScaleDegreeIndex } from "../ScaleModes/ScaleDegreeType";
-import { ScaleModeType } from "../ScaleModes/ScaleModeType";
-import { ScaleDegreeInfo } from "../ScaleModes/ScaleDegreeInfo";
-import { ActualIndex, ixActualArray } from "../IndexTypes";
-import { KeySignature } from "../Keys/KeySignature";
-import { isMajor, KeyType } from "../Keys/KeyType";
-import { KeyNoteResolver } from "./KeyNoteResolver";
-import { TWELVE } from "../NoteConstants";
-import { NoteConverter } from "../NoteConverter";
-import { NoteInfo } from "../NoteInfo";
-import { KeyDisplayMode } from "../SettingModes";
-import { ScalePlaybackMode } from "../ScalePlaybackMode";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+import { ScaleModeType } from "@/types/enums/ScaleModeType";
+import { isMajor, KeyType } from "@/types/enums/KeyType";
+
+import {
+  addChromatic,
+  ChromaticIndex,
+  ixChromatic,
+} from "@/types/ChromaticIndex";
+import { ScaleModeLibrary } from "@/types/ScaleModes/ScaleModeLibrary";
+import { ScaleModeInfo } from "@/types/ScaleModes/ScaleModeInfo";
+import { ScaleDegreeIndex } from "@/types/ScaleModes/ScaleDegreeType";
+import { ScaleDegreeInfo } from "@/types/ScaleModes/ScaleDegreeInfo";
+import { ActualIndex, ixActualArray } from "@/types/IndexTypes";
+import { KeySignature } from "@/types/Keys/KeySignature";
+
+import { NoteConverter } from "@/types/NoteConverter";
+import { NoteInfo } from "@/types/NoteInfo";
+import { KeyDisplayMode } from "@/types/SettingModes";
+import { ScalePlaybackMode } from "@/types/ScalePlaybackMode";
+
 import { IndexUtils } from "@/utils/IndexUtils";
+
+import { KeyNoteResolver } from "./KeyNoteResolver";
 
 export class MusicalKey {
   public readonly tonicString: string; // Root note (e.g., "C", "A")

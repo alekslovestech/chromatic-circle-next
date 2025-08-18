@@ -5,7 +5,7 @@ import { Factory, StaveNote } from "vexflow";
 import { getAccidentalSignForEasyScore } from "@/types/AccidentalTypeDisplay";
 import { NoteWithOctave } from "@/types/NoteInfo";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
-import { isMajor } from "@/types/Keys/KeyType";
+import { isMajor } from "@/types/enums/KeyType";
 
 import { COMMON_STYLES } from "@/lib/design";
 import { useBorder } from "@/lib/hooks";

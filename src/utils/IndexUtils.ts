@@ -1,5 +1,5 @@
 import { ActualIndex, InversionIndex } from "../types/IndexTypes";
-import { TWELVE, TWENTY4 } from "../types/NoteConstants";
+import { TWELVE, TWENTY4 } from "../types/constants/NoteConstants";
 
 export class IndexUtils {
   static StringWithPaddedIndex = (prefix: string, index: number) =>
@@ -34,8 +34,9 @@ export class IndexUtils {
 
   static rootNoteAtInversion = (
     indices: ActualIndex[],
-    inversionIndex: InversionIndex,
-  ): ActualIndex => indices[(indices.length - inversionIndex) % indices.length] as ActualIndex;
+    inversionIndex: InversionIndex
+  ): ActualIndex =>
+    indices[(indices.length - inversionIndex) % indices.length] as ActualIndex;
 
   //put the first note at the end
   static firstNoteToLast = (indices: number[]): number[] => {
@@ -52,7 +53,7 @@ export class IndexUtils {
   //if the new index is already selected, remove it, otherwise add it
   static ToggleNewIndex = (
     selectedNoteIndices: ActualIndex[],
-    newIndex: ActualIndex,
+    newIndex: ActualIndex
   ): ActualIndex[] => {
     let updatedIndices = selectedNoteIndices.includes(newIndex)
       ? selectedNoteIndices.filter((index) => index !== newIndex)
@@ -66,7 +67,11 @@ export class IndexUtils {
     return this.fitChordToAbsoluteRange(newIndices);
   };
 
-  private static shiftToRange = (indices: number[], min: number, max: number): number[] => {
+  private static shiftToRange = (
+    indices: number[],
+    min: number,
+    max: number
+  ): number[] => {
     const shift = indices.some((note) => note >= max)
       ? -TWELVE
       : indices.some((note) => note < min)

@@ -4,7 +4,7 @@ import { SpecialType } from "./enums/SpecialType";
 import { IntervalType } from "./enums/IntervalType";
 import { ChordType } from "./enums/ChordType";
 
-import { CHORD_OFFSET_PATTERNS } from "./ChordOffsetPatterns";
+import { CHORD_OFFSET_PATTERNS } from "./constants/ChordOffsetPatterns";
 import { ixOffsetArray } from "./IndexTypes";
 import { NoteGrouping } from "./NoteGrouping";
 import { ChordDisplayMode } from "./SettingModes";

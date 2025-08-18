@@ -1,10 +1,10 @@
 import { AccidentalType } from "@/types/enums/AccidentalType";
+import { SCALE_MODE_PATTERNS } from "@/types/constants/ScaleModePatterns";
 
 import { addChromatic, ChromaticIndex } from "../ChromaticIndex";
-import { TWELVE } from "../NoteConstants";
+import { TWELVE } from "../constants/NoteConstants";
 import { ScaleDegreeInfo } from "./ScaleDegreeInfo";
 import { ixScaleDegreeIndex, ScaleDegreeIndex } from "./ScaleDegreeType";
-import { SCALE_MODE_PATTERNS } from "./ScaleModePatterns";
 
 export class ScalePattern {
   private readonly pattern: number[];

@@ -6,7 +6,7 @@ import {
 import {
   WHITE_KEYS_PER_OCTAVE,
   WHITE_KEYS_PER_2OCTAVES,
-} from "@/types/NoteConstants";
+} from "@/types/constants/NoteConstants";
 import { isBlackKey } from "../KeyboardUtils";
 
 //utils for calculating the linear keyboard geometry

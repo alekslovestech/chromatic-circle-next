@@ -3,7 +3,7 @@ import { ChordType } from "@/types/enums/ChordType";
 import { SpecialType } from "@/types/enums/SpecialType";
 
 import { DEFAULT_MUSICAL_KEY, MusicalKey } from "@/types/Keys/MusicalKey";
-import { KeyType } from "@/types/Keys/KeyType";
+import { KeyType } from "@/types/enums/KeyType";
 import { ixActualArray, ixInversion } from "@/types/IndexTypes";
 
 import { SpellingUtils } from "@/utils/SpellingUtils";

@@ -23,7 +23,7 @@ import { IndexUtils } from "./IndexUtils";
 import { SpellingUtils } from "./SpellingUtils";
 import { NoteConverter } from "@/types/NoteConverter";
 import { AccidentalType } from "@/types/enums/AccidentalType";
-import { TWELVE } from "@/types/NoteConstants";
+import { TWELVE } from "@/types/constants/NoteConstants";
 import { ChordUtils } from "./ChordUtils";
 
 export class MusicalDisplayFormatter {
