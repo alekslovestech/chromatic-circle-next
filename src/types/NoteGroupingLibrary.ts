@@ -1,13 +1,12 @@
+import { NoteGroupingId } from "./enums/NoteGroupingId";
+import { NoteGroupingType } from "./enums/NoteGroupingType";
+import { SpecialType } from "./enums/SpecialType";
+import { IntervalType } from "./enums/IntervalType";
+import { ChordType } from "./enums/ChordType";
+
 import { CHORD_OFFSET_PATTERNS } from "./ChordOffsetPatterns";
 import { ixOffsetArray } from "./IndexTypes";
 import { NoteGrouping } from "./NoteGrouping";
-import {
-  ChordType,
-  IntervalType,
-  NoteGroupingId,
-  NoteGroupingType,
-  SpecialType,
-} from "./enums/NoteGroupingId";
 import { ChordDisplayMode } from "./SettingModes";
 class NoteGroupingLibrarySingleton {
   public getGroupingById(id: NoteGroupingId): NoteGrouping {

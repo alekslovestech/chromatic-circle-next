@@ -1,7 +1,8 @@
-import { MusicalKey } from "./Keys/MusicalKey";
-import { ChordType } from "./enums/NoteGroupingId";
-import { RomanChord } from "./RomanChord";
-import { AccidentalType } from "./AccidentalTypeDisplay";
+import { ChordType } from "@/types/enums/ChordType";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+
+import { MusicalKey } from "@/types/Keys/MusicalKey";
+import { RomanChord } from "@/types/RomanChord";
 import { splitRomanString } from "./RomanParser";
 import { AbsoluteChord } from "./AbsoluteChord";
 import { addChromatic } from "./ChromaticIndex";

@@ -1,5 +1,6 @@
 // src/types/KeySignature.ts
-import { AccidentalType } from "../AccidentalTypeDisplay";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+
 import { isMajor, KeyType } from "./KeyType";
 import {
   MAJOR_KEY_SIGNATURES,

@@ -1,4 +1,5 @@
-import { AccidentalType } from "../AccidentalTypeDisplay";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+
 import { addChromatic, ChromaticIndex } from "../ChromaticIndex";
 import { TWELVE } from "../NoteConstants";
 import { ScaleDegreeInfo } from "./ScaleDegreeInfo";

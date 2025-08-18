@@ -1,5 +1,6 @@
-import { ChromaticIndex, ixChromatic } from "../types/ChromaticIndex";
-import { AccidentalType } from "./AccidentalTypeDisplay";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+
+import { ChromaticIndex, ixChromatic } from "@/types/ChromaticIndex";
 import { actualIndexToChromaticAndOctave } from "./IndexTypes";
 import { ActualIndex } from "./IndexTypes";
 import { KeyNoteResolver } from "./Keys/KeyNoteResolver";

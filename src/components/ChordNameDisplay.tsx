@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { ChordDisplayInfo } from "@/types/interfaces/ChordDisplayInfo";
 import { ChordDisplayMode } from "@/types/SettingModes";
 
 import { useMusical } from "@/contexts/MusicalContext";
@@ -9,11 +10,11 @@ import {
   useIsChordsOrIntervals,
 } from "@/contexts/ChordPresetContext";
 
-import { ChordUtils, IChordDisplayInfo } from "@/utils/ChordUtils";
 import { SpellingUtils } from "@/utils/SpellingUtils";
 import { TYPOGRAPHY } from "@/lib/design";
 import { LAYOUT_PATTERNS } from "@/lib/design/LayoutPatterns";
 import { useBorder } from "@/lib/hooks";
+import { MusicalDisplayFormatter } from "@/utils/MusicalDisplayFormatter";
 
 const MAX_CHORD_NAME_LENGTH = 7;
 const BREAK_CHARACTER = "\u200B";
@@ -46,13 +47,13 @@ export const ChordNameDisplay: React.FC = () => {
 
     const displayInfo =
       shouldUseChordPresetSpelling && selectedNoteIndices.length > 0
-        ? ChordUtils.getChordPresetDisplayInfo(
+        ? MusicalDisplayFormatter.getChordPresetDisplayInfo(
             selectedNoteIndices,
             selectedChordType,
             selectedInversionIndex,
             chordDisplayMode
           )
-        : ChordUtils.getDisplayInfoFromIndices(
+        : MusicalDisplayFormatter.getDisplayInfoFromIndices(
             selectedNoteIndices,
             chordDisplayMode,
             selectedMusicalKey
@@ -61,7 +62,7 @@ export const ChordNameDisplay: React.FC = () => {
     return renderChordDisplay(displayInfo);
   };
 
-  const renderChordDisplay = (displayInfo: IChordDisplayInfo) => {
+  const renderChordDisplay = (displayInfo: ChordDisplayInfo) => {
     const { chordName, noteGroupingString } = displayInfo;
     const chordNameDisplay =
       chordName.length > MAX_CHORD_NAME_LENGTH && chordName.includes("/")

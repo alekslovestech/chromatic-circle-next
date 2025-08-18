@@ -1,6 +1,7 @@
-import { getAccidentalSignForDisplay } from "../AccidentalTypeDisplay";
-import { NoteConverter } from "../NoteConverter";
-import { AccidentalType } from "../AccidentalTypeDisplay";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+
+import { getAccidentalSignForDisplay } from "@/types/AccidentalTypeDisplay";
+import { NoteConverter } from "@/types/NoteConverter";
 import {
   ScaleDegree,
   ScaleDegreeIndex,

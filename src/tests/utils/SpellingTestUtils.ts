@@ -1,6 +1,7 @@
-import { NoteInfo, NoteWithOctave } from "../../types/NoteInfo";
-import { AccidentalType } from "../../types/AccidentalTypeDisplay";
-import { ixOctaveOffset } from "../../types/IndexTypes";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+
+import { NoteInfo, NoteWithOctave } from "@/types/NoteInfo";
+import { ixOctaveOffset } from "@/types/IndexTypes";
 
 export class SpellingTestUtils {
   static makeNoteWithOctave(

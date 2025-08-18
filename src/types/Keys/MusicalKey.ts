@@ -1,4 +1,5 @@
-import { AccidentalType } from "../AccidentalTypeDisplay";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+
 import { addChromatic, ChromaticIndex, ixChromatic } from "../ChromaticIndex";
 import { ScaleModeLibrary } from "../ScaleModes/ScaleModeLibrary";
 import { ScaleModeInfo } from "../ScaleModes/ScaleModeInfo";

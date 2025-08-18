@@ -1,6 +1,8 @@
-import { ChordType } from "./enums/NoteGroupingId";
-import { ChromaticIndex } from "./ChromaticIndex";
-import { NoteConverter } from "./NoteConverter";
+import { ChordType } from "@/types/enums/ChordType";
+
+import { ChromaticIndex } from "@/types/ChromaticIndex";
+import { NoteConverter } from "@/types/NoteConverter";
+
 export class AbsoluteChord {
   public readonly chromaticIndex: ChromaticIndex;
   public readonly chordType: ChordType;
