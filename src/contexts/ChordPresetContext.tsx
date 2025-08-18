@@ -3,7 +3,7 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
 
 import { InversionIndex, ixInversion } from "@/types/IndexTypes";
-import { NoteGroupingId } from "@/types/NoteGroupingTypes";
+import { NoteGroupingId } from "@/types/enums/NoteGroupingId";
 import { InputMode } from "@/types/SettingModes";
 import { ChordUtils } from "@/utils/ChordUtils";
 

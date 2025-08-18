@@ -1,4 +1,4 @@
-import { AccidentalType } from "./AccidentalType";
+import { AccidentalType } from "./AccidentalTypeDisplay";
 import { NoteInfo } from "./NoteInfo";
 
 export const TWELVE = 12; //the magic number

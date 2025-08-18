@@ -1,11 +1,9 @@
-export enum AccidentalType {
-  None = "None",
-  Natural = "Natural",
-  Sharp = "Sharp",
-  Flat = "Flat",
-}
+import { AccidentalType } from "./enums/AccidentalType";
+
 //mostly used in for text on keyboards / accidental toggle
-export const getAccidentalSignForDisplay = (accidental: AccidentalType): string => {
+export const getAccidentalSignForDisplay = (
+  accidental: AccidentalType
+): string => {
   switch (accidental) {
     case AccidentalType.None:
       return "";
@@ -20,7 +18,9 @@ export const getAccidentalSignForDisplay = (accidental: AccidentalType): string 
   }
 };
 
-export const getAccidentalSignForDebug = (accidental: AccidentalType): string => {
+export const getAccidentalSignForDebug = (
+  accidental: AccidentalType
+): string => {
   switch (accidental) {
     case AccidentalType.None:
       return "";
@@ -36,7 +36,9 @@ export const getAccidentalSignForDebug = (accidental: AccidentalType): string =>
 };
 
 //mostly used in StaffRenderer / EasyScore format
-export const getAccidentalSignForEasyScore = (accidental: AccidentalType): string => {
+export const getAccidentalSignForEasyScore = (
+  accidental: AccidentalType
+): string => {
   switch (accidental) {
     case AccidentalType.None:
       return "";
@@ -51,7 +53,9 @@ export const getAccidentalSignForEasyScore = (accidental: AccidentalType): strin
   }
 };
 
-export const getOppositeAccidental = (prevAccidental: AccidentalType): AccidentalType => {
+export const getOppositeAccidental = (
+  prevAccidental: AccidentalType
+): AccidentalType => {
   if (prevAccidental === AccidentalType.Sharp) return AccidentalType.Flat;
   if (prevAccidental === AccidentalType.Flat) return AccidentalType.Sharp;
   return prevAccidental; //no change

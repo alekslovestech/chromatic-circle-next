@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import { chromaticToActual, ixOctaveOffset } from "@/types/IndexTypes";
-import { ChordProgressionType } from "@/types/ChordProgressionType";
+import { ChordProgressionType } from "@/types/enums/ChordProgressionType";
 import { ChordProgressionLibrary } from "@/types/ChordProgressionLibrary";
 import { AbsoluteChord } from "@/types/AbsoluteChord";
 

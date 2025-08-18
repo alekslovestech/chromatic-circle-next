@@ -1,6 +1,6 @@
 import { CHORD_OFFSET_PATTERNS } from "../ChordOffsetPatterns";
 import { addChromatic, ChromaticIndex } from "../ChromaticIndex";
-import { ChordType } from "../NoteGroupingTypes";
+import { ChordType } from "../enums/NoteGroupingId";
 import { RomanChord } from "../RomanChord";
 import { ScaleModeType } from "./ScaleModeType";
 import { ScalePattern } from "./ScalePattern";

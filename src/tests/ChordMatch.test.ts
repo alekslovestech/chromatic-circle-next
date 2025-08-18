@@ -1,15 +1,21 @@
-import { ChordType, IntervalType, SpecialType } from "../types/NoteGroupingTypes";
+import {
+  ChordType,
+  IntervalType,
+  SpecialType,
+} from "../types/enums/NoteGroupingId";
 import { ixActualArray } from "../types/IndexTypes";
-import { IChordMatch } from "../types/ChordMatch";
+import { IChordMatch } from "../types/IChordMatch";
 import { ChordUtils } from "../utils/ChordUtils";
 
 function verifyChordMatch(
   rootNote: number,
   type: ChordType | IntervalType | SpecialType,
   inversionIndex: number,
-  indices: number[],
+  indices: number[]
 ) {
-  const actual: IChordMatch = ChordUtils.getMatchFromIndices(ixActualArray(indices));
+  const actual: IChordMatch = ChordUtils.getMatchFromIndices(
+    ixActualArray(indices)
+  );
   expect(actual.rootNote).toBe(rootNote);
   expect(actual.definition.id).toBe(type);
   expect(actual.inversionIndex).toBe(inversionIndex);
@@ -17,9 +23,27 @@ function verifyChordMatch(
 
 describe("ChordMatch tests", () => {
   const testCases = [
-    { desc: "empty indices", root: 0, type: SpecialType.None, inv: 0, indices: [] },
-    { desc: "major chord", root: 0, type: ChordType.Major, inv: 0, indices: [0, 4, 7] },
-    { desc: "minor chord", root: 0, type: ChordType.Minor, inv: 0, indices: [0, 3, 7] },
+    {
+      desc: "empty indices",
+      root: 0,
+      type: SpecialType.None,
+      inv: 0,
+      indices: [],
+    },
+    {
+      desc: "major chord",
+      root: 0,
+      type: ChordType.Major,
+      inv: 0,
+      indices: [0, 4, 7],
+    },
+    {
+      desc: "minor chord",
+      root: 0,
+      type: ChordType.Minor,
+      inv: 0,
+      indices: [0, 3, 7],
+    },
     {
       desc: "minor chord with root note",
       root: 2,
@@ -62,12 +86,48 @@ describe("ChordMatch tests", () => {
       inv: 3,
       indices: [11, 12, 16, 19],
     },
-    { desc: "diminished chord", root: 0, type: ChordType.Diminished, inv: 0, indices: [0, 3, 6] },
-    { desc: "augmented chord", root: 0, type: ChordType.Augmented, inv: 0, indices: [0, 4, 8] },
-    { desc: "sus4 chord", root: 0, type: ChordType.Sus4, inv: 0, indices: [0, 5, 7] },
-    { desc: "single note", root: 0, type: SpecialType.Note, inv: 0, indices: [0] },
-    { desc: "fifth interval", root: 0, type: IntervalType.Fifth, inv: 0, indices: [0, 7] },
-    { desc: "unknown chord", root: 0, type: ChordType.Unknown, inv: 0, indices: [0, 1, 2] },
+    {
+      desc: "diminished chord",
+      root: 0,
+      type: ChordType.Diminished,
+      inv: 0,
+      indices: [0, 3, 6],
+    },
+    {
+      desc: "augmented chord",
+      root: 0,
+      type: ChordType.Augmented,
+      inv: 0,
+      indices: [0, 4, 8],
+    },
+    {
+      desc: "sus4 chord",
+      root: 0,
+      type: ChordType.Sus4,
+      inv: 0,
+      indices: [0, 5, 7],
+    },
+    {
+      desc: "single note",
+      root: 0,
+      type: SpecialType.Note,
+      inv: 0,
+      indices: [0],
+    },
+    {
+      desc: "fifth interval",
+      root: 0,
+      type: IntervalType.Fifth,
+      inv: 0,
+      indices: [0, 7],
+    },
+    {
+      desc: "unknown chord",
+      root: 0,
+      type: ChordType.Unknown,
+      inv: 0,
+      indices: [0, 1, 2],
+    },
     {
       desc: "Narrow 23 chord",
       root: 0,

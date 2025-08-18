@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState } from "react";
 import { useScalePlayback } from "@/lib/hooks/useScalePlayback";
 import { useChordProgressionPlayback } from "@/lib/hooks/useChordProgressionPlayback";
 import { ScalePlaybackMode } from "@/types/ScalePlaybackMode";
-import { ChordProgressionType } from "@/types/ChordProgressionType";
+import { ChordProgressionType } from "@/types/enums/ChordProgressionType";
 
 export enum PlaybackState {
   ScaleComplete,

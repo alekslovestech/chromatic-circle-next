@@ -1,4 +1,4 @@
-import { AccidentalType } from "../AccidentalType";
+import { AccidentalType } from "../AccidentalTypeDisplay";
 import { addChromatic, ChromaticIndex } from "../ChromaticIndex";
 import { TWELVE } from "../NoteConstants";
 import { ScaleDegreeInfo } from "./ScaleDegreeInfo";

@@ -1,4 +1,4 @@
-import { AccidentalType } from "../types/AccidentalType";
+import { AccidentalType } from "../types/AccidentalTypeDisplay";
 import { ixScaleDegree } from "../types/ScaleModes/ScaleDegreeType";
 import { ScaleDegreeInfo } from "../types/ScaleModes/ScaleDegreeInfo";
 

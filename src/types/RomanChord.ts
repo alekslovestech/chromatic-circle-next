@@ -1,11 +1,14 @@
-import { AccidentalType, getAccidentalSignForDisplay } from "./AccidentalType";
+import {
+  AccidentalType,
+  getAccidentalSignForDisplay,
+} from "./AccidentalTypeDisplay";
 import {
   ixScaleDegreeIndex,
   ScaleDegree,
   ScaleDegreeIndex,
   ixScaleDegree,
 } from "./ScaleModes/ScaleDegreeType";
-import { ChordType } from "./NoteGroupingTypes";
+import { ChordType } from "./enums/NoteGroupingId";
 import { IScalePatternForRomanChords } from "./IScalePatternForRomanChords";
 import { ScaleDegreeInfo } from "./ScaleModes/ScaleDegreeInfo";
 import { RomanNumeralString } from "./RomanTypes";

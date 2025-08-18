@@ -1,5 +1,5 @@
-import { AccidentalType } from "../types/AccidentalType";
-import { ChordType } from "../types/NoteGroupingTypes";
+import { AccidentalType } from "../types/AccidentalTypeDisplay";
+import { ChordType } from "../types/enums/NoteGroupingId";
 import { RomanChord } from "../types/RomanChord";
 import { RomanResolver } from "../types/RomanResolver";
 import { ixScaleDegree } from "../types/ScaleModes/ScaleDegreeType";

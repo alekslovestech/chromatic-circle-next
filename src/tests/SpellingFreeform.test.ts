@@ -1,7 +1,7 @@
 import { DEFAULT_MUSICAL_KEY, MusicalKey } from "@/types/Keys/MusicalKey";
-import { AccidentalType } from "@/types/AccidentalType";
+import { AccidentalType } from "@/types/AccidentalTypeDisplay";
 import { KeyType } from "@/types/Keys/KeyType";
-import { ChordType, SpecialType } from "@/types/NoteGroupingTypes";
+import { ChordType, SpecialType } from "@/types/enums/NoteGroupingId";
 import { ixActualArray, ixInversion } from "@/types/IndexTypes";
 
 import { SpellingUtils } from "@/utils/SpellingUtils";

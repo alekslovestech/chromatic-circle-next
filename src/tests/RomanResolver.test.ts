@@ -1,6 +1,6 @@
 import { MusicalKey } from "../types/Keys/MusicalKey";
 import { RomanResolver } from "../types/RomanResolver";
-import { ChordType } from "../types/NoteGroupingTypes";
+import { ChordType } from "../types/enums/NoteGroupingId";
 import { NoteConverter } from "../types/NoteConverter";
 import { GreekTestConstants } from "../tests/utils/GreekTestConstants";
 

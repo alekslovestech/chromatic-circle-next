@@ -1,20 +1,17 @@
+import { NoteGroupingId } from "@/types/enums/NoteGroupingId";
+import { SpecialType } from "@/types/enums/SpecialType";
+import { ChordType } from "@/types/enums/ChordType";
+
 import {
   ActualIndex,
   actualIndexToChromaticAndOctave,
   InversionIndex,
 } from "@/types/IndexTypes";
-import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { KeyNoteResolver } from "@/types/Keys/KeyNoteResolver";
 import { NoteWithOctave } from "@/types/NoteInfo";
-import {
-  NoteGroupingId,
-  ChordType,
-  SpecialType,
-} from "@/types/NoteGroupingTypes";
 import { ChordUtils } from "@/utils/ChordUtils";
-import { AccidentalType } from "@/types/AccidentalType";
-import { isBlackKey } from "./Keyboard/KeyboardUtils";
+import { AccidentalPreferenceResolver } from "@/utils/AccidentalPreferenceResolver";
 
 export class SpellingUtils {
   static computeNotesFromMusicalKey(
@@ -27,6 +24,33 @@ export class SpellingUtils {
         actualIndex
       )
     );
+  }
+
+  static computeFirstNoteFromChordPreset(
+    baseIndex: ActualIndex,
+    selectedChordType: NoteGroupingId,
+    selectedInversionIndex: InversionIndex
+  ): NoteWithOctave {
+    const chordIndices = ChordUtils.calculateChordNotesFromIndex(
+      baseIndex,
+      selectedChordType,
+      selectedInversionIndex
+    );
+
+    const { chromaticIndex: rootChromaticIndex } =
+      actualIndexToChromaticAndOctave(baseIndex);
+
+    const accidentalPreference =
+      AccidentalPreferenceResolver.getChordPresetSpellingPreference(
+        selectedChordType,
+        rootChromaticIndex
+      );
+
+    const noteInfo = KeyNoteResolver.resolveAbsoluteNoteWithOctave(
+      chordIndices[0],
+      accidentalPreference
+    );
+    return noteInfo;
   }
 
   static computeNotesFromChordPreset(
@@ -45,10 +69,11 @@ export class SpellingUtils {
     const { chromaticIndex: rootChromaticIndex } =
       actualIndexToChromaticAndOctave(baseIndex);
 
-    const accidentalPreference = this.getSpellingPreference(
-      selectedChordType,
-      rootChromaticIndex
-    );
+    const accidentalPreference =
+      AccidentalPreferenceResolver.getChordPresetSpellingPreference(
+        selectedChordType,
+        rootChromaticIndex
+      );
 
     return chordIndices.map((actualIndex) =>
       KeyNoteResolver.resolveAbsoluteNoteWithOctave(
@@ -91,16 +116,5 @@ export class SpellingUtils {
           selectedNoteIndices,
           selectedMusicalKey
         );
-  }
-
-  static getSpellingPreference(
-    chordType: NoteGroupingId,
-    rootChromaticIndex: ChromaticIndex
-  ): AccidentalType {
-    const isMinorQuality = ChordUtils.isMinorQualityChord(chordType);
-    const isBlackKeyRoot = isBlackKey(rootChromaticIndex);
-    return isBlackKeyRoot === isMinorQuality
-      ? AccidentalType.Sharp
-      : AccidentalType.Flat;
   }
 }

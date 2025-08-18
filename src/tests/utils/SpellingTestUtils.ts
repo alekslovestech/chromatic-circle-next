@@ -1,5 +1,5 @@
 import { NoteInfo, NoteWithOctave } from "../../types/NoteInfo";
-import { AccidentalType } from "../../types/AccidentalType";
+import { AccidentalType } from "../../types/AccidentalTypeDisplay";
 import { ixOctaveOffset } from "../../types/IndexTypes";
 
 export class SpellingTestUtils {

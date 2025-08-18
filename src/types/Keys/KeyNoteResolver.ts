@@ -1,4 +1,5 @@
-import { AccidentalType } from "../AccidentalType";
+import { AccidentalType } from "../enums/AccidentalType";
+
 import { ChromaticIndex } from "../ChromaticIndex";
 import { ActualIndex, actualIndexToChromaticAndOctave } from "../IndexTypes";
 import { NOTES_WITH_SHARP, NOTES_WITH_FLAT } from "../NoteConstants";

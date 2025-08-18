@@ -1,4 +1,4 @@
-import { ChordType } from "./NoteGroupingTypes";
+import { ChordType } from "./enums/ChordType";
 import { ScaleDegreeInfo } from "./ScaleModes/ScaleDegreeInfo";
 
 /**

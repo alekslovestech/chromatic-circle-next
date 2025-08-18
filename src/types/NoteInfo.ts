@@ -1,8 +1,8 @@
+import { AccidentalType } from "./enums/AccidentalType";
 import {
-  AccidentalType,
   getAccidentalSignForDebug,
   getAccidentalSignForDisplay,
-} from "./AccidentalType";
+} from "./AccidentalTypeDisplay";
 import { OctaveOffset } from "./IndexTypes";
 
 export class NoteInfo {

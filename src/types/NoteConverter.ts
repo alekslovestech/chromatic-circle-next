@@ -1,5 +1,5 @@
 import { ChromaticIndex, ixChromatic } from "../types/ChromaticIndex";
-import { AccidentalType } from "./AccidentalType";
+import { AccidentalType } from "./AccidentalTypeDisplay";
 import { actualIndexToChromaticAndOctave } from "./IndexTypes";
 import { ActualIndex } from "./IndexTypes";
 import { KeyNoteResolver } from "./Keys/KeyNoteResolver";
@@ -32,11 +32,17 @@ export class NoteConverter {
 
   static sanitizeNoteString(noteString: string): string {
     // Convert display symbols to text format
-    return noteString.replace(/[♯#]/g, "#").replace(/[♭b]/g, "b").replace(/[♮n]/g, "n");
+    return noteString
+      .replace(/[♯#]/g, "#")
+      .replace(/[♭b]/g, "b")
+      .replace(/[♮n]/g, "n");
   }
 
   // For display - converts index to text
-  static fromChromaticIndex(index: ChromaticIndex, preferSharps: boolean = true): string {
+  static fromChromaticIndex(
+    index: ChromaticIndex,
+    preferSharps: boolean = true
+  ): string {
     const sharpMap: { [key: number]: string } = {
       0: "C",
       1: "C#",
@@ -74,7 +80,10 @@ export class NoteConverter {
   }
 
   // Helper for testing - converts array of indices to note names
-  static indicesToNoteArray(indices: ChromaticIndex[], preferSharps: boolean = true): string[] {
+  static indicesToNoteArray(
+    indices: ChromaticIndex[],
+    preferSharps: boolean = true
+  ): string[] {
     return indices.map((index) => this.fromChromaticIndex(index, preferSharps));
   }
 
@@ -101,10 +110,13 @@ export class NoteConverter {
 
   static getNoteTextFromActualIndex = (
     actualIndex: ActualIndex,
-    accidentalPreference: AccidentalType,
+    accidentalPreference: AccidentalType
   ): string => {
     const { chromaticIndex } = actualIndexToChromaticAndOctave(actualIndex);
-    const noteInfo = KeyNoteResolver.resolveAbsoluteNote(chromaticIndex, accidentalPreference);
+    const noteInfo = KeyNoteResolver.resolveAbsoluteNote(
+      chromaticIndex,
+      accidentalPreference
+    );
     return noteInfo.formatNoteNameForDisplay();
   };
 }

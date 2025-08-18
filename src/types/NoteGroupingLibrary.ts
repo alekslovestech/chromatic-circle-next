@@ -7,7 +7,7 @@ import {
   NoteGroupingId,
   NoteGroupingType,
   SpecialType,
-} from "./NoteGroupingTypes";
+} from "./enums/NoteGroupingId";
 import { ChordDisplayMode } from "./SettingModes";
 class NoteGroupingLibrarySingleton {
   public getGroupingById(id: NoteGroupingId): NoteGrouping {

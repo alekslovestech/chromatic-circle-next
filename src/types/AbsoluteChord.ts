@@ -1,4 +1,4 @@
-import { ChordType } from "./NoteGroupingTypes";
+import { ChordType } from "./enums/NoteGroupingId";
 import { ChromaticIndex } from "./ChromaticIndex";
 import { NoteConverter } from "./NoteConverter";
 export class AbsoluteChord {

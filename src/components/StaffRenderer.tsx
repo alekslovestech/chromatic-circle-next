@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import { Factory, StaveNote } from "vexflow";
 
-import { getAccidentalSignForEasyScore } from "@/types/AccidentalType";
+import { getAccidentalSignForEasyScore } from "@/types/AccidentalTypeDisplay";
 import { NoteWithOctave } from "@/types/NoteInfo";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { isMajor } from "@/types/Keys/KeyType";

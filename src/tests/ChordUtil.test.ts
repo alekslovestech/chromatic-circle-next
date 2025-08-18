@@ -8,7 +8,7 @@ import { KeyType } from "../types/Keys/KeyType";
 import { DEFAULT_MUSICAL_KEY } from "../types/Keys/MusicalKey";
 
 import { MusicalKey } from "../types/Keys/MusicalKey";
-import { ChordType } from "../types/NoteGroupingTypes";
+import { ChordType } from "../types/enums/NoteGroupingId";
 import { ChordDisplayMode } from "../types/SettingModes";
 import { ChordUtils } from "../utils/ChordUtils";
 

@@ -1,6 +1,6 @@
 import { DEFAULT_MUSICAL_KEY, MusicalKey } from "../types/Keys/MusicalKey";
 import { NoteInfo } from "../types/NoteInfo";
-import { AccidentalType } from "../types/AccidentalType";
+import { AccidentalType } from "../types/AccidentalTypeDisplay";
 import { KeyType } from "../types/Keys/KeyType";
 import { NoteConverter } from "../types/NoteConverter";
 import { KeyNoteResolver } from "../types/Keys/KeyNoteResolver";
