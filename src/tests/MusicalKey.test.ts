@@ -1,6 +1,7 @@
-import { MusicalKey } from "../types/Keys/MusicalKey";
-import { KeyType } from "../types/Keys/KeyType";
-import { AccidentalType } from "../types/AccidentalTypeDisplay";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+
+import { MusicalKey } from "@/types/Keys/MusicalKey";
+import { KeyType } from "@/types/Keys/KeyType";
 
 describe("getDefaultAccidental", () => {
   const testCases = [

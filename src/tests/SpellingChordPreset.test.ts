@@ -1,5 +1,5 @@
-import { AccidentalType } from "@/types/AccidentalTypeDisplay";
-import { ChordType } from "@/types/enums/NoteGroupingId";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+import { ChordType } from "@/types/enums/ChordType";
 import { ixActual, ixInversion } from "@/types/IndexTypes";
 
 import { SpellingUtils } from "@/utils/SpellingUtils";

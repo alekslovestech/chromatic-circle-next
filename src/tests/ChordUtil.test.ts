@@ -1,3 +1,4 @@
+import { ChordType } from "../types/enums/ChordType";
 import {
   InversionIndex,
   ixActual,
@@ -8,9 +9,10 @@ import { KeyType } from "../types/Keys/KeyType";
 import { DEFAULT_MUSICAL_KEY } from "../types/Keys/MusicalKey";
 
 import { MusicalKey } from "../types/Keys/MusicalKey";
-import { ChordType } from "../types/enums/NoteGroupingId";
+
 import { ChordDisplayMode } from "../types/SettingModes";
 import { ChordUtils } from "../utils/ChordUtils";
+import { MusicalDisplayFormatter } from "@/utils/MusicalDisplayFormatter";
 
 function verifyChordNameWithMode(
   expectedChordName: string,
@@ -18,8 +20,10 @@ function verifyChordNameWithMode(
   displayMode: ChordDisplayMode = ChordDisplayMode.Letters_Short,
   musicalKey: MusicalKey = DEFAULT_MUSICAL_KEY
 ) {
-  const chordMatch = ChordUtils.getMatchFromIndices(ixActualArray(indices));
-  const actual = ChordUtils.deriveChordName(
+  const chordMatch = MusicalDisplayFormatter.getMatchFromIndices(
+    ixActualArray(indices)
+  );
+  const actual = MusicalDisplayFormatter.deriveChordName(
     chordMatch,
     displayMode,
     musicalKey

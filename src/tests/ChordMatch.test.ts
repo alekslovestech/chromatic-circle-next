@@ -1,11 +1,10 @@
-import {
-  ChordType,
-  IntervalType,
-  SpecialType,
-} from "../types/enums/NoteGroupingId";
+import { ChordType } from "@/types/enums/ChordType";
+import { IntervalType } from "@/types/enums/IntervalType";
+import { SpecialType } from "@/types/enums/SpecialType";
+
 import { ixActualArray } from "../types/IndexTypes";
-import { IChordMatch } from "../types/IChordMatch";
-import { ChordUtils } from "../utils/ChordUtils";
+import { ChordMatch } from "../types/interfaces/ChordMatch";
+import { MusicalDisplayFormatter } from "../utils/MusicalDisplayFormatter";
 
 function verifyChordMatch(
   rootNote: number,
@@ -13,7 +12,7 @@ function verifyChordMatch(
   inversionIndex: number,
   indices: number[]
 ) {
-  const actual: IChordMatch = ChordUtils.getMatchFromIndices(
+  const actual: ChordMatch = MusicalDisplayFormatter.getMatchFromIndices(
     ixActualArray(indices)
   );
   expect(actual.rootNote).toBe(rootNote);

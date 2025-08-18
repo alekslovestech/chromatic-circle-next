@@ -3,7 +3,7 @@ import { DEFAULT_MUSICAL_KEY, MusicalKey } from "../types/Keys/MusicalKey";
 import { ChordDisplayMode } from "../types/SettingModes";
 
 import { ScaleModeType } from "../types/ScaleModes/ScaleModeType";
-import { ChordUtils } from "../utils/ChordUtils";
+import { MusicalDisplayFormatter } from "@/utils/MusicalDisplayFormatter";
 
 function verifyDisplayInfo(
   expectedNoteGrouping: string,
@@ -11,7 +11,7 @@ function verifyDisplayInfo(
   indices: number[],
   musicalKey: MusicalKey = DEFAULT_MUSICAL_KEY
 ) {
-  const result = ChordUtils.getDisplayInfoFromIndices(
+  const result = MusicalDisplayFormatter.getDisplayInfoFromIndices(
     ixActualArray(indices),
     ChordDisplayMode.Letters_Short,
     musicalKey

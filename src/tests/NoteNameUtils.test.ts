@@ -1,6 +1,7 @@
-import { AccidentalType } from "../types/AccidentalTypeDisplay";
-import { NoteConverter } from "../types/NoteConverter";
-import { ixActual } from "../types/IndexTypes";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+
+import { NoteConverter } from "@/types/NoteConverter";
+import { ixActual } from "@/types/IndexTypes";
 
 describe("getNoteTextFromActualIndex", () => {
   const testCases = [

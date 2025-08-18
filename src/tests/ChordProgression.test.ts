@@ -1,8 +1,9 @@
-import { ChordProgression } from "../types/ChordProgression";
-import { DEFAULT_MUSICAL_KEY, MusicalKey } from "../types/Keys/MusicalKey";
-import { ChordType } from "../types/enums/NoteGroupingId";
-import { AbsoluteChord } from "../types/AbsoluteChord";
-import { KeyType } from "../types/Keys/KeyType";
+import { ChordType } from "@/types/enums/ChordType";
+
+import { ChordProgression } from "@/types/ChordProgression";
+import { DEFAULT_MUSICAL_KEY, MusicalKey } from "@/types/Keys/MusicalKey";
+import { AbsoluteChord } from "@/types/AbsoluteChord";
+import { KeyType } from "@/types/Keys/KeyType";
 
 describe("Chord progression derives correct chords for C major key", () => {
   const cMajor = DEFAULT_MUSICAL_KEY;

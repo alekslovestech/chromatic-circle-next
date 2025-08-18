@@ -1,6 +1,7 @@
-import { AccidentalType } from "../types/AccidentalTypeDisplay";
-import { ixScaleDegree } from "../types/ScaleModes/ScaleDegreeType";
-import { ScaleDegreeInfo } from "../types/ScaleModes/ScaleDegreeInfo";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+
+import { ixScaleDegree } from "@/types/ScaleModes/ScaleDegreeType";
+import { ScaleDegreeInfo } from "@/types/ScaleModes/ScaleDegreeInfo";
 
 describe("Scale Degree Info", () => {
   const testCases = [
