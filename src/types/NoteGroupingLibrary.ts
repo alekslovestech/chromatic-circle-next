@@ -151,7 +151,7 @@ class NoteGroupingLibrarySingleton {
       "7",
       "7",
       "Dominant 7th Chord",
-      [0, 4, 7, 10]
+      CHORD_OFFSET_PATTERNS.DOMINANT7
     ),
     NoteGrouping.createChord(
       ChordType.Major7,
@@ -159,7 +159,7 @@ class NoteGroupingLibrarySingleton {
       "Maj7",
       "Δ7",
       "Major 7th Chord",
-      [0, 4, 7, 11]
+      CHORD_OFFSET_PATTERNS.MAJOR7
     ),
     NoteGrouping.createChord(
       ChordType.Minor7,
@@ -167,7 +167,7 @@ class NoteGroupingLibrarySingleton {
       "min7",
       "m7",
       "Minor 7th Chord",
-      [0, 3, 7, 10]
+      CHORD_OFFSET_PATTERNS.MINOR7
     ),
     NoteGrouping.createChord(
       ChordType.HalfDiminished,
@@ -175,7 +175,7 @@ class NoteGroupingLibrarySingleton {
       "m7♭5",
       "ø7",
       "Half Diminished 7th Chord",
-      [0, 3, 6, 10]
+      CHORD_OFFSET_PATTERNS.HALF_DIMINISHED7
     ),
     NoteGrouping.createChord(
       ChordType.MinorMajor7,
@@ -183,7 +183,7 @@ class NoteGroupingLibrarySingleton {
       "mMaj7",
       "mΔ7",
       "Minor Major 7th Chord",
-      [0, 3, 7, 11]
+      CHORD_OFFSET_PATTERNS.MINOR_MAJOR7
     ),
 
     NoteGrouping.createChord(
@@ -192,7 +192,7 @@ class NoteGroupingLibrarySingleton {
       "dim7",
       "°7",
       "Diminished 7th Chord",
-      [0, 3, 6, 9]
+      CHORD_OFFSET_PATTERNS.DIMINISHED7
     ),
     NoteGrouping.createChord(
       ChordType.Six,
@@ -200,7 +200,7 @@ class NoteGroupingLibrarySingleton {
       "6",
       "6",
       "Major 6th Chord",
-      [0, 4, 7, 9]
+      CHORD_OFFSET_PATTERNS.MAJOR6
     ),
     NoteGrouping.createChord(
       ChordType.Minor6,
@@ -208,7 +208,7 @@ class NoteGroupingLibrarySingleton {
       "min6",
       "m6",
       "Minor 6th Chord",
-      [0, 3, 7, 9]
+      CHORD_OFFSET_PATTERNS.MINOR6
     ),
     NoteGrouping.createChord(
       ChordType.AugMajor7,
@@ -216,7 +216,7 @@ class NoteGroupingLibrarySingleton {
       "+Maj7",
       "+Δ7",
       "Augmented Major 7th Chord",
-      [0, 4, 8, 11]
+      CHORD_OFFSET_PATTERNS.AUGMENTED_MAJOR7
     ),
 
     // Extended Chords
