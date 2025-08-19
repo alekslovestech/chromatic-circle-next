@@ -1,12 +1,11 @@
-import { AccidentalType } from "../../types/enums/AccidentalType";
+import { AccidentalType } from "@/types/enums/AccidentalType";
 import {
   ActualIndex,
   actualIndexToChromaticAndOctave,
-} from "../../types/IndexTypes";
-import { NoteWithOctave } from "../../types/NoteWithOctave";
+} from "@/types/IndexTypes";
+import { NoteWithOctave } from "@/types/NoteWithOctave";
+import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { ChromaticNoteResolver } from "./ChromaticNoteResolver";
-import { MusicalKey } from "../../types/Keys/MusicalKey";
-
 export class ActualNoteResolver {
   static resolveNoteInKeyWithOctave(
     musicalKey: MusicalKey,

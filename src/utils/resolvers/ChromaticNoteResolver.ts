@@ -4,12 +4,9 @@ import {
 } from "@/types/constants/NoteConstants";
 
 import { AccidentalType } from "@/types/enums/AccidentalType";
-
-import { ChromaticIndex } from "../../types/ChromaticIndex";
-
-import { NoteInfo } from "../../types/NoteInfo";
-import { MusicalKey } from "../../types/Keys/MusicalKey";
-
+import { ChromaticIndex } from "@/types/ChromaticIndex";
+import { NoteInfo } from "@/types/NoteInfo";
+import { MusicalKey } from "@/types/Keys/MusicalKey";
 export class ChromaticNoteResolver {
   static resolveNoteInKey(
     musicalKey: MusicalKey,
