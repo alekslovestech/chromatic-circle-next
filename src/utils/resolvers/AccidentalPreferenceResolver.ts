@@ -3,7 +3,7 @@ import { NoteGroupingId } from "@/types/enums/NoteGroupingId";
 import { ChordType } from "@/types/enums/ChordType";
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 
-import { isBlackKey } from "@/utils/Keyboard/KeyboardUtils";
+import { IndexUtils } from "@/utils/IndexUtils";
 
 export class AccidentalPreferenceResolver {
   static getChordPresetSpellingPreference(
@@ -11,7 +11,7 @@ export class AccidentalPreferenceResolver {
     rootChromaticIndex: ChromaticIndex
   ): AccidentalType {
     const isMinorQuality = this.isMinorQualityChord(chordType);
-    const isBlackKeyRoot = isBlackKey(rootChromaticIndex);
+    const isBlackKeyRoot = IndexUtils.isBlackKey(rootChromaticIndex);
     return isBlackKeyRoot === isMinorQuality
       ? AccidentalType.Sharp
       : AccidentalType.Flat;

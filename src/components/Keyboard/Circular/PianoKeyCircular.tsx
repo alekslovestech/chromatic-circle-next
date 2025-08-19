@@ -11,7 +11,6 @@ import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 
 import { ArcPathVisualizer } from "@/utils/Keyboard/Circular/ArcPathVisualizer";
 import { IndexUtils } from "@/utils/IndexUtils";
-import { isBlackKey } from "@/utils/Keyboard/KeyboardUtils";
 import { VisualStateUtils } from "@/utils/visual/VisualStateUtils";
 
 import { useMusical } from "@/contexts/MusicalContext";
@@ -61,7 +60,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     selectedNoteIndices
   );
   const isScales = useIsScalePreviewMode();
-  const isBlack = isBlackKey(
+  const isBlack = IndexUtils.isBlackKey(
     chromaticToActual(chromaticIndex, ixOctaveOffset(0))
   );
 

@@ -1,7 +1,12 @@
-import { ActualIndex, InversionIndex } from "../types/IndexTypes";
-import { TWELVE, TWENTY4 } from "../types/constants/NoteConstants";
+import { TWELVE, TWENTY4 } from "@/types/constants/NoteConstants";
+
+import { ChromaticIndex } from "@/types/ChromaticIndex";
+import { ActualIndex, InversionIndex } from "@/types/IndexTypes";
 
 export class IndexUtils {
+  static isBlackKey = (actualIndex: ActualIndex | ChromaticIndex): boolean =>
+    [1, 3, 6, 8, 10].includes(actualIndex % TWELVE);
+
   static StringWithPaddedIndex = (prefix: string, index: number) =>
     `${prefix}${String(index).padStart(2, "0")}`;
   //everything relative to root note

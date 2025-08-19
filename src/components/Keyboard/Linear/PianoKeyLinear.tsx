@@ -7,7 +7,6 @@ import {
 import { KeyDisplayMode } from "@/types/SettingModes";
 
 import { IndexUtils } from "@/utils/IndexUtils";
-import { isBlackKey } from "@/utils/Keyboard/KeyboardUtils";
 import { LinearKeyboardUtils } from "@/utils/Keyboard/Linear/LinearKeyboardUtils";
 import { VisualStateUtils } from "@/utils/visual/VisualStateUtils";
 
@@ -29,7 +28,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   const { selectedMusicalKey, selectedNoteIndices } = useMusical();
   const { monochromeMode } = useDisplay();
 
-  const isShortKey = isBlackKey(actualIndex);
+  const isShortKey = IndexUtils.isBlackKey(actualIndex);
   const { chromaticIndex } = actualIndexToChromaticAndOctave(actualIndex);
   const left = LinearKeyboardUtils.getKeyPosition(actualIndex);
 
