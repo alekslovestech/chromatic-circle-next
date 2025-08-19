@@ -2,7 +2,8 @@ import { NoteWithOctave } from "@/types/NoteWithOctave";
 import { AccidentalFormatter } from "./AccidentalTypeDisplay";
 
 export class NoteFormatter {
-  static formatForDisplay(note: NoteWithOctave): string {
+  static formatForDisplay(note: NoteWithOctave | null): string {
+    if (!note) return "";
     const accidentalSign = AccidentalFormatter.getAccidentalSignForDisplay(
       note.accidental
     );

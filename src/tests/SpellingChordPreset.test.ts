@@ -61,5 +61,17 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         ]
       );
     });
+
+    describe("Minor starting with a black key", () => {
+      testChordSpelling(
+        "G minor triad in root position",
+        [10, 13, 17], // Bb, Db, F
+        [
+          new NoteWithOctave("B", AccidentalType.Flat, ixOctaveOffset(0)),
+          new NoteWithOctave("D", AccidentalType.Flat, ixOctaveOffset(1)),
+          new NoteWithOctave("F", AccidentalType.None, ixOctaveOffset(1)),
+        ]
+      );
+    });
   });
 });

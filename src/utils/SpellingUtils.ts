@@ -17,7 +17,7 @@ import { IndexUtils } from "@/utils/IndexUtils";
 import { AccidentalPreferenceResolver } from "@/utils/resolvers/AccidentalPreferenceResolver";
 import { ActualNoteResolver } from "@/utils/resolvers/ActualNoteResolver";
 
-import { MusicalDisplayFormatter } from "./formatters/MusicalDisplayFormatter";
+import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
 
 export class SpellingUtils {
   static computeNotesFromMusicalKey(
@@ -30,6 +30,53 @@ export class SpellingUtils {
         actualIndex
       )
     );
+  }
+
+  static computeSpecificNoteInChordContext(
+    targetNoteIndex: ActualIndex,
+    selectedNoteIndices: ActualIndex[], // The full chord
+    selectedMusicalKey: MusicalKey,
+    selectedChordType: NoteGroupingId,
+    isChordsOrIntervals: boolean
+  ): NoteWithOctave | null {
+    if (selectedNoteIndices.length === 0) return null;
+
+    // Use the same decision logic as computeStaffNotes
+    const isChordPresetKnown = this.isChordPresetKnown(
+      selectedChordType,
+      isChordsOrIntervals
+    );
+
+    let spelledNotes: NoteWithOctave[];
+
+    if (isChordPresetKnown) {
+      const chordMatch =
+        MusicalDisplayFormatter.getMatchFromIndices(selectedNoteIndices);
+      spelledNotes = this.computeNotesFromChordPreset(
+        selectedNoteIndices,
+        chordMatch
+      );
+    } else {
+      spelledNotes = this.computeNotesFromMusicalKey(
+        selectedNoteIndices,
+        selectedMusicalKey
+      );
+    }
+
+    // Find the spelled note that corresponds to our target note
+    // We need to match by chromatic equivalence since octaves might differ
+    const { chromaticIndex: targetChromatic } =
+      actualIndexToChromaticAndOctave(targetNoteIndex);
+
+    for (let i = 0; i < selectedNoteIndices.length; i++) {
+      const { chromaticIndex: chordNoteChromatic } =
+        actualIndexToChromaticAndOctave(selectedNoteIndices[i]);
+      if (chordNoteChromatic === targetChromatic) {
+        return spelledNotes[i];
+      }
+    }
+
+    return null; // Target note not found in the chord
   }
 
   static computeFirstNoteFromChordPreset(
