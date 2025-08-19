@@ -3,7 +3,7 @@ import { AccidentalType } from "@/types/enums/AccidentalType";
 import { ChromaticIndex, ixChromatic } from "@/types/ChromaticIndex";
 import { actualIndexToChromaticAndOctave } from "./IndexTypes";
 import { ActualIndex } from "./IndexTypes";
-import { KeyNoteResolver } from "./Keys/KeyNoteResolver";
+import { ChromaticNoteResolver } from "../utils/resolvers/ChromaticNoteResolver";
 
 export class NoteConverter {
   // For testing and input - converts text to index
@@ -114,7 +114,7 @@ export class NoteConverter {
     accidentalPreference: AccidentalType
   ): string => {
     const { chromaticIndex } = actualIndexToChromaticAndOctave(actualIndex);
-    const noteInfo = KeyNoteResolver.resolveAbsoluteNote(
+    const noteInfo = ChromaticNoteResolver.resolveAbsoluteNote(
       chromaticIndex,
       accidentalPreference
     );

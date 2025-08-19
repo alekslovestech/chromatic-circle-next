@@ -1,6 +1,7 @@
 import { NoteGroupingId } from "@/types/enums/NoteGroupingId";
 import { SpecialType } from "@/types/enums/SpecialType";
 import { ChordType } from "@/types/enums/ChordType";
+import { ChordMatch } from "@/types/interfaces/ChordMatch";
 
 import {
   ActualIndex,
@@ -8,13 +9,14 @@ import {
   InversionIndex,
 } from "@/types/IndexTypes";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
-import { KeyNoteResolver } from "@/types/Keys/KeyNoteResolver";
 import { NoteWithOctave } from "@/types/NoteWithOctave";
+
 import { ChordUtils } from "@/utils/ChordUtils";
-import { AccidentalPreferenceResolver } from "@/utils/AccidentalPreferenceResolver";
+import { AccidentalPreferenceResolver } from "@/utils/resolvers/AccidentalPreferenceResolver";
+import { ActualNoteResolver } from "@/utils/resolvers/ActualNoteResolver";
+
 import { IndexUtils } from "@/utils/IndexUtils";
 import { MusicalDisplayFormatter } from "./formatters/MusicalDisplayFormatter";
-import { ChordMatch } from "@/types/interfaces/ChordMatch";
 
 export class SpellingUtils {
   static computeNotesFromMusicalKey(
@@ -22,7 +24,7 @@ export class SpellingUtils {
     selectedMusicalKey: MusicalKey
   ): NoteWithOctave[] {
     return actualIndices.map((actualIndex) =>
-      KeyNoteResolver.resolveNoteInKeyWithOctave(
+      ActualNoteResolver.resolveNoteInKeyWithOctave(
         selectedMusicalKey,
         actualIndex
       )
@@ -49,7 +51,7 @@ export class SpellingUtils {
         rootChromaticIndex
       );
 
-    const noteInfo = KeyNoteResolver.resolveAbsoluteNoteWithOctave(
+    const noteInfo = ActualNoteResolver.resolveAbsoluteNoteWithOctave(
       chordIndices[0],
       accidentalPreference
     );
@@ -77,7 +79,7 @@ export class SpellingUtils {
       );
 
     return chordIndices.map((actualIndex) =>
-      KeyNoteResolver.resolveAbsoluteNoteWithOctave(
+      ActualNoteResolver.resolveAbsoluteNoteWithOctave(
         actualIndex,
         accidentalPreference
       )

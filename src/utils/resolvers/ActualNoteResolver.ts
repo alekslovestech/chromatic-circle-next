@@ -1,0 +1,44 @@
+import { AccidentalType } from "../../types/enums/AccidentalType";
+import {
+  ActualIndex,
+  actualIndexToChromaticAndOctave,
+} from "../../types/IndexTypes";
+import { NoteWithOctave } from "../../types/NoteWithOctave";
+import { ChromaticNoteResolver } from "./ChromaticNoteResolver";
+import { MusicalKey } from "../../types/Keys/MusicalKey";
+
+export class ActualNoteResolver {
+  static resolveNoteInKeyWithOctave(
+    musicalKey: MusicalKey,
+    actualIndex: ActualIndex
+  ): NoteWithOctave {
+    const { chromaticIndex, octaveOffset } =
+      actualIndexToChromaticAndOctave(actualIndex);
+    const noteInfo = ChromaticNoteResolver.resolveNoteInKey(
+      musicalKey,
+      chromaticIndex
+    );
+    return new NoteWithOctave(
+      noteInfo.noteName,
+      noteInfo.accidental,
+      octaveOffset
+    );
+  }
+
+  static resolveAbsoluteNoteWithOctave(
+    actualIndex: ActualIndex,
+    accidentalPreference: AccidentalType
+  ): NoteWithOctave {
+    const { chromaticIndex, octaveOffset } =
+      actualIndexToChromaticAndOctave(actualIndex);
+    const noteInfo = ChromaticNoteResolver.resolveAbsoluteNote(
+      chromaticIndex,
+      accidentalPreference
+    );
+    return new NoteWithOctave(
+      noteInfo.noteName,
+      noteInfo.accidental,
+      octaveOffset
+    );
+  }
+}

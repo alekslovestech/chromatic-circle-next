@@ -23,7 +23,7 @@ import { ScalePlaybackMode } from "@/types/ScalePlaybackMode";
 
 import { IndexUtils } from "@/utils/IndexUtils";
 
-import { KeyNoteResolver } from "./KeyNoteResolver";
+import { ChromaticNoteResolver } from "../../utils/resolvers/ChromaticNoteResolver";
 
 export class MusicalKey {
   public readonly tonicString: string; // Root note (e.g., "C", "A")
@@ -154,7 +154,7 @@ export class MusicalKey {
   }
 
   getNoteInfoFromChromatic(chromaticIndex: ChromaticIndex): NoteInfo {
-    return KeyNoteResolver.resolveAbsoluteNote(
+    return ChromaticNoteResolver.resolveAbsoluteNote(
       chromaticIndex,
       this.getDefaultAccidental()
     );
@@ -178,7 +178,7 @@ export class MusicalKey {
     const scaleDegreeInfo =
       this.getScaleDegreeInfoFromChromatic(chromaticIndex);
     if (keyTextMode === KeyDisplayMode.NoteNames) {
-      const noteInfo = KeyNoteResolver.resolveAbsoluteNote(
+      const noteInfo = ChromaticNoteResolver.resolveAbsoluteNote(
         chromaticIndex,
         this.getDefaultAccidental()
       );

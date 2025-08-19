@@ -4,7 +4,7 @@ import { DEFAULT_MUSICAL_KEY, MusicalKey } from "@/types/Keys/MusicalKey";
 import { NoteInfo } from "@/types/NoteInfo";
 import { KeyType } from "@/types/enums/KeyType";
 import { NoteConverter } from "@/types/NoteConverter";
-import { KeyNoteResolver } from "@/types/Keys/KeyNoteResolver";
+import { ChromaticNoteResolver } from "@/utils/resolvers/ChromaticNoteResolver";
 
 function verifyResolvedNote(
   musicalKey: MusicalKey,
@@ -12,7 +12,10 @@ function verifyResolvedNote(
   expectedNote: NoteInfo
 ) {
   const chromaticIndex = NoteConverter.toChromaticIndex(noteText);
-  const note = KeyNoteResolver.resolveNoteInKey(musicalKey, chromaticIndex);
+  const note = ChromaticNoteResolver.resolveNoteInKey(
+    musicalKey,
+    chromaticIndex
+  );
   expect(note).toEqual(expectedNote);
 }
 
