@@ -12,10 +12,11 @@ import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { NoteWithOctave } from "@/types/NoteWithOctave";
 
 import { ChordUtils } from "@/utils/ChordUtils";
+import { IndexUtils } from "@/utils/IndexUtils";
+
 import { AccidentalPreferenceResolver } from "@/utils/resolvers/AccidentalPreferenceResolver";
 import { ActualNoteResolver } from "@/utils/resolvers/ActualNoteResolver";
 
-import { IndexUtils } from "@/utils/IndexUtils";
 import { MusicalDisplayFormatter } from "./formatters/MusicalDisplayFormatter";
 
 export class SpellingUtils {
