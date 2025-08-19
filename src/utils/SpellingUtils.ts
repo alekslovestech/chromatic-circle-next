@@ -9,7 +9,7 @@ import {
 } from "@/types/IndexTypes";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { KeyNoteResolver } from "@/types/Keys/KeyNoteResolver";
-import { NoteWithOctave } from "@/types/NoteInfo";
+import { NoteWithOctave } from "@/types/NoteWithOctave";
 import { ChordUtils } from "@/utils/ChordUtils";
 import { AccidentalPreferenceResolver } from "@/utils/AccidentalPreferenceResolver";
 import { IndexUtils } from "@/utils/IndexUtils";

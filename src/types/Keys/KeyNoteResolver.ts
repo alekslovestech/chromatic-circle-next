@@ -3,7 +3,8 @@ import { AccidentalType } from "../enums/AccidentalType";
 import { ChromaticIndex } from "../ChromaticIndex";
 import { ActualIndex, actualIndexToChromaticAndOctave } from "../IndexTypes";
 import { NOTES_WITH_SHARP, NOTES_WITH_FLAT } from "../constants/NoteConstants";
-import { NoteInfo, NoteWithOctave } from "../NoteInfo";
+import { NoteInfo } from "../NoteInfo";
+import { NoteWithOctave } from "../NoteWithOctave";
 import { MusicalKey } from "./MusicalKey";
 
 export class KeyNoteResolver {
@@ -32,7 +33,11 @@ export class KeyNoteResolver {
     const { chromaticIndex, octaveOffset } =
       actualIndexToChromaticAndOctave(actualIndex);
     const noteInfo = this.resolveNoteInKey(musicalKey, chromaticIndex);
-    return new NoteWithOctave(noteInfo, octaveOffset);
+    return new NoteWithOctave(
+      noteInfo.noteName,
+      noteInfo.accidental,
+      octaveOffset
+    );
   }
 
   static resolveAbsoluteNote(
@@ -53,7 +58,11 @@ export class KeyNoteResolver {
       chromaticIndex,
       accidentalPreference
     );
-    return new NoteWithOctave(noteInfo, octaveOffset);
+    return new NoteWithOctave(
+      noteInfo.noteName,
+      noteInfo.accidental,
+      octaveOffset
+    );
   }
 
   private static getNotesArray = (preference: AccidentalType): NoteInfo[] =>

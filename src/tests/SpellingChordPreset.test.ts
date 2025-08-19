@@ -1,21 +1,18 @@
 import { AccidentalType } from "@/types/enums/AccidentalType";
-import { ixActualArray } from "@/types/IndexTypes";
+import { ixActualArray, ixOctaveOffset } from "@/types/IndexTypes";
 
 import { SpellingUtils } from "@/utils/SpellingUtils";
 
 import { SpellingTestUtils } from "./utils/SpellingTestUtils";
 import { MusicalDisplayFormatter } from "@/utils/MusicalDisplayFormatter";
+import { NoteWithOctave } from "@/types/NoteWithOctave";
 
 describe("SpellingChordPreset - Chord preset-based note spelling", () => {
   // Helper function to make tests cleaner
   function testChordSpelling(
     description: string,
     chordIndices: number[],
-    expectedNotes: Array<{
-      note: string;
-      accidental: AccidentalType;
-      octave: number;
-    }>
+    expectedNotes: NoteWithOctave[]
   ) {
     test(description, () => {
       const indices = ixActualArray(chordIndices);
@@ -26,12 +23,7 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
       );
 
       expect(result).toHaveLength(expectedNotes.length);
-      SpellingTestUtils.verifyNoteWithOctaveArray(
-        result,
-        expectedNotes.map((n) =>
-          SpellingTestUtils.makeNoteWithOctave(n.note, n.accidental, n.octave)
-        )
-      );
+      SpellingTestUtils.verifyNoteWithOctaveArray(result, expectedNotes);
     });
   }
 
@@ -41,9 +33,9 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         "G major triad in root position",
         [7, 11, 14], // G, B, D
         [
-          { note: "G", accidental: AccidentalType.None, octave: 0 },
-          { note: "B", accidental: AccidentalType.None, octave: 0 },
-          { note: "D", accidental: AccidentalType.None, octave: 1 },
+          new NoteWithOctave("G", AccidentalType.None, ixOctaveOffset(0)),
+          new NoteWithOctave("B", AccidentalType.None, ixOctaveOffset(0)),
+          new NoteWithOctave("D", AccidentalType.None, ixOctaveOffset(1)),
         ]
       );
 
@@ -51,9 +43,9 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         "G major triad in first inversion",
         [11, 14, 19], // B, D, G
         [
-          { note: "B", accidental: AccidentalType.None, octave: 0 },
-          { note: "D", accidental: AccidentalType.None, octave: 1 },
-          { note: "G", accidental: AccidentalType.None, octave: 1 },
+          new NoteWithOctave("B", AccidentalType.None, ixOctaveOffset(0)),
+          new NoteWithOctave("D", AccidentalType.None, ixOctaveOffset(1)),
+          new NoteWithOctave("G", AccidentalType.None, ixOctaveOffset(1)),
         ]
       );
     });
@@ -63,9 +55,9 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         "G minor triad in root position",
         [7, 10, 14], // G, Bb, D
         [
-          { note: "G", accidental: AccidentalType.None, octave: 0 },
-          { note: "B", accidental: AccidentalType.Flat, octave: 0 },
-          { note: "D", accidental: AccidentalType.None, octave: 1 },
+          new NoteWithOctave("G", AccidentalType.None, ixOctaveOffset(0)),
+          new NoteWithOctave("B", AccidentalType.Flat, ixOctaveOffset(0)),
+          new NoteWithOctave("D", AccidentalType.None, ixOctaveOffset(1)),
         ]
       );
     });

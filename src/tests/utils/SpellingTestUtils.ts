@@ -1,19 +1,6 @@
-import { AccidentalType } from "@/types/enums/AccidentalType";
-
-import { NoteInfo, NoteWithOctave } from "@/types/NoteInfo";
-import { ixOctaveOffset } from "@/types/IndexTypes";
+import { NoteWithOctave } from "@/types/NoteWithOctave";
 
 export class SpellingTestUtils {
-  static makeNoteWithOctave(
-    noteName: string,
-    accidental: AccidentalType,
-    octaveOffsetAsNumber: number
-  ): NoteWithOctave {
-    const octaveOffset = ixOctaveOffset(octaveOffsetAsNumber);
-    const noteInfo = new NoteInfo(noteName, accidental);
-    return new NoteWithOctave(noteInfo, octaveOffset);
-  }
-
   static verifyNoteWithOctaveArray(
     actual: NoteWithOctave[],
     expected: NoteWithOctave[]
