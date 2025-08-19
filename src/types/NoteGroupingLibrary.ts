@@ -1,4 +1,4 @@
-import { NoteGroupingId } from "./enums/NoteGroupingId";
+import { NoteGroupingId } from "./NoteGroupingId";
 import { NoteGroupingType } from "./enums/NoteGroupingType";
 import { SpecialType } from "./enums/SpecialType";
 import { IntervalType } from "./enums/IntervalType";

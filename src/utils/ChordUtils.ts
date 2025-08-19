@@ -1,6 +1,6 @@
 import { ixActualArray } from "../types/IndexTypes";
 import { NoteGroupingLibrary } from "../types/NoteGroupingLibrary";
-import { NoteGroupingId } from "../types/enums/NoteGroupingId";
+import { NoteGroupingId } from "../types/NoteGroupingId";
 import {
   InversionIndex,
   ixInversion,

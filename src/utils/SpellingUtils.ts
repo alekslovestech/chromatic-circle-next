@@ -1,4 +1,4 @@
-import { NoteGroupingId } from "@/types/enums/NoteGroupingId";
+import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { SpecialType } from "@/types/enums/SpecialType";
 import { ChordType } from "@/types/enums/ChordType";
 import { ChordMatch } from "@/types/interfaces/ChordMatch";

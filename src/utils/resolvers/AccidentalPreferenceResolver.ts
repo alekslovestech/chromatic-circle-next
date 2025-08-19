@@ -1,5 +1,5 @@
 import { AccidentalType } from "@/types/enums/AccidentalType";
-import { NoteGroupingId } from "@/types/enums/NoteGroupingId";
+import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { ChordType } from "@/types/enums/ChordType";
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 
