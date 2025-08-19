@@ -12,7 +12,7 @@ import { MusicalKey } from "../types/Keys/MusicalKey";
 
 import { ChordDisplayMode } from "../types/SettingModes";
 import { ChordUtils } from "../utils/ChordUtils";
-import { MusicalDisplayFormatter } from "@/utils/MusicalDisplayFormatter";
+import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
 
 function verifyChordNameWithMode(
   expectedChordName: string,

@@ -4,7 +4,7 @@ import { ixActualArray, ixOctaveOffset } from "@/types/IndexTypes";
 import { SpellingUtils } from "@/utils/SpellingUtils";
 
 import { SpellingTestUtils } from "./utils/SpellingTestUtils";
-import { MusicalDisplayFormatter } from "@/utils/MusicalDisplayFormatter";
+import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
 import { NoteWithOctave } from "@/types/NoteWithOctave";
 
 describe("SpellingChordPreset - Chord preset-based note spelling", () => {

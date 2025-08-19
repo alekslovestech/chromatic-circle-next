@@ -1,9 +1,7 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import { Factory, StaveNote } from "vexflow";
+import { Factory } from "vexflow";
 
-import { getAccidentalSignForEasyScore } from "@/types/AccidentalTypeDisplay";
-import { NoteWithOctave } from "@/types/NoteWithOctave";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { isMajor } from "@/types/enums/KeyType";
 
@@ -16,38 +14,11 @@ import {
 } from "@/contexts/ChordPresetContext";
 
 import { SpellingUtils } from "@/utils/SpellingUtils";
+import { VexFlowFormatter } from "@/utils/formatters/VexFlowFormatter";
 
 interface StaffRendererProps {
   style?: React.CSSProperties;
 }
-
-// Only VexFlow-specific functions stay here
-const createVexFlowNotesFromNoteWithOctaves = (
-  notesWithOctaves: NoteWithOctave[],
-  factory: Factory
-): StaveNote[] => {
-  const keys = notesWithOctaves.map((noteWithOctave, index) => ({
-    key: noteWithOctave.formatForVexFlow(),
-    accidentalSign: getAccidentalSignForEasyScore(noteWithOctave.accidental),
-    index,
-  }));
-
-  const chordNote = factory.StaveNote({
-    keys: keys.map((k) => k.key),
-    duration: "w",
-  });
-
-  keys.forEach(({ accidentalSign, index }) => {
-    if (accidentalSign) {
-      chordNote.addModifier(
-        factory.Accidental({ type: accidentalSign }),
-        index
-      );
-    }
-  });
-
-  return [chordNote];
-};
 
 const getKeySignatureForVex = (musicalKey: MusicalKey) => {
   const pureKey = musicalKey.tonicString;
@@ -108,7 +79,7 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
     console.log("notesWithOctaves", notesWithOctaves);
 
     // Step 2: Render NoteWithOctave[] to VexFlow - pure rendering logic
-    const notes = createVexFlowNotesFromNoteWithOctaves(
+    const notes = VexFlowFormatter.createVexFlowNotesFromNoteWithOctaves(
       notesWithOctaves,
       factory
     );

@@ -19,12 +19,13 @@ import {
 } from "@/types/IndexTypes";
 import { NoteGrouping } from "@/types/NoteGrouping";
 import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
-import { IndexUtils } from "./IndexUtils";
-import { SpellingUtils } from "./SpellingUtils";
+import { IndexUtils } from "../IndexUtils";
+import { SpellingUtils } from "../SpellingUtils";
 import { NoteConverter } from "@/types/NoteConverter";
 import { AccidentalType } from "@/types/enums/AccidentalType";
 import { TWELVE } from "@/types/constants/NoteConstants";
-import { ChordUtils } from "./ChordUtils";
+import { ChordUtils } from "../ChordUtils";
+import { NoteFormatter } from "./NoteFormatter";
 
 export class MusicalDisplayFormatter {
   static getDisplayInfoFromIndices(
@@ -60,17 +61,19 @@ export class MusicalDisplayFormatter {
     );
 
     // Get spelled notes for root and bass using the new helper function
-    const rootSpelling = SpellingUtils.computeFirstNoteFromChordPreset(
+    const rootNoteWithOctave = SpellingUtils.computeFirstNoteFromChordPreset(
       rootNoteIndex,
       selectedChordType,
       ixInversion(0) // Root position
-    ).formatNoteNameForDisplay();
+    );
+    const rootSpelling = NoteFormatter.formatForDisplay(rootNoteWithOctave);
 
-    const bassSpelling = SpellingUtils.computeFirstNoteFromChordPreset(
+    const bassNoteWithOctave = SpellingUtils.computeFirstNoteFromChordPreset(
       rootNoteIndex,
       selectedChordType,
       selectedInversionIndex
-    ).formatNoteNameForDisplay();
+    );
+    const bassSpelling = NoteFormatter.formatForDisplay(bassNoteWithOctave);
 
     // Build chord name using existing library function
     const chordTypeName = NoteGroupingLibrary.getId(

@@ -13,7 +13,7 @@ import { NoteWithOctave } from "@/types/NoteWithOctave";
 import { ChordUtils } from "@/utils/ChordUtils";
 import { AccidentalPreferenceResolver } from "@/utils/AccidentalPreferenceResolver";
 import { IndexUtils } from "@/utils/IndexUtils";
-import { MusicalDisplayFormatter } from "./MusicalDisplayFormatter";
+import { MusicalDisplayFormatter } from "./formatters/MusicalDisplayFormatter";
 import { ChordMatch } from "@/types/interfaces/ChordMatch";
 
 export class SpellingUtils {

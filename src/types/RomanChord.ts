@@ -1,7 +1,7 @@
 import { AccidentalType } from "@/types/enums/AccidentalType";
 import { ChordType } from "@/types/enums/ChordType";
 
-import { getAccidentalSignForDisplay } from "@/types/AccidentalTypeDisplay";
+import { AccidentalFormatter } from "@/utils/formatters/AccidentalTypeDisplay";
 import {
   ixScaleDegreeIndex,
   ScaleDegree,
@@ -194,7 +194,9 @@ export class RomanChord {
    * @returns The string representation of this Roman chord
    */
   getString(): string {
-    const accidentalString = getAccidentalSignForDisplay(this.accidental);
+    const accidentalString = AccidentalFormatter.getAccidentalSignForDisplay(
+      this.accidental
+    );
     const romanNumeralString = RomanChord.getScaleDegreeAsRomanString(
       this.scaleDegreeIndex,
       this.chordType === ChordType.Minor ||

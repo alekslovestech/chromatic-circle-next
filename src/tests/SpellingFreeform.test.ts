@@ -9,6 +9,7 @@ import { ixActualArray, ixOctaveOffset } from "@/types/IndexTypes";
 import { SpellingUtils } from "@/utils/SpellingUtils";
 import { SpellingTestUtils } from "./utils/SpellingTestUtils";
 import { NoteWithOctave } from "@/types/NoteWithOctave";
+import { VexFlowFormatter } from "@/utils/formatters/VexFlowFormatter";
 
 describe("SpellingFreeform - Key-based note spelling", () => {
   describe("computeNotesWithOctaves", () => {
@@ -135,7 +136,7 @@ describe("SpellingFreeform - Key-based note spelling", () => {
         DEFAULT_MUSICAL_KEY
       );
 
-      expect(result[0].formatForVexFlow()).toBe("G/4");
+      expect(VexFlowFormatter.formatNote(result[0])).toBe("G/4");
     });
 
     test("NoteWithOctave with accidental formats correctly", () => {
@@ -144,7 +145,7 @@ describe("SpellingFreeform - Key-based note spelling", () => {
         DEFAULT_MUSICAL_KEY
       );
 
-      expect(result[0].formatForVexFlow()).toBe("G/4");
+      expect(VexFlowFormatter.formatNote(result[0])).toBe("G/4");
       expect(result[0].accidental).toBe(AccidentalType.Sharp);
     });
   });

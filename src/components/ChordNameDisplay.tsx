@@ -14,7 +14,7 @@ import { SpellingUtils } from "@/utils/SpellingUtils";
 import { TYPOGRAPHY } from "@/lib/design";
 import { LAYOUT_PATTERNS } from "@/lib/design/LayoutPatterns";
 import { useBorder } from "@/lib/hooks";
-import { MusicalDisplayFormatter } from "@/utils/MusicalDisplayFormatter";
+import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
 
 const MAX_CHORD_NAME_LENGTH = 7;
 const BREAK_CHARACTER = "\u200B";

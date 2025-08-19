@@ -1,6 +1,6 @@
 import { AccidentalType } from "@/types/enums/AccidentalType";
 
-import { getAccidentalSignForDisplay } from "@/types/AccidentalTypeDisplay";
+import { AccidentalFormatter } from "@/utils/formatters/AccidentalTypeDisplay";
 import { NoteConverter } from "@/types/NoteConverter";
 import {
   ScaleDegree,
@@ -29,7 +29,7 @@ export class ScaleDegreeInfo {
 
   getDisplayString(): string {
     return (
-      getAccidentalSignForDisplay(this.accidentalPrefix) +
+      AccidentalFormatter.getAccidentalSignForDisplay(this.accidentalPrefix) +
       this._scaleDegree.toString()
     );
   }

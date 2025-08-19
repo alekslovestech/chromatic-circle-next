@@ -1,8 +1,5 @@
 import { AccidentalType } from "./enums/AccidentalType";
-import {
-  getAccidentalSignForDebug,
-  getAccidentalSignForDisplay,
-} from "./AccidentalTypeDisplay";
+import { AccidentalFormatter } from "@/utils/formatters/AccidentalTypeDisplay";
 
 export class NoteInfo {
   constructor(
@@ -11,12 +8,16 @@ export class NoteInfo {
   ) {}
 
   formatNoteNameForDisplay(): string {
-    const accidentalSign = getAccidentalSignForDisplay(this.accidental);
+    const accidentalSign = AccidentalFormatter.getAccidentalSignForDisplay(
+      this.accidental
+    );
     return `${this.noteName}${accidentalSign}`;
   }
 
   formatNoteNameForDebug(): string {
-    const accidentalSign = getAccidentalSignForDebug(this.accidental);
+    const accidentalSign = AccidentalFormatter.getAccidentalSignForDebug(
+      this.accidental
+    );
     return `${this.noteName}${accidentalSign}`;
   }
 }

@@ -4,7 +4,7 @@ import { SpecialType } from "@/types/enums/SpecialType";
 
 import { ixActualArray } from "../types/IndexTypes";
 import { ChordMatch } from "../types/interfaces/ChordMatch";
-import { MusicalDisplayFormatter } from "../utils/MusicalDisplayFormatter";
+import { MusicalDisplayFormatter } from "../utils/formatters/MusicalDisplayFormatter";
 
 function verifyChordMatch(
   rootNote: number,

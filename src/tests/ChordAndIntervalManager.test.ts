@@ -3,7 +3,7 @@ import { DEFAULT_MUSICAL_KEY, MusicalKey } from "../types/Keys/MusicalKey";
 import { ChordDisplayMode } from "../types/SettingModes";
 
 import { ScaleModeType } from "../types/enums/ScaleModeType";
-import { MusicalDisplayFormatter } from "@/utils/MusicalDisplayFormatter";
+import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
 
 function verifyDisplayInfo(
   expectedNoteGrouping: string,
