@@ -1,5 +1,5 @@
 import { AccidentalType } from "@/types/enums/AccidentalType";
-import { ixActualArray, ixOctaveOffset } from "@/types/IndexTypes";
+import { ixActualArray } from "@/types/IndexTypes";
 
 import { SpellingUtils } from "@/utils/SpellingUtils";
 
@@ -33,9 +33,9 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         "G major triad in root position",
         [7, 11, 14], // G, B, D
         [
-          new NoteWithOctave("G", AccidentalType.None, ixOctaveOffset(0)),
-          new NoteWithOctave("B", AccidentalType.None, ixOctaveOffset(0)),
-          new NoteWithOctave("D", AccidentalType.None, ixOctaveOffset(1)),
+          new NoteWithOctave("G", AccidentalType.None, 0),
+          new NoteWithOctave("B", AccidentalType.None, 0),
+          new NoteWithOctave("D", AccidentalType.None, 1),
         ]
       );
 
@@ -43,9 +43,9 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         "G major triad in first inversion",
         [11, 14, 19], // B, D, G
         [
-          new NoteWithOctave("B", AccidentalType.None, ixOctaveOffset(0)),
-          new NoteWithOctave("D", AccidentalType.None, ixOctaveOffset(1)),
-          new NoteWithOctave("G", AccidentalType.None, ixOctaveOffset(1)),
+          new NoteWithOctave("B", AccidentalType.None, 0),
+          new NoteWithOctave("D", AccidentalType.None, 1),
+          new NoteWithOctave("G", AccidentalType.None, 1),
         ]
       );
     });
@@ -55,9 +55,9 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         "G minor triad in root position",
         [7, 10, 14], // G, Bb, D
         [
-          new NoteWithOctave("G", AccidentalType.None, ixOctaveOffset(0)),
-          new NoteWithOctave("B", AccidentalType.Flat, ixOctaveOffset(0)),
-          new NoteWithOctave("D", AccidentalType.None, ixOctaveOffset(1)),
+          new NoteWithOctave("G", AccidentalType.None, 0),
+          new NoteWithOctave("B", AccidentalType.Flat, 0),
+          new NoteWithOctave("D", AccidentalType.None, 1),
         ]
       );
     });
@@ -67,9 +67,9 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         "G minor triad in root position",
         [10, 13, 17], // Bb, Db, F
         [
-          new NoteWithOctave("B", AccidentalType.Flat, ixOctaveOffset(0)),
-          new NoteWithOctave("D", AccidentalType.Flat, ixOctaveOffset(1)),
-          new NoteWithOctave("F", AccidentalType.None, ixOctaveOffset(1)),
+          new NoteWithOctave("B", AccidentalType.Flat, 0),
+          new NoteWithOctave("D", AccidentalType.Flat, 1),
+          new NoteWithOctave("F", AccidentalType.None, 1),
         ]
       );
     });
