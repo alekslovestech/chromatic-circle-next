@@ -5,8 +5,9 @@ import {
   ixScaleDegreeIndex,
   ScaleDegreeIndex,
 } from "@/types/ScaleModes/ScaleDegreeType";
-import { chromaticToActual, ixOctaveOffset } from "@/types/IndexTypes";
+import { chromaticToActual } from "@/types/IndexTypes";
 import { ScalePlaybackMode } from "@/types/ScalePlaybackMode";
+
 import { PlaybackState } from "@/contexts/AudioContext";
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
@@ -58,10 +59,7 @@ export const useScalePlayback = ({
         "selectedMusicalKey should always be defined"
       );
       console.log("PlayScaleStep: landing on the tonic");
-      const actualTonicIndex = chromaticToActual(
-        selectedMusicalKey.tonicIndex,
-        ixOctaveOffset(0)
-      );
+      const actualTonicIndex = chromaticToActual(selectedMusicalKey.tonicIndex);
       setSelectedNoteIndices([actualTonicIndex]);
       stopScalePlayback();
       landingNoteRef.current = false;

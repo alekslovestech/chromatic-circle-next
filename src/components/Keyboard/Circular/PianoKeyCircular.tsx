@@ -2,11 +2,7 @@
 import React from "react";
 
 import { ChromaticIndex } from "@/types/ChromaticIndex";
-import {
-  ActualIndex,
-  chromaticToActual,
-  ixOctaveOffset,
-} from "@/types/IndexTypes";
+import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 
 import { ArcPathVisualizer } from "@/utils/Keyboard/Circular/ArcPathVisualizer";
@@ -35,18 +31,6 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   innerRadius,
   onClick,
 }) => {
-  const isSelectedEitherOctave = (
-    chromaticIndex: ChromaticIndex,
-    selectedNoteIndices: ActualIndex[]
-  ): boolean => {
-    const actualIndex0 = chromaticToActual(chromaticIndex, ixOctaveOffset(0));
-    const actualIndex1 = chromaticToActual(chromaticIndex, ixOctaveOffset(1));
-    return (
-      selectedNoteIndices.includes(actualIndex0) ||
-      selectedNoteIndices.includes(actualIndex1)
-    );
-  };
-
   const { selectedMusicalKey, selectedNoteIndices } = useMusical();
   const { keyTextMode, monochromeMode } = useDisplay();
   const { selectedChordType } = useChordPresets();
@@ -63,14 +47,12 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   );
 
   const baseClasses = ["key-base", "pie-slice-key"];
-  const isSelected = isSelectedEitherOctave(
+  const isSelected = IndexUtils.isSelectedEitherOctave(
     chromaticIndex,
     selectedNoteIndices
   );
   const isScales = useIsScalePreviewMode();
-  const isBlack = IndexUtils.isBlackKey(
-    chromaticToActual(chromaticIndex, ixOctaveOffset(0))
-  );
+  const isBlack = IndexUtils.isBlackKey(chromaticIndex);
 
   // Add color classes based on visual state and selection
   const keyColors = VisualStateUtils.getKeyColors(
@@ -97,7 +79,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
       ? ""
       : NoteFormatter.formatForDisplay(
           SpellingUtils.computeSpecificNoteInChordContext(
-            chromaticToActual(chromaticIndex, ixOctaveOffset(0)),
+            chromaticToActual(chromaticIndex),
             selectedNoteIndices,
             selectedMusicalKey,
             selectedChordType,
@@ -111,7 +93,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
       id={id}
       className={`${baseClasses.join(" ")}  !${keyColors.border}`}
       onClick={() => {
-        onClick(chromaticToActual(chromaticIndex, ixOctaveOffset(0)));
+        onClick(chromaticToActual(chromaticIndex));
       }}
     >
       <path

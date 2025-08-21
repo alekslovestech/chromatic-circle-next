@@ -1,7 +1,11 @@
 import { TWELVE, TWENTY4 } from "@/types/constants/NoteConstants";
 
 import { ChromaticIndex } from "@/types/ChromaticIndex";
-import { ActualIndex, InversionIndex } from "@/types/IndexTypes";
+import {
+  ActualIndex,
+  chromaticToActual,
+  InversionIndex,
+} from "@/types/IndexTypes";
 
 export class IndexUtils {
   static isBlackKey(actualIndex: ActualIndex | ChromaticIndex): boolean {
@@ -10,6 +14,18 @@ export class IndexUtils {
 
   static StringWithPaddedIndex(prefix: string, index: number): string {
     return `${prefix}${String(index).padStart(2, "0")}`;
+  }
+
+  static isSelectedEitherOctave(
+    chromaticIndex: ChromaticIndex,
+    selectedNoteIndices: ActualIndex[]
+  ): boolean {
+    const actualIndex0 = chromaticToActual(chromaticIndex, 0);
+    const actualIndex1 = chromaticToActual(chromaticIndex, 1);
+    return (
+      selectedNoteIndices.includes(actualIndex0) ||
+      selectedNoteIndices.includes(actualIndex1)
+    );
   }
 
   //everything relative to root note

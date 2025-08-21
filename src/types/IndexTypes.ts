@@ -43,9 +43,10 @@ export function ixOctaveOffset(n: number): OctaveOffset {
 
 export function chromaticToActual(
   chromaticIndex: ChromaticIndex,
-  octaveOffset: OctaveOffset
+  octaveOffset: number = 0
 ): ActualIndex {
-  const result = octaveOffset * TWELVE + chromaticIndex;
+  const validatedOctaveOffset = ixOctaveOffset(octaveOffset);
+  const result = validatedOctaveOffset * TWELVE + chromaticIndex;
   return ixActual(result);
 }
 

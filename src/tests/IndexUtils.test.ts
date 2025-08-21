@@ -5,7 +5,6 @@ import {
   ixActual,
   ixActualArray,
   ixInversion,
-  ixOctaveOffset,
 } from "../types/IndexTypes";
 import { IndexUtils } from "../utils/IndexUtils";
 
@@ -99,9 +98,9 @@ describe("IndexUtils", () => {
 
     cases.forEach(({ chromatic, octave, expected }) => {
       it(`${chromatic},${octave} -> ${expected}`, () => {
-        expect(
-          chromaticToActual(ixChromatic(chromatic), ixOctaveOffset(octave))
-        ).toBe(expected);
+        expect(chromaticToActual(ixChromatic(chromatic), octave)).toBe(
+          expected
+        );
       });
     });
   });
