@@ -25,7 +25,7 @@ export class AccidentalPreferenceResolver {
           ? AccidentalType.Flat
           : AccidentalType.Sharp;
       case ChordQuality.Augmented:
-        return [1, 3, 6, 10].includes(rootChromaticIndex)
+        return [1, 3, 6, 8, 10].includes(rootChromaticIndex)
           ? AccidentalType.Flat
           : AccidentalType.Sharp;
       default:

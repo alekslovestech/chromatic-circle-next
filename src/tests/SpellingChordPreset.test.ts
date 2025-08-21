@@ -60,9 +60,7 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
           new NoteWithOctave("D", AccidentalType.None, 1),
         ]
       );
-    });
 
-    describe("Minor starting B => sharp", () => {
       testChordSpelling(
         "B minor triad in root position",
         [11, 14, 18], // B, D, F#
@@ -72,9 +70,7 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
           new NoteWithOctave("F", AccidentalType.Sharp, 1),
         ]
       );
-    });
 
-    describe("Minor starting A#/Bb => flat", () => {
       testChordSpelling(
         "Bb minor triad in root position",
         [10, 13, 17], // Bb, Db, F
@@ -84,9 +80,7 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
           new NoteWithOctave("F", AccidentalType.None, 1),
         ]
       );
-    });
 
-    describe("Minor starting with C#/Db => sharp", () => {
       testChordSpelling(
         "C# minor triad in root position",
         [1, 4, 8], // C#, E, G#
@@ -98,7 +92,9 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
       );
     });
 
-    describe("C aug => sharp", () => {
+    //not always clean, and sometimes a mix of sharps and flats is best
+    //but for now we'll just use the preference
+    describe("Augmented triads", () => {
       testChordSpelling(
         "C aug in root position",
         [0, 4, 8], // C, E, G#
@@ -106,6 +102,15 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
           new NoteWithOctave("C", AccidentalType.None, 0),
           new NoteWithOctave("E", AccidentalType.None, 0),
           new NoteWithOctave("G", AccidentalType.Sharp, 0),
+        ]
+      );
+      testChordSpelling(
+        "G# aug => Ab",
+        [8, 12, 16], // Ab, C, E
+        [
+          new NoteWithOctave("A", AccidentalType.Flat, 0),
+          new NoteWithOctave("C", AccidentalType.None, 1),
+          new NoteWithOctave("E", AccidentalType.None, 1),
         ]
       );
     });
