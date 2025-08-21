@@ -19,11 +19,12 @@ import {
 } from "@/types/IndexTypes";
 import { NoteGrouping } from "@/types/NoteGrouping";
 import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
-import { IndexUtils } from "../IndexUtils";
-import { SpellingUtils } from "../SpellingUtils";
 import { NoteConverter } from "@/types/NoteConverter";
 import { AccidentalType } from "@/types/enums/AccidentalType";
 import { TWELVE } from "@/types/constants/NoteConstants";
+
+import { IndexUtils } from "../IndexUtils";
+import { SpellingUtils } from "../SpellingUtils";
 import { ChordUtils } from "../ChordUtils";
 import { NoteFormatter } from "./NoteFormatter";
 
@@ -53,6 +54,14 @@ export class MusicalDisplayFormatter {
   ): ChordDisplayInfo {
     if (selectedNoteIndices.length === 0) {
       return { noteGroupingString: "None", chordName: "Ø" };
+    }
+
+    if (selectedNoteIndices.length === 2) {
+      const chordTypeName = NoteGroupingLibrary.getId(
+        selectedChordType,
+        ChordDisplayMode.Letters_Short
+      );
+      return { noteGroupingString: "Interval", chordName: chordTypeName };
     }
 
     const rootNoteIndex = IndexUtils.rootNoteAtInversion(

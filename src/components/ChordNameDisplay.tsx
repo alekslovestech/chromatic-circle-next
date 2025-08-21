@@ -51,7 +51,7 @@ export const ChordNameDisplay: React.FC = () => {
             selectedNoteIndices,
             selectedChordType,
             selectedInversionIndex,
-            chordDisplayMode
+            ChordDisplayMode.Symbols
           )
         : MusicalDisplayFormatter.getDisplayInfoFromIndices(
             selectedNoteIndices,
