@@ -28,6 +28,16 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
   }
 
   describe("computeNotesFromChordPreset", () => {
+    describe("Minor 3rds", () => {
+      testChordSpelling(
+        "G minor 3rd in root position",
+        [7, 10], // G, Bb
+        [
+          new NoteWithOctave("G", AccidentalType.None, 0),
+          new NoteWithOctave("B", AccidentalType.Flat, 0),
+        ]
+      );
+    });
     describe("Major triads", () => {
       testChordSpelling(
         "G major triad in root position",

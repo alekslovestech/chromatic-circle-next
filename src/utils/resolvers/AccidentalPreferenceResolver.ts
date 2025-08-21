@@ -4,6 +4,8 @@ import { ChordQuality } from "@/types/enums/ChordQuality";
 
 import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { ChromaticIndex } from "@/types/ChromaticIndex";
+import { IntervalType } from "@/types/enums/IntervalType";
+import { IndexUtils } from "../IndexUtils";
 
 export class AccidentalPreferenceResolver {
   static getChordPresetSpellingPreference(
@@ -20,6 +22,18 @@ export class AccidentalPreferenceResolver {
     rootChromaticIndex: ChromaticIndex
   ): AccidentalType {
     switch (chordQuality) {
+      case ChordQuality.Minor_Interval:
+        return IndexUtils.isBlackKey(rootChromaticIndex)
+          ? AccidentalType.Sharp
+          : AccidentalType.Flat;
+      case ChordQuality.Major_Interval:
+        return IndexUtils.isBlackKey(rootChromaticIndex)
+          ? AccidentalType.Flat
+          : AccidentalType.Sharp;
+
+      //not fully implemented yet
+      case ChordQuality.Other_Interval:
+        return AccidentalType.Sharp;
       case ChordQuality.Minor:
         return [0, 3, 5, 7, 10].includes(rootChromaticIndex)
           ? AccidentalType.Flat
@@ -37,6 +51,20 @@ export class AccidentalPreferenceResolver {
 
   private static getChordQuality(chordType: NoteGroupingId): ChordQuality {
     switch (chordType) {
+      case IntervalType.Minor2:
+      case IntervalType.Minor3:
+      case IntervalType.Minor6:
+      case IntervalType.Minor7:
+        return ChordQuality.Minor_Interval;
+      case IntervalType.Major2:
+      case IntervalType.Major3:
+      case IntervalType.Major6:
+      case IntervalType.Major7:
+        return ChordQuality.Major_Interval;
+      case IntervalType.Fourth:
+      case IntervalType.Tritone:
+      case IntervalType.Fifth:
+        return ChordQuality.Other_Interval;
       case ChordType.Minor:
       case ChordType.Diminished:
       case ChordType.Minor7:
