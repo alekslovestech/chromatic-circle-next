@@ -3,13 +3,13 @@ import React from "react";
 
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
+
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 
 import { ArcPathVisualizer } from "@/utils/Keyboard/Circular/ArcPathVisualizer";
 import { IndexUtils } from "@/utils/IndexUtils";
 import { VisualStateUtils } from "@/utils/visual/VisualStateUtils";
-import { NoteFormatter } from "@/utils/formatters/NoteFormatter";
-import { SpellingUtils } from "@/utils/SpellingUtils";
+import { KeyboardUtils } from "@/utils/Keyboard/KeyboardUtils";
 
 import {
   useChordPresets,
@@ -75,17 +75,14 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     keyTextMode
   );
   if (isBlack) {
-    noteText = !isSelected
-      ? ""
-      : NoteFormatter.formatForDisplay(
-          SpellingUtils.computeSpecificNoteInChordContext(
-            chromaticToActual(chromaticIndex),
-            selectedNoteIndices,
-            selectedMusicalKey,
-            selectedChordType,
-            isChordsOrIntervals
-          )
-        );
+    noteText = KeyboardUtils.computeNoteText(
+      chromaticIndex,
+      isSelected,
+      selectedNoteIndices,
+      selectedMusicalKey,
+      selectedChordType,
+      isChordsOrIntervals
+    );
   }
 
   return (
