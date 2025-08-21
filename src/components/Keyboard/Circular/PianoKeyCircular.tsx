@@ -47,7 +47,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   );
 
   const baseClasses = ["key-base", "pie-slice-key"];
-  const isSelected = IndexUtils.isSelectedEitherOctave(
+  const isSelected = KeyboardUtils.isSelectedEitherOctave(
     chromaticIndex,
     selectedNoteIndices
   );
@@ -68,7 +68,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
 
   if (isScales) baseClasses.push("disabled");
 
-  const id = IndexUtils.StringWithPaddedIndex("circularKey", chromaticIndex);
+  const id = KeyboardUtils.StringWithPaddedIndex("circularKey", chromaticIndex);
 
   let noteText = selectedMusicalKey.getDisplayString(
     chromaticIndex,
