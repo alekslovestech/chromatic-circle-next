@@ -1,6 +1,8 @@
 import { AccidentalType } from "@/types/enums/AccidentalType";
-import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { ChordType } from "@/types/enums/ChordType";
+import { ChordQuality } from "@/types/enums/ChordQuality";
+
+import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 
 export class AccidentalPreferenceResolver {
@@ -8,41 +10,48 @@ export class AccidentalPreferenceResolver {
     chordType: NoteGroupingId,
     rootChromaticIndex: ChromaticIndex
   ): AccidentalType {
-    const isMinorQuality = this.isMinorQualityChord(chordType);
+    const chordQuality = this.getChordQuality(chordType);
 
-    return isMinorQuality
-      ? this.getMinorChordAccidentalPreference(rootChromaticIndex)
-      : this.getMajorChordAccidentalPreference(rootChromaticIndex);
+    return this.getChordAccidentalPreference(chordQuality, rootChromaticIndex);
   }
 
-  private static getMinorChordAccidentalPreference(
+  private static getChordAccidentalPreference(
+    chordQuality: ChordQuality,
     rootChromaticIndex: ChromaticIndex
   ): AccidentalType {
-    const flatPreferenceNotes = [0, 3, 5, 7, 10]; // C, Eb, F, G, Bb
-    return flatPreferenceNotes.includes(rootChromaticIndex)
-      ? AccidentalType.Flat
-      : AccidentalType.Sharp;
+    switch (chordQuality) {
+      case ChordQuality.Minor:
+        return [0, 3, 5, 7, 10].includes(rootChromaticIndex)
+          ? AccidentalType.Flat
+          : AccidentalType.Sharp;
+      case ChordQuality.Augmented:
+        return [1, 3, 6, 10].includes(rootChromaticIndex)
+          ? AccidentalType.Flat
+          : AccidentalType.Sharp;
+      default:
+        return [0, 1, 3, 5, 8, 10].includes(rootChromaticIndex)
+          ? AccidentalType.Flat
+          : AccidentalType.Sharp;
+    }
   }
 
-  private static getMajorChordAccidentalPreference(
-    rootChromaticIndex: ChromaticIndex
-  ): AccidentalType {
-    const flatPreferenceNotes = [0, 1, 3, 5, 8, 10]; // C, Db, Eb, F, Ab, Bb
-    return flatPreferenceNotes.includes(rootChromaticIndex)
-      ? AccidentalType.Flat
-      : AccidentalType.Sharp;
-  }
-
-  private static isMinorQualityChord(chordType: NoteGroupingId): boolean {
-    return [
-      ChordType.Minor,
-      ChordType.Diminished,
-      ChordType.Minor7,
-      ChordType.HalfDiminished,
-      ChordType.Diminished7,
-      ChordType.Minor6,
-      ChordType.SpreadMinor,
-      ChordType.SpreadDiminished,
-    ].includes(chordType as ChordType);
+  private static getChordQuality(chordType: NoteGroupingId): ChordQuality {
+    switch (chordType) {
+      case ChordType.Minor:
+      case ChordType.Diminished:
+      case ChordType.Minor7:
+      case ChordType.HalfDiminished:
+      case ChordType.Diminished7:
+      case ChordType.Minor6:
+      case ChordType.SpreadMinor:
+      case ChordType.SpreadDiminished:
+        return ChordQuality.Minor;
+      case ChordType.Augmented:
+      case ChordType.AugMajor7:
+      case ChordType.SpreadAugmented:
+        return ChordQuality.Augmented;
+      default:
+        return ChordQuality.Major;
+    }
   }
 }

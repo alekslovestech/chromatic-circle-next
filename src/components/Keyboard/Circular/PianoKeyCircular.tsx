@@ -32,7 +32,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   onClick,
 }) => {
   const { selectedMusicalKey, selectedNoteIndices } = useMusical();
-  const { keyTextMode, monochromeMode } = useDisplay();
+  const { monochromeMode } = useDisplay();
   const { selectedChordType } = useChordPresets();
   const isChordsOrIntervals = useIsChordsOrIntervals();
   const pathData = ArcPathVisualizer.getArcPathData(
@@ -69,21 +69,14 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   if (isScales) baseClasses.push("disabled");
 
   const id = KeyboardUtils.StringWithPaddedIndex("circularKey", chromaticIndex);
-
-  let noteText = selectedMusicalKey.getDisplayString(
+  const noteText = KeyboardUtils.computeNoteText(
     chromaticIndex,
-    keyTextMode
+    isSelected,
+    selectedNoteIndices,
+    selectedMusicalKey,
+    selectedChordType,
+    isChordsOrIntervals
   );
-  if (isBlack) {
-    noteText = KeyboardUtils.computeNoteText(
-      chromaticIndex,
-      isSelected,
-      selectedNoteIndices,
-      selectedMusicalKey,
-      selectedChordType,
-      isChordsOrIntervals
-    );
-  }
 
   return (
     <g

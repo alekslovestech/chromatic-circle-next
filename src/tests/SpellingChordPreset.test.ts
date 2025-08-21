@@ -97,5 +97,17 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         ]
       );
     });
+
+    describe("C aug => sharp", () => {
+      testChordSpelling(
+        "C aug in root position",
+        [0, 4, 8], // C, E, G#
+        [
+          new NoteWithOctave("C", AccidentalType.None, 0),
+          new NoteWithOctave("E", AccidentalType.None, 0),
+          new NoteWithOctave("G", AccidentalType.Sharp, 0),
+        ]
+      );
+    });
   });
 });
