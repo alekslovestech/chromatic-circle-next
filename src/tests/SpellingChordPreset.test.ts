@@ -28,12 +28,30 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
   }
 
   describe("computeNotesFromChordPreset", () => {
-    describe("Minor 3rds", () => {
+    describe("intervals", () => {
       testChordSpelling(
-        "G minor 3rd in root position",
+        "G minor 3rd",
         [7, 10], // G, Bb
         [
           new NoteWithOctave("G", AccidentalType.None, 0),
+          new NoteWithOctave("B", AccidentalType.Flat, 0),
+        ]
+      );
+
+      testChordSpelling(
+        "G# major 3rd",
+        [8, 12], // Ab, C
+        [
+          new NoteWithOctave("A", AccidentalType.Flat, 0),
+          new NoteWithOctave("C", AccidentalType.None, 1),
+        ]
+      );
+
+      testChordSpelling(
+        "F perfect 4th",
+        [5, 10], // F, Bb
+        [
+          new NoteWithOctave("F", AccidentalType.None, 0),
           new NoteWithOctave("B", AccidentalType.Flat, 0),
         ]
       );
