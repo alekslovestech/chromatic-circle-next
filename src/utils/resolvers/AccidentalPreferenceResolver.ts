@@ -3,18 +3,34 @@ import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { ChordType } from "@/types/enums/ChordType";
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 
-import { IndexUtils } from "@/utils/IndexUtils";
-
 export class AccidentalPreferenceResolver {
   static getChordPresetSpellingPreference(
     chordType: NoteGroupingId,
     rootChromaticIndex: ChromaticIndex
   ): AccidentalType {
     const isMinorQuality = this.isMinorQualityChord(chordType);
-    const isBlackKeyRoot = IndexUtils.isBlackKey(rootChromaticIndex);
-    return isBlackKeyRoot === isMinorQuality
-      ? AccidentalType.Sharp
-      : AccidentalType.Flat;
+
+    return isMinorQuality
+      ? this.getMinorChordAccidentalPreference(rootChromaticIndex)
+      : this.getMajorChordAccidentalPreference(rootChromaticIndex);
+  }
+
+  private static getMinorChordAccidentalPreference(
+    rootChromaticIndex: ChromaticIndex
+  ): AccidentalType {
+    const flatPreferenceNotes = [0, 3, 5, 7, 10]; // C, Eb, F, G, Bb
+    return flatPreferenceNotes.includes(rootChromaticIndex)
+      ? AccidentalType.Flat
+      : AccidentalType.Sharp;
+  }
+
+  private static getMajorChordAccidentalPreference(
+    rootChromaticIndex: ChromaticIndex
+  ): AccidentalType {
+    const flatPreferenceNotes = [0, 1, 3, 5, 8, 10]; // C, Db, Eb, F, Ab, Bb
+    return flatPreferenceNotes.includes(rootChromaticIndex)
+      ? AccidentalType.Flat
+      : AccidentalType.Sharp;
   }
 
   private static isMinorQualityChord(chordType: NoteGroupingId): boolean {

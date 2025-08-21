@@ -62,14 +62,38 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
       );
     });
 
-    describe("Minor starting with a black key", () => {
+    describe("Minor starting B => sharp", () => {
       testChordSpelling(
-        "G minor triad in root position",
+        "B minor triad in root position",
+        [11, 14, 18], // B, D, F#
+        [
+          new NoteWithOctave("B", AccidentalType.None, 0),
+          new NoteWithOctave("D", AccidentalType.None, 1),
+          new NoteWithOctave("F", AccidentalType.Sharp, 1),
+        ]
+      );
+    });
+
+    describe("Minor starting A#/Bb => flat", () => {
+      testChordSpelling(
+        "Bb minor triad in root position",
         [10, 13, 17], // Bb, Db, F
         [
           new NoteWithOctave("B", AccidentalType.Flat, 0),
           new NoteWithOctave("D", AccidentalType.Flat, 1),
           new NoteWithOctave("F", AccidentalType.None, 1),
+        ]
+      );
+    });
+
+    describe("Minor starting with C#/Db => sharp", () => {
+      testChordSpelling(
+        "C# minor triad in root position",
+        [1, 4, 8], // C#, E, G#
+        [
+          new NoteWithOctave("C", AccidentalType.Sharp, 0),
+          new NoteWithOctave("E", AccidentalType.None, 0),
+          new NoteWithOctave("G", AccidentalType.Sharp, 0),
         ]
       );
     });
