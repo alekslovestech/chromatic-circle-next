@@ -5,13 +5,15 @@ import { TWELVE } from "../types/constants/NoteConstants";
 import { KeyDisplayMode } from "../types/SettingModes";
 import { GreekTestConstants } from "./utils/GreekTestConstants";
 import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
+import { ScaleModeFormatter } from "@/utils/formatters/ScaleModeFormatter";
 
 function verifyScaleDegreeDisplayStrings(
   greekMode: ScaleModeType,
   expectedNotes: string[]
 ) {
   const greekModeInfo = ScaleModeLibrary.getModeInfo(greekMode);
-  const displayStrings = greekModeInfo.getDisplayStrings(
+  const displayStrings = ScaleModeFormatter.getDisplayStrings(
+    greekModeInfo,
     KeyDisplayMode.ScaleDegree
   );
   expect(displayStrings).toEqual(expectedNotes);

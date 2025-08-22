@@ -4,11 +4,8 @@ import { ChordType } from "@/types/enums/ChordType";
 import { ScaleModeType } from "@/types/enums/ScaleModeType";
 
 import { addChromatic, ChromaticIndex } from "@/types/ChromaticIndex";
-import { RomanChord } from "@/types/RomanChord";
 
-import { ScaleDegreeFormatter } from "@/utils/formatters/ScaleDegreeFormatter";
 import { IScalePatternForRomanChords } from "../IScalePatternForRomanChords";
-import { KeyDisplayMode } from "../SettingModes";
 
 import { ScalePattern } from "./ScalePattern";
 import { ScaleDegreeInfo } from "./ScaleDegreeInfo";
@@ -59,15 +56,6 @@ export class ScaleModeInfo implements IScalePatternForRomanChords {
     return this.scalePattern.addOffsetsChromatic(tonicIndex);
   }
 
-  public getDisplayStrings(keyTextMode: KeyDisplayMode): string[] {
-    return Array.from({ length: this.scalePattern.getLength() }, (_, i) => {
-      const scaleDegreeInfo = this.scalePattern.getScaleDegreeInfoFromPosition(
-        ixScaleDegreeIndex(i)
-      );
-      return this.getDisplayString(scaleDegreeInfo, keyTextMode);
-    });
-  }
-
   public getIonianTonicIndex(tonicIndex: ChromaticIndex): ChromaticIndex {
     const offset = this.modeNumber - 1;
 
@@ -86,20 +74,6 @@ export class ScaleModeInfo implements IScalePatternForRomanChords {
   ): boolean {
     const scaleNotes = this.getAbsoluteScaleNotes(tonicIndex);
     return scaleNotes.includes(chromaticIndex);
-  }
-
-  public getDisplayString(
-    scaleDegreeInfo: ScaleDegreeInfo,
-    keyTextMode: KeyDisplayMode
-  ): string {
-    if (keyTextMode === KeyDisplayMode.ScaleDegree) {
-      return ScaleDegreeFormatter.formatForDisplay(scaleDegreeInfo);
-    }
-    if (keyTextMode === KeyDisplayMode.Roman) {
-      const romanChord = RomanChord.fromScaleDegreeInfo(scaleDegreeInfo, this);
-      return romanChord.getString();
-    }
-    throw new Error("Unexpected key text mode");
   }
 
   //scaleDegreeIndex is the index of the scale degree in the pattern (0-6)

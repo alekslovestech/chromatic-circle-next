@@ -3,6 +3,7 @@ import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { KeyDisplayMode } from "@/types/SettingModes";
 import { TWELVE } from "@/types/constants/NoteConstants";
 import { ChromaticNoteResolver } from "../resolvers/ChromaticNoteResolver";
+import { ScaleModeFormatter } from "./ScaleModeFormatter";
 
 export class MusicalKeyFormatter {
   static getDisplayString(
@@ -21,7 +22,8 @@ export class MusicalKeyFormatter {
     }
     if (!scaleDegreeInfo) return "";
 
-    return musicalKey.greekModeInfo.getDisplayString(
+    return ScaleModeFormatter.getDisplayString(
+      musicalKey.greekModeInfo,
       scaleDegreeInfo,
       keyTextMode
     );
