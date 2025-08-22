@@ -12,10 +12,11 @@ function verifyRomanDisplayStrings(
   expectedNotes: string[]
 ) {
   const scaleModeInfo = ScaleModeLibrary.getModeInfo(greekMode);
-  const romanDisplayStrings = ScaleModeFormatter.getDisplayStrings(
-    scaleModeInfo,
-    KeyDisplayMode.Roman
-  );
+  const romanDisplayStrings =
+    ScaleModeFormatter.formatAllScaleDegreesForDisplay(
+      scaleModeInfo,
+      KeyDisplayMode.Roman
+    );
 
   expect(romanDisplayStrings).toEqual(expectedNotes);
 }
@@ -23,7 +24,7 @@ function verifyRomanDisplayStrings(
 function verifyRomanArray(musicalKey: MusicalKey, expectedArray: string[]) {
   expect(expectedArray.length).toBe(TWELVE);
 
-  const displayStrings = MusicalKeyFormatter.getDisplayStringArray(
+  const displayStrings = MusicalKeyFormatter.formatAllNotesForDisplay(
     musicalKey,
     KeyDisplayMode.Roman
   );

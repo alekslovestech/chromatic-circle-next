@@ -6,7 +6,7 @@ import { ChromaticNoteResolver } from "../resolvers/ChromaticNoteResolver";
 import { ScaleModeFormatter } from "./ScaleModeFormatter";
 
 export class MusicalKeyFormatter {
-  static getDisplayString(
+  static formatNoteForDisplay(
     musicalKey: MusicalKey,
     chromaticIndex: ChromaticIndex,
     keyTextMode: KeyDisplayMode
@@ -22,19 +22,19 @@ export class MusicalKeyFormatter {
     }
     if (!scaleDegreeInfo) return "";
 
-    return ScaleModeFormatter.getDisplayString(
+    return ScaleModeFormatter.formatScaleDegreeForDisplay(
       musicalKey.greekModeInfo,
       scaleDegreeInfo,
       keyTextMode
     );
   }
 
-  static getDisplayStringArray(
+  static formatAllNotesForDisplay(
     musicalKey: MusicalKey,
     keyTextMode: KeyDisplayMode
   ): string[] {
     return Array.from({ length: TWELVE }, (_, i) =>
-      this.getDisplayString(musicalKey, ixChromatic(i), keyTextMode)
+      this.formatNoteForDisplay(musicalKey, ixChromatic(i), keyTextMode)
     );
   }
 }

@@ -12,7 +12,7 @@ function verifyScaleDegreeDisplayStrings(
   expectedNotes: string[]
 ) {
   const greekModeInfo = ScaleModeLibrary.getModeInfo(greekMode);
-  const displayStrings = ScaleModeFormatter.getDisplayStrings(
+  const displayStrings = ScaleModeFormatter.formatAllScaleDegreesForDisplay(
     greekModeInfo,
     KeyDisplayMode.ScaleDegree
   );
@@ -25,7 +25,7 @@ function verifyScaleDegreesArray(
 ) {
   expect(expectedArray.length).toBe(TWELVE);
 
-  const displayStrings = MusicalKeyFormatter.getDisplayStringArray(
+  const displayStrings = MusicalKeyFormatter.formatAllNotesForDisplay(
     musicalKey,
     KeyDisplayMode.ScaleDegree
   );

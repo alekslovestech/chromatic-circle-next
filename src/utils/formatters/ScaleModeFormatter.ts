@@ -6,7 +6,7 @@ import { ScaleDegreeFormatter } from "./ScaleDegreeFormatter";
 import { RomanChord } from "@/types/RomanChord";
 
 export class ScaleModeFormatter {
-  static getDisplayStrings(
+  static formatAllScaleDegreesForDisplay(
     scaleModeInfo: ScaleModeInfo,
     keyTextMode: KeyDisplayMode
   ): string[] {
@@ -17,7 +17,7 @@ export class ScaleModeFormatter {
           scaleModeInfo.scalePattern.getScaleDegreeInfoFromPosition(
             ixScaleDegreeIndex(i)
           );
-        return this.getDisplayString(
+        return this.formatScaleDegreeForDisplay(
           scaleModeInfo,
           scaleDegreeInfo,
           keyTextMode
@@ -26,7 +26,7 @@ export class ScaleModeFormatter {
     );
   }
 
-  static getDisplayString(
+  static formatScaleDegreeForDisplay(
     scaleModeInfo: ScaleModeInfo,
     scaleDegreeInfo: ScaleDegreeInfo,
     keyTextMode: KeyDisplayMode

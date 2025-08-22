@@ -25,6 +25,7 @@ export class KeyboardUtils {
       selectedNoteIndices.includes(actualIndex1)
     );
   }
+
   static computeNoteTextForScalesMode(
     chromaticIndex: ChromaticIndex,
     selectedMusicalKey: MusicalKey
@@ -36,7 +37,7 @@ export class KeyboardUtils {
 
     return !isDiatonic
       ? ""
-      : MusicalKeyFormatter.getDisplayString(
+      : MusicalKeyFormatter.formatNoteForDisplay(
           selectedMusicalKey,
           chromaticIndex,
           KeyDisplayMode.NoteNames
@@ -55,7 +56,7 @@ export class KeyboardUtils {
 
     // White keys: always show note text using key signature
     if (!isBlackKey) {
-      return MusicalKeyFormatter.getDisplayString(
+      return MusicalKeyFormatter.formatNoteForDisplay(
         selectedMusicalKey,
         chromaticIndex,
         KeyDisplayMode.NoteNames
