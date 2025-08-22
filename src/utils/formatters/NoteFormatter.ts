@@ -1,5 +1,5 @@
 import { NoteWithOctave } from "@/types/NoteWithOctave";
-import { AccidentalFormatter } from "./AccidentalTypeDisplay";
+import { AccidentalFormatter } from "./AccidentalFormatter";
 
 export class NoteFormatter {
   static formatForDisplay(note: NoteWithOctave | null): string {

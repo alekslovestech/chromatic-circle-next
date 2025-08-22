@@ -7,6 +7,7 @@ import { KeyDisplayMode } from "@/types/SettingModes";
 import { SpellingUtils } from "@/utils/SpellingUtils";
 import { NoteFormatter } from "@/utils/formatters/NoteFormatter";
 import { IndexUtils } from "@/utils/IndexUtils";
+import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
 
 export class KeyboardUtils {
   static StringWithPaddedIndex(prefix: string, index: number): string {
@@ -24,9 +25,25 @@ export class KeyboardUtils {
       selectedNoteIndices.includes(actualIndex1)
     );
   }
+  static computeNoteTextForScalesMode(
+    chromaticIndex: ChromaticIndex,
+    selectedMusicalKey: MusicalKey
+  ): string {
+    const isDiatonic = selectedMusicalKey.greekModeInfo.isDiatonicNote(
+      chromaticIndex,
+      selectedMusicalKey.tonicIndex
+    );
 
-  // Computes the note text to display on a keyboard key based on chord context
-  static computeNoteText(
+    return !isDiatonic
+      ? ""
+      : MusicalKeyFormatter.getDisplayString(
+          selectedMusicalKey,
+          chromaticIndex,
+          KeyDisplayMode.NoteNames
+        );
+  }
+
+  static computeNoteTextForDefaultMode(
     chromaticIndex: ChromaticIndex,
     isSelected: boolean,
     selectedNoteIndices: ActualIndex[],
@@ -38,7 +55,8 @@ export class KeyboardUtils {
 
     // White keys: always show note text using key signature
     if (!isBlackKey) {
-      return selectedMusicalKey.getDisplayString(
+      return MusicalKeyFormatter.getDisplayString(
+        selectedMusicalKey,
         chromaticIndex,
         KeyDisplayMode.NoteNames
       );

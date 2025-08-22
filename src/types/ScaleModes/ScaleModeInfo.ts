@@ -6,12 +6,14 @@ import { ScaleModeType } from "@/types/enums/ScaleModeType";
 import { addChromatic, ChromaticIndex } from "@/types/ChromaticIndex";
 import { RomanChord } from "@/types/RomanChord";
 
+import { ScaleDegreeFormatter } from "@/utils/formatters/ScaleDegreeFormatter";
+import { IScalePatternForRomanChords } from "../IScalePatternForRomanChords";
+import { KeyDisplayMode } from "../SettingModes";
+
 import { ScalePattern } from "./ScalePattern";
 import { ScaleDegreeInfo } from "./ScaleDegreeInfo";
 import { ScaleDegreeIndex } from "./ScaleDegreeType";
 import { ixScaleDegreeIndex } from "./ScaleDegreeType";
-import { IScalePatternForRomanChords } from "../IScalePatternForRomanChords";
-import { KeyDisplayMode } from "../SettingModes";
 
 export class ScaleModeInfo implements IScalePatternForRomanChords {
   /**
@@ -91,7 +93,7 @@ export class ScaleModeInfo implements IScalePatternForRomanChords {
     keyTextMode: KeyDisplayMode
   ): string {
     if (keyTextMode === KeyDisplayMode.ScaleDegree) {
-      return scaleDegreeInfo.getDisplayString();
+      return ScaleDegreeFormatter.formatForDisplay(scaleDegreeInfo);
     }
     if (keyTextMode === KeyDisplayMode.Roman) {
       const romanChord = RomanChord.fromScaleDegreeInfo(scaleDegreeInfo, this);

@@ -69,14 +69,19 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   if (isScales) baseClasses.push("disabled");
 
   const id = KeyboardUtils.StringWithPaddedIndex("circularKey", chromaticIndex);
-  const noteText = KeyboardUtils.computeNoteText(
-    chromaticIndex,
-    isSelected,
-    selectedNoteIndices,
-    selectedMusicalKey,
-    selectedChordType,
-    isChordsOrIntervals
-  );
+  const noteText = isScales
+    ? KeyboardUtils.computeNoteTextForScalesMode(
+        chromaticIndex,
+        selectedMusicalKey
+      )
+    : KeyboardUtils.computeNoteTextForDefaultMode(
+        chromaticIndex,
+        isSelected,
+        selectedNoteIndices,
+        selectedMusicalKey,
+        selectedChordType,
+        isChordsOrIntervals
+      );
 
   return (
     <g

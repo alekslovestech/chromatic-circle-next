@@ -2,6 +2,7 @@ import { AccidentalType } from "@/types/enums/AccidentalType";
 
 import { ixScaleDegree } from "@/types/ScaleModes/ScaleDegreeType";
 import { ScaleDegreeInfo } from "@/types/ScaleModes/ScaleDegreeInfo";
+import { ScaleDegreeFormatter } from "@/utils/formatters/ScaleDegreeFormatter";
 
 describe("Scale Degree Info", () => {
   const testCases = [
@@ -37,7 +38,9 @@ describe("Scale Degree Info", () => {
         ixScaleDegree(degree),
         accidental
       );
-      expect(scaleDegreeInfo.getDisplayString()).toEqual(expected);
+      expect(ScaleDegreeFormatter.formatForDisplay(scaleDegreeInfo)).toEqual(
+        expected
+      );
     });
   });
 });

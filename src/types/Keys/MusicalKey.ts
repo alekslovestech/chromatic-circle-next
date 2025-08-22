@@ -1,14 +1,8 @@
-import { TWELVE } from "@/types/constants/NoteConstants";
-
 import { AccidentalType } from "@/types/enums/AccidentalType";
 import { ScaleModeType } from "@/types/enums/ScaleModeType";
 import { isMajor, KeyType } from "@/types/enums/KeyType";
 
-import {
-  addChromatic,
-  ChromaticIndex,
-  ixChromatic,
-} from "@/types/ChromaticIndex";
+import { addChromatic, ChromaticIndex } from "@/types/ChromaticIndex";
 import { ScaleModeLibrary } from "@/types/ScaleModes/ScaleModeLibrary";
 import { ScaleModeInfo } from "@/types/ScaleModes/ScaleModeInfo";
 import { ScaleDegreeIndex } from "@/types/ScaleModes/ScaleDegreeType";
@@ -18,7 +12,6 @@ import { KeySignature } from "@/types/Keys/KeySignature";
 
 import { NoteConverter } from "@/types/NoteConverter";
 import { NoteInfo } from "@/types/NoteInfo";
-import { KeyDisplayMode } from "@/types/SettingModes";
 import { ScalePlaybackMode } from "@/types/ScalePlaybackMode";
 
 import { IndexUtils } from "@/utils/IndexUtils";
@@ -169,30 +162,6 @@ export class MusicalKey {
       (key) => NoteConverter.toChromaticIndex(key) === tonicIndex
     );
     return tonicAsString!;
-  }
-
-  getDisplayString(
-    chromaticIndex: ChromaticIndex,
-    keyTextMode: KeyDisplayMode
-  ): string {
-    const scaleDegreeInfo =
-      this.getScaleDegreeInfoFromChromatic(chromaticIndex);
-    if (keyTextMode === KeyDisplayMode.NoteNames) {
-      const noteInfo = ChromaticNoteResolver.resolveAbsoluteNote(
-        chromaticIndex,
-        this.getDefaultAccidental()
-      );
-      return noteInfo.formatNoteNameForDisplay();
-    }
-    if (!scaleDegreeInfo) return "";
-
-    return this.greekModeInfo.getDisplayString(scaleDegreeInfo, keyTextMode);
-  }
-
-  getDisplayStringArray(keyTextMode: KeyDisplayMode): string[] {
-    return Array.from({ length: TWELVE }, (_, i) =>
-      this.getDisplayString(ixChromatic(i), keyTextMode)
-    );
   }
 }
 

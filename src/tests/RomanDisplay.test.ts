@@ -4,6 +4,7 @@ import { MusicalKey } from "../types/Keys/MusicalKey";
 import { TWELVE } from "../types/constants/NoteConstants";
 import { KeyDisplayMode } from "../types/SettingModes";
 import { GreekTestConstants } from "./utils/GreekTestConstants";
+import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
 
 function verifyRomanDisplayStrings(
   greekMode: ScaleModeType,
@@ -20,7 +21,10 @@ function verifyRomanDisplayStrings(
 function verifyRomanArray(musicalKey: MusicalKey, expectedArray: string[]) {
   expect(expectedArray.length).toBe(TWELVE);
 
-  const displayStrings = musicalKey.getDisplayStringArray(KeyDisplayMode.Roman);
+  const displayStrings = MusicalKeyFormatter.getDisplayStringArray(
+    musicalKey,
+    KeyDisplayMode.Roman
+  );
   expect(displayStrings).toEqual(expectedArray);
 }
 describe("Roman Mode Index Arrays", () => {

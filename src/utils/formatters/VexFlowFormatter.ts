@@ -1,4 +1,4 @@
-import { AccidentalFormatter } from "@/utils/formatters/AccidentalTypeDisplay";
+import { AccidentalFormatter } from "@/utils/formatters/AccidentalFormatter";
 import { NoteWithOctave } from "@/types/NoteWithOctave";
 import { Factory, StaveNote } from "vexflow";
 

@@ -5,6 +5,7 @@ import { addChromatic, ChromaticIndex } from "../ChromaticIndex";
 import { TWELVE } from "../constants/NoteConstants";
 import { ScaleDegreeInfo } from "./ScaleDegreeInfo";
 import { ixScaleDegreeIndex, ScaleDegreeIndex } from "./ScaleDegreeType";
+import { ScaleDegreeFormatter } from "@/utils/formatters/ScaleDegreeFormatter";
 
 export class ScalePattern {
   private readonly pattern: number[];
@@ -30,7 +31,10 @@ export class ScalePattern {
         : currentNote < ionianNote
         ? AccidentalType.Flat
         : AccidentalType.None;
-    return ScaleDegreeInfo.fromScaleDegreeIndex(scaleDegreeIndex, accidental);
+    return ScaleDegreeFormatter.fromScaleDegreeIndex(
+      scaleDegreeIndex,
+      accidental
+    );
   }
 
   public getRootOffset(scaleDegreeIndex: ScaleDegreeIndex): [number] {

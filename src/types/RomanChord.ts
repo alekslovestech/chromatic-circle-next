@@ -1,7 +1,7 @@
 import { AccidentalType } from "@/types/enums/AccidentalType";
 import { ChordType } from "@/types/enums/ChordType";
 
-import { AccidentalFormatter } from "@/utils/formatters/AccidentalTypeDisplay";
+import { AccidentalFormatter } from "@/utils/formatters/AccidentalFormatter";
 import {
   ixScaleDegreeIndex,
   ScaleDegree,

@@ -46,6 +46,7 @@ export class MusicalDisplayFormatter {
     const noteGroupingString = noteGrouping.toString();
     return { noteGroupingString, chordName };
   }
+
   static getChordPresetDisplayInfo(
     selectedNoteIndices: ActualIndex[],
     selectedChordType: NoteGroupingId,

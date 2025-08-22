@@ -1,5 +1,5 @@
 import { AccidentalType } from "./enums/AccidentalType";
-import { AccidentalFormatter } from "@/utils/formatters/AccidentalTypeDisplay";
+import { AccidentalFormatter } from "@/utils/formatters/AccidentalFormatter";
 
 export class NoteInfo {
   constructor(

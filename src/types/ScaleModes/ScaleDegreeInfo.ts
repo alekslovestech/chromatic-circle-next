@@ -1,11 +1,8 @@
 import { AccidentalType } from "@/types/enums/AccidentalType";
 
-import { AccidentalFormatter } from "@/utils/formatters/AccidentalTypeDisplay";
-import { NoteConverter } from "@/types/NoteConverter";
 import {
   ScaleDegree,
   ScaleDegreeIndex,
-  ixScaleDegree,
   ixScaleDegreeIndex,
 } from "./ScaleDegreeType";
 export class ScaleDegreeInfo {
@@ -20,34 +17,11 @@ export class ScaleDegreeInfo {
     this.accidentalPrefix = accidental;
   }
 
-  static fromScaleDegreeIndex(
-    scaleDegreeIndex: ScaleDegreeIndex,
-    accidental: AccidentalType = AccidentalType.None
-  ): ScaleDegreeInfo {
-    return new ScaleDegreeInfo(ixScaleDegree(scaleDegreeIndex + 1), accidental);
-  }
-
-  getDisplayString(): string {
-    return (
-      AccidentalFormatter.getAccidentalSignForDisplay(this.accidentalPrefix) +
-      this._scaleDegree.toString()
-    );
-  }
-
   get scaleDegree(): ScaleDegree {
     return this._scaleDegree;
   }
 
   get scaleDegreeIndex(): ScaleDegreeIndex {
     return ixScaleDegreeIndex(this._scaleDegree - 1);
-  }
-
-  static fromString(scaleDegreeString: string): ScaleDegreeInfo {
-    const accidentalChar =
-      scaleDegreeString.length > 1 ? scaleDegreeString[0] : "";
-    const numberPart = scaleDegreeString.slice(-1);
-    const scaleDegree = ixScaleDegree(parseInt(numberPart));
-    const accidental = NoteConverter.getAccidentalType(accidentalChar);
-    return new ScaleDegreeInfo(scaleDegree, accidental);
   }
 }

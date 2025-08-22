@@ -57,14 +57,19 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   if (isScales) baseClasses.push("disabled");
 
   const id = KeyboardUtils.StringWithPaddedIndex("linearKey", actualIndex);
-  const noteText = KeyboardUtils.computeNoteText(
-    chromaticIndex,
-    isSelected,
-    selectedNoteIndices,
-    selectedMusicalKey,
-    selectedChordType,
-    isChordsOrIntervals
-  );
+  const noteText = isScales
+    ? KeyboardUtils.computeNoteTextForScalesMode(
+        chromaticIndex,
+        selectedMusicalKey
+      )
+    : KeyboardUtils.computeNoteTextForDefaultMode(
+        chromaticIndex,
+        isSelected,
+        selectedNoteIndices,
+        selectedMusicalKey,
+        selectedChordType,
+        isChordsOrIntervals
+      );
 
   const allBaseClasses = baseClasses.join(" ");
   return (

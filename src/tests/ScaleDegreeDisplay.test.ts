@@ -4,6 +4,7 @@ import { MusicalKey } from "../types/Keys/MusicalKey";
 import { TWELVE } from "../types/constants/NoteConstants";
 import { KeyDisplayMode } from "../types/SettingModes";
 import { GreekTestConstants } from "./utils/GreekTestConstants";
+import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
 
 function verifyScaleDegreeDisplayStrings(
   greekMode: ScaleModeType,
@@ -22,7 +23,8 @@ function verifyScaleDegreesArray(
 ) {
   expect(expectedArray.length).toBe(TWELVE);
 
-  const displayStrings = musicalKey.getDisplayStringArray(
+  const displayStrings = MusicalKeyFormatter.getDisplayStringArray(
+    musicalKey,
     KeyDisplayMode.ScaleDegree
   );
   expect(displayStrings).toEqual(expectedArray);

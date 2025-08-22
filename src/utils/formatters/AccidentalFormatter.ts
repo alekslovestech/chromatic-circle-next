@@ -1,4 +1,4 @@
-import { AccidentalType } from "../../types/enums/AccidentalType";
+import { AccidentalType } from "@/types/enums/AccidentalType";
 
 export class AccidentalFormatter {
   //mostly used in for text on keyboards / accidental toggle
