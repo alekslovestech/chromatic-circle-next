@@ -1,6 +1,7 @@
-import { AccidentalType } from "../types/AccidentalType";
-import { NoteConverter } from "../types/NoteConverter";
-import { ixActual } from "../types/IndexTypes";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+
+import { NoteConverter } from "@/types/NoteConverter";
+import { ixActual } from "@/types/IndexTypes";
 
 describe("getNoteTextFromActualIndex", () => {
   const testCases = [
@@ -13,7 +14,9 @@ describe("getNoteTextFromActualIndex", () => {
 
   testCases.forEach(({ index, accidental, expected }) => {
     test(`index ${index} with ${accidental} accidental returns ${expected}`, () => {
-      expect(NoteConverter.getNoteTextFromActualIndex(ixActual(index), accidental)).toBe(expected);
+      expect(
+        NoteConverter.getNoteTextFromActualIndex(ixActual(index), accidental)
+      ).toBe(expected);
     });
   });
 });

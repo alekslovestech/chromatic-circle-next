@@ -1,5 +1,5 @@
 import { ChordProgression } from "@/types/ChordProgression";
-import { ChordProgressionType } from "@/types/ChordProgressionType";
+import { ChordProgressionType } from "@/types/enums/ChordProgressionType";
 
 class ChordProgressionLibrarySingleton {
   private static instance: ChordProgressionLibrarySingleton;

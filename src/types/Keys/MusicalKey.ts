@@ -1,40 +1,49 @@
-import { AccidentalType } from "../AccidentalType";
-import { addChromatic, ChromaticIndex, ixChromatic } from "../ChromaticIndex";
-import { GreekModeDictionary } from "../GreekModes/GreekModeDictionary";
-import { GreekModeInfo } from "../GreekModes/GreekModeInfo";
-import { ScaleDegreeIndex } from "../GreekModes/ScaleDegreeType";
-import { GreekModeType } from "../GreekModes/GreekModeType";
-import { ScaleDegreeInfo } from "../GreekModes/ScaleDegreeInfo";
-import { ActualIndex, ixActualArray } from "../IndexTypes";
-import { KeySignature } from "../Keys/KeySignature";
-import { isMajor, KeyType } from "../Keys/KeyType";
-import { KeyNoteResolver } from "./KeyNoteResolver";
-import { TWELVE } from "../NoteConstants";
-import { NoteConverter } from "../NoteConverter";
-import { NoteInfo } from "../NoteInfo";
-import { KeyDisplayMode } from "../SettingModes";
-import { ScalePlaybackMode } from "../ScalePlaybackMode";
+import { TWELVE } from "@/types/constants/NoteConstants";
+
+import { AccidentalType } from "@/types/enums/AccidentalType";
+import { ScaleModeType } from "@/types/enums/ScaleModeType";
+import { isMajor, KeyType } from "@/types/enums/KeyType";
+
+import {
+  addChromatic,
+  ChromaticIndex,
+  ixChromatic,
+} from "@/types/ChromaticIndex";
+import { ScaleModeLibrary } from "@/types/ScaleModes/ScaleModeLibrary";
+import { ScaleModeInfo } from "@/types/ScaleModes/ScaleModeInfo";
+import { ScaleDegreeIndex } from "@/types/ScaleModes/ScaleDegreeType";
+import { ScaleDegreeInfo } from "@/types/ScaleModes/ScaleDegreeInfo";
+import { ActualIndex, ixActualArray } from "@/types/IndexTypes";
+import { KeySignature } from "@/types/Keys/KeySignature";
+
+import { NoteConverter } from "@/types/NoteConverter";
+import { NoteInfo } from "@/types/NoteInfo";
+import { KeyDisplayMode } from "@/types/SettingModes";
+import { ScalePlaybackMode } from "@/types/ScalePlaybackMode";
+
 import { IndexUtils } from "@/utils/IndexUtils";
+
+import { ChromaticNoteResolver } from "../../utils/resolvers/ChromaticNoteResolver";
 
 export class MusicalKey {
   public readonly tonicString: string; // Root note (e.g., "C", "A")
   public readonly classicalMode: KeyType; // Major or minor scale
-  public readonly greekMode: GreekModeType;
+  public readonly greekMode: ScaleModeType;
   public readonly keySignature: KeySignature;
   public readonly tonicIndex: ChromaticIndex;
-  public readonly greekModeInfo: GreekModeInfo;
+  public readonly greekModeInfo: ScaleModeInfo;
 
   private constructor(
     tonicAsString: string,
     classicalMode: KeyType,
-    greekMode: GreekModeType
+    greekMode: ScaleModeType
   ) {
     this.tonicString = NoteConverter.sanitizeNoteString(tonicAsString);
     this.classicalMode = classicalMode;
     this.greekMode = greekMode;
     this.keySignature = new KeySignature(tonicAsString, classicalMode);
     this.tonicIndex = NoteConverter.toChromaticIndex(this.tonicString);
-    this.greekModeInfo = GreekModeDictionary.getModeInfo(greekMode);
+    this.greekModeInfo = ScaleModeLibrary.getModeInfo(greekMode);
   }
 
   public get scalePatternLength(): number {
@@ -83,19 +92,19 @@ export class MusicalKey {
     classicalMode: KeyType
   ): MusicalKey {
     const greekMode = isMajor(classicalMode)
-      ? GreekModeType.Ionian
-      : GreekModeType.Aeolian;
+      ? ScaleModeType.Ionian
+      : ScaleModeType.Aeolian;
     return new MusicalKey(tonicAsString, classicalMode, greekMode);
   }
 
   static fromGreekMode(
     tonicAsString: string,
-    greekMode: GreekModeType
+    greekMode: ScaleModeType
   ): MusicalKey {
     const classicalMode = [
-      GreekModeType.Ionian,
-      GreekModeType.Lydian,
-      //   GreekModeType.Mixolydian,
+      ScaleModeType.Ionian,
+      ScaleModeType.Lydian,
+      //   ScaleModeType.Mixolydian,
     ].includes(greekMode)
       ? KeyType.Major
       : KeyType.Minor;
@@ -128,7 +137,7 @@ export class MusicalKey {
       ionianTonicIndex,
       KeyType.Major
     );
-    return MusicalKey.fromGreekMode(ionianTonicString, GreekModeType.Ionian);
+    return MusicalKey.fromGreekMode(ionianTonicString, ScaleModeType.Ionian);
   }
 
   getDefaultAccidental(): AccidentalType {
@@ -145,7 +154,7 @@ export class MusicalKey {
   }
 
   getNoteInfoFromChromatic(chromaticIndex: ChromaticIndex): NoteInfo {
-    return KeyNoteResolver.resolveAbsoluteNote(
+    return ChromaticNoteResolver.resolveAbsoluteNote(
       chromaticIndex,
       this.getDefaultAccidental()
     );
@@ -169,7 +178,7 @@ export class MusicalKey {
     const scaleDegreeInfo =
       this.getScaleDegreeInfoFromChromatic(chromaticIndex);
     if (keyTextMode === KeyDisplayMode.NoteNames) {
-      const noteInfo = KeyNoteResolver.resolveAbsoluteNote(
+      const noteInfo = ChromaticNoteResolver.resolveAbsoluteNote(
         chromaticIndex,
         this.getDefaultAccidental()
       );

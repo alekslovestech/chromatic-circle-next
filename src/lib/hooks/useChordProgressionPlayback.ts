@@ -1,12 +1,13 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import { chromaticToActual, ixOctaveOffset } from "@/types/IndexTypes";
-import { ChordProgressionType } from "@/types/ChordProgressionType";
-import { PlaybackState } from "@/contexts/AudioContext";
-import { useMusical } from "@/contexts/MusicalContext";
+import { chromaticToActual } from "@/types/IndexTypes";
+import { ChordProgressionType } from "@/types/enums/ChordProgressionType";
 import { ChordProgressionLibrary } from "@/types/ChordProgressionLibrary";
 import { AbsoluteChord } from "@/types/AbsoluteChord";
+
+import { PlaybackState } from "@/contexts/AudioContext";
+import { useMusical } from "@/contexts/MusicalContext";
 
 const PLAYBACK_DURATION_CHORD = 500;
 
@@ -35,9 +36,7 @@ export const useChordProgressionPlayback = ({
     );
 
     // Update the visual selection (just like scale playback does)
-    setSelectedNoteIndices([
-      chromaticToActual(currentChord.chromaticIndex, ixOctaveOffset(0)),
-    ]);
+    setSelectedNoteIndices([chromaticToActual(currentChord.chromaticIndex)]);
 
     // Move to next chord (or loop back to start)
     chordIndexRef.current = (chordIndexRef.current + 1) % progression.length;

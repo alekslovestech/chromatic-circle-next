@@ -1,6 +1,60 @@
-import { ChromaticIndex } from "../../types/ChromaticIndex";
-import { ActualIndex } from "../../types/IndexTypes";
-import { TWELVE } from "../../types/NoteConstants";
+import { ChromaticIndex } from "@/types/ChromaticIndex";
+import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
+import { MusicalKey } from "@/types/Keys/MusicalKey";
+import { NoteGroupingId } from "@/types/NoteGroupingId";
+import { KeyDisplayMode } from "@/types/SettingModes";
 
-export const isBlackKey = (actualIndex: ActualIndex | ChromaticIndex): boolean =>
-  [1, 3, 6, 8, 10].includes(actualIndex % TWELVE);
+import { SpellingUtils } from "@/utils/SpellingUtils";
+import { NoteFormatter } from "@/utils/formatters/NoteFormatter";
+import { IndexUtils } from "@/utils/IndexUtils";
+
+export class KeyboardUtils {
+  static StringWithPaddedIndex(prefix: string, index: number): string {
+    return `${prefix}${String(index).padStart(2, "0")}`;
+  }
+
+  static isSelectedEitherOctave(
+    chromaticIndex: ChromaticIndex,
+    selectedNoteIndices: ActualIndex[]
+  ): boolean {
+    const actualIndex0 = chromaticToActual(chromaticIndex, 0);
+    const actualIndex1 = chromaticToActual(chromaticIndex, 1);
+    return (
+      selectedNoteIndices.includes(actualIndex0) ||
+      selectedNoteIndices.includes(actualIndex1)
+    );
+  }
+
+  // Computes the note text to display on a keyboard key based on chord context
+  static computeNoteText(
+    chromaticIndex: ChromaticIndex,
+    isSelected: boolean,
+    selectedNoteIndices: ActualIndex[],
+    selectedMusicalKey: MusicalKey,
+    selectedChordType: NoteGroupingId,
+    isChordsOrIntervals: boolean
+  ): string {
+    const isBlackKey = IndexUtils.isBlackKey(chromaticIndex);
+
+    // White keys: always show note text using key signature
+    if (!isBlackKey) {
+      return selectedMusicalKey.getDisplayString(
+        chromaticIndex,
+        KeyDisplayMode.NoteNames
+      );
+    }
+
+    // Black keys: only show when selected, using chord context spelling
+    return !isSelected
+      ? ""
+      : NoteFormatter.formatForDisplay(
+          SpellingUtils.computeSpecificNoteInChordContext(
+            chromaticToActual(chromaticIndex),
+            selectedNoteIndices,
+            selectedMusicalKey,
+            selectedChordType,
+            isChordsOrIntervals
+          )
+        );
+  }
+}

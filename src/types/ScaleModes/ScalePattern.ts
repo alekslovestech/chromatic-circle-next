@@ -1,9 +1,10 @@
-import { AccidentalType } from "../AccidentalType";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+import { SCALE_MODE_PATTERNS } from "@/types/constants/ScaleModePatterns";
+
 import { addChromatic, ChromaticIndex } from "../ChromaticIndex";
-import { TWELVE } from "../NoteConstants";
+import { TWELVE } from "../constants/NoteConstants";
 import { ScaleDegreeInfo } from "./ScaleDegreeInfo";
 import { ixScaleDegreeIndex, ScaleDegreeIndex } from "./ScaleDegreeType";
-import { GREEK_MODE_PATTERNS } from "./GreekModePatterns";
 
 export class ScalePattern {
   private readonly pattern: number[];
@@ -22,7 +23,7 @@ export class ScalePattern {
     scaleDegreeIndex: ScaleDegreeIndex
   ): ScaleDegreeInfo {
     const currentNote = this.pattern[scaleDegreeIndex];
-    const ionianNote = GREEK_MODE_PATTERNS.IONIAN[scaleDegreeIndex];
+    const ionianNote = SCALE_MODE_PATTERNS.IONIAN[scaleDegreeIndex];
     const accidental =
       currentNote > ionianNote
         ? AccidentalType.Sharp

@@ -1,6 +1,8 @@
+import { NoteGroupingId } from "./NoteGroupingId";
+import { NoteGroupingType } from "./enums/NoteGroupingType";
+
 import { IndexUtils } from "../utils/IndexUtils";
 import { ixOffsetArray, OffsetIndex } from "./IndexTypes";
-import { NoteGroupingId, NoteGroupingType } from "./NoteGroupingTypes";
 
 export class NoteGrouping {
   public readonly inversions: OffsetIndex[][];

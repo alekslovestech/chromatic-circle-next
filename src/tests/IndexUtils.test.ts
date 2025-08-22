@@ -5,10 +5,8 @@ import {
   ixActual,
   ixActualArray,
   ixInversion,
-  ixOctaveOffset,
 } from "../types/IndexTypes";
 import { IndexUtils } from "../utils/IndexUtils";
-import { isBlackKey } from "../utils/Keyboard/KeyboardUtils";
 
 describe("IndexUtils", () => {
   describe("normalizeIndices", () => {
@@ -39,9 +37,12 @@ describe("IndexUtils", () => {
 
     cases.forEach(({ desc, indices, inv, expected }) => {
       it(desc, () => {
-        expect(IndexUtils.rootNoteAtInversion(ixActualArray(indices), ixInversion(inv))).toEqual(
-          expected,
-        );
+        expect(
+          IndexUtils.rootNoteAtInversion(
+            ixActualArray(indices),
+            ixInversion(inv)
+          )
+        ).toEqual(expected);
       });
     });
   });
@@ -66,8 +67,18 @@ describe("IndexUtils", () => {
       { desc: "different arrays", a: [2, 6, 9], b: [2, 6, 9], expected: true },
       { desc: "different lengths 1", a: [0, 4, 7], b: [0, 4], expected: false },
       { desc: "different lengths 2", a: [0, 4], b: [0, 4, 7], expected: false },
-      { desc: "different elements 1", a: [0, 4, 7], b: [0, 4, 8], expected: false },
-      { desc: "different elements 2", a: [2, 6, 9], b: [2, 5, 9], expected: false },
+      {
+        desc: "different elements 1",
+        a: [0, 4, 7],
+        b: [0, 4, 8],
+        expected: false,
+      },
+      {
+        desc: "different elements 2",
+        a: [2, 6, 9],
+        b: [2, 5, 9],
+        expected: false,
+      },
     ];
 
     cases.forEach(({ desc, a, b, expected }) => {
@@ -87,7 +98,9 @@ describe("IndexUtils", () => {
 
     cases.forEach(({ chromatic, octave, expected }) => {
       it(`${chromatic},${octave} -> ${expected}`, () => {
-        expect(chromaticToActual(ixChromatic(chromatic), ixOctaveOffset(octave))).toBe(expected);
+        expect(chromaticToActual(ixChromatic(chromatic), octave)).toBe(
+          expected
+        );
       });
     });
   });
@@ -102,7 +115,9 @@ describe("IndexUtils", () => {
 
     cases.forEach(({ actual, expected }) => {
       it(`${actual} -> chromatic:${expected.chromaticIndex},octave:${expected.octaveOffset}`, () => {
-        expect(actualIndexToChromaticAndOctave(ixActual(actual))).toEqual(expected);
+        expect(actualIndexToChromaticAndOctave(ixActual(actual))).toEqual(
+          expected
+        );
       });
     });
   });
@@ -113,13 +128,13 @@ describe("IndexUtils", () => {
 
     blackKeys.forEach((key) => {
       it(`${key} is black`, () => {
-        expect(isBlackKey(ixActual(key))).toBeTruthy();
+        expect(IndexUtils.isBlackKey(ixActual(key))).toBeTruthy();
       });
     });
 
     whiteKeys.forEach((key) => {
       it(`${key} is white`, () => {
-        expect(isBlackKey(ixActual(key))).toBeFalsy();
+        expect(IndexUtils.isBlackKey(ixActual(key))).toBeFalsy();
       });
     });
   });
@@ -127,7 +142,12 @@ describe("IndexUtils", () => {
   describe("shiftIndices", () => {
     const cases = [
       { desc: "shift up", input: [0, 4, 7], shift: 1, expected: [1, 5, 8] },
-      { desc: "shift down", input: [0, 4, 7], shift: -1, expected: [11, 15, 18] },
+      {
+        desc: "shift down",
+        input: [0, 4, 7],
+        shift: -1,
+        expected: [11, 15, 18],
+      },
       { desc: "shift 0 down", input: [0], shift: -1, expected: [11] },
       { desc: "shift 23 up", input: [23], shift: 1, expected: [12] },
     ];

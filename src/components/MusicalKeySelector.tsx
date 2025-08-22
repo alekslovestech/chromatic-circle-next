@@ -2,8 +2,8 @@
 import React from "react";
 
 import { MusicalKey } from "@/types/Keys/MusicalKey";
-import { GreekModeType } from "@/types/GreekModes/GreekModeType";
-import { isMajor } from "@/types/Keys/KeyType";
+import { ScaleModeType } from "@/types/enums/ScaleModeType";
+import { isMajor } from "@/types/enums/KeyType";
 import { KeySignature } from "@/types/Keys/KeySignature";
 
 import { useMusical } from "@/contexts/MusicalContext";
@@ -37,7 +37,7 @@ export const MusicalKeySelector = ({
   const handleGreekModeChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    const greekMode = event.target.value as GreekModeType;
+    const greekMode = event.target.value as ScaleModeType;
     const newKey = MusicalKey.fromGreekMode(
       selectedMusicalKey.tonicString,
       greekMode
@@ -83,7 +83,7 @@ export const MusicalKeySelector = ({
             onChange={handleGreekModeChange}
             title="Select musical mode"
           >
-            {Object.values(GreekModeType).map((mode) => (
+            {Object.values(ScaleModeType).map((mode) => (
               <option id={`greek-mode-option-${mode}`} key={mode} value={mode}>
                 {mode}
               </option>

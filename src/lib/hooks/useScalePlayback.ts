@@ -4,13 +4,14 @@ import { useCallback, useRef, useEffect, useState } from "react";
 import {
   ixScaleDegreeIndex,
   ScaleDegreeIndex,
-} from "@/types/GreekModes/ScaleDegreeType";
-import { chromaticToActual, ixOctaveOffset } from "@/types/IndexTypes";
+} from "@/types/ScaleModes/ScaleDegreeType";
+import { chromaticToActual } from "@/types/IndexTypes";
 import { ScalePlaybackMode } from "@/types/ScalePlaybackMode";
+
 import { PlaybackState } from "@/contexts/AudioContext";
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
-import { useGlobalMode } from "@/lib/hooks";
+import { useGlobalMode } from "./useGlobalMode";
 
 const PLAYBACK_DURATION_SINGLE_NOTE = 300;
 const PLAYBACK_DURATION_CHORD = 500;
@@ -58,10 +59,7 @@ export const useScalePlayback = ({
         "selectedMusicalKey should always be defined"
       );
       console.log("PlayScaleStep: landing on the tonic");
-      const actualTonicIndex = chromaticToActual(
-        selectedMusicalKey.tonicIndex,
-        ixOctaveOffset(0)
-      );
+      const actualTonicIndex = chromaticToActual(selectedMusicalKey.tonicIndex);
       setSelectedNoteIndices([actualTonicIndex]);
       stopScalePlayback();
       landingNoteRef.current = false;

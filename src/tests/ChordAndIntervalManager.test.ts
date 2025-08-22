@@ -2,8 +2,8 @@ import { ixActualArray } from "../types/IndexTypes";
 import { DEFAULT_MUSICAL_KEY, MusicalKey } from "../types/Keys/MusicalKey";
 import { ChordDisplayMode } from "../types/SettingModes";
 
-import { GreekModeType } from "../types/GreekModes/GreekModeType";
-import { ChordUtils } from "../utils/ChordUtils";
+import { ScaleModeType } from "../types/enums/ScaleModeType";
+import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
 
 function verifyDisplayInfo(
   expectedNoteGrouping: string,
@@ -11,7 +11,7 @@ function verifyDisplayInfo(
   indices: number[],
   musicalKey: MusicalKey = DEFAULT_MUSICAL_KEY
 ) {
-  const result = ChordUtils.getDisplayInfoFromIndices(
+  const result = MusicalDisplayFormatter.getDisplayInfoFromIndices(
     ixActualArray(indices),
     ChordDisplayMode.Letters_Short,
     musicalKey
@@ -33,7 +33,7 @@ describe("getDisplayPropertiesFromIndices", () => {
       noteGrouping: "Chord",
       chordName: "B♭2♯4",
       indices: [10, 12, 16],
-      key: MusicalKey.fromGreekMode("C", GreekModeType.Dorian),
+      key: MusicalKey.fromGreekMode("C", ScaleModeType.Dorian),
     },
   ];
 

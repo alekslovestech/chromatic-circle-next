@@ -1,6 +1,6 @@
 import { MusicalKey } from "../types/Keys/MusicalKey";
-import { KeyType } from "../types/Keys/KeyType";
-import { GreekModeType } from "../types/GreekModes/GreekModeType";
+import { KeyType } from "../types/enums/KeyType";
+import { ScaleModeType } from "../types/enums/ScaleModeType";
 import { GreekTestConstants } from "../tests/utils/GreekTestConstants";
 
 const greekTestConstants = GreekTestConstants.getInstance();
@@ -43,13 +43,13 @@ describe("MusicalKey transforms", () => {
         desc: "C Dorian => C# Dorian",
         input: greekTestConstants.C_DORIAN_KEY,
         semitones: 1,
-        expected: MusicalKey.fromGreekMode("C#", GreekModeType.Dorian),
+        expected: MusicalKey.fromGreekMode("C#", ScaleModeType.Dorian),
       },
       {
         desc: "E Phrygian minor => F Phrygian minor",
         input: greekTestConstants.E_PHRYGIAN_KEY,
         semitones: 1,
-        expected: MusicalKey.fromGreekMode("F", GreekModeType.Phrygian),
+        expected: MusicalKey.fromGreekMode("F", ScaleModeType.Phrygian),
       },
       {
         desc: "C major => B major",
@@ -61,13 +61,13 @@ describe("MusicalKey transforms", () => {
         desc: "C Dorian => B Dorian",
         input: greekTestConstants.C_DORIAN_KEY,
         semitones: -1,
-        expected: MusicalKey.fromGreekMode("B", GreekModeType.Dorian),
+        expected: MusicalKey.fromGreekMode("B", ScaleModeType.Dorian),
       },
       {
         desc: "F Phrygian minor => E Phrygian minor",
-        input: MusicalKey.fromGreekMode("F", GreekModeType.Phrygian),
+        input: MusicalKey.fromGreekMode("F", ScaleModeType.Phrygian),
         semitones: -1,
-        expected: MusicalKey.fromGreekMode("E", GreekModeType.Phrygian),
+        expected: MusicalKey.fromGreekMode("E", ScaleModeType.Phrygian),
       },
     ];
 
@@ -107,7 +107,7 @@ describe("MusicalKey transforms", () => {
       },
       {
         desc: "C Arabic => Ab Ionian",
-        input: MusicalKey.fromGreekMode("C", GreekModeType.Byzantine),
+        input: MusicalKey.fromGreekMode("C", ScaleModeType.Byzantine),
         expected: "Ab",
       },
     ];

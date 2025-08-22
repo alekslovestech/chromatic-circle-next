@@ -3,20 +3,21 @@ import React from "react";
 
 import { InputMode } from "@/types/SettingModes";
 import { ixActual, ixInversion } from "@/types/IndexTypes";
-import { NoteGroupingId } from "@/types/NoteGroupingTypes";
+import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
 
-import { IndexUtils } from "@/utils/IndexUtils";
 import { ChordUtils } from "@/utils/ChordUtils";
+import { IndexUtils } from "@/utils/IndexUtils";
 
 import { useChordPresets } from "@/contexts/ChordPresetContext";
 import { useMusical } from "@/contexts/MusicalContext";
 
-import { SectionTitle } from "../Common/SectionTitle";
-import { InversionButton } from "../Buttons/InversionButton";
-import { ChordPresetButton } from "./ChordPresetButton";
 import { LAYOUT_PATTERNS } from "@/lib/design";
-import { useBorder } from "@/lib/hooks/useBorder";
+import { useBorder } from "@/lib/hooks";
+
+import { InversionButton } from "../Buttons/InversionButton";
+import { SectionTitle } from "../Common/SectionTitle";
+import { ChordPresetButton } from "./ChordPresetButton";
 
 export const ChordPresetSelector: React.FC = () => {
   const {

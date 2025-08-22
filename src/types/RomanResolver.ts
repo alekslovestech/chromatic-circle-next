@@ -1,7 +1,8 @@
-import { MusicalKey } from "./Keys/MusicalKey";
-import { ChordType } from "./NoteGroupingTypes";
-import { RomanChord } from "./RomanChord";
-import { AccidentalType } from "./AccidentalType";
+import { ChordType } from "@/types/enums/ChordType";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+
+import { MusicalKey } from "@/types/Keys/MusicalKey";
+import { RomanChord } from "@/types/RomanChord";
 import { splitRomanString } from "./RomanParser";
 import { AbsoluteChord } from "./AbsoluteChord";
 import { addChromatic } from "./ChromaticIndex";
@@ -21,9 +22,14 @@ export class RomanResolver {
    * @returns An absolute chord representing the resolved Roman numeral
    * @throws Error if the Roman numeral string is invalid
    */
-  static resolveAsAbsoluteChord(romanString: string, musicalKey: MusicalKey): AbsoluteChord {
+  static resolveAsAbsoluteChord(
+    romanString: string,
+    musicalKey: MusicalKey
+  ): AbsoluteChord {
     const romanChord = RomanResolver.createRomanChordFromString(romanString);
-    const scale = musicalKey.greekModeInfo.getAbsoluteScaleNotes(musicalKey.tonicIndex);
+    const scale = musicalKey.greekModeInfo.getAbsoluteScaleNotes(
+      musicalKey.tonicIndex
+    );
 
     // Get the base chromatic index from the scale
     let chromaticIndex = scale[romanChord.scaleDegreeIndex];
@@ -50,12 +56,17 @@ export class RomanResolver {
   static createRomanChordFromString(romanString: string): RomanChord {
     const parsedRoman = splitRomanString(romanString);
     const accidental: AccidentalType = NoteConverter.getAccidentalType(
-      parsedRoman.accidentalPrefix,
+      parsedRoman.accidentalPrefix
     );
 
     const ordinal = RomanChord.fromRoman(parsedRoman.pureRoman);
-    const isLowercase = RomanChord.isLowercaseRomanNumeral(parsedRoman.pureRoman);
-    const chordType = RomanChord.determineChordType(isLowercase, parsedRoman.chordSuffix);
+    const isLowercase = RomanChord.isLowercaseRomanNumeral(
+      parsedRoman.pureRoman
+    );
+    const chordType = RomanChord.determineChordType(
+      isLowercase,
+      parsedRoman.chordSuffix
+    );
     const bassDegree = parsedRoman.bassRoman
       ? RomanChord.fromRoman(parsedRoman.bassRoman)
       : undefined;

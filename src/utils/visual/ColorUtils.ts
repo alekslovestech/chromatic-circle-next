@@ -1,5 +1,5 @@
 import { ActualIndex } from "@/types/IndexTypes";
-import { TWELVE } from "@/types/NoteConstants";
+import { TWELVE } from "@/types/constants/NoteConstants";
 
 type RGB = [number, number, number];
 export class ColorUtils {

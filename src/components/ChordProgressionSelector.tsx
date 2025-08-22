@@ -3,7 +3,7 @@ import React from "react";
 
 import { Select } from "./Common/Select";
 import { useAudio } from "@/contexts/AudioContext";
-import { ChordProgressionType } from "@/types/ChordProgressionType";
+import { ChordProgressionType } from "@/types/enums/ChordProgressionType";
 
 export const ChordProgressionSelector = () => {
   const { selectedProgression, setSelectedProgression } = useAudio();

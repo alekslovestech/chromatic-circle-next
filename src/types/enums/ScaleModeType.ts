@@ -1,4 +1,4 @@
-export enum GreekModeType {
+export enum ScaleModeType {
   Ionian = "Ionian",
   Dorian = "Dorian",
   UkrainianDorian = "Ukrainian Dorian",

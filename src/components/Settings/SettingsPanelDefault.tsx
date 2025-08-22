@@ -1,11 +1,13 @@
+import { InputMode } from "@/types/SettingModes";
 import { LAYOUT_PATTERNS } from "@/lib/design";
-import { useBorder } from "@/lib/hooks/useBorder";
+import { useBorder } from "@/lib/hooks";
+
+import { useChordPresets } from "@/contexts/ChordPresetContext";
+
 import { ClearButton } from "../Buttons/ClearButton";
 import { PlayNotesButton } from "../Buttons/PlayNotesButton";
 import { TransposeWidget } from "../TransposeWidget";
 import { MusicalKeySelector } from "../MusicalKeySelector";
-import { useChordPresets } from "@/contexts/ChordPresetContext";
-import { InputMode } from "@/types/SettingModes";
 //import {MonochromeModeToggle} from "../MonochromeModeToggle";
 //import { CircularVisModeSelect } from "../Keyboard/Circular/CircularVisModeSelect";
 

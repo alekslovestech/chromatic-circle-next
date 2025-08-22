@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { NoteGroupingId } from "@/types/NoteGroupingTypes";
+import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { ChordDisplayMode } from "@/types/SettingModes";
 import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
 import { Button } from "../Common/Button";

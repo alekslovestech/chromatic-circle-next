@@ -1,13 +1,16 @@
-import { AccidentalType, getAccidentalSignForDisplay } from "./AccidentalType";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+import { ChordType } from "@/types/enums/ChordType";
+
+import { AccidentalFormatter } from "@/utils/formatters/AccidentalTypeDisplay";
 import {
   ixScaleDegreeIndex,
   ScaleDegree,
   ScaleDegreeIndex,
   ixScaleDegree,
-} from "./GreekModes/ScaleDegreeType";
-import { ChordType } from "./NoteGroupingTypes";
+} from "./ScaleModes/ScaleDegreeType";
+
 import { IScalePatternForRomanChords } from "./IScalePatternForRomanChords";
-import { ScaleDegreeInfo } from "./GreekModes/ScaleDegreeInfo";
+import { ScaleDegreeInfo } from "./ScaleModes/ScaleDegreeInfo";
 import { RomanNumeralString } from "./RomanTypes";
 
 export class RomanChord {
@@ -20,7 +23,7 @@ export class RomanChord {
     scaleDegree: ScaleDegree,
     chordType: ChordType,
     accidental: AccidentalType = AccidentalType.None,
-    bassDegree: number | undefined = undefined,
+    bassDegree: number | undefined = undefined
   ) {
     this.scaleDegree = scaleDegree;
     this.chordType = chordType;
@@ -40,12 +43,16 @@ export class RomanChord {
    */
   static fromScaleDegreeInfo(
     scaleDegreeInfo: ScaleDegreeInfo,
-    scalePattern: IScalePatternForRomanChords,
+    scalePattern: IScalePatternForRomanChords
   ): RomanChord {
     const offsets = scalePattern.getTriadOffsets(scaleDegreeInfo);
     const chordType = scalePattern.determineChordType(offsets);
 
-    return new RomanChord(scaleDegreeInfo.scaleDegree, chordType, scaleDegreeInfo.accidentalPrefix);
+    return new RomanChord(
+      scaleDegreeInfo.scaleDegree,
+      chordType,
+      scaleDegreeInfo.accidentalPrefix
+    );
   }
 
   /**
@@ -92,12 +99,30 @@ export class RomanChord {
    */
   static getScaleDegreeAsRomanString(
     scaleDegreeIndex: ScaleDegreeIndex,
-    isLowercase: boolean = false,
+    isLowercase: boolean = false
   ): RomanNumeralString {
-    const bigNumerals: RomanNumeralString[] = ["I", "II", "III", "IV", "V", "VI", "VII"];
-    const smallNumerals: RomanNumeralString[] = ["i", "ii", "iii", "iv", "v", "vi", "vii"];
+    const bigNumerals: RomanNumeralString[] = [
+      "I",
+      "II",
+      "III",
+      "IV",
+      "V",
+      "VI",
+      "VII",
+    ];
+    const smallNumerals: RomanNumeralString[] = [
+      "i",
+      "ii",
+      "iii",
+      "iv",
+      "v",
+      "vi",
+      "vii",
+    ];
 
-    return isLowercase ? smallNumerals[scaleDegreeIndex] : bigNumerals[scaleDegreeIndex];
+    return isLowercase
+      ? smallNumerals[scaleDegreeIndex]
+      : bigNumerals[scaleDegreeIndex];
   }
 
   /**
@@ -169,10 +194,13 @@ export class RomanChord {
    * @returns The string representation of this Roman chord
    */
   getString(): string {
-    const accidentalString = getAccidentalSignForDisplay(this.accidental);
+    const accidentalString = AccidentalFormatter.getAccidentalSignForDisplay(
+      this.accidental
+    );
     const romanNumeralString = RomanChord.getScaleDegreeAsRomanString(
       this.scaleDegreeIndex,
-      this.chordType === ChordType.Minor || this.chordType === ChordType.Diminished,
+      this.chordType === ChordType.Minor ||
+        this.chordType === ChordType.Diminished
     );
     const chordPostfix = RomanChord.getChordTypePostfix(this.chordType);
 

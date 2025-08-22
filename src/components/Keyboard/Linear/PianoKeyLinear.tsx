@@ -4,16 +4,19 @@ import {
   ActualIndex,
   actualIndexToChromaticAndOctave,
 } from "@/types/IndexTypes";
-import { KeyDisplayMode } from "@/types/SettingModes";
 
 import { IndexUtils } from "@/utils/IndexUtils";
-import { isBlackKey } from "@/utils/Keyboard/KeyboardUtils";
 import { LinearKeyboardUtils } from "@/utils/Keyboard/Linear/LinearKeyboardUtils";
 import { VisualStateUtils } from "@/utils/visual/VisualStateUtils";
+import { KeyboardUtils } from "@/utils/Keyboard/KeyboardUtils";
 
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
+import {
+  useChordPresets,
+  useIsChordsOrIntervals,
+} from "@/contexts/ChordPresetContext";
 
 interface PianoKeyProps {
   actualIndex: ActualIndex;
@@ -28,8 +31,10 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
 }) => {
   const { selectedMusicalKey, selectedNoteIndices } = useMusical();
   const { monochromeMode } = useDisplay();
+  const { selectedChordType } = useChordPresets();
+  const isChordsOrIntervals = useIsChordsOrIntervals();
 
-  const isShortKey = isBlackKey(actualIndex);
+  const isShortKey = IndexUtils.isBlackKey(actualIndex);
   const { chromaticIndex } = actualIndexToChromaticAndOctave(actualIndex);
   const left = LinearKeyboardUtils.getKeyPosition(actualIndex);
 
@@ -51,10 +56,14 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   if (isShortKey) baseClasses.push("short");
   if (isScales) baseClasses.push("disabled");
 
-  const id = IndexUtils.StringWithPaddedIndex("linearKey", actualIndex);
-  const noteText = selectedMusicalKey.getDisplayString(
+  const id = KeyboardUtils.StringWithPaddedIndex("linearKey", actualIndex);
+  const noteText = KeyboardUtils.computeNoteText(
     chromaticIndex,
-    KeyDisplayMode.NoteNames
+    isSelected,
+    selectedNoteIndices,
+    selectedMusicalKey,
+    selectedChordType,
+    isChordsOrIntervals
   );
 
   const allBaseClasses = baseClasses.join(" ");
