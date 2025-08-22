@@ -23,7 +23,7 @@
 
 # generated assets
 /public/favicon.ico
-/public/*.png
+/public/opengraph-image.png
 
 # misc
 .DS_Store
