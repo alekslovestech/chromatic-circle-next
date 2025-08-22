@@ -1,6 +1,6 @@
 # Music Wheel
 
-<img src="./public/Ghighres.png" width="200">
+<img src="./public/Ghighres.png" width="300">
 
 MusicWheel is an interactive web application designed to help musicians, students, and music theory nerds explore and understand musical theory concepts. This app features a unique combination of visual and auditory tools, including
 
@@ -19,6 +19,6 @@ Key features of MusicWheel include:
 
 - Musical scales and modes (Ionian, Dorian, Phrygian, etc.)
 
-  <img src="./public/PhrygianScale.png" width="200">
+  <img src="./public/PhrygianScale.png" width="300">
 
 Want to learn music theory, write some tunes, or just play around with how notes work together? Music Wheel is a fun and easy way to explore music and understand how it all fits together.
