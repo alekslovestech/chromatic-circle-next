@@ -2,21 +2,21 @@ import { AccidentalType } from "@/types/enums/AccidentalType";
 import { ScaleModeType } from "@/types/enums/ScaleModeType";
 import { isMajor, KeyType } from "@/types/enums/KeyType";
 
+import { NoteInfo } from "@/types/interfaces/NoteInfo";
+
 import { addChromatic, ChromaticIndex } from "@/types/ChromaticIndex";
 import { ScaleModeLibrary } from "@/types/ScaleModes/ScaleModeLibrary";
 import { ScaleModeInfo } from "@/types/ScaleModes/ScaleModeInfo";
 import { ScaleDegreeIndex } from "@/types/ScaleModes/ScaleDegreeType";
 import { ScaleDegreeInfo } from "@/types/ScaleModes/ScaleDegreeInfo";
+import { ScalePlaybackMode } from "@/types/ScalePlaybackMode";
 import { ActualIndex, ixActualArray } from "@/types/IndexTypes";
 import { KeySignature } from "@/types/Keys/KeySignature";
 
 import { NoteConverter } from "@/utils/NoteConverter";
-import { NoteInfo } from "@/types/interfaces/NoteInfo";
-import { ScalePlaybackMode } from "@/types/ScalePlaybackMode";
-
 import { IndexUtils } from "@/utils/IndexUtils";
 
-import { ChromaticNoteResolver } from "../../utils/resolvers/ChromaticNoteResolver";
+import { ChromaticNoteResolver } from "@/utils/resolvers/ChromaticNoteResolver";
 
 export class MusicalKey {
   public readonly tonicString: string; // Root note (e.g., "C", "A")
@@ -40,7 +40,7 @@ export class MusicalKey {
   }
 
   public get scalePatternLength(): number {
-    return this.scaleModeInfo.scalePattern.getLength();
+    return this.scaleModeInfo.getScalePatternLength();
   }
 
   /**

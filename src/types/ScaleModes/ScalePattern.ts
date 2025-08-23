@@ -1,11 +1,14 @@
-import { AccidentalType } from "@/types/enums/AccidentalType";
 import { SCALE_MODE_PATTERNS } from "@/types/constants/ScaleModePatterns";
+import { TWELVE } from "@/types/constants/NoteConstants";
 
-import { addChromatic, ChromaticIndex } from "../ChromaticIndex";
-import { TWELVE } from "../constants/NoteConstants";
-import { ScaleDegreeInfo } from "./ScaleDegreeInfo";
-import { ixScaleDegreeIndex, ScaleDegreeIndex } from "./ScaleDegreeType";
-import { ScaleDegreeFormatter } from "@/utils/formatters/ScaleDegreeFormatter";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+
+import { addChromatic, ChromaticIndex } from "@/types/ChromaticIndex";
+import { ScaleDegreeInfo } from "@/types/ScaleModes/ScaleDegreeInfo";
+import {
+  ixScaleDegreeIndex,
+  ScaleDegreeIndex,
+} from "@/types/ScaleModes/ScaleDegreeType";
 
 export class ScalePattern {
   private readonly pattern: number[];
@@ -31,10 +34,7 @@ export class ScalePattern {
         : currentNote < ionianNote
         ? AccidentalType.Flat
         : AccidentalType.None;
-    return ScaleDegreeFormatter.fromScaleDegreeIndex(
-      scaleDegreeIndex,
-      accidental
-    );
+    return ScaleDegreeInfo.fromScaleDegreeIndex(scaleDegreeIndex, accidental);
   }
 
   public getRootOffset(scaleDegreeIndex: ScaleDegreeIndex): [number] {
@@ -82,7 +82,7 @@ export class ScalePattern {
    */
   public findPositionInScale(relativeOffset: number): ScaleDegreeIndex {
     // Normalize the offset to be within 0-11
-    const normalizedOffset = ((relativeOffset % 12) + 12) % 12;
+    const normalizedOffset = relativeOffset % TWELVE;
     return ixScaleDegreeIndex(
       this.pattern.findIndex((offset) => offset === normalizedOffset)
     );

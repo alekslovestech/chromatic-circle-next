@@ -3,6 +3,7 @@ import { AccidentalType } from "@/types/enums/AccidentalType";
 import {
   ScaleDegree,
   ScaleDegreeIndex,
+  ixScaleDegree,
   ixScaleDegreeIndex,
 } from "./ScaleDegreeType";
 export class ScaleDegreeInfo {
@@ -23,5 +24,12 @@ export class ScaleDegreeInfo {
 
   get scaleDegreeIndex(): ScaleDegreeIndex {
     return ixScaleDegreeIndex(this._scaleDegree - 1);
+  }
+
+  static fromScaleDegreeIndex(
+    scaleDegreeIndex: ScaleDegreeIndex,
+    accidental: AccidentalType = AccidentalType.None
+  ): ScaleDegreeInfo {
+    return new ScaleDegreeInfo(ixScaleDegree(scaleDegreeIndex + 1), accidental);
   }
 }
