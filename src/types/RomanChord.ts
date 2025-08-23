@@ -8,8 +8,6 @@ import {
   ixScaleDegree,
 } from "./ScaleModes/ScaleDegreeType";
 
-import { RomanNumeralString } from "./RomanTypes";
-
 export class RomanChord {
   //implements IRomanChord {
   scaleDegree: ScaleDegree;
@@ -69,40 +67,6 @@ export class RomanChord {
   }
 
   /**
-   * Converts a scale degree index to a Roman numeral string.
-   * @param scaleDegreeIndex The scale degree index (0-6)
-   * @param isLowercase Whether to use lowercase numerals
-   * @returns The Roman numeral string
-   */
-  static getScaleDegreeAsRomanString(
-    scaleDegreeIndex: ScaleDegreeIndex,
-    isLowercase: boolean = false
-  ): RomanNumeralString {
-    const bigNumerals: RomanNumeralString[] = [
-      "I",
-      "II",
-      "III",
-      "IV",
-      "V",
-      "VI",
-      "VII",
-    ];
-    const smallNumerals: RomanNumeralString[] = [
-      "i",
-      "ii",
-      "iii",
-      "iv",
-      "v",
-      "vi",
-      "vii",
-    ];
-
-    return isLowercase
-      ? smallNumerals[scaleDegreeIndex]
-      : bigNumerals[scaleDegreeIndex];
-  }
-
-  /**
    * Determines the chord type based on whether the Roman numeral is lowercase and its suffix.
    * @param isLowercase Whether the Roman numeral is lowercase
    * @param suffix The chord suffix (e.g., "", "7", "maj7", "dim")
@@ -140,29 +104,5 @@ export class RomanChord {
     }
 
     return chordType;
-  }
-
-  /**
-   * Gets the postfix string for a chord type.
-   * @param chordType The chord type
-   * @returns The postfix string for the chord type
-   */
-  static getChordTypePostfix(chordType: ChordType): string {
-    switch (chordType) {
-      case ChordType.Diminished:
-        return "°";
-      case ChordType.Augmented:
-        return "+";
-      case ChordType.Minor:
-      case ChordType.Major:
-      case ChordType.Dominant7:
-      case ChordType.Minor7:
-      case ChordType.Major7:
-      case ChordType.Diminished7:
-      case ChordType.HalfDiminished:
-        return "";
-      default:
-        return "";
-    }
   }
 }
