@@ -23,7 +23,7 @@ export class MusicalKeyFormatter {
     if (!scaleDegreeInfo) return "";
 
     return ScaleModeFormatter.formatScaleDegreeForDisplay(
-      musicalKey.greekModeInfo,
+      musicalKey.scaleModeInfo,
       scaleDegreeInfo,
       keyTextMode
     );

@@ -30,7 +30,7 @@ export class KeyboardUtils {
     chromaticIndex: ChromaticIndex,
     selectedMusicalKey: MusicalKey
   ): string {
-    const isDiatonic = selectedMusicalKey.greekModeInfo.isDiatonicNote(
+    const isDiatonic = selectedMusicalKey.scaleModeInfo.isDiatonicNote(
       chromaticIndex,
       selectedMusicalKey.tonicIndex
     );

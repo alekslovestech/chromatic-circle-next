@@ -21,10 +21,10 @@ import { ChromaticNoteResolver } from "../../utils/resolvers/ChromaticNoteResolv
 export class MusicalKey {
   public readonly tonicString: string; // Root note (e.g., "C", "A")
   public readonly classicalMode: KeyType; // Major or minor scale
-  public readonly greekMode: ScaleModeType;
+  public readonly scaleMode: ScaleModeType;
   public readonly keySignature: KeySignature;
   public readonly tonicIndex: ChromaticIndex;
-  public readonly greekModeInfo: ScaleModeInfo;
+  public readonly scaleModeInfo: ScaleModeInfo;
 
   private constructor(
     tonicAsString: string,
@@ -33,14 +33,14 @@ export class MusicalKey {
   ) {
     this.tonicString = NoteConverter.sanitizeNoteString(tonicAsString);
     this.classicalMode = classicalMode;
-    this.greekMode = greekMode;
+    this.scaleMode = greekMode;
     this.keySignature = new KeySignature(tonicAsString, classicalMode);
     this.tonicIndex = NoteConverter.toChromaticIndex(this.tonicString);
-    this.greekModeInfo = ScaleModeLibrary.getModeInfo(greekMode);
+    this.scaleModeInfo = ScaleModeLibrary.getModeInfo(greekMode);
   }
 
   public get scalePatternLength(): number {
-    return this.greekModeInfo.scalePattern.getLength();
+    return this.scaleModeInfo.scalePattern.getLength();
   }
 
   /**
@@ -55,15 +55,15 @@ export class MusicalKey {
   ): number[] {
     switch (scalePlaybackMode) {
       case ScalePlaybackMode.Triad:
-        return this.greekModeInfo.scalePattern.getOffsets135(scaleDegreeIndex);
+        return this.scaleModeInfo.scalePattern.getOffsets135(scaleDegreeIndex);
       case ScalePlaybackMode.Seventh:
-        return this.greekModeInfo.scalePattern.getOffsets1357(scaleDegreeIndex);
+        return this.scaleModeInfo.scalePattern.getOffsets1357(scaleDegreeIndex);
       case ScalePlaybackMode.DronedSingleNote:
-        return this.greekModeInfo.scalePattern.getTonicDroneWithRootOffset(
+        return this.scaleModeInfo.scalePattern.getTonicDroneWithRootOffset(
           scaleDegreeIndex
         );
       default:
-        return this.greekModeInfo.scalePattern.getRootOffset(scaleDegreeIndex);
+        return this.scaleModeInfo.scalePattern.getRootOffset(scaleDegreeIndex);
     }
   }
 
@@ -77,7 +77,7 @@ export class MusicalKey {
   }
 
   toString(): string {
-    return `${this.tonicString} (${this.classicalMode} | ${this.greekMode})`;
+    return `${this.tonicString} (${this.classicalMode} | ${this.scaleMode})`;
   }
 
   static fromClassicalMode(
@@ -119,11 +119,11 @@ export class MusicalKey {
       newTonicIndex,
       this.classicalMode
     );
-    return MusicalKey.fromGreekMode(newTonicAsString, this.greekMode);
+    return MusicalKey.fromGreekMode(newTonicAsString, this.scaleMode);
   }
 
   getCanonicalIonianKey(): MusicalKey {
-    const ionianTonicIndex = this.greekModeInfo.getIonianTonicIndex(
+    const ionianTonicIndex = this.scaleModeInfo.getIonianTonicIndex(
       this.tonicIndex
     );
     const ionianTonicString = this.findKeyWithTonicIndex(
@@ -140,7 +140,7 @@ export class MusicalKey {
   public getScaleDegreeInfoFromChromatic(
     chromaticIndex: ChromaticIndex
   ): ScaleDegreeInfo | null {
-    return this.greekModeInfo.getScaleDegreeInfoFromChromatic(
+    return this.scaleModeInfo.getScaleDegreeInfoFromChromatic(
       chromaticIndex,
       this.tonicIndex
     );

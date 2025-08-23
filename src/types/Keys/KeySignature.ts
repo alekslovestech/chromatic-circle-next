@@ -1,12 +1,12 @@
 import { AccidentalType } from "@/types/enums/AccidentalType";
+import { isMajor, KeyType } from "@/types/enums/KeyType";
 
 import {
   MAJOR_KEY_SIGNATURES,
   MINOR_KEY_SIGNATURES,
-} from "../constants/KeySignatureConstants";
+} from "@/types/constants/KeySignatureConstants";
 
-import { isMajor, KeyType } from "../enums/KeyType";
-import { NoteConverter } from "../NoteConverter";
+import { NoteConverter } from "@/types/NoteConverter";
 
 export class KeySignature {
   private readonly tonicString: string;

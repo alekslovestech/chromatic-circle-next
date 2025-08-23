@@ -27,7 +27,7 @@ export class RomanResolver {
     musicalKey: MusicalKey
   ): AbsoluteChord {
     const romanChord = RomanResolver.createRomanChordFromString(romanString);
-    const scale = musicalKey.greekModeInfo.getAbsoluteScaleNotes(
+    const scale = musicalKey.scaleModeInfo.getAbsoluteScaleNotes(
       musicalKey.tonicIndex
     );
 
