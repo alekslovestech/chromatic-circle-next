@@ -1,9 +1,10 @@
 import { AccidentalType } from "@/types/enums/AccidentalType";
 
 import { ChromaticIndex, ixChromatic } from "@/types/ChromaticIndex";
-import { actualIndexToChromaticAndOctave } from "./IndexTypes";
-import { ActualIndex } from "./IndexTypes";
-import { ChromaticNoteResolver } from "../utils/resolvers/ChromaticNoteResolver";
+import { ActualIndex } from "@/types/IndexTypes";
+
+import { NoteFormatter } from "@/utils/formatters/NoteFormatter";
+import { ActualNoteResolver } from "@/utils/resolvers/ActualNoteResolver";
 
 export class NoteConverter {
   // For testing and input - converts text to index
@@ -37,6 +38,10 @@ export class NoteConverter {
       .replace(/[♯#]/g, "#")
       .replace(/[♭b]/g, "b")
       .replace(/[♮n]/g, "n");
+  }
+
+  static stripAccidentals(note: string): string {
+    return note.replace(/[#b]/g, "");
   }
 
   // For display - converts index to text
@@ -88,36 +93,14 @@ export class NoteConverter {
     return indices.map((index) => this.fromChromaticIndex(index, preferSharps));
   }
 
-  static stripAccidentals(note: string): string {
-    return note.replace(/[#b]/g, "");
-  }
-
-  //accidental string can be in display format, or debug format
-  static getAccidentalType(accidentalString: string): AccidentalType {
-    switch (accidentalString) {
-      case "#":
-      case "♯":
-        return AccidentalType.Sharp;
-      case "b":
-      case "♭":
-        return AccidentalType.Flat;
-      case "n":
-      case "♮":
-        return AccidentalType.Natural;
-      default:
-        return AccidentalType.None;
-    }
-  }
-
-  static getNoteTextFromActualIndex = (
+  static getNoteTextFromActualIndex(
     actualIndex: ActualIndex,
     accidentalPreference: AccidentalType
-  ): string => {
-    const { chromaticIndex } = actualIndexToChromaticAndOctave(actualIndex);
-    const noteInfo = ChromaticNoteResolver.resolveAbsoluteNote(
-      chromaticIndex,
+  ): string {
+    const noteInfo = ActualNoteResolver.resolveAbsoluteNoteWithOctave(
+      actualIndex,
       accidentalPreference
     );
-    return noteInfo.formatNoteNameForDisplay();
-  };
+    return NoteFormatter.formatForDisplay(noteInfo);
+  }
 }

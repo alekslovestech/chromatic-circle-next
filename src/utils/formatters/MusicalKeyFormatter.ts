@@ -2,8 +2,11 @@ import { ChromaticIndex, ixChromatic } from "@/types/ChromaticIndex";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { KeyDisplayMode } from "@/types/SettingModes";
 import { TWELVE } from "@/types/constants/NoteConstants";
-import { ChromaticNoteResolver } from "../resolvers/ChromaticNoteResolver";
+
+import { ChromaticNoteResolver } from "@/utils/resolvers/ChromaticNoteResolver";
+
 import { ScaleModeFormatter } from "./ScaleModeFormatter";
+import { NoteFormatter } from "./NoteFormatter";
 
 export class MusicalKeyFormatter {
   static formatNoteForDisplay(
@@ -18,7 +21,7 @@ export class MusicalKeyFormatter {
         chromaticIndex,
         musicalKey.getDefaultAccidental()
       );
-      return noteInfo.formatNoteNameForDisplay();
+      return NoteFormatter.formatForDisplay(noteInfo);
     }
     if (!scaleDegreeInfo) return "";
 

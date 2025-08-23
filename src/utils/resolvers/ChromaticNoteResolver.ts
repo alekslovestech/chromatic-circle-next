@@ -2,10 +2,10 @@ import {
   NOTES_WITH_SHARP,
   NOTES_WITH_FLAT,
 } from "@/types/constants/NoteConstants";
-
 import { AccidentalType } from "@/types/enums/AccidentalType";
+import { NoteInfo } from "@/types/interfaces/NoteInfo";
+
 import { ChromaticIndex } from "@/types/ChromaticIndex";
-import { NoteInfo } from "@/types/NoteInfo";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 export class ChromaticNoteResolver {
   static resolveNoteInKey(
@@ -17,13 +17,14 @@ export class ChromaticNoteResolver {
       chromaticIndex,
       defaultAccidental
     );
-    return new NoteInfo(
+    const resolvedAccidental = musicalKey.keySignature.applyToNote(
       absoluteNote.noteName,
-      musicalKey.keySignature.applyToNote(
-        absoluteNote.noteName,
-        absoluteNote.accidental
-      )
+      absoluteNote.accidental
     );
+    return {
+      noteName: absoluteNote.noteName,
+      accidental: resolvedAccidental,
+    };
   }
 
   static resolveAbsoluteNote(

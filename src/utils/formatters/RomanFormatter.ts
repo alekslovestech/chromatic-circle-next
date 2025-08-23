@@ -1,8 +1,8 @@
 import { ChordType } from "@/types/enums/ChordType";
 import { RomanChord } from "@/types/RomanChord";
 import { ScaleDegreeInfo } from "@/types/ScaleModes/ScaleDegreeInfo";
+import { ScaleModeInfo } from "@/types/ScaleModes/ScaleModeInfo";
 import { AccidentalFormatter } from "./AccidentalFormatter";
-import { IScalePatternForRomanChords } from "@/types/IScalePatternForRomanChords";
 
 export class RomanFormatter {
   /**
@@ -13,7 +13,7 @@ export class RomanFormatter {
    */
   static fromScaleDegreeInfo(
     scaleDegreeInfo: ScaleDegreeInfo,
-    scaleModeInfo: IScalePatternForRomanChords
+    scaleModeInfo: ScaleModeInfo
   ): RomanChord {
     const offsets = scaleModeInfo.getTriadOffsets(scaleDegreeInfo);
     const chordType = scaleModeInfo.determineChordType(offsets);

@@ -3,7 +3,10 @@ import {
   ActualIndex,
   actualIndexToChromaticAndOctave,
 } from "@/types/IndexTypes";
-import { NoteWithOctave } from "@/types/NoteWithOctave";
+import {
+  createNoteWithOctave,
+  NoteWithOctave,
+} from "@/types/interfaces/NoteWithOctave";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { ChromaticNoteResolver } from "./ChromaticNoteResolver";
 export class ActualNoteResolver {
@@ -17,7 +20,7 @@ export class ActualNoteResolver {
       musicalKey,
       chromaticIndex
     );
-    return new NoteWithOctave(
+    return createNoteWithOctave(
       noteInfo.noteName,
       noteInfo.accidental,
       octaveOffset
@@ -34,7 +37,7 @@ export class ActualNoteResolver {
       chromaticIndex,
       accidentalPreference
     );
-    return new NoteWithOctave(
+    return createNoteWithOctave(
       noteInfo.noteName,
       noteInfo.accidental,
       octaveOffset

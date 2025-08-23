@@ -10,8 +10,8 @@ import { ScaleDegreeInfo } from "@/types/ScaleModes/ScaleDegreeInfo";
 import { ActualIndex, ixActualArray } from "@/types/IndexTypes";
 import { KeySignature } from "@/types/Keys/KeySignature";
 
-import { NoteConverter } from "@/types/NoteConverter";
-import { NoteInfo } from "@/types/NoteInfo";
+import { NoteConverter } from "@/utils/NoteConverter";
+import { NoteInfo } from "@/types/interfaces/NoteInfo";
 import { ScalePlaybackMode } from "@/types/ScalePlaybackMode";
 
 import { IndexUtils } from "@/utils/IndexUtils";

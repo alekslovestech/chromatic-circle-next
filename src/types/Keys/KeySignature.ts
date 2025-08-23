@@ -6,7 +6,7 @@ import {
   MINOR_KEY_SIGNATURES,
 } from "@/types/constants/KeySignatureConstants";
 
-import { NoteConverter } from "@/types/NoteConverter";
+import { NoteConverter } from "@/utils/NoteConverter";
 
 export class KeySignature {
   private readonly tonicString: string;

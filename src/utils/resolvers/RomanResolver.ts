@@ -3,10 +3,10 @@ import { AccidentalType } from "@/types/enums/AccidentalType";
 
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { RomanChord } from "@/types/RomanChord";
-import { splitRomanString } from "./RomanParser";
-import { AbsoluteChord } from "./AbsoluteChord";
-import { addChromatic } from "./ChromaticIndex";
-import { NoteConverter } from "./NoteConverter";
+import { splitRomanString } from "@/types/RomanParser";
+import { AbsoluteChord } from "@/types/AbsoluteChord";
+import { addChromatic } from "@/types/ChromaticIndex";
+import { AccidentalFormatter } from "@/utils/formatters/AccidentalFormatter";
 
 /**
  * Resolves Roman numeral chords to absolute chords in a given musical key.
@@ -55,7 +55,7 @@ export class RomanResolver {
    */
   static createRomanChordFromString(romanString: string): RomanChord {
     const parsedRoman = splitRomanString(romanString);
-    const accidental: AccidentalType = NoteConverter.getAccidentalType(
+    const accidental: AccidentalType = AccidentalFormatter.parseAccidentalType(
       parsedRoman.accidentalPrefix
     );
 

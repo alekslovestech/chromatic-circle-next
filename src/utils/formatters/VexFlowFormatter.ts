@@ -3,7 +3,7 @@ import { Factory, StaveNote } from "vexflow";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { isMajor } from "@/types/enums/KeyType";
 
-import { NoteWithOctave } from "@/types/NoteWithOctave";
+import { NoteWithOctave } from "@/types/interfaces/NoteWithOctave";
 import { AccidentalFormatter } from "@/utils/formatters/AccidentalFormatter";
 
 export class VexFlowFormatter {

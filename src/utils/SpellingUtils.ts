@@ -9,7 +9,7 @@ import {
   InversionIndex,
 } from "@/types/IndexTypes";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
-import { NoteWithOctave } from "@/types/NoteWithOctave";
+import { NoteWithOctave } from "@/types/interfaces/NoteWithOctave";
 
 import { ChordUtils } from "@/utils/ChordUtils";
 import { IndexUtils } from "@/utils/IndexUtils";

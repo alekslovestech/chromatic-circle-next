@@ -1,11 +1,15 @@
 import { AccidentalType } from "@/types/enums/AccidentalType";
-import { ixActualArray } from "@/types/IndexTypes";
+import {
+  createNoteWithOctave,
+  NoteWithOctave,
+} from "@/types/interfaces/NoteWithOctave";
 
 import { SpellingUtils } from "@/utils/SpellingUtils";
 
 import { SpellingTestUtils } from "./utils/SpellingTestUtils";
 import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
-import { NoteWithOctave } from "@/types/NoteWithOctave";
+
+import { ixActualArray } from "@/types/IndexTypes";
 
 describe("SpellingChordPreset - Chord preset-based note spelling", () => {
   // Helper function to make tests cleaner
@@ -33,8 +37,8 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         "G minor 3rd",
         [7, 10], // G, Bb
         [
-          new NoteWithOctave("G", AccidentalType.None, 0),
-          new NoteWithOctave("B", AccidentalType.Flat, 0),
+          createNoteWithOctave("G", AccidentalType.None, 0),
+          createNoteWithOctave("B", AccidentalType.Flat, 0),
         ]
       );
 
@@ -42,8 +46,8 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         "G# major 3rd",
         [8, 12], // Ab, C
         [
-          new NoteWithOctave("A", AccidentalType.Flat, 0),
-          new NoteWithOctave("C", AccidentalType.None, 1),
+          createNoteWithOctave("A", AccidentalType.Flat, 0),
+          createNoteWithOctave("C", AccidentalType.None, 1),
         ]
       );
 
@@ -51,8 +55,8 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         "F perfect 4th",
         [5, 10], // F, Bb
         [
-          new NoteWithOctave("F", AccidentalType.None, 0),
-          new NoteWithOctave("B", AccidentalType.Flat, 0),
+          createNoteWithOctave("F", AccidentalType.None, 0),
+          createNoteWithOctave("B", AccidentalType.Flat, 0),
         ]
       );
     });
@@ -61,9 +65,9 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         "G major triad in root position",
         [7, 11, 14], // G, B, D
         [
-          new NoteWithOctave("G", AccidentalType.None, 0),
-          new NoteWithOctave("B", AccidentalType.None, 0),
-          new NoteWithOctave("D", AccidentalType.None, 1),
+          createNoteWithOctave("G", AccidentalType.None, 0),
+          createNoteWithOctave("B", AccidentalType.None, 0),
+          createNoteWithOctave("D", AccidentalType.None, 1),
         ]
       );
 
@@ -71,9 +75,9 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         "G major triad in first inversion",
         [11, 14, 19], // B, D, G
         [
-          new NoteWithOctave("B", AccidentalType.None, 0),
-          new NoteWithOctave("D", AccidentalType.None, 1),
-          new NoteWithOctave("G", AccidentalType.None, 1),
+          createNoteWithOctave("B", AccidentalType.None, 0),
+          createNoteWithOctave("D", AccidentalType.None, 1),
+          createNoteWithOctave("G", AccidentalType.None, 1),
         ]
       );
     });
@@ -83,9 +87,9 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         "G minor triad in root position",
         [7, 10, 14], // G, Bb, D
         [
-          new NoteWithOctave("G", AccidentalType.None, 0),
-          new NoteWithOctave("B", AccidentalType.Flat, 0),
-          new NoteWithOctave("D", AccidentalType.None, 1),
+          createNoteWithOctave("G", AccidentalType.None, 0),
+          createNoteWithOctave("B", AccidentalType.Flat, 0),
+          createNoteWithOctave("D", AccidentalType.None, 1),
         ]
       );
 
@@ -93,9 +97,9 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         "B minor triad in root position",
         [11, 14, 18], // B, D, F#
         [
-          new NoteWithOctave("B", AccidentalType.None, 0),
-          new NoteWithOctave("D", AccidentalType.None, 1),
-          new NoteWithOctave("F", AccidentalType.Sharp, 1),
+          createNoteWithOctave("B", AccidentalType.None, 0),
+          createNoteWithOctave("D", AccidentalType.None, 1),
+          createNoteWithOctave("F", AccidentalType.Sharp, 1),
         ]
       );
 
@@ -103,9 +107,9 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         "Bb minor triad in root position",
         [10, 13, 17], // Bb, Db, F
         [
-          new NoteWithOctave("B", AccidentalType.Flat, 0),
-          new NoteWithOctave("D", AccidentalType.Flat, 1),
-          new NoteWithOctave("F", AccidentalType.None, 1),
+          createNoteWithOctave("B", AccidentalType.Flat, 0),
+          createNoteWithOctave("D", AccidentalType.Flat, 1),
+          createNoteWithOctave("F", AccidentalType.None, 1),
         ]
       );
 
@@ -113,9 +117,9 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         "C# minor triad in root position",
         [1, 4, 8], // C#, E, G#
         [
-          new NoteWithOctave("C", AccidentalType.Sharp, 0),
-          new NoteWithOctave("E", AccidentalType.None, 0),
-          new NoteWithOctave("G", AccidentalType.Sharp, 0),
+          createNoteWithOctave("C", AccidentalType.Sharp, 0),
+          createNoteWithOctave("E", AccidentalType.None, 0),
+          createNoteWithOctave("G", AccidentalType.Sharp, 0),
         ]
       );
     });
@@ -127,18 +131,18 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         "C aug in root position",
         [0, 4, 8], // C, E, G#
         [
-          new NoteWithOctave("C", AccidentalType.None, 0),
-          new NoteWithOctave("E", AccidentalType.None, 0),
-          new NoteWithOctave("G", AccidentalType.Sharp, 0),
+          createNoteWithOctave("C", AccidentalType.None, 0),
+          createNoteWithOctave("E", AccidentalType.None, 0),
+          createNoteWithOctave("G", AccidentalType.Sharp, 0),
         ]
       );
       testChordSpelling(
         "G# aug => Ab",
         [8, 12, 16], // Ab, C, E
         [
-          new NoteWithOctave("A", AccidentalType.Flat, 0),
-          new NoteWithOctave("C", AccidentalType.None, 1),
-          new NoteWithOctave("E", AccidentalType.None, 1),
+          createNoteWithOctave("A", AccidentalType.Flat, 0),
+          createNoteWithOctave("C", AccidentalType.None, 1),
+          createNoteWithOctave("E", AccidentalType.None, 1),
         ]
       );
     });

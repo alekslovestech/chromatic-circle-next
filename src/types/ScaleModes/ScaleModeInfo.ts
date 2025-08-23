@@ -5,14 +5,12 @@ import { ScaleModeType } from "@/types/enums/ScaleModeType";
 
 import { addChromatic, ChromaticIndex } from "@/types/ChromaticIndex";
 
-import { IScalePatternForRomanChords } from "../IScalePatternForRomanChords";
-
 import { ScalePattern } from "./ScalePattern";
 import { ScaleDegreeInfo } from "./ScaleDegreeInfo";
 import { ScaleDegreeIndex } from "./ScaleDegreeType";
 import { ixScaleDegreeIndex } from "./ScaleDegreeType";
 
-export class ScaleModeInfo implements IScalePatternForRomanChords {
+export class ScaleModeInfo {
   /**
    * The scale pattern for this mode.
    * For most use cases, you can access this directly to use ScalePattern methods.
@@ -26,6 +24,10 @@ export class ScaleModeInfo implements IScalePatternForRomanChords {
     public readonly modeNumber: number // The number of the mode, typically 1-7. e.g. 1 for Ionian, 2 for Dorian, etc.
   ) {
     this.scalePattern = new ScalePattern(pattern);
+  }
+
+  public getScalePatternLength(): number {
+    return this.scalePattern.getLength();
   }
 
   /**
@@ -93,6 +95,12 @@ export class ScaleModeInfo implements IScalePatternForRomanChords {
     });
 
     return (matchingPattern?.[0] as ChordType) || ChordType.Unknown;
+  }
+
+  public getScaleDegreeInfoFromPosition(
+    scaleDegreeIndex: ScaleDegreeIndex
+  ): ScaleDegreeInfo {
+    return this.scalePattern.getScaleDegreeInfoFromPosition(scaleDegreeIndex);
   }
 
   public getTriadOffsets(scaleDegreeInfo: ScaleDegreeInfo): number[] {

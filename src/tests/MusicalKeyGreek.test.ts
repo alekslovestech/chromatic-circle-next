@@ -1,5 +1,5 @@
 import { MusicalKey } from "../types/Keys/MusicalKey";
-import { NoteConverter } from "../types/NoteConverter";
+import { NoteConverter } from "../utils/NoteConverter";
 import { GreekTestConstants } from "./utils/GreekTestConstants";
 
 function verifyGreekModeScaleNotes(

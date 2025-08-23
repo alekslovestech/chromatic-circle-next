@@ -1,9 +1,9 @@
 import { KeyDisplayMode } from "@/types/SettingModes";
-import { ScaleModeInfo } from "@/types/ScaleModes/ScaleModeInfo";
 import { ixScaleDegreeIndex } from "@/types/ScaleModes/ScaleDegreeType";
 import { ScaleDegreeInfo } from "@/types/ScaleModes/ScaleDegreeInfo";
 import { ScaleDegreeFormatter } from "./ScaleDegreeFormatter";
 import { RomanFormatter } from "./RomanFormatter";
+import { ScaleModeInfo } from "@/types/ScaleModes/ScaleModeInfo";
 
 export class ScaleModeFormatter {
   static formatAllScaleDegreesForDisplay(
@@ -11,12 +11,11 @@ export class ScaleModeFormatter {
     keyTextMode: KeyDisplayMode
   ): string[] {
     return Array.from(
-      { length: scaleModeInfo.scalePattern.getLength() },
+      { length: scaleModeInfo.getScalePatternLength() },
       (_, i) => {
-        const scaleDegreeInfo =
-          scaleModeInfo.scalePattern.getScaleDegreeInfoFromPosition(
-            ixScaleDegreeIndex(i)
-          );
+        const scaleDegreeInfo = scaleModeInfo.getScaleDegreeInfoFromPosition(
+          ixScaleDegreeIndex(i)
+        );
         return this.formatScaleDegreeForDisplay(
           scaleModeInfo,
           scaleDegreeInfo,
