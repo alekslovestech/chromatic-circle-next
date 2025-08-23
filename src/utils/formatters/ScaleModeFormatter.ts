@@ -30,16 +30,13 @@ export class ScaleModeFormatter {
     scaleDegreeInfo: ScaleDegreeInfo,
     keyTextMode: KeyDisplayMode
   ): string {
-    if (keyTextMode === KeyDisplayMode.ScaleDegree) {
-      return ScaleDegreeFormatter.formatForDisplay(scaleDegreeInfo);
+    switch (keyTextMode) {
+      case KeyDisplayMode.ScaleDegree:
+        return ScaleDegreeFormatter.formatForDisplay(scaleDegreeInfo);
+      case KeyDisplayMode.Roman:
+        return RomanFormatter.formatForDisplay(scaleDegreeInfo, scaleModeInfo);
+      default:
+        return "???";
     }
-    if (keyTextMode === KeyDisplayMode.Roman) {
-      const romanChord = RomanFormatter.fromScaleDegreeInfo(
-        scaleDegreeInfo,
-        scaleModeInfo
-      );
-      return RomanFormatter.getString(romanChord);
-    }
-    throw new Error("Unexpected key text mode");
   }
 }

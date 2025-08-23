@@ -11,7 +11,7 @@ export class RomanFormatter {
    * @param scalePattern The scale pattern to use for determining the chord type
    * @returns A new Roman chord with the correct chord type based on the scale pattern
    */
-  static fromScaleDegreeInfo(
+  private static fromScaleDegreeInfo(
     scaleDegreeInfo: ScaleDegreeInfo,
     scaleModeInfo: ScaleModeInfo
   ): RomanChord {
@@ -25,11 +25,11 @@ export class RomanFormatter {
     );
   }
 
-  /**
-   * Gets the string representation of this Roman chord.
-   * @returns The string representation of this Roman chord
-   */
-  static getString(romanChord: RomanChord): string {
+  static formatForDisplay(
+    scaleDegreeInfo: ScaleDegreeInfo,
+    scaleModeInfo: ScaleModeInfo
+  ): string {
+    const romanChord = this.fromScaleDegreeInfo(scaleDegreeInfo, scaleModeInfo);
     const accidentalString = AccidentalFormatter.getAccidentalSignForDisplay(
       romanChord.accidental
     );
