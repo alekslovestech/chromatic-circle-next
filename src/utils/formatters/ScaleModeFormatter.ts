@@ -3,7 +3,7 @@ import { ScaleModeInfo } from "@/types/ScaleModes/ScaleModeInfo";
 import { ixScaleDegreeIndex } from "@/types/ScaleModes/ScaleDegreeType";
 import { ScaleDegreeInfo } from "@/types/ScaleModes/ScaleDegreeInfo";
 import { ScaleDegreeFormatter } from "./ScaleDegreeFormatter";
-import { RomanChord } from "@/types/RomanChord";
+import { RomanFormatter } from "./RomanFormatter";
 
 export class ScaleModeFormatter {
   static formatAllScaleDegreesForDisplay(
@@ -35,11 +35,11 @@ export class ScaleModeFormatter {
       return ScaleDegreeFormatter.formatForDisplay(scaleDegreeInfo);
     }
     if (keyTextMode === KeyDisplayMode.Roman) {
-      const romanChord = RomanChord.fromScaleDegreeInfo(
+      const romanChord = RomanFormatter.fromScaleDegreeInfo(
         scaleDegreeInfo,
         scaleModeInfo
       );
-      return romanChord.getString();
+      return RomanFormatter.getString(romanChord);
     }
     throw new Error("Unexpected key text mode");
   }

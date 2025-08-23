@@ -1,7 +1,6 @@
 import { AccidentalType } from "@/types/enums/AccidentalType";
 import { ChordType } from "@/types/enums/ChordType";
 
-import { AccidentalFormatter } from "@/utils/formatters/AccidentalFormatter";
 import {
   ixScaleDegreeIndex,
   ScaleDegree,
@@ -9,8 +8,6 @@ import {
   ixScaleDegree,
 } from "./ScaleModes/ScaleDegreeType";
 
-import { IScalePatternForRomanChords } from "./IScalePatternForRomanChords";
-import { ScaleDegreeInfo } from "./ScaleModes/ScaleDegreeInfo";
 import { RomanNumeralString } from "./RomanTypes";
 
 export class RomanChord {
@@ -33,26 +30,6 @@ export class RomanChord {
 
   get scaleDegreeIndex(): ScaleDegreeIndex {
     return ixScaleDegreeIndex(this.scaleDegree - 1);
-  }
-
-  /**
-   * Creates a Roman chord from a scale degree info using a scale pattern.
-   * @param scaleDegreeInfo The scale degree info containing the scale degree and accidental
-   * @param scalePattern The scale pattern to use for determining the chord type
-   * @returns A new Roman chord with the correct chord type based on the scale pattern
-   */
-  static fromScaleDegreeInfo(
-    scaleDegreeInfo: ScaleDegreeInfo,
-    scalePattern: IScalePatternForRomanChords
-  ): RomanChord {
-    const offsets = scalePattern.getTriadOffsets(scaleDegreeInfo);
-    const chordType = scalePattern.determineChordType(offsets);
-
-    return new RomanChord(
-      scaleDegreeInfo.scaleDegree,
-      chordType,
-      scaleDegreeInfo.accidentalPrefix
-    );
   }
 
   /**
@@ -187,23 +164,5 @@ export class RomanChord {
       default:
         return "";
     }
-  }
-
-  /**
-   * Gets the string representation of this Roman chord.
-   * @returns The string representation of this Roman chord
-   */
-  getString(): string {
-    const accidentalString = AccidentalFormatter.getAccidentalSignForDisplay(
-      this.accidental
-    );
-    const romanNumeralString = RomanChord.getScaleDegreeAsRomanString(
-      this.scaleDegreeIndex,
-      this.chordType === ChordType.Minor ||
-        this.chordType === ChordType.Diminished
-    );
-    const chordPostfix = RomanChord.getChordTypePostfix(this.chordType);
-
-    return `${accidentalString}${romanNumeralString}${chordPostfix}`;
   }
 }

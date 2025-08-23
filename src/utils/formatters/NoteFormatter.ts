@@ -16,18 +16,4 @@ export class NoteFormatter {
     );
     return `${note.noteName}${accidentalSign}`;
   }
-
-  static formatWithOctaveForDisplay(
-    note: NoteWithOctave,
-    baseOctave: number = 4
-  ): string {
-    return `${this.formatForDisplay(note)}${baseOctave + note.octaveOffset}`;
-  }
-
-  static formatWithOctaveForDebug(
-    note: NoteWithOctave,
-    baseOctave: number = 4
-  ): string {
-    return `${this.formatForDebug(note)}${baseOctave + note.octaveOffset}`;
-  }
 }
