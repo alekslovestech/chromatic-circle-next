@@ -8,7 +8,7 @@ import { ixActualArray } from "@/types/IndexTypes";
 
 import { SpellingUtils } from "@/utils/SpellingUtils";
 import { SpellingTestUtils } from "./utils/SpellingTestUtils";
-import { NoteWithOctave } from "@/types/NoteWithOctave";
+import { createNoteWithOctave } from "@/types/interfaces/NoteWithOctave";
 import { VexFlowFormatter } from "@/utils/formatters/VexFlowFormatter";
 
 describe("SpellingFreeform - Key-based note spelling", () => {
@@ -21,7 +21,7 @@ describe("SpellingFreeform - Key-based note spelling", () => {
 
       expect(result).toHaveLength(1);
       SpellingTestUtils.verifyNoteWithOctaveArray(result, [
-        new NoteWithOctave("G", AccidentalType.None, 0),
+        createNoteWithOctave("G", AccidentalType.None, 0),
       ]);
     });
 
@@ -33,7 +33,7 @@ describe("SpellingFreeform - Key-based note spelling", () => {
 
       expect(result).toHaveLength(1);
       SpellingTestUtils.verifyNoteWithOctaveArray(result, [
-        new NoteWithOctave("G", AccidentalType.Sharp, 0),
+        createNoteWithOctave("G", AccidentalType.Sharp, 0),
       ]);
     });
 
@@ -45,7 +45,7 @@ describe("SpellingFreeform - Key-based note spelling", () => {
 
       expect(result).toHaveLength(1);
       SpellingTestUtils.verifyNoteWithOctaveArray(result, [
-        new NoteWithOctave("C", AccidentalType.Sharp, 1),
+        createNoteWithOctave("C", AccidentalType.Sharp, 1),
       ]);
     });
 
@@ -57,9 +57,9 @@ describe("SpellingFreeform - Key-based note spelling", () => {
 
       expect(result).toHaveLength(3);
       SpellingTestUtils.verifyNoteWithOctaveArray(result, [
-        new NoteWithOctave("G", AccidentalType.None, 0),
-        new NoteWithOctave("B", AccidentalType.None, 0),
-        new NoteWithOctave("D", AccidentalType.None, 1),
+        createNoteWithOctave("G", AccidentalType.None, 0),
+        createNoteWithOctave("B", AccidentalType.None, 0),
+        createNoteWithOctave("D", AccidentalType.None, 1),
       ]);
     });
 
@@ -72,8 +72,8 @@ describe("SpellingFreeform - Key-based note spelling", () => {
 
       expect(result).toHaveLength(2);
       SpellingTestUtils.verifyNoteWithOctaveArray(result, [
-        new NoteWithOctave("A", AccidentalType.None, 0),
-        new NoteWithOctave("C", AccidentalType.None, 1),
+        createNoteWithOctave("A", AccidentalType.None, 0),
+        createNoteWithOctave("C", AccidentalType.None, 1),
       ]);
     });
 
@@ -98,8 +98,8 @@ describe("SpellingFreeform - Key-based note spelling", () => {
 
       expect(result).toHaveLength(2); // Raw notes
       SpellingTestUtils.verifyNoteWithOctaveArray(result, [
-        new NoteWithOctave("G", AccidentalType.None, 0),
-        new NoteWithOctave("G", AccidentalType.Sharp, 0),
+        createNoteWithOctave("G", AccidentalType.None, 0),
+        createNoteWithOctave("G", AccidentalType.Sharp, 0),
       ]);
     });
 
@@ -113,7 +113,7 @@ describe("SpellingFreeform - Key-based note spelling", () => {
 
       expect(result).toHaveLength(1); // Just the raw note
       SpellingTestUtils.verifyNoteWithOctaveArray(result, [
-        new NoteWithOctave("G", AccidentalType.None, 0),
+        createNoteWithOctave("G", AccidentalType.None, 0),
       ]);
     });
 

@@ -1,17 +1,12 @@
 import { AccidentalType } from "@/types/enums/AccidentalType";
 import { ChordType } from "@/types/enums/ChordType";
 
-import { AccidentalFormatter } from "@/utils/formatters/AccidentalTypeDisplay";
 import {
   ixScaleDegreeIndex,
   ScaleDegree,
   ScaleDegreeIndex,
   ixScaleDegree,
 } from "./ScaleModes/ScaleDegreeType";
-
-import { IScalePatternForRomanChords } from "./IScalePatternForRomanChords";
-import { ScaleDegreeInfo } from "./ScaleModes/ScaleDegreeInfo";
-import { RomanNumeralString } from "./RomanTypes";
 
 export class RomanChord {
   //implements IRomanChord {
@@ -33,26 +28,6 @@ export class RomanChord {
 
   get scaleDegreeIndex(): ScaleDegreeIndex {
     return ixScaleDegreeIndex(this.scaleDegree - 1);
-  }
-
-  /**
-   * Creates a Roman chord from a scale degree info using a scale pattern.
-   * @param scaleDegreeInfo The scale degree info containing the scale degree and accidental
-   * @param scalePattern The scale pattern to use for determining the chord type
-   * @returns A new Roman chord with the correct chord type based on the scale pattern
-   */
-  static fromScaleDegreeInfo(
-    scaleDegreeInfo: ScaleDegreeInfo,
-    scalePattern: IScalePatternForRomanChords
-  ): RomanChord {
-    const offsets = scalePattern.getTriadOffsets(scaleDegreeInfo);
-    const chordType = scalePattern.determineChordType(offsets);
-
-    return new RomanChord(
-      scaleDegreeInfo.scaleDegree,
-      chordType,
-      scaleDegreeInfo.accidentalPrefix
-    );
   }
 
   /**
@@ -89,40 +64,6 @@ export class RomanChord {
    */
   static isLowercaseRomanNumeral(numeral: string): boolean {
     return numeral.toLowerCase() === numeral;
-  }
-
-  /**
-   * Converts a scale degree index to a Roman numeral string.
-   * @param scaleDegreeIndex The scale degree index (0-6)
-   * @param isLowercase Whether to use lowercase numerals
-   * @returns The Roman numeral string
-   */
-  static getScaleDegreeAsRomanString(
-    scaleDegreeIndex: ScaleDegreeIndex,
-    isLowercase: boolean = false
-  ): RomanNumeralString {
-    const bigNumerals: RomanNumeralString[] = [
-      "I",
-      "II",
-      "III",
-      "IV",
-      "V",
-      "VI",
-      "VII",
-    ];
-    const smallNumerals: RomanNumeralString[] = [
-      "i",
-      "ii",
-      "iii",
-      "iv",
-      "v",
-      "vi",
-      "vii",
-    ];
-
-    return isLowercase
-      ? smallNumerals[scaleDegreeIndex]
-      : bigNumerals[scaleDegreeIndex];
   }
 
   /**
@@ -163,47 +104,5 @@ export class RomanChord {
     }
 
     return chordType;
-  }
-
-  /**
-   * Gets the postfix string for a chord type.
-   * @param chordType The chord type
-   * @returns The postfix string for the chord type
-   */
-  static getChordTypePostfix(chordType: ChordType): string {
-    switch (chordType) {
-      case ChordType.Diminished:
-        return "°";
-      case ChordType.Augmented:
-        return "+";
-      case ChordType.Minor:
-      case ChordType.Major:
-      case ChordType.Dominant7:
-      case ChordType.Minor7:
-      case ChordType.Major7:
-      case ChordType.Diminished7:
-      case ChordType.HalfDiminished:
-        return "";
-      default:
-        return "";
-    }
-  }
-
-  /**
-   * Gets the string representation of this Roman chord.
-   * @returns The string representation of this Roman chord
-   */
-  getString(): string {
-    const accidentalString = AccidentalFormatter.getAccidentalSignForDisplay(
-      this.accidental
-    );
-    const romanNumeralString = RomanChord.getScaleDegreeAsRomanString(
-      this.scaleDegreeIndex,
-      this.chordType === ChordType.Minor ||
-        this.chordType === ChordType.Diminished
-    );
-    const chordPostfix = RomanChord.getChordTypePostfix(this.chordType);
-
-    return `${accidentalString}${romanNumeralString}${chordPostfix}`;
   }
 }

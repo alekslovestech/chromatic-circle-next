@@ -1,6 +1,6 @@
 import { AccidentalType } from "@/types/enums/AccidentalType";
 
-import { NoteConverter } from "@/types/NoteConverter";
+import { NoteConverter } from "@/utils/NoteConverter";
 import { ixActual } from "@/types/IndexTypes";
 
 describe("getNoteTextFromActualIndex", () => {

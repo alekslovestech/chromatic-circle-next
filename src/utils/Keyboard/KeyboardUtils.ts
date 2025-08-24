@@ -1,12 +1,14 @@
+import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
+
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { NoteGroupingId } from "@/types/NoteGroupingId";
-import { KeyDisplayMode } from "@/types/SettingModes";
 
 import { SpellingUtils } from "@/utils/SpellingUtils";
 import { NoteFormatter } from "@/utils/formatters/NoteFormatter";
 import { IndexUtils } from "@/utils/IndexUtils";
+import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
 
 export class KeyboardUtils {
   static StringWithPaddedIndex(prefix: string, index: number): string {
@@ -25,8 +27,26 @@ export class KeyboardUtils {
     );
   }
 
-  // Computes the note text to display on a keyboard key based on chord context
-  static computeNoteText(
+  static computeNoteTextForScalesMode(
+    chromaticIndex: ChromaticIndex,
+    selectedMusicalKey: MusicalKey,
+    keyDisplayMode: KeyDisplayMode
+  ): string {
+    const isDiatonic = selectedMusicalKey.scaleModeInfo.isDiatonicNote(
+      chromaticIndex,
+      selectedMusicalKey.tonicIndex
+    );
+
+    return !isDiatonic
+      ? ""
+      : MusicalKeyFormatter.formatNoteForDisplay(
+          selectedMusicalKey,
+          chromaticIndex,
+          keyDisplayMode
+        );
+  }
+
+  static computeNoteTextForDefaultMode(
     chromaticIndex: ChromaticIndex,
     isSelected: boolean,
     selectedNoteIndices: ActualIndex[],
@@ -38,7 +58,8 @@ export class KeyboardUtils {
 
     // White keys: always show note text using key signature
     if (!isBlackKey) {
-      return selectedMusicalKey.getDisplayString(
+      return MusicalKeyFormatter.formatNoteForDisplay(
+        selectedMusicalKey,
         chromaticIndex,
         KeyDisplayMode.NoteNames
       );

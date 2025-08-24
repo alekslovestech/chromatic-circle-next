@@ -1,9 +1,14 @@
 import { MusicalKey } from "../types/Keys/MusicalKey";
-import { NoteConverter } from "../types/NoteConverter";
+import { NoteConverter } from "../utils/NoteConverter";
 import { GreekTestConstants } from "./utils/GreekTestConstants";
 
-function verifyGreekModeScaleNotes(musicalKey: MusicalKey, expectedNotes: string[]) {
-  const noteList = musicalKey.greekModeInfo.getAbsoluteScaleNotes(musicalKey.tonicIndex);
+function verifyGreekModeScaleNotes(
+  musicalKey: MusicalKey,
+  expectedNotes: string[]
+) {
+  const noteList = musicalKey.scaleModeInfo.getAbsoluteScaleNotes(
+    musicalKey.tonicIndex
+  );
   const expectedIndices = NoteConverter.noteArrayToIndices(expectedNotes);
   expect(noteList).toEqual(expectedIndices);
 }

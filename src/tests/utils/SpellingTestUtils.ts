@@ -1,4 +1,4 @@
-import { NoteWithOctave } from "@/types/NoteWithOctave";
+import { NoteWithOctave } from "@/types/interfaces/NoteWithOctave";
 
 export class SpellingTestUtils {
   static verifyNoteWithOctaveArray(

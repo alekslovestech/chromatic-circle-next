@@ -1,11 +1,12 @@
 import { AccidentalType } from "@/types/enums/AccidentalType";
 import { ChordType } from "@/types/enums/ChordType";
 import { ChordQuality } from "@/types/enums/ChordQuality";
+import { IntervalType } from "@/types/enums/IntervalType";
 
 import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { ChromaticIndex } from "@/types/ChromaticIndex";
-import { IntervalType } from "@/types/enums/IntervalType";
-import { IndexUtils } from "../IndexUtils";
+
+import { IndexUtils } from "@/utils/IndexUtils";
 
 export class AccidentalPreferenceResolver {
   static getChordPresetSpellingPreference(

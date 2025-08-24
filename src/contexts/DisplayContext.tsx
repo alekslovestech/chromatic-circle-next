@@ -1,12 +1,12 @@
 "use client";
 
 import React, { createContext, useState, useContext, ReactNode } from "react";
-import {
-  CircularVisMode,
-  ChordDisplayMode,
-  KeyDisplayMode,
-} from "@/types/SettingModes";
+
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
+
+import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
+import { CircularVisMode } from "@/types/SettingModes";
+import { ChordDisplayMode } from "@/types/SettingModes";
 
 export interface DisplaySettings {
   circularVisMode: CircularVisMode;

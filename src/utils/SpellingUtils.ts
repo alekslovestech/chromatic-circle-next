@@ -9,7 +9,7 @@ import {
   InversionIndex,
 } from "@/types/IndexTypes";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
-import { NoteWithOctave } from "@/types/NoteWithOctave";
+import { NoteWithOctave } from "@/types/interfaces/NoteWithOctave";
 
 import { ChordUtils } from "@/utils/ChordUtils";
 import { IndexUtils } from "@/utils/IndexUtils";
@@ -37,15 +37,15 @@ export class SpellingUtils {
     selectedNoteIndices: ActualIndex[], // The full chord
     selectedMusicalKey: MusicalKey,
     selectedChordType: NoteGroupingId,
-    isChordsOrIntervals: boolean
+    isChordsOrIntervals: boolean,
+    isScalesMode?: boolean
   ): NoteWithOctave | null {
     if (selectedNoteIndices.length === 0) return null;
 
     // Use the same decision logic as computeStaffNotes
-    const isChordPresetKnown = this.isChordPresetKnown(
-      selectedChordType,
-      isChordsOrIntervals
-    );
+    const isChordPresetKnown = isScalesMode
+      ? false
+      : this.isChordPresetKnown(selectedChordType, isChordsOrIntervals);
 
     let spelledNotes: NoteWithOctave[];
 
@@ -152,14 +152,16 @@ export class SpellingUtils {
     selectedNoteIndices: ActualIndex[],
     selectedMusicalKey: MusicalKey,
     selectedChordType: NoteGroupingId,
-    isChordsOrIntervals: boolean
+    isChordsOrIntervals: boolean,
+    isScalesMode?: boolean // Add this parameter
   ): NoteWithOctave[] {
     if (selectedNoteIndices.length === 0) return [];
 
-    const isChordPresetKnown = this.isChordPresetKnown(
-      selectedChordType,
-      isChordsOrIntervals
-    );
+    // In scales mode, always use key-based spelling regardless of chord presets
+    const isChordPresetKnown = isScalesMode
+      ? false
+      : this.isChordPresetKnown(selectedChordType, isChordsOrIntervals);
+
     const chordMatch =
       MusicalDisplayFormatter.getMatchFromIndices(selectedNoteIndices);
     return isChordPresetKnown

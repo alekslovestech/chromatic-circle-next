@@ -1,5 +1,6 @@
+import { TWELVE } from "@/types/constants/NoteConstants";
+import { AccidentalType } from "@/types/enums/AccidentalType";
 import { SpecialType } from "@/types/enums/SpecialType";
-import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { ChordType } from "@/types/enums/ChordType";
 import { NoteGroupingType } from "@/types/enums/NoteGroupingType";
 
@@ -8,6 +9,7 @@ import { ChordMatch } from "@/types/interfaces/ChordMatch";
 
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 
+import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { ChordDisplayMode } from "@/types/SettingModes";
 import {
   ActualIndex,
@@ -19,13 +21,12 @@ import {
 } from "@/types/IndexTypes";
 import { NoteGrouping } from "@/types/NoteGrouping";
 import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
-import { NoteConverter } from "@/types/NoteConverter";
-import { AccidentalType } from "@/types/enums/AccidentalType";
-import { TWELVE } from "@/types/constants/NoteConstants";
 
-import { IndexUtils } from "../IndexUtils";
-import { SpellingUtils } from "../SpellingUtils";
-import { ChordUtils } from "../ChordUtils";
+import { NoteConverter } from "@/utils/NoteConverter";
+import { IndexUtils } from "@/utils/IndexUtils";
+import { SpellingUtils } from "@/utils/SpellingUtils";
+import { ChordUtils } from "@/utils/ChordUtils";
+
 import { NoteFormatter } from "./NoteFormatter";
 
 export class MusicalDisplayFormatter {
@@ -46,6 +47,7 @@ export class MusicalDisplayFormatter {
     const noteGroupingString = noteGrouping.toString();
     return { noteGroupingString, chordName };
   }
+
   static getChordPresetDisplayInfo(
     selectedNoteIndices: ActualIndex[],
     selectedChordType: NoteGroupingId,

@@ -1,4 +1,4 @@
-import { AccidentalType } from "../../types/enums/AccidentalType";
+import { AccidentalType } from "@/types/enums/AccidentalType";
 
 export class AccidentalFormatter {
   //mostly used in for text on keyboards / accidental toggle
@@ -49,6 +49,23 @@ export class AccidentalFormatter {
         return "";
     }
   };
+
+  //accidental string can be in display format, or debug format
+  static parseAccidentalType(accidentalString: string): AccidentalType {
+    switch (accidentalString) {
+      case "#":
+      case "♯":
+        return AccidentalType.Sharp;
+      case "b":
+      case "♭":
+        return AccidentalType.Flat;
+      case "n":
+      case "♮":
+        return AccidentalType.Natural;
+      default:
+        return AccidentalType.None;
+    }
+  }
 }
 
 export const getOppositeAccidental = (

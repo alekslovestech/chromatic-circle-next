@@ -24,7 +24,7 @@ export class VisualStateUtils {
     isBlack: boolean,
     isSelected: boolean
   ): PureColors {
-    const isDiatonic = musicalKey.greekModeInfo.isDiatonicNote(
+    const isDiatonic = musicalKey.scaleModeInfo.isDiatonicNote(
       chromaticIndex,
       musicalKey.tonicIndex
     );

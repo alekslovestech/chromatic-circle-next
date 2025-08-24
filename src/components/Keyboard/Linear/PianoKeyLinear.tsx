@@ -1,9 +1,12 @@
 import React from "react";
 
+import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
+
 import {
   ActualIndex,
   actualIndexToChromaticAndOctave,
 } from "@/types/IndexTypes";
+import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
 
 import { IndexUtils } from "@/utils/IndexUtils";
 import { LinearKeyboardUtils } from "@/utils/Keyboard/Linear/LinearKeyboardUtils";
@@ -12,7 +15,6 @@ import { KeyboardUtils } from "@/utils/Keyboard/KeyboardUtils";
 
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
-import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 import {
   useChordPresets,
   useIsChordsOrIntervals,
@@ -57,14 +59,20 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   if (isScales) baseClasses.push("disabled");
 
   const id = KeyboardUtils.StringWithPaddedIndex("linearKey", actualIndex);
-  const noteText = KeyboardUtils.computeNoteText(
-    chromaticIndex,
-    isSelected,
-    selectedNoteIndices,
-    selectedMusicalKey,
-    selectedChordType,
-    isChordsOrIntervals
-  );
+  const noteText = isScales
+    ? KeyboardUtils.computeNoteTextForScalesMode(
+        chromaticIndex,
+        selectedMusicalKey,
+        KeyDisplayMode.NoteNames
+      )
+    : KeyboardUtils.computeNoteTextForDefaultMode(
+        chromaticIndex,
+        isSelected,
+        selectedNoteIndices,
+        selectedMusicalKey,
+        selectedChordType,
+        isChordsOrIntervals
+      );
 
   const allBaseClasses = baseClasses.join(" ");
   return (

@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
 
+import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
+
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
 
@@ -69,14 +71,20 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   if (isScales) baseClasses.push("disabled");
 
   const id = KeyboardUtils.StringWithPaddedIndex("circularKey", chromaticIndex);
-  const noteText = KeyboardUtils.computeNoteText(
-    chromaticIndex,
-    isSelected,
-    selectedNoteIndices,
-    selectedMusicalKey,
-    selectedChordType,
-    isChordsOrIntervals
-  );
+  const noteText = isScales
+    ? KeyboardUtils.computeNoteTextForScalesMode(
+        chromaticIndex,
+        selectedMusicalKey,
+        KeyDisplayMode.ScaleDegree
+      )
+    : KeyboardUtils.computeNoteTextForDefaultMode(
+        chromaticIndex,
+        isSelected,
+        selectedNoteIndices,
+        selectedMusicalKey,
+        selectedChordType,
+        isChordsOrIntervals
+      );
 
   return (
     <g

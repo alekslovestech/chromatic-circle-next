@@ -1,18 +1,24 @@
-import { ScaleModeLibrary } from "../types/ScaleModes/ScaleModeLibrary";
-import { ScaleModeType } from "../types/enums/ScaleModeType";
-import { MusicalKey } from "../types/Keys/MusicalKey";
-import { TWELVE } from "../types/constants/NoteConstants";
-import { KeyDisplayMode } from "../types/SettingModes";
+import { TWELVE } from "@/types/constants/NoteConstants";
+import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
+import { ScaleModeType } from "@/types/enums/ScaleModeType";
+
+import { ScaleModeLibrary } from "@/types/ScaleModes/ScaleModeLibrary";
+import { MusicalKey } from "@/types/Keys/MusicalKey";
+
+import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
+import { ScaleModeFormatter } from "@/utils/formatters/ScaleModeFormatter";
 import { GreekTestConstants } from "./utils/GreekTestConstants";
 
 function verifyRomanDisplayStrings(
   greekMode: ScaleModeType,
   expectedNotes: string[]
 ) {
-  const greekModeInfo = ScaleModeLibrary.getModeInfo(greekMode);
-  const romanDisplayStrings = greekModeInfo.getDisplayStrings(
-    KeyDisplayMode.Roman
-  );
+  const scaleModeInfo = ScaleModeLibrary.getModeInfo(greekMode);
+  const romanDisplayStrings =
+    ScaleModeFormatter.formatAllScaleDegreesForDisplay(
+      scaleModeInfo,
+      KeyDisplayMode.Roman
+    );
 
   expect(romanDisplayStrings).toEqual(expectedNotes);
 }
@@ -20,7 +26,10 @@ function verifyRomanDisplayStrings(
 function verifyRomanArray(musicalKey: MusicalKey, expectedArray: string[]) {
   expect(expectedArray.length).toBe(TWELVE);
 
-  const displayStrings = musicalKey.getDisplayStringArray(KeyDisplayMode.Roman);
+  const displayStrings = MusicalKeyFormatter.formatAllNotesForDisplay(
+    musicalKey,
+    KeyDisplayMode.Roman
+  );
   expect(displayStrings).toEqual(expectedArray);
 }
 describe("Roman Mode Index Arrays", () => {

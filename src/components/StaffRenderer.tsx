@@ -2,9 +2,6 @@
 import React, { useEffect, useRef } from "react";
 import { Factory } from "vexflow";
 
-import { MusicalKey } from "@/types/Keys/MusicalKey";
-import { isMajor } from "@/types/enums/KeyType";
-
 import { COMMON_STYLES } from "@/lib/design";
 import { useBorder } from "@/lib/hooks";
 import { useMusical } from "@/contexts/MusicalContext";
@@ -19,12 +16,6 @@ import { VexFlowFormatter } from "@/utils/formatters/VexFlowFormatter";
 interface StaffRendererProps {
   style?: React.CSSProperties;
 }
-
-const getKeySignatureForVex = (musicalKey: MusicalKey) => {
-  const pureKey = musicalKey.tonicString;
-  const majorMinor = isMajor(musicalKey.classicalMode) ? "" : "m";
-  return pureKey + majorMinor;
-};
 
 export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
   const staffDivRef = useRef<HTMLDivElement>(null);
@@ -60,9 +51,9 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
     });
 
     const canonicalIonianKey = selectedMusicalKey.getCanonicalIonianKey();
-    stave
-      .addClef("treble")
-      .addKeySignature(getKeySignatureForVex(canonicalIonianKey));
+    const keySignature =
+      VexFlowFormatter.getKeySignatureForVex(canonicalIonianKey);
+    stave.addClef("treble").addKeySignature(keySignature);
     stave.setStyle({ strokeStyle: "black" });
     stave.setContext(context).draw();
 
@@ -75,8 +66,6 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
       selectedChordType,
       isChordsOrIntervals
     );
-
-    console.log("notesWithOctaves", notesWithOctaves);
 
     // Step 2: Render NoteWithOctave[] to VexFlow - pure rendering logic
     const notes = VexFlowFormatter.createVexFlowNotesFromNoteWithOctaves(

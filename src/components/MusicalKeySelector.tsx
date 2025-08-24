@@ -25,7 +25,7 @@ export const MusicalKeySelector = ({
     const tonicName = event.target.value as string;
 
     const newKey = useDropdownSelector
-      ? MusicalKey.fromGreekMode(tonicName, selectedMusicalKey.greekMode)
+      ? MusicalKey.fromGreekMode(tonicName, selectedMusicalKey.scaleMode)
       : MusicalKey.fromClassicalMode(
           tonicName,
           selectedMusicalKey.classicalMode
@@ -79,7 +79,7 @@ export const MusicalKeySelector = ({
           <TonicSelector />
           <Select
             id="greek-mode-select"
-            value={selectedMusicalKey.greekMode}
+            value={selectedMusicalKey.scaleMode}
             onChange={handleGreekModeChange}
             title="Select musical mode"
           >

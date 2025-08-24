@@ -1,8 +1,11 @@
-import { ScaleModeLibrary } from "../types/ScaleModes/ScaleModeLibrary";
-import { ScaleModeType } from "../types/enums/ScaleModeType";
-import { MusicalKey } from "../types/Keys/MusicalKey";
-import { TWELVE } from "../types/constants/NoteConstants";
-import { KeyDisplayMode } from "../types/SettingModes";
+import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
+import { ScaleModeType } from "@/types/enums/ScaleModeType";
+import { MusicalKey } from "@/types/Keys/MusicalKey";
+import { ScaleModeLibrary } from "@/types/ScaleModes/ScaleModeLibrary";
+import { TWELVE } from "@/types/constants/NoteConstants";
+
+import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
+import { ScaleModeFormatter } from "@/utils/formatters/ScaleModeFormatter";
 import { GreekTestConstants } from "./utils/GreekTestConstants";
 
 function verifyScaleDegreeDisplayStrings(
@@ -10,7 +13,8 @@ function verifyScaleDegreeDisplayStrings(
   expectedNotes: string[]
 ) {
   const greekModeInfo = ScaleModeLibrary.getModeInfo(greekMode);
-  const displayStrings = greekModeInfo.getDisplayStrings(
+  const displayStrings = ScaleModeFormatter.formatAllScaleDegreesForDisplay(
+    greekModeInfo,
     KeyDisplayMode.ScaleDegree
   );
   expect(displayStrings).toEqual(expectedNotes);
@@ -22,7 +26,8 @@ function verifyScaleDegreesArray(
 ) {
   expect(expectedArray.length).toBe(TWELVE);
 
-  const displayStrings = musicalKey.getDisplayStringArray(
+  const displayStrings = MusicalKeyFormatter.formatAllNotesForDisplay(
+    musicalKey,
     KeyDisplayMode.ScaleDegree
   );
   expect(displayStrings).toEqual(expectedArray);
