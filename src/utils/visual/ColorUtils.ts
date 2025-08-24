@@ -1,3 +1,4 @@
+import { makeChromaticIndex, subChromatic } from "@/types/ChromaticIndex";
 import { ActualIndex } from "@/types/IndexTypes";
 import { TWELVE } from "@/types/constants/NoteConstants";
 
@@ -11,7 +12,7 @@ export class ColorUtils {
   }
 
   static cyclicIntervalsFromActualIndices(indices: number[]): number[] {
-    const pcs = indices.map((index) => (index + TWELVE) % TWELVE);
+    const pcs = indices.map((index) => makeChromaticIndex(index));
     const sortedPcs = pcs.sort((a, b) => a - b);
     return this.cyclicIntervals(sortedPcs);
   }
@@ -26,7 +27,7 @@ export class ColorUtils {
     for (let i = 0; i < len; i++) {
       const current = sortedPcs[i];
       const next = sortedPcs[(i + 1) % len];
-      const diff = (next - current + TWELVE) % TWELVE;
+      const diff = subChromatic(next, current);
       intervals.push(diff);
     }
 

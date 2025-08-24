@@ -1,6 +1,6 @@
 import { TWELVE, TWENTY4 } from "@/types/constants/NoteConstants";
 
-import { ChromaticIndex } from "@/types/ChromaticIndex";
+import { ChromaticIndex, subChromatic } from "@/types/ChromaticIndex";
 import { ActualIndex, InversionIndex } from "@/types/IndexTypes";
 
 export class IndexUtils {
@@ -11,7 +11,9 @@ export class IndexUtils {
   //everything relative to root note
   static normalizeIndices(indices: number[]): number[] {
     const rootNote = indices[0];
-    return indices.map((note) => (note - rootNote + TWELVE) % TWELVE);
+    return indices.map((note) =>
+      subChromatic(note as ChromaticIndex, rootNote)
+    );
   }
 
   static fitChordToAbsoluteRange(indices: number[]): number[] {
