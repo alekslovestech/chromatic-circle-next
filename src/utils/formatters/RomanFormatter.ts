@@ -2,8 +2,8 @@ import { ChordType } from "@/types/enums/ChordType";
 import { RomanChord } from "@/types/RomanChord";
 import { ScaleDegreeInfo } from "@/types/ScaleModes/ScaleDegreeInfo";
 import { ScaleModeInfo } from "@/types/ScaleModes/ScaleModeInfo";
-import { AccidentalFormatter } from "./AccidentalFormatter";
 import { RomanNumeralString } from "@/types/RomanTypes";
+import { AccidentalFormatter } from "./AccidentalFormatter";
 
 export class RomanFormatter {
   static formatForDisplay(

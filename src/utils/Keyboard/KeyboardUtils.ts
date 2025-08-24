@@ -28,7 +28,8 @@ export class KeyboardUtils {
 
   static computeNoteTextForScalesMode(
     chromaticIndex: ChromaticIndex,
-    selectedMusicalKey: MusicalKey
+    selectedMusicalKey: MusicalKey,
+    keyDisplayMode: KeyDisplayMode
   ): string {
     const isDiatonic = selectedMusicalKey.scaleModeInfo.isDiatonicNote(
       chromaticIndex,
@@ -40,7 +41,7 @@ export class KeyboardUtils {
       : MusicalKeyFormatter.formatNoteForDisplay(
           selectedMusicalKey,
           chromaticIndex,
-          KeyDisplayMode.NoteNames
+          keyDisplayMode
         );
   }
 

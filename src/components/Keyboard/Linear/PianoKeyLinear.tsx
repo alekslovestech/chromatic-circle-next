@@ -1,9 +1,12 @@
 import React from "react";
 
+import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
+
 import {
   ActualIndex,
   actualIndexToChromaticAndOctave,
 } from "@/types/IndexTypes";
+import { KeyDisplayMode } from "@/types/SettingModes";
 
 import { IndexUtils } from "@/utils/IndexUtils";
 import { LinearKeyboardUtils } from "@/utils/Keyboard/Linear/LinearKeyboardUtils";
@@ -12,7 +15,6 @@ import { KeyboardUtils } from "@/utils/Keyboard/KeyboardUtils";
 
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
-import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 import {
   useChordPresets,
   useIsChordsOrIntervals,
@@ -60,7 +62,8 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   const noteText = isScales
     ? KeyboardUtils.computeNoteTextForScalesMode(
         chromaticIndex,
-        selectedMusicalKey
+        selectedMusicalKey,
+        KeyDisplayMode.NoteNames
       )
     : KeyboardUtils.computeNoteTextForDefaultMode(
         chromaticIndex,

@@ -1,9 +1,10 @@
 import { KeyDisplayMode } from "@/types/SettingModes";
 import { ixScaleDegreeIndex } from "@/types/ScaleModes/ScaleDegreeType";
 import { ScaleDegreeInfo } from "@/types/ScaleModes/ScaleDegreeInfo";
-import { ScaleDegreeFormatter } from "./ScaleDegreeFormatter";
-import { RomanFormatter } from "./RomanFormatter";
 import { ScaleModeInfo } from "@/types/ScaleModes/ScaleModeInfo";
+
+import { RomanFormatter } from "./RomanFormatter";
+import { ScaleDegreeFormatter } from "./ScaleDegreeFormatter";
 
 export class ScaleModeFormatter {
   static formatAllScaleDegreesForDisplay(

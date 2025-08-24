@@ -3,6 +3,7 @@ import React from "react";
 
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
+import { KeyDisplayMode } from "@/types/SettingModes";
 
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 
@@ -72,7 +73,8 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   const noteText = isScales
     ? KeyboardUtils.computeNoteTextForScalesMode(
         chromaticIndex,
-        selectedMusicalKey
+        selectedMusicalKey,
+        KeyDisplayMode.ScaleDegree
       )
     : KeyboardUtils.computeNoteTextForDefaultMode(
         chromaticIndex,

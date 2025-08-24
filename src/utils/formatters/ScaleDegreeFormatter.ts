@@ -4,10 +4,9 @@ import { AccidentalFormatter } from "./AccidentalFormatter";
 
 export class ScaleDegreeFormatter {
   static formatForDisplay(scaleDegreeInfo: ScaleDegreeInfo): string {
-    return (
-      AccidentalFormatter.getAccidentalSignForDisplay(
-        scaleDegreeInfo.accidentalPrefix
-      ) + scaleDegreeInfo.scaleDegree.toString()
-    );
+    const { accidentalPrefix, scaleDegree } = scaleDegreeInfo;
+    const accidentalSign =
+      AccidentalFormatter.getAccidentalSignForDisplay(accidentalPrefix);
+    return `${accidentalSign}${scaleDegree.toString()}`;
   }
 }
