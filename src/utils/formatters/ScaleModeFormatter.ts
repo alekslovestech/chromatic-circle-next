@@ -1,4 +1,4 @@
-import { KeyDisplayMode } from "@/types/SettingModes";
+import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
 import { ixScaleDegreeIndex } from "@/types/ScaleModes/ScaleDegreeType";
 import { ScaleDegreeInfo } from "@/types/ScaleModes/ScaleDegreeInfo";
 import { ScaleModeInfo } from "@/types/ScaleModes/ScaleModeInfo";

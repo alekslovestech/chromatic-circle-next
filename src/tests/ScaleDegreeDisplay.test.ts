@@ -1,11 +1,12 @@
-import { ScaleModeLibrary } from "../types/ScaleModes/ScaleModeLibrary";
-import { ScaleModeType } from "../types/enums/ScaleModeType";
-import { MusicalKey } from "../types/Keys/MusicalKey";
-import { TWELVE } from "../types/constants/NoteConstants";
-import { KeyDisplayMode } from "../types/SettingModes";
-import { GreekTestConstants } from "./utils/GreekTestConstants";
+import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
+import { ScaleModeType } from "@/types/enums/ScaleModeType";
+import { MusicalKey } from "@/types/Keys/MusicalKey";
+import { ScaleModeLibrary } from "@/types/ScaleModes/ScaleModeLibrary";
+import { TWELVE } from "@/types/constants/NoteConstants";
+
 import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
 import { ScaleModeFormatter } from "@/utils/formatters/ScaleModeFormatter";
+import { GreekTestConstants } from "./utils/GreekTestConstants";
 
 function verifyScaleDegreeDisplayStrings(
   greekMode: ScaleModeType,

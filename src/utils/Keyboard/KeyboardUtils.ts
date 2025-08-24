@@ -1,8 +1,9 @@
+import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
+
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { NoteGroupingId } from "@/types/NoteGroupingId";
-import { KeyDisplayMode } from "@/types/SettingModes";
 
 import { SpellingUtils } from "@/utils/SpellingUtils";
 import { NoteFormatter } from "@/utils/formatters/NoteFormatter";

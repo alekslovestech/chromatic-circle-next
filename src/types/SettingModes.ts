@@ -19,9 +19,3 @@ export enum CircularVisMode {
   Radial = "Radial",
   Polygon = "Polygon",
 }
-
-export enum KeyDisplayMode {
-  NoteNames = "Note Names",
-  ScaleDegree = "Scale Degree",
-  Roman = "Roman",
-}

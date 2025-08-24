@@ -1,9 +1,10 @@
 "use client";
 import React from "react";
 
+import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
+
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
-import { KeyDisplayMode } from "@/types/SettingModes";
 
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 

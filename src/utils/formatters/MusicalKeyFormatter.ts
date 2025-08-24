@@ -1,7 +1,8 @@
+import { TWELVE } from "@/types/constants/NoteConstants";
+import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
+
 import { ChromaticIndex, ixChromatic } from "@/types/ChromaticIndex";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
-import { KeyDisplayMode } from "@/types/SettingModes";
-import { TWELVE } from "@/types/constants/NoteConstants";
 
 import { ChromaticNoteResolver } from "@/utils/resolvers/ChromaticNoteResolver";
 

@@ -1,9 +1,11 @@
 "use client";
 import React from "react";
-import { useDisplay } from "@/contexts/DisplayContext";
-import { KeyDisplayMode } from "@/types/SettingModes";
+
 import { Button } from "@/components/Common/Button";
 import { SectionTitle } from "@/components/Common/SectionTitle";
+
+import { useDisplay } from "@/contexts/DisplayContext";
+import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
 
 interface DisplayModeOption {
   id: string;

@@ -6,7 +6,7 @@ import {
   ActualIndex,
   actualIndexToChromaticAndOctave,
 } from "@/types/IndexTypes";
-import { KeyDisplayMode } from "@/types/SettingModes";
+import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
 
 import { IndexUtils } from "@/utils/IndexUtils";
 import { LinearKeyboardUtils } from "@/utils/Keyboard/Linear/LinearKeyboardUtils";
