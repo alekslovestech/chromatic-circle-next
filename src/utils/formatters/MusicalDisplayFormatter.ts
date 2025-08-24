@@ -5,7 +5,7 @@ import { ChordType } from "@/types/enums/ChordType";
 import { NoteGroupingType } from "@/types/enums/NoteGroupingType";
 
 import { ChordDisplayInfo } from "@/types/interfaces/ChordDisplayInfo";
-import { ChordMatch } from "@/types/interfaces/ChordMatch";
+import { ChordMatch, makeChordMatch } from "@/types/interfaces/ChordMatch";
 
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 
@@ -108,11 +108,11 @@ export class MusicalDisplayFormatter {
 
   static getMatchFromIndices(indices: ActualIndex[]): ChordMatch {
     if (indices.length === 0) {
-      return {
-        rootNote: ixActual(0),
-        definition: NoteGroupingLibrary.getGroupingById(SpecialType.None),
-        inversionIndex: ixInversion(0),
-      };
+      return makeChordMatch(
+        0,
+        NoteGroupingLibrary.getGroupingById(SpecialType.None),
+        0
+      );
     }
 
     const normalizedIndices = IndexUtils.normalizeIndices(indices);
@@ -127,11 +127,7 @@ export class MusicalDisplayFormatter {
         const rootNoteIndex = ixActual(
           IndexUtils.rootNoteAtInversion(indices, ixInversion(0)) % TWELVE
         );
-        return {
-          rootNote: rootNoteIndex,
-          definition,
-          inversionIndex: ixInversion(0),
-        };
+        return makeChordMatch(rootNoteIndex, definition, 0);
       }
     }
 
@@ -143,10 +139,12 @@ export class MusicalDisplayFormatter {
           definition.inversions[i]
         );
         if (IndexUtils.areIndicesEqual(inversionIndices, normalizedIndices)) {
-          const rootNoteIndex = ixActual(
-            IndexUtils.rootNoteAtInversion(indices, i) % TWELVE
+          const rootNoteAtInversion = IndexUtils.rootNoteAtInversion(
+            indices,
+            i
           );
-          return { rootNote: rootNoteIndex, definition, inversionIndex: i };
+          const rootNoteIndex = ixActual(rootNoteAtInversion % TWELVE);
+          return makeChordMatch(rootNoteIndex, definition, i);
         }
       }
     }
@@ -205,19 +203,16 @@ export class MusicalDisplayFormatter {
   private static createUnknownChord(indices: ActualIndex[]): ChordMatch {
     const firstIndex = indices.length > 0 ? indices[0] : 0;
     const offsets = indices.map((index) => ixOffset(index - firstIndex));
-    return {
-      rootNote: ixActual(firstIndex),
-      definition: new NoteGrouping(
-        ChordType.Unknown,
-        "",
-        "",
-        "",
-        -1,
-        offsets,
-        false
-      ),
-      inversionIndex: ixInversion(0),
-    };
+    const definition = new NoteGrouping(
+      ChordType.Unknown,
+      "",
+      "",
+      "",
+      -1,
+      offsets,
+      false
+    );
+    return makeChordMatch(firstIndex, definition, 0);
   }
 
   private static getBassNoteIndex(

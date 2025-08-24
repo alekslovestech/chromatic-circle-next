@@ -5,7 +5,7 @@ import { ChordMatch } from "@/types/interfaces/ChordMatch";
 
 import {
   ActualIndex,
-  actualIndexToChromaticAndOctave,
+  actualToChromatic,
   InversionIndex,
 } from "@/types/IndexTypes";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
@@ -65,12 +65,10 @@ export class SpellingUtils {
 
     // Find the spelled note that corresponds to our target note
     // We need to match by chromatic equivalence since octaves might differ
-    const { chromaticIndex: targetChromatic } =
-      actualIndexToChromaticAndOctave(targetNoteIndex);
+    const targetChromatic = actualToChromatic(targetNoteIndex);
 
     for (let i = 0; i < selectedNoteIndices.length; i++) {
-      const { chromaticIndex: chordNoteChromatic } =
-        actualIndexToChromaticAndOctave(selectedNoteIndices[i]);
+      const chordNoteChromatic = actualToChromatic(selectedNoteIndices[i]);
       if (chordNoteChromatic === targetChromatic) {
         return spelledNotes[i];
       }
@@ -90,8 +88,7 @@ export class SpellingUtils {
       selectedInversionIndex
     );
 
-    const { chromaticIndex: rootChromaticIndex } =
-      actualIndexToChromaticAndOctave(baseIndex);
+    const rootChromaticIndex = actualToChromatic(baseIndex);
 
     const accidentalPreference =
       AccidentalPreferenceResolver.getChordPresetSpellingPreference(
@@ -117,8 +114,7 @@ export class SpellingUtils {
     );
 
     // Get the root chromatic index to determine spelling preference
-    const { chromaticIndex: rootChromaticIndex } =
-      actualIndexToChromaticAndOctave(rootIndex);
+    const rootChromaticIndex = actualToChromatic(rootIndex);
 
     const accidentalPreference =
       AccidentalPreferenceResolver.getChordPresetSpellingPreference(
