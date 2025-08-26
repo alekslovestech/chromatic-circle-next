@@ -77,6 +77,7 @@ export class AccidentalPreferenceResolver {
       case ChordType.MinorMajor7:
       case ChordType.SpreadMinor:
       case ChordType.SpreadDiminished:
+      case ChordType.MajFlat5:
         return ChordQuality.Minor;
 
       case ChordType.Augmented:

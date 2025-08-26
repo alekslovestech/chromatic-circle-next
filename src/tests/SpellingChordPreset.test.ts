@@ -146,5 +146,17 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
         ]
       );
     });
+
+    describe("Altered triads", () => {
+      testChordSpelling(
+        "C maj b5 => Gb",
+        [0, 4, 6], // C, E, G♭
+        [
+          createNoteWithOctave("C", AccidentalType.None, 0),
+          createNoteWithOctave("E", AccidentalType.None, 0),
+          createNoteWithOctave("G", AccidentalType.Flat, 0),
+        ]
+      );
+    });
   });
 });

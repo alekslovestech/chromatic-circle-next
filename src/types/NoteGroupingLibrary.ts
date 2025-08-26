@@ -228,6 +228,8 @@ class NoteGroupingLibrarySingleton {
       "Add 9th Chord",
       [0, 4, 7, 14]
     ),
+
+    //"hidden" chords (not visible in the presets list, but can be detected by the app)
     NoteGrouping.createChord(
       ChordType.Add2,
       29,
@@ -239,7 +241,6 @@ class NoteGroupingLibrarySingleton {
       false
     ),
 
-    //"hidden" chords (not visible in the presets list, but can be detected by the app)
     NoteGrouping.createChord(
       ChordType.Seven13,
       30,
@@ -292,7 +293,6 @@ class NoteGroupingLibrarySingleton {
     ),
 
     //Narrow Chords
-
     NoteGrouping.createChord(
       ChordType.Narrow23,
       35,
@@ -335,7 +335,7 @@ class NoteGroupingLibrarySingleton {
       false
     ),
     NoteGrouping.createChord(
-      ChordType.Narrow34sharp,
+      ChordType.MajFlat5,
       39,
       "♭5",
       "♭5",

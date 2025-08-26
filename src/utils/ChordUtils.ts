@@ -36,7 +36,7 @@ export class ChordUtils {
     isToggle: boolean,
     selectedNoteIndices: ActualIndex[],
     chordType: NoteGroupingId,
-    inversionIndex: InversionIndex
+    inversionIndex: InversionIndex = ixInversion(0)
   ): ActualIndex[] {
     if (isToggle)
       return IndexUtils.ToggleNewIndex(
