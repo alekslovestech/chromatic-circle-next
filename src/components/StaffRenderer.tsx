@@ -12,6 +12,8 @@ import {
 
 import { SpellingUtils } from "@/utils/SpellingUtils";
 import { VexFlowFormatter } from "@/utils/formatters/VexFlowFormatter";
+import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
+import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
 
 interface StaffRendererProps {
   style?: React.CSSProperties;
@@ -22,6 +24,7 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { selectedNoteIndices, selectedMusicalKey } = useMusical();
   const { selectedChordType, selectedInversionIndex } = useChordPresets();
+  const isScalesMode = useIsScalePreviewMode();
   const isChordsOrIntervals = useIsChordsOrIntervals();
   const border = useBorder();
 
@@ -60,12 +63,19 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
     if (selectedNoteIndices.length === 0) return;
 
     // Step 1: Compute NoteWithOctave[] - all context values passed as parameters
-    const notesWithOctaves = SpellingUtils.computeStaffNotes(
-      selectedNoteIndices,
-      canonicalIonianKey,
-      selectedChordType,
-      isChordsOrIntervals
-    );
+    const isChordPresetKnown =
+      !isScalesMode &&
+      SpellingUtils.isChordPresetKnown(selectedChordType, isChordsOrIntervals);
+
+    const notesWithOctaves = isChordPresetKnown
+      ? SpellingUtils.computeNotesFromChordPreset(
+          selectedNoteIndices,
+          MusicalDisplayFormatter.getMatchFromIndices(selectedNoteIndices)
+        )
+      : SpellingUtils.computeNotesFromMusicalKey(
+          selectedNoteIndices,
+          canonicalIonianKey
+        );
 
     // Step 2: Render NoteWithOctave[] to VexFlow - pure rendering logic
     const notes = VexFlowFormatter.createVexFlowNotesFromNoteWithOctaves(
@@ -88,6 +98,7 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
     selectedChordType,
     selectedInversionIndex,
     isChordsOrIntervals,
+    isScalesMode,
   ]);
 
   return (

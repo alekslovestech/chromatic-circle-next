@@ -9,6 +9,8 @@ import { SpellingUtils } from "@/utils/SpellingUtils";
 import { NoteFormatter } from "@/utils/formatters/NoteFormatter";
 import { IndexUtils } from "@/utils/IndexUtils";
 import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
+import { MusicalDisplayFormatter } from "../formatters/MusicalDisplayFormatter";
+import { ActualNoteResolver } from "../resolvers/ActualNoteResolver";
 
 export class KeyboardUtils {
   static StringWithPaddedIndex(prefix: string, index: number): string {
@@ -65,17 +67,31 @@ export class KeyboardUtils {
       );
     }
 
-    // Black keys: only show when selected, using chord context spelling
-    return !isSelected
-      ? ""
-      : NoteFormatter.formatForDisplay(
-          SpellingUtils.computeSpecificNoteInChordContext(
-            chromaticToActual(chromaticIndex),
-            selectedNoteIndices,
-            selectedMusicalKey,
-            selectedChordType,
-            isChordsOrIntervals
-          )
-        );
+    // Black keys: only show when selected
+    if (!isSelected) return "";
+
+    const isChordPresetKnown = SpellingUtils.isChordPresetKnown(
+      selectedChordType,
+      isChordsOrIntervals
+    );
+
+    const targetNoteIndex = chromaticToActual(chromaticIndex);
+
+    if (isChordPresetKnown) {
+      const chordMatch =
+        MusicalDisplayFormatter.getMatchFromIndices(selectedNoteIndices);
+      const spelledNote = SpellingUtils.computeSingleNoteFromChordPreset(
+        targetNoteIndex,
+        selectedNoteIndices,
+        chordMatch
+      );
+      return NoteFormatter.formatForDisplay(spelledNote);
+    } else {
+      const spelledNote = ActualNoteResolver.resolveNoteInKeyWithOctave(
+        selectedMusicalKey,
+        targetNoteIndex
+      );
+      return NoteFormatter.formatForDisplay(spelledNote);
+    }
   }
 }

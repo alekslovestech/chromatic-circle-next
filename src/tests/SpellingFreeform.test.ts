@@ -1,6 +1,4 @@
 import { AccidentalType } from "@/types/enums/AccidentalType";
-import { ChordType } from "@/types/enums/ChordType";
-import { SpecialType } from "@/types/enums/SpecialType";
 
 import { DEFAULT_MUSICAL_KEY, MusicalKey } from "@/types/Keys/MusicalKey";
 import { KeyType } from "@/types/enums/KeyType";
@@ -87,42 +85,38 @@ describe("SpellingFreeform - Key-based note spelling", () => {
     });
   });
 
-  describe("computeStaffNotes with freeform notes", () => {
-    test("uses raw notes when freeform type is specified", () => {
-      const result = SpellingUtils.computeStaffNotes(
-        ixActualArray([7, 8]), // G, G#
-        DEFAULT_MUSICAL_KEY,
-        SpecialType.Freeform, // Not a known chord
-        true
+  describe("computeNotesFromChordPreset and computeNotesFromMusicalKey", () => {
+    test("uses computeNotesFromMusicalKey for freeform notes", () => {
+      const indices = ixActualArray([7, 8]); // G, G#
+      const result = SpellingUtils.computeNotesFromMusicalKey(
+        indices,
+        DEFAULT_MUSICAL_KEY
       );
 
-      expect(result).toHaveLength(2); // Raw notes
+      expect(result).toHaveLength(2);
       SpellingTestUtils.verifyNoteWithOctaveArray(result, [
         createNoteWithOctave("G", AccidentalType.None, 0),
         createNoteWithOctave("G", AccidentalType.Sharp, 0),
       ]);
     });
 
-    test("uses raw notes when chords/intervals are not active", () => {
-      const result = SpellingUtils.computeStaffNotes(
-        ixActualArray([7]), // G
-        DEFAULT_MUSICAL_KEY,
-        ChordType.Major,
-        false // chords/intervals not active
+    test("uses computeNotesFromMusicalKey when not in chord mode", () => {
+      const indices = ixActualArray([7]); // G
+      const result = SpellingUtils.computeNotesFromMusicalKey(
+        indices,
+        DEFAULT_MUSICAL_KEY
       );
 
-      expect(result).toHaveLength(1); // Just the raw note
+      expect(result).toHaveLength(1);
       SpellingTestUtils.verifyNoteWithOctaveArray(result, [
         createNoteWithOctave("G", AccidentalType.None, 0),
       ]);
     });
 
     test("returns empty array for empty input", () => {
-      const result = SpellingUtils.computeStaffNotes(
+      const result = SpellingUtils.computeNotesFromMusicalKey(
         ixActualArray([]),
-        DEFAULT_MUSICAL_KEY,
-        ChordType.Major,
-        true
+        DEFAULT_MUSICAL_KEY
       );
 
       expect(result).toEqual([]);

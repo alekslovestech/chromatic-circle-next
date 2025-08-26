@@ -30,7 +30,17 @@ export const KeyboardCircular = () => {
       ? CircularVisMode.Radial
       : CircularVisMode.None;
   const isScales = useIsScalePreviewMode();
-  const coords = [-MAX_RADIUS, -MAX_RADIUS, MAX_RADIUS * 2, MAX_RADIUS * 2];
+
+  const SCALE_BOUNDARY_EXTENT = OUTER_RADIUS + CIRCLE_RADIUS * 2;
+  const VIEWPORT_RADIUS = Math.max(SCALE_BOUNDARY_EXTENT, MAX_RADIUS);
+  const coords = [
+    -VIEWPORT_RADIUS,
+    -VIEWPORT_RADIUS,
+    VIEWPORT_RADIUS * 2,
+    VIEWPORT_RADIUS * 2,
+  ];
+  console.log(SCALE_BOUNDARY_EXTENT, VIEWPORT_RADIUS);
+  console.log(coords);
   const chordColor = ColorUtils.getChordColor(selectedNoteIndices);
 
   const getLineCartesianPoints = (

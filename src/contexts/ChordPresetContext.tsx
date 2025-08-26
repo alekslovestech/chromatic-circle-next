@@ -2,9 +2,11 @@
 
 import React, { createContext, useState, useContext, ReactNode } from "react";
 
+import { ChordType } from "@/types/enums/ChordType";
 import { InversionIndex, ixInversion } from "@/types/IndexTypes";
 import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { InputMode } from "@/types/SettingModes";
+
 import { ChordUtils } from "@/utils/ChordUtils";
 
 import { useMusical } from "./MusicalContext";
@@ -23,9 +25,9 @@ const ChordPresetContext = createContext<ChordPresetSettings | null>(null);
 export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [inputMode, setInputMode] = useState<InputMode>(InputMode.SingleNote);
+  const [inputMode, setInputMode] = useState<InputMode>(InputMode.ChordPresets);
   const [selectedChordType, setSelectedChordType] = useState<NoteGroupingId>(
-    "Note" as NoteGroupingId
+    ChordType.Major
   );
   const [selectedInversionIndex, setSelectedInversionIndex] =
     useState<InversionIndex>(ixInversion(0));
@@ -62,8 +64,7 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
         rootNoteIndex!,
         false,
         selectedNoteIndices,
-        newChordType,
-        ixInversion(0)
+        newChordType
       );
       setSelectedNoteIndices(updatedIndices);
     }

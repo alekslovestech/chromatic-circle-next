@@ -2,10 +2,7 @@ import React from "react";
 
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 
-import {
-  ActualIndex,
-  actualIndexToChromaticAndOctave,
-} from "@/types/IndexTypes";
+import { ActualIndex, actualToChromatic } from "@/types/IndexTypes";
 import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
 
 import { IndexUtils } from "@/utils/IndexUtils";
@@ -37,7 +34,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   const isChordsOrIntervals = useIsChordsOrIntervals();
 
   const isShortKey = IndexUtils.isBlackKey(actualIndex);
-  const { chromaticIndex } = actualIndexToChromaticAndOctave(actualIndex);
+  const chromaticIndex = actualToChromatic(actualIndex);
   const left = LinearKeyboardUtils.getKeyPosition(actualIndex);
 
   const baseClasses = ["key-base", "piano-key"];
