@@ -24,7 +24,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   isRootNote,
   onClick,
 }) => {
-  const { selectedMusicalKey, selectedNoteIndices, currentChordMatch } =
+  const { selectedMusicalKey, selectedNoteIndices, currentChordRef } =
     useMusical();
   const { monochromeMode } = useDisplay();
 
@@ -62,7 +62,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
         isSelected,
         selectedNoteIndices,
         selectedMusicalKey,
-        currentChordMatch
+        currentChordRef
       );
 
   const allBaseClasses = baseClasses.join(" ");

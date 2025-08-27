@@ -19,11 +19,14 @@ import {
 import { TYPOGRAPHY } from "@/lib/design";
 import { LAYOUT_PATTERNS } from "@/lib/design/LayoutPatterns";
 import { useBorder } from "@/lib/hooks";
+import { makeChordReference } from "@/types/interfaces/ChordReference";
+import { IndexUtils } from "@/utils/IndexUtils";
 
 const MAX_CHORD_NAME_LENGTH = 7;
 const BREAK_CHARACTER = "\u200B";
 export const ChordNameDisplay: React.FC = () => {
-  const { selectedNoteIndices, selectedMusicalKey } = useMusical();
+  const { selectedNoteIndices, selectedMusicalKey, currentChordRef } =
+    useMusical();
   const { chordDisplayMode, setChordDisplayMode } = useDisplay();
   const { selectedChordType, selectedInversionIndex } = useChordPresets();
   const isChordsOrIntervals = useIsChordsOrIntervals();
@@ -51,19 +54,32 @@ export const ChordNameDisplay: React.FC = () => {
       selectedChordType !== SpecialType.Freeform &&
       selectedChordType !== ChordType.Unknown;
 
-    const displayInfo =
-      shouldUseChordPresetSpelling && selectedNoteIndices.length > 0
-        ? MusicalDisplayFormatter.getChordPresetDisplayInfo(
+    let displayInfo: ChordDisplayInfo;
+
+    if (shouldUseChordPresetSpelling && selectedNoteIndices.length > 0) {
+      const chordRef =
+        currentChordRef ||
+        makeChordReference(
+          IndexUtils.rootNoteAtInversion(
             selectedNoteIndices,
-            selectedChordType,
-            selectedInversionIndex,
-            ChordDisplayMode.Symbols
-          )
-        : MusicalDisplayFormatter.getDisplayInfoFromIndices(
-            selectedNoteIndices,
-            chordDisplayMode,
-            selectedMusicalKey
-          );
+            selectedInversionIndex
+          ),
+          selectedChordType,
+          selectedInversionIndex
+        );
+
+      displayInfo = MusicalDisplayFormatter.getChordPresetDisplayInfo(
+        selectedNoteIndices,
+        chordRef,
+        ChordDisplayMode.Symbols
+      );
+    } else {
+      displayInfo = MusicalDisplayFormatter.getDisplayInfoFromIndices(
+        selectedNoteIndices,
+        chordDisplayMode,
+        selectedMusicalKey
+      );
+    }
 
     return renderChordDisplay(displayInfo);
   };

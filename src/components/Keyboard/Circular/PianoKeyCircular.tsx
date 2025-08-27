@@ -29,7 +29,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   innerRadius,
   onClick,
 }) => {
-  const { selectedMusicalKey, selectedNoteIndices, currentChordMatch } =
+  const { selectedMusicalKey, selectedNoteIndices, currentChordRef } =
     useMusical();
   const { monochromeMode } = useDisplay();
   const pathData = ArcPathVisualizer.getArcPathData(
@@ -77,7 +77,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
         isSelected,
         selectedNoteIndices,
         selectedMusicalKey,
-        currentChordMatch
+        currentChordRef!
       );
 
   return (

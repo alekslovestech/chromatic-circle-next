@@ -3,21 +3,20 @@ import { IntervalType } from "@/types/enums/IntervalType";
 import { SpecialType } from "@/types/enums/SpecialType";
 
 import { ixActualArray } from "../types/IndexTypes";
-import { ChordMatch } from "../types/interfaces/ChordMatch";
 import { MusicalDisplayFormatter } from "../utils/formatters/MusicalDisplayFormatter";
 
-function verifyChordMatch(
+function verifyChordRef(
   rootNote: number,
   type: ChordType | IntervalType | SpecialType,
   inversionIndex: number,
   indices: number[]
 ) {
-  const actual: ChordMatch = MusicalDisplayFormatter.getMatchFromIndices(
+  const actualRef = MusicalDisplayFormatter.getChordReferenceFromIndices(
     ixActualArray(indices)
   );
-  expect(actual.rootNote).toBe(rootNote);
-  expect(actual.definition.id).toBe(type);
-  expect(actual.inversionIndex).toBe(inversionIndex);
+  expect(actualRef?.rootNote).toBe(rootNote);
+  expect(actualRef?.id).toBe(type);
+  expect(actualRef?.inversionIndex).toBe(inversionIndex);
 }
 
 describe("ChordMatch tests", () => {
@@ -166,7 +165,7 @@ describe("ChordMatch tests", () => {
 
   testCases.forEach(({ desc, root, type, inv, indices }) => {
     test(desc, () => {
-      verifyChordMatch(root, type, inv, indices);
+      verifyChordRef(root, type, inv, indices);
     });
   });
 });

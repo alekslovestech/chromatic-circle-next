@@ -9,7 +9,7 @@ import React, {
 } from "react";
 
 import { ChordType } from "@/types/enums/ChordType";
-import { makeChordMatch } from "@/types/interfaces/ChordMatch";
+import { makeChordReference } from "@/types/interfaces/ChordReference";
 
 import { InversionIndex, ixInversion } from "@/types/IndexTypes";
 import { NoteGroupingId } from "@/types/NoteGroupingId";
@@ -18,9 +18,6 @@ import { InputMode } from "@/types/SettingModes";
 import { ChordUtils } from "@/utils/ChordUtils";
 
 import { useMusical } from "./MusicalContext";
-
-import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
-
 export interface ChordPresetSettings {
   inputMode: InputMode;
   selectedChordType: NoteGroupingId;
@@ -42,22 +39,20 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
   const [selectedInversionIndex, setSelectedInversionIndex] =
     useState<InversionIndex>(ixInversion(0));
 
-  const { selectedNoteIndices, setSelectedNoteIndices, setCurrentChordMatch } =
+  const { selectedNoteIndices, setSelectedNoteIndices, setCurrentChordRef } =
     useMusical();
 
-  // Add this useEffect to update currentChordMatch when notes change
   useEffect(() => {
-    // Update currentChordMatch when selectedNoteIndices changes in preset mode
     if (inputMode !== InputMode.Freeform && selectedNoteIndices.length > 0) {
       const rootNoteIndex = selectedNoteIndices[0];
-      const chordMatch = makeChordMatch(
+      const chordRef = makeChordReference(
         rootNoteIndex,
-        NoteGroupingLibrary.getGroupingById(selectedChordType),
+        selectedChordType,
         selectedInversionIndex
       );
-      setCurrentChordMatch(chordMatch);
+      setCurrentChordRef(chordRef);
     } else if (inputMode === InputMode.Freeform) {
-      setCurrentChordMatch(undefined);
+      setCurrentChordRef(undefined);
     }
   }, [
     selectedNoteIndices,
@@ -100,16 +95,11 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
       );
       setSelectedNoteIndices(updatedIndices);
 
-      // Also set the ChordMatch directly - no reverse engineering needed!
-      const chordMatch = makeChordMatch(
-        rootNoteIndex!,
-        NoteGroupingLibrary.getGroupingById(newChordType),
-        0
-      );
-      setCurrentChordMatch(chordMatch);
+      const chordRef = makeChordReference(rootNoteIndex!, newChordType, 0);
+      setCurrentChordRef(chordRef);
     } else {
       // In freeform mode, clear the chord match
-      setCurrentChordMatch(undefined);
+      setCurrentChordRef(undefined);
     }
   };
 
@@ -120,12 +110,12 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
     // Update currentChordMatch if we're in preset mode
     if (inputMode !== InputMode.Freeform && selectedNoteIndices.length > 0) {
       const rootNoteIndex = selectedNoteIndices[0];
-      const chordMatch = makeChordMatch(
+      const chordRef = makeChordReference(
         rootNoteIndex,
-        NoteGroupingLibrary.getGroupingById(newChordType),
+        newChordType,
         selectedInversionIndex
       );
-      setCurrentChordMatch(chordMatch);
+      setCurrentChordRef(chordRef);
     }
   };
 
@@ -135,16 +125,15 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
     // Update currentChordMatch if we're in preset mode
     if (inputMode !== InputMode.Freeform && selectedNoteIndices.length > 0) {
       const rootNoteIndex = selectedNoteIndices[0];
-      const chordMatch = makeChordMatch(
+      const chordRef = makeChordReference(
         rootNoteIndex,
-        NoteGroupingLibrary.getGroupingById(selectedChordType),
+        selectedChordType,
         newInversionIndex
       );
-      setCurrentChordMatch(chordMatch);
+      setCurrentChordRef(chordRef);
     }
   };
 
-  // Export the wrapped setters instead
   const value: ChordPresetSettings = {
     inputMode,
     selectedChordType,

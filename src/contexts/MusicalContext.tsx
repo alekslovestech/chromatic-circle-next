@@ -9,20 +9,20 @@ import React, {
 } from "react";
 
 import { ChordType } from "@/types/enums/ChordType";
-import { ChordMatch } from "@/types/interfaces/ChordMatch";
 import { ActualIndex, ixActualArray } from "@/types/IndexTypes";
 import { DEFAULT_MUSICAL_KEY, MusicalKey } from "@/types/Keys/MusicalKey";
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
+import { ChordReference } from "@/types/interfaces/ChordReference";
 
 import { ChordUtils } from "@/utils/ChordUtils";
 
 export interface MusicalSettings {
   selectedNoteIndices: ActualIndex[];
   selectedMusicalKey: MusicalKey;
-  currentChordMatch?: ChordMatch;
+  currentChordRef?: ChordReference;
   setSelectedNoteIndices: (indices: ActualIndex[]) => void;
   setSelectedMusicalKey: (key: MusicalKey) => void;
-  setCurrentChordMatch: (chordMatch?: ChordMatch) => void;
+  setCurrentChordRef: (chordRef?: ChordReference) => void;
 }
 
 const MusicalContext = createContext<MusicalSettings | null>(null);
@@ -36,16 +36,16 @@ export const MusicalProvider: React.FC<{ children: ReactNode }> = ({
   );
   const [selectedMusicalKey, setSelectedMusicalKey] =
     useState<MusicalKey>(DEFAULT_MUSICAL_KEY);
-  const [currentChordMatch, setCurrentChordMatch] = useState<
-    ChordMatch | undefined
+  const [currentChordRef, setCurrentChordRef] = useState<
+    ChordReference | undefined
   >(undefined);
   const value: MusicalSettings = {
     selectedNoteIndices,
     selectedMusicalKey,
-    currentChordMatch,
+    currentChordRef,
     setSelectedNoteIndices,
     setSelectedMusicalKey,
-    setCurrentChordMatch,
+    setCurrentChordRef,
   };
 
   useEffect(() => {

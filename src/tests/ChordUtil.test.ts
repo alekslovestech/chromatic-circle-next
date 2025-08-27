@@ -20,17 +20,27 @@ function verifyChordNameWithMode(
   displayMode: ChordDisplayMode = ChordDisplayMode.Letters_Short,
   musicalKey: MusicalKey = DEFAULT_MUSICAL_KEY
 ) {
-  const chordMatch = MusicalDisplayFormatter.getMatchFromIndices(
-    ixActualArray(indices)
-  );
-  const actual = MusicalDisplayFormatter.deriveChordName(
-    chordMatch,
-    displayMode,
-    musicalKey
-  );
+  const actualIndices = ixActualArray(indices);
+  const chordRef =
+    MusicalDisplayFormatter.getChordReferenceFromIndices(actualIndices);
+
+  // For inversions, pass the bass note (lowest note) to the derivation function
+  const bassNote =
+    actualIndices.length > 0 ? Math.min(...actualIndices) : undefined;
+
+  const actual = chordRef
+    ? MusicalDisplayFormatter.deriveChordNameFromReference(
+        chordRef,
+        displayMode,
+        musicalKey,
+        ixActual(bassNote ?? 0)
+      )
+    : "";
+
   expect(actual).toBe(expectedChordName);
 }
 
+// The other helper functions remain unchanged since they test ChordUtils directly
 function verifyChordNotesFromIndex(
   expectedNotes: number[],
   index: number,

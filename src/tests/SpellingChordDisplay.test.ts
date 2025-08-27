@@ -12,11 +12,11 @@ describe("SpellingChordDisplay - Chord display info", () => {
   ) {
     test(description, () => {
       const indices = ixActualArray(chordIndices);
-      const chordMatch = MusicalDisplayFormatter.getMatchFromIndices(indices);
+      const chordRef =
+        MusicalDisplayFormatter.getChordReferenceFromIndices(indices);
       const result = MusicalDisplayFormatter.getChordPresetDisplayInfo(
         indices,
-        chordMatch.definition.id,
-        chordMatch.inversionIndex,
+        chordRef!,
         ChordDisplayMode.Symbols
       );
 

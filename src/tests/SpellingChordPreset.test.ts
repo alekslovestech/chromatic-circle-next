@@ -3,13 +3,12 @@ import {
   createNoteWithOctave,
   NoteWithOctave,
 } from "@/types/interfaces/NoteWithOctave";
+import { ixActualArray } from "@/types/IndexTypes";
 
 import { SpellingUtils } from "@/utils/SpellingUtils";
-
-import { SpellingTestUtils } from "./utils/SpellingTestUtils";
 import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
 
-import { ixActualArray } from "@/types/IndexTypes";
+import { SpellingTestUtils } from "@/tests/utils/SpellingTestUtils";
 
 describe("SpellingChordPreset - Chord preset-based note spelling", () => {
   // Helper function to make tests cleaner
@@ -20,10 +19,12 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
   ) {
     test(description, () => {
       const indices = ixActualArray(chordIndices);
-      const chordMatch = MusicalDisplayFormatter.getMatchFromIndices(indices);
+      //const chordMatch = MusicalDisplayFormatter.getMatchFromIndices(indices);
+      const chordRef =
+        MusicalDisplayFormatter.getChordReferenceFromIndices(indices);
       const result = SpellingUtils.computeNotesFromChordPreset(
         indices,
-        chordMatch
+        chordRef!
       );
 
       expect(result).toHaveLength(expectedNotes.length);

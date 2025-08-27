@@ -1,5 +1,4 @@
 import { NoteGroupingId } from "@/types/NoteGroupingId";
-import { ChordMatch } from "@/types/interfaces/ChordMatch";
 
 import {
   ActualIndex,
@@ -14,23 +13,23 @@ import { IndexUtils } from "@/utils/IndexUtils";
 
 import { AccidentalPreferenceResolver } from "@/utils/resolvers/AccidentalPreferenceResolver";
 import { ActualNoteResolver } from "@/utils/resolvers/ActualNoteResolver";
-import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
+import { ChordReference } from "@/types/interfaces/ChordReference";
 
 export class SpellingUtils {
   static computeSingleNoteFromChordPreset(
     targetNoteIndex: ActualIndex,
     chordIndices: ActualIndex[],
-    chordMatch: ChordMatch
+    chordRef: ChordReference
   ): NoteWithOctave {
     // Direct computation for single note - no array creation
     const rootIndex = IndexUtils.rootNoteAtInversion(
       chordIndices,
-      chordMatch.inversionIndex
+      chordRef.inversionIndex
     );
     const rootChromaticIndex = actualToChromatic(rootIndex);
     const accidentalPreference =
       AccidentalPreferenceResolver.getChordPresetSpellingPreference(
-        chordMatch.definition.id,
+        chordRef.id,
         rootChromaticIndex
       );
     return ActualNoteResolver.resolveAbsoluteNoteWithOctave(
@@ -50,16 +49,16 @@ export class SpellingUtils {
       selectedInversionIndex
     );
     // Create a minimal ChordMatch for reuse
-    const chordMatch: ChordMatch = {
+    const chordRef: ChordReference = {
       rootNote: baseIndex,
-      definition: NoteGroupingLibrary.getGroupingById(selectedChordType),
+      id: selectedChordType,
       inversionIndex: selectedInversionIndex,
     };
 
     return this.computeSingleNoteFromChordPreset(
       chordIndices[0],
       chordIndices,
-      chordMatch
+      chordRef
     );
   }
 
@@ -77,14 +76,10 @@ export class SpellingUtils {
 
   static computeNotesFromChordPreset(
     chordIndices: ActualIndex[],
-    chordMatch: ChordMatch
+    chordRef: ChordReference
   ): NoteWithOctave[] {
     return chordIndices.map((actualIndex) =>
-      this.computeSingleNoteFromChordPreset(
-        actualIndex,
-        chordIndices,
-        chordMatch
-      )
+      this.computeSingleNoteFromChordPreset(actualIndex, chordIndices, chordRef)
     );
   }
 
@@ -92,10 +87,10 @@ export class SpellingUtils {
   static computeNotesWithOptimalStrategy(
     selectedNoteIndices: ActualIndex[],
     selectedMusicalKey: MusicalKey,
-    currentChordMatch?: ChordMatch
+    currentChordRef?: ChordReference
   ): NoteWithOctave[] {
-    return currentChordMatch
-      ? this.computeNotesFromChordPreset(selectedNoteIndices, currentChordMatch)
+    return currentChordRef
+      ? this.computeNotesFromChordPreset(selectedNoteIndices, currentChordRef)
       : this.computeNotesFromMusicalKey(
           selectedNoteIndices,
           selectedMusicalKey
