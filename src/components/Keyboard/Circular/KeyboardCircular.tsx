@@ -4,7 +4,6 @@ import { ChromaticIndex, ixChromatic } from "@/types/ChromaticIndex";
 import { ColorUtils } from "@/utils/visual/ColorUtils";
 import { CartesianPoint, PolarMath } from "@/utils/Keyboard/Circular/PolarMath";
 
-//import { useDisplay } from "@/contexts/DisplayContext";
 import { useMusical } from "@/contexts/MusicalContext";
 
 import { CIRCLE_RADIUS, useKeyboardHandlers } from "../KeyboardBase";
@@ -39,8 +38,6 @@ export const KeyboardCircular = () => {
     VIEWPORT_RADIUS * 2,
     VIEWPORT_RADIUS * 2,
   ];
-  console.log(SCALE_BOUNDARY_EXTENT, VIEWPORT_RADIUS);
-  console.log(coords);
   const chordColor = ColorUtils.getChordColor(selectedNoteIndices);
 
   const getLineCartesianPoints = (

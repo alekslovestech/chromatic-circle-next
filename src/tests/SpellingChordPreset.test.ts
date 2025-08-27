@@ -124,6 +124,18 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
       );
     });
 
+    describe("Diminished triads", () => {
+      testChordSpelling(
+        "D dim in root position",
+        [2, 5, 8], // D, F, Ab
+        [
+          createNoteWithOctave("D", AccidentalType.None, 0),
+          createNoteWithOctave("F", AccidentalType.None, 0),
+          createNoteWithOctave("A", AccidentalType.Flat, 0),
+        ]
+      );
+    });
+
     //not always clean, and sometimes a mix of sharps and flats is best
     //but for now we'll just use the preference
     describe("Augmented triads", () => {

@@ -102,4 +102,18 @@ export class SpellingUtils {
       selectedChordType !== ChordType.Unknown
     );
   }
+
+  // Add a method that uses ChordMatch when available, falls back to reverse-engineering
+  static computeNotesWithOptimalStrategy(
+    selectedNoteIndices: ActualIndex[],
+    selectedMusicalKey: MusicalKey,
+    currentChordMatch?: ChordMatch
+  ): NoteWithOctave[] {
+    return currentChordMatch
+      ? this.computeNotesFromChordPreset(selectedNoteIndices, currentChordMatch)
+      : this.computeNotesFromMusicalKey(
+          selectedNoteIndices,
+          selectedMusicalKey
+        );
+  }
 }

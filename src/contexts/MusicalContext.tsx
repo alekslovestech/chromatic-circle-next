@@ -7,17 +7,22 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
+
+import { ChordType } from "@/types/enums/ChordType";
+import { ChordMatch } from "@/types/interfaces/ChordMatch";
 import { ActualIndex, ixActualArray } from "@/types/IndexTypes";
 import { DEFAULT_MUSICAL_KEY, MusicalKey } from "@/types/Keys/MusicalKey";
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
-import { ChordType } from "@/types/enums/ChordType";
+
 import { ChordUtils } from "@/utils/ChordUtils";
 
 export interface MusicalSettings {
   selectedNoteIndices: ActualIndex[];
   selectedMusicalKey: MusicalKey;
+  currentChordMatch?: ChordMatch;
   setSelectedNoteIndices: (indices: ActualIndex[]) => void;
   setSelectedMusicalKey: (key: MusicalKey) => void;
+  setCurrentChordMatch: (chordMatch?: ChordMatch) => void;
 }
 
 const MusicalContext = createContext<MusicalSettings | null>(null);
@@ -31,11 +36,16 @@ export const MusicalProvider: React.FC<{ children: ReactNode }> = ({
   );
   const [selectedMusicalKey, setSelectedMusicalKey] =
     useState<MusicalKey>(DEFAULT_MUSICAL_KEY);
+  const [currentChordMatch, setCurrentChordMatch] = useState<
+    ChordMatch | undefined
+  >(undefined);
   const value: MusicalSettings = {
     selectedNoteIndices,
     selectedMusicalKey,
+    currentChordMatch,
     setSelectedNoteIndices,
     setSelectedMusicalKey,
+    setCurrentChordMatch,
   };
 
   useEffect(() => {

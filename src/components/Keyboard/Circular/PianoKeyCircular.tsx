@@ -13,10 +13,6 @@ import { IndexUtils } from "@/utils/IndexUtils";
 import { VisualStateUtils } from "@/utils/visual/VisualStateUtils";
 import { KeyboardUtils } from "@/utils/Keyboard/KeyboardUtils";
 
-import {
-  useChordPresets,
-  useIsChordsOrIntervals,
-} from "@/contexts/ChordPresetContext";
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
 
@@ -33,10 +29,9 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   innerRadius,
   onClick,
 }) => {
-  const { selectedMusicalKey, selectedNoteIndices } = useMusical();
+  const { selectedMusicalKey, selectedNoteIndices, currentChordMatch } =
+    useMusical();
   const { monochromeMode } = useDisplay();
-  const { selectedChordType } = useChordPresets();
-  const isChordsOrIntervals = useIsChordsOrIntervals();
   const pathData = ArcPathVisualizer.getArcPathData(
     chromaticIndex,
     outerRadius,
@@ -82,8 +77,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
         isSelected,
         selectedNoteIndices,
         selectedMusicalKey,
-        selectedChordType,
-        isChordsOrIntervals
+        currentChordMatch
       );
 
   return (

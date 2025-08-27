@@ -1,15 +1,14 @@
 import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
+import { ChordMatch } from "@/types/interfaces/ChordMatch";
 
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
-import { NoteGroupingId } from "@/types/NoteGroupingId";
 
 import { SpellingUtils } from "@/utils/SpellingUtils";
 import { NoteFormatter } from "@/utils/formatters/NoteFormatter";
 import { IndexUtils } from "@/utils/IndexUtils";
 import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
-import { MusicalDisplayFormatter } from "../formatters/MusicalDisplayFormatter";
 import { ActualNoteResolver } from "../resolvers/ActualNoteResolver";
 
 export class KeyboardUtils {
@@ -53,8 +52,7 @@ export class KeyboardUtils {
     isSelected: boolean,
     selectedNoteIndices: ActualIndex[],
     selectedMusicalKey: MusicalKey,
-    selectedChordType: NoteGroupingId,
-    isChordsOrIntervals: boolean
+    currentChordMatch?: ChordMatch
   ): string {
     const isBlackKey = IndexUtils.isBlackKey(chromaticIndex);
 
@@ -70,20 +68,13 @@ export class KeyboardUtils {
     // Black keys: only show when selected
     if (!isSelected) return "";
 
-    const isChordPresetKnown = SpellingUtils.isChordPresetKnown(
-      selectedChordType,
-      isChordsOrIntervals
-    );
-
     const targetNoteIndex = chromaticToActual(chromaticIndex);
 
-    if (isChordPresetKnown) {
-      const chordMatch =
-        MusicalDisplayFormatter.getMatchFromIndices(selectedNoteIndices);
+    if (currentChordMatch) {
       const spelledNote = SpellingUtils.computeSingleNoteFromChordPreset(
         targetNoteIndex,
         selectedNoteIndices,
-        chordMatch
+        currentChordMatch
       );
       return NoteFormatter.formatForDisplay(spelledNote);
     } else {
