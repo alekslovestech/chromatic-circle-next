@@ -90,19 +90,6 @@ export class SpellingUtils {
     );
   }
 
-  static isChordPresetKnown(
-    selectedChordType: NoteGroupingId,
-    isChordsOrIntervals: boolean
-  ): boolean {
-    return (
-      isChordsOrIntervals &&
-      selectedChordType !== SpecialType.None &&
-      selectedChordType !== SpecialType.Note &&
-      selectedChordType !== SpecialType.Freeform &&
-      selectedChordType !== ChordType.Unknown
-    );
-  }
-
   // Add a method that uses ChordMatch when available, falls back to reverse-engineering
   static computeNotesWithOptimalStrategy(
     selectedNoteIndices: ActualIndex[],

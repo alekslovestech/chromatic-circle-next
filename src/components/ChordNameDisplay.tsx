@@ -1,7 +1,13 @@
 "use client";
 import React from "react";
+
+import { SpecialType } from "@/types/enums/SpecialType";
+import { ChordType } from "@/types/enums/ChordType";
+
 import { ChordDisplayInfo } from "@/types/interfaces/ChordDisplayInfo";
 import { ChordDisplayMode } from "@/types/SettingModes";
+
+import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
 
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
@@ -10,11 +16,9 @@ import {
   useIsChordsOrIntervals,
 } from "@/contexts/ChordPresetContext";
 
-import { SpellingUtils } from "@/utils/SpellingUtils";
 import { TYPOGRAPHY } from "@/lib/design";
 import { LAYOUT_PATTERNS } from "@/lib/design/LayoutPatterns";
 import { useBorder } from "@/lib/hooks";
-import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
 
 const MAX_CHORD_NAME_LENGTH = 7;
 const BREAK_CHARACTER = "\u200B";
@@ -40,10 +44,12 @@ export const ChordNameDisplay: React.FC = () => {
   }
 
   const renderNoteGrouping = () => {
-    const shouldUseChordPresetSpelling = SpellingUtils.isChordPresetKnown(
-      selectedChordType,
-      isChordsOrIntervals
-    );
+    const shouldUseChordPresetSpelling =
+      isChordsOrIntervals &&
+      selectedChordType !== SpecialType.None &&
+      selectedChordType !== SpecialType.Note &&
+      selectedChordType !== SpecialType.Freeform &&
+      selectedChordType !== ChordType.Unknown;
 
     const displayInfo =
       shouldUseChordPresetSpelling && selectedNoteIndices.length > 0

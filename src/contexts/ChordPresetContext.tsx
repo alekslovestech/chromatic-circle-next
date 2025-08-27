@@ -9,6 +9,8 @@ import React, {
 } from "react";
 
 import { ChordType } from "@/types/enums/ChordType";
+import { makeChordMatch } from "@/types/interfaces/ChordMatch";
+
 import { InversionIndex, ixInversion } from "@/types/IndexTypes";
 import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { InputMode } from "@/types/SettingModes";
@@ -16,7 +18,7 @@ import { InputMode } from "@/types/SettingModes";
 import { ChordUtils } from "@/utils/ChordUtils";
 
 import { useMusical } from "./MusicalContext";
-import { makeChordMatch } from "@/types/interfaces/ChordMatch";
+
 import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
 
 export interface ChordPresetSettings {
