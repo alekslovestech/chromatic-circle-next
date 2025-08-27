@@ -1,11 +1,9 @@
 import { NoteGroupingId } from "@/types/NoteGroupingId";
-import { SpecialType } from "@/types/enums/SpecialType";
-import { ChordType } from "@/types/enums/ChordType";
 import { ChordMatch } from "@/types/interfaces/ChordMatch";
 
 import {
   ActualIndex,
-  actualIndexToChromaticAndOctave,
+  actualToChromatic,
   InversionIndex,
 } from "@/types/IndexTypes";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
@@ -16,67 +14,29 @@ import { IndexUtils } from "@/utils/IndexUtils";
 
 import { AccidentalPreferenceResolver } from "@/utils/resolvers/AccidentalPreferenceResolver";
 import { ActualNoteResolver } from "@/utils/resolvers/ActualNoteResolver";
-
-import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
+import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
 
 export class SpellingUtils {
-  static computeNotesFromMusicalKey(
-    actualIndices: ActualIndex[],
-    selectedMusicalKey: MusicalKey
-  ): NoteWithOctave[] {
-    return actualIndices.map((actualIndex) =>
-      ActualNoteResolver.resolveNoteInKeyWithOctave(
-        selectedMusicalKey,
-        actualIndex
-      )
-    );
-  }
-
-  static computeSpecificNoteInChordContext(
+  static computeSingleNoteFromChordPreset(
     targetNoteIndex: ActualIndex,
-    selectedNoteIndices: ActualIndex[], // The full chord
-    selectedMusicalKey: MusicalKey,
-    selectedChordType: NoteGroupingId,
-    isChordsOrIntervals: boolean,
-    isScalesMode?: boolean
-  ): NoteWithOctave | null {
-    if (selectedNoteIndices.length === 0) return null;
-
-    // Use the same decision logic as computeStaffNotes
-    const isChordPresetKnown = isScalesMode
-      ? false
-      : this.isChordPresetKnown(selectedChordType, isChordsOrIntervals);
-
-    let spelledNotes: NoteWithOctave[];
-
-    if (isChordPresetKnown) {
-      const chordMatch =
-        MusicalDisplayFormatter.getMatchFromIndices(selectedNoteIndices);
-      spelledNotes = this.computeNotesFromChordPreset(
-        selectedNoteIndices,
-        chordMatch
+    chordIndices: ActualIndex[],
+    chordMatch: ChordMatch
+  ): NoteWithOctave {
+    // Direct computation for single note - no array creation
+    const rootIndex = IndexUtils.rootNoteAtInversion(
+      chordIndices,
+      chordMatch.inversionIndex
+    );
+    const rootChromaticIndex = actualToChromatic(rootIndex);
+    const accidentalPreference =
+      AccidentalPreferenceResolver.getChordPresetSpellingPreference(
+        chordMatch.definition.id,
+        rootChromaticIndex
       );
-    } else {
-      spelledNotes = this.computeNotesFromMusicalKey(
-        selectedNoteIndices,
-        selectedMusicalKey
-      );
-    }
-
-    // Find the spelled note that corresponds to our target note
-    // We need to match by chromatic equivalence since octaves might differ
-    const { chromaticIndex: targetChromatic } =
-      actualIndexToChromaticAndOctave(targetNoteIndex);
-
-    for (let i = 0; i < selectedNoteIndices.length; i++) {
-      const { chromaticIndex: chordNoteChromatic } =
-        actualIndexToChromaticAndOctave(selectedNoteIndices[i]);
-      if (chordNoteChromatic === targetChromatic) {
-        return spelledNotes[i];
-      }
-    }
-
-    return null; // Target note not found in the chord
+    return ActualNoteResolver.resolveAbsoluteNoteWithOctave(
+      targetNoteIndex,
+      accidentalPreference
+    );
   }
 
   static computeFirstNoteFromChordPreset(
@@ -89,86 +49,53 @@ export class SpellingUtils {
       selectedChordType,
       selectedInversionIndex
     );
+    // Create a minimal ChordMatch for reuse
+    const chordMatch: ChordMatch = {
+      rootNote: baseIndex,
+      definition: NoteGroupingLibrary.getGroupingById(selectedChordType),
+      inversionIndex: selectedInversionIndex,
+    };
 
-    const { chromaticIndex: rootChromaticIndex } =
-      actualIndexToChromaticAndOctave(baseIndex);
-
-    const accidentalPreference =
-      AccidentalPreferenceResolver.getChordPresetSpellingPreference(
-        selectedChordType,
-        rootChromaticIndex
-      );
-
-    const noteInfo = ActualNoteResolver.resolveAbsoluteNoteWithOctave(
+    return this.computeSingleNoteFromChordPreset(
       chordIndices[0],
-      accidentalPreference
+      chordIndices,
+      chordMatch
     );
-    return noteInfo;
   }
 
-  static computeNotesFromChordPreset(
-    chordIndices: ActualIndex[], // The chord indices we already have
-    chordMatch: ChordMatch
+  static computeNotesFromMusicalKey(
+    actualIndices: ActualIndex[],
+    selectedMusicalKey: MusicalKey
   ): NoteWithOctave[] {
-    // Use the existing utility to find the root note from the chord indices
-    const rootIndex = IndexUtils.rootNoteAtInversion(
-      chordIndices,
-      chordMatch.inversionIndex
-    );
-
-    // Get the root chromatic index to determine spelling preference
-    const { chromaticIndex: rootChromaticIndex } =
-      actualIndexToChromaticAndOctave(rootIndex);
-
-    const accidentalPreference =
-      AccidentalPreferenceResolver.getChordPresetSpellingPreference(
-        chordMatch.definition.id,
-        rootChromaticIndex
-      );
-
-    return chordIndices.map((actualIndex) =>
-      ActualNoteResolver.resolveAbsoluteNoteWithOctave(
-        actualIndex,
-        accidentalPreference
+    return actualIndices.map((actualIndex) =>
+      ActualNoteResolver.resolveNoteInKeyWithOctave(
+        selectedMusicalKey,
+        actualIndex
       )
     );
   }
 
-  static isChordPresetKnown(
-    selectedChordType: NoteGroupingId,
-    isChordsOrIntervals: boolean
-  ): boolean {
-    return (
-      isChordsOrIntervals &&
-      selectedChordType !== SpecialType.None &&
-      selectedChordType !== SpecialType.Note &&
-      selectedChordType !== SpecialType.Freeform &&
-      selectedChordType !== ChordType.Unknown
+  static computeNotesFromChordPreset(
+    chordIndices: ActualIndex[],
+    chordMatch: ChordMatch
+  ): NoteWithOctave[] {
+    return chordIndices.map((actualIndex) =>
+      this.computeSingleNoteFromChordPreset(
+        actualIndex,
+        chordIndices,
+        chordMatch
+      )
     );
   }
 
-  // High-level orchestrator function that handles the logic flow
-  static computeStaffNotes(
+  // Add a method that uses ChordMatch when available, falls back to reverse-engineering
+  static computeNotesWithOptimalStrategy(
     selectedNoteIndices: ActualIndex[],
     selectedMusicalKey: MusicalKey,
-    selectedChordType: NoteGroupingId,
-    isChordsOrIntervals: boolean,
-    isScalesMode?: boolean // Add this parameter
+    currentChordMatch?: ChordMatch
   ): NoteWithOctave[] {
-    if (selectedNoteIndices.length === 0) return [];
-
-    // In scales mode, always use key-based spelling regardless of chord presets
-    const isChordPresetKnown = isScalesMode
-      ? false
-      : this.isChordPresetKnown(selectedChordType, isChordsOrIntervals);
-
-    const chordMatch =
-      MusicalDisplayFormatter.getMatchFromIndices(selectedNoteIndices);
-    return isChordPresetKnown
-      ? this.computeNotesFromChordPreset(
-          selectedNoteIndices, // Pass the chord indices we already have
-          chordMatch
-        )
+    return currentChordMatch
+      ? this.computeNotesFromChordPreset(selectedNoteIndices, currentChordMatch)
       : this.computeNotesFromMusicalKey(
           selectedNoteIndices,
           selectedMusicalKey

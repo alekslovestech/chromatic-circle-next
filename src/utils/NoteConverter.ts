@@ -85,14 +85,6 @@ export class NoteConverter {
     return notes.map((note) => this.toChromaticIndex(note));
   }
 
-  // Helper for testing - converts array of indices to note names
-  static indicesToNoteArray(
-    indices: ChromaticIndex[],
-    preferSharps: boolean = true
-  ): string[] {
-    return indices.map((index) => this.fromChromaticIndex(index, preferSharps));
-  }
-
   static getNoteTextFromActualIndex(
     actualIndex: ActualIndex,
     accidentalPreference: AccidentalType

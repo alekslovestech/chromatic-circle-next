@@ -1,14 +1,15 @@
 import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
+import { ChordMatch } from "@/types/interfaces/ChordMatch";
 
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
-import { NoteGroupingId } from "@/types/NoteGroupingId";
 
 import { SpellingUtils } from "@/utils/SpellingUtils";
 import { NoteFormatter } from "@/utils/formatters/NoteFormatter";
 import { IndexUtils } from "@/utils/IndexUtils";
 import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
+import { ActualNoteResolver } from "../resolvers/ActualNoteResolver";
 
 export class KeyboardUtils {
   static StringWithPaddedIndex(prefix: string, index: number): string {
@@ -51,8 +52,7 @@ export class KeyboardUtils {
     isSelected: boolean,
     selectedNoteIndices: ActualIndex[],
     selectedMusicalKey: MusicalKey,
-    selectedChordType: NoteGroupingId,
-    isChordsOrIntervals: boolean
+    currentChordMatch?: ChordMatch
   ): string {
     const isBlackKey = IndexUtils.isBlackKey(chromaticIndex);
 
@@ -65,17 +65,24 @@ export class KeyboardUtils {
       );
     }
 
-    // Black keys: only show when selected, using chord context spelling
-    return !isSelected
-      ? ""
-      : NoteFormatter.formatForDisplay(
-          SpellingUtils.computeSpecificNoteInChordContext(
-            chromaticToActual(chromaticIndex),
-            selectedNoteIndices,
-            selectedMusicalKey,
-            selectedChordType,
-            isChordsOrIntervals
-          )
-        );
+    // Black keys: only show when selected
+    if (!isSelected) return "";
+
+    const targetNoteIndex = chromaticToActual(chromaticIndex);
+
+    if (currentChordMatch) {
+      const spelledNote = SpellingUtils.computeSingleNoteFromChordPreset(
+        targetNoteIndex,
+        selectedNoteIndices,
+        currentChordMatch
+      );
+      return NoteFormatter.formatForDisplay(spelledNote);
+    } else {
+      const spelledNote = ActualNoteResolver.resolveNoteInKeyWithOctave(
+        selectedMusicalKey,
+        targetNoteIndex
+      );
+      return NoteFormatter.formatForDisplay(spelledNote);
+    }
   }
 }

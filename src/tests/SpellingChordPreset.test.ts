@@ -124,6 +124,38 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
       );
     });
 
+    describe("Diminished triads", () => {
+      testChordSpelling(
+        "D dim => flat",
+        [2, 5, 8], // D, F, Ab
+        [
+          createNoteWithOctave("D", AccidentalType.None, 0),
+          createNoteWithOctave("F", AccidentalType.None, 0),
+          createNoteWithOctave("A", AccidentalType.Flat, 0),
+        ]
+      );
+
+      testChordSpelling(
+        "D#/Eb dim => sharp",
+        [3, 6, 9], // D#, F#, A
+        [
+          createNoteWithOctave("D", AccidentalType.Sharp, 0),
+          createNoteWithOctave("F", AccidentalType.Sharp, 0),
+          createNoteWithOctave("A", AccidentalType.None, 0),
+        ]
+      );
+
+      testChordSpelling(
+        "E dim => flat",
+        [4, 7, 10], // Eb, G, Bb
+        [
+          createNoteWithOctave("E", AccidentalType.None, 0),
+          createNoteWithOctave("G", AccidentalType.None, 0),
+          createNoteWithOctave("B", AccidentalType.Flat, 0),
+        ]
+      );
+    });
+
     //not always clean, and sometimes a mix of sharps and flats is best
     //but for now we'll just use the preference
     describe("Augmented triads", () => {
@@ -143,6 +175,18 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
           createNoteWithOctave("A", AccidentalType.Flat, 0),
           createNoteWithOctave("C", AccidentalType.None, 1),
           createNoteWithOctave("E", AccidentalType.None, 1),
+        ]
+      );
+    });
+
+    describe("Altered triads", () => {
+      testChordSpelling(
+        "C maj b5 => Gb",
+        [0, 4, 6], // C, E, G♭
+        [
+          createNoteWithOctave("C", AccidentalType.None, 0),
+          createNoteWithOctave("E", AccidentalType.None, 0),
+          createNoteWithOctave("G", AccidentalType.Flat, 0),
         ]
       );
     });

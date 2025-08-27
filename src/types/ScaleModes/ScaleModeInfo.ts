@@ -3,7 +3,11 @@ import { CHORD_OFFSET_PATTERNS } from "@/types/constants/ChordOffsetPatterns";
 import { ChordType } from "@/types/enums/ChordType";
 import { ScaleModeType } from "@/types/enums/ScaleModeType";
 
-import { addChromatic, ChromaticIndex } from "@/types/ChromaticIndex";
+import {
+  addChromatic,
+  ChromaticIndex,
+  subChromatic,
+} from "@/types/ChromaticIndex";
 
 import { ScalePattern } from "./ScalePattern";
 import { ScaleDegreeInfo } from "./ScaleDegreeInfo";
@@ -40,7 +44,7 @@ export class ScaleModeInfo {
     chromaticIndex: ChromaticIndex,
     tonicIndex: ChromaticIndex
   ): ScaleDegreeInfo | null {
-    const relativeOffset = (chromaticIndex - tonicIndex + 12) % 12; // Normalize to 0-11
+    const relativeOffset = subChromatic(chromaticIndex, tonicIndex); // Normalize to 0-11
     const scaleDegreePosition: ScaleDegreeIndex =
       this.scalePattern.findPositionInScale(relativeOffset);
 

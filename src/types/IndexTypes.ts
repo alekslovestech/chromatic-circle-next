@@ -50,6 +50,10 @@ export function chromaticToActual(
   return ixActual(result);
 }
 
+export function actualToChromatic(actualIndex: ActualIndex): ChromaticIndex {
+  return ixChromatic(actualIndex % TWELVE);
+}
+
 export function actualIndexToChromaticAndOctave(actualIndex: ActualIndex) {
   return {
     chromaticIndex: ixChromatic(actualIndex % TWELVE),

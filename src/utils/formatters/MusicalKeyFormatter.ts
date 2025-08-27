@@ -16,7 +16,10 @@ export class MusicalKeyFormatter {
     keyTextMode: KeyDisplayMode
   ): string {
     const scaleDegreeInfo =
-      musicalKey.getScaleDegreeInfoFromChromatic(chromaticIndex);
+      musicalKey.scaleModeInfo.getScaleDegreeInfoFromChromatic(
+        chromaticIndex,
+        musicalKey.tonicIndex
+      );
     if (keyTextMode === KeyDisplayMode.NoteNames) {
       const noteInfo = ChromaticNoteResolver.resolveAbsoluteNote(
         chromaticIndex,

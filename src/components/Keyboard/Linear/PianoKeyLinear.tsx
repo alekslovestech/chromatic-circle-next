@@ -2,10 +2,7 @@ import React from "react";
 
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 
-import {
-  ActualIndex,
-  actualIndexToChromaticAndOctave,
-} from "@/types/IndexTypes";
+import { ActualIndex, actualToChromatic } from "@/types/IndexTypes";
 import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
 
 import { IndexUtils } from "@/utils/IndexUtils";
@@ -15,10 +12,6 @@ import { KeyboardUtils } from "@/utils/Keyboard/KeyboardUtils";
 
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
-import {
-  useChordPresets,
-  useIsChordsOrIntervals,
-} from "@/contexts/ChordPresetContext";
 
 interface PianoKeyProps {
   actualIndex: ActualIndex;
@@ -31,13 +24,12 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   isRootNote,
   onClick,
 }) => {
-  const { selectedMusicalKey, selectedNoteIndices } = useMusical();
+  const { selectedMusicalKey, selectedNoteIndices, currentChordMatch } =
+    useMusical();
   const { monochromeMode } = useDisplay();
-  const { selectedChordType } = useChordPresets();
-  const isChordsOrIntervals = useIsChordsOrIntervals();
 
   const isShortKey = IndexUtils.isBlackKey(actualIndex);
-  const { chromaticIndex } = actualIndexToChromaticAndOctave(actualIndex);
+  const chromaticIndex = actualToChromatic(actualIndex);
   const left = LinearKeyboardUtils.getKeyPosition(actualIndex);
 
   const baseClasses = ["key-base", "piano-key"];
@@ -70,8 +62,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
         isSelected,
         selectedNoteIndices,
         selectedMusicalKey,
-        selectedChordType,
-        isChordsOrIntervals
+        currentChordMatch
       );
 
   const allBaseClasses = baseClasses.join(" ");

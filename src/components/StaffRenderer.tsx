@@ -5,13 +5,10 @@ import { Factory } from "vexflow";
 import { COMMON_STYLES } from "@/lib/design";
 import { useBorder } from "@/lib/hooks";
 import { useMusical } from "@/contexts/MusicalContext";
-import {
-  useChordPresets,
-  useIsChordsOrIntervals,
-} from "@/contexts/ChordPresetContext";
 
 import { SpellingUtils } from "@/utils/SpellingUtils";
 import { VexFlowFormatter } from "@/utils/formatters/VexFlowFormatter";
+import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 
 interface StaffRendererProps {
   style?: React.CSSProperties;
@@ -20,9 +17,9 @@ interface StaffRendererProps {
 export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
   const staffDivRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { selectedNoteIndices, selectedMusicalKey } = useMusical();
-  const { selectedChordType, selectedInversionIndex } = useChordPresets();
-  const isChordsOrIntervals = useIsChordsOrIntervals();
+  const { selectedNoteIndices, selectedMusicalKey, currentChordMatch } =
+    useMusical();
+  const isScalesMode = useIsScalePreviewMode();
   const border = useBorder();
 
   useEffect(() => {
@@ -59,12 +56,14 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
 
     if (selectedNoteIndices.length === 0) return;
 
+    console.log(
+      `currentChordMatch = ${JSON.stringify(currentChordMatch, null, 2)}`
+    );
     // Step 1: Compute NoteWithOctave[] - all context values passed as parameters
-    const notesWithOctaves = SpellingUtils.computeStaffNotes(
+    const notesWithOctaves = SpellingUtils.computeNotesWithOptimalStrategy(
       selectedNoteIndices,
       canonicalIonianKey,
-      selectedChordType,
-      isChordsOrIntervals
+      currentChordMatch
     );
 
     // Step 2: Render NoteWithOctave[] to VexFlow - pure rendering logic
@@ -85,9 +84,8 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
   }, [
     selectedNoteIndices,
     selectedMusicalKey,
-    selectedChordType,
-    selectedInversionIndex,
-    isChordsOrIntervals,
+    currentChordMatch,
+    isScalesMode,
   ]);
 
   return (

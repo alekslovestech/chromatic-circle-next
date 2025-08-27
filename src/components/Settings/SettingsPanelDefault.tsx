@@ -24,7 +24,7 @@ export const SettingsPanelDefault = () => {
       {/*<CircularVisModeSelect />*/}
 
       <div className={`key-selector flex ${settingsGap} `}>
-        <MusicalKeySelector useDropdownSelector={false} />
+        {isFreeformMode && <MusicalKeySelector useDropdownSelector={false} />}
       </div>
 
       {/*<MonochromeModeToggle />*/}
