@@ -56,9 +56,6 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
 
     if (selectedNoteIndices.length === 0) return;
 
-    console.log(
-      `currentChordMatch = ${JSON.stringify(currentChordMatch, null, 2)}`
-    );
     // Step 1: Compute NoteWithOctave[] - all context values passed as parameters
     const notesWithOctaves = SpellingUtils.computeNotesWithOptimalStrategy(
       selectedNoteIndices,

@@ -49,6 +49,7 @@ export const MusicalProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   useEffect(() => {
+    if (selectedNoteIndices.length === 0) return;
     const rootNoteIndex = selectedNoteIndices[0];
     const updatedIndices = ChordUtils.calculateUpdatedIndices(
       rootNoteIndex,
