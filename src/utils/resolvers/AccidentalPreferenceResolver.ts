@@ -32,18 +32,24 @@ export class AccidentalPreferenceResolver {
           ? AccidentalType.Flat
           : AccidentalType.Sharp;
 
-      case ChordQuality.Minor:
-        return [0, 3, 5, 7, 10].includes(rootChromaticIndex)
-          ? AccidentalType.Flat
-          : AccidentalType.Sharp;
-      case ChordQuality.Augmented:
-        return [1, 3, 6, 8, 10].includes(rootChromaticIndex)
-          ? AccidentalType.Flat
-          : AccidentalType.Sharp;
       case ChordQuality.Major:
         return [0, 1, 3, 5, 8, 10].includes(rootChromaticIndex)
           ? AccidentalType.Flat
           : AccidentalType.Sharp;
+      case ChordQuality.Minor:
+        return [0, 2, 3, 5, 7, 10].includes(rootChromaticIndex)
+          ? AccidentalType.Flat
+          : AccidentalType.Sharp;
+      case ChordQuality.Diminished:
+        return IndexUtils.isBlackKey(rootChromaticIndex)
+          ? AccidentalType.Sharp
+          : AccidentalType.Flat;
+      //there's no purely correct way to do this, sometimes mixed accidentals are best
+      case ChordQuality.Augmented:
+        return [1, 3, 6, 8, 10].includes(rootChromaticIndex)
+          ? AccidentalType.Flat
+          : AccidentalType.Sharp;
+
       //optimal spelling not yet defined, or there's no preference
       default:
         return IndexUtils.isBlackKey(rootChromaticIndex)
@@ -71,14 +77,16 @@ export class AccidentalPreferenceResolver {
       case ChordType.Minor:
       case ChordType.Minor7:
       case ChordType.Minor6:
+      case ChordType.MinorMajor7:
+      case ChordType.SpreadMinor:
+        return ChordQuality.Minor;
+
       case ChordType.Diminished:
       case ChordType.HalfDiminished:
       case ChordType.Diminished7:
-      case ChordType.MinorMajor7:
-      case ChordType.SpreadMinor:
       case ChordType.SpreadDiminished:
       case ChordType.MajFlat5:
-        return ChordQuality.Minor;
+        return ChordQuality.Diminished;
 
       case ChordType.Augmented:
       case ChordType.AugMajor7:

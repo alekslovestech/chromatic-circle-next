@@ -33,30 +33,25 @@ export class ChordUtils {
 
   static calculateUpdatedIndices(
     newIndex: ActualIndex,
-    isToggle: boolean,
+    isFreeform: boolean,
     selectedNoteIndices: ActualIndex[],
     chordType: NoteGroupingId,
     inversionIndex: InversionIndex = ixInversion(0)
   ): ActualIndex[] {
-    if (isToggle)
-      return IndexUtils.ToggleNewIndex(
-        selectedNoteIndices,
-        newIndex as ActualIndex
-      );
-
-    // New behavior: treat newIndex as the desired bass note
-    return this.calculateChordNotesFromBassNote(
-      newIndex,
-      chordType,
-      inversionIndex
-    );
+    return isFreeform
+      ? IndexUtils.ToggleNewIndex(selectedNoteIndices, newIndex as ActualIndex)
+      : this.calculateChordNotesFromBassNote(
+          newIndex,
+          chordType,
+          inversionIndex
+        );
   }
 
   /**
    * Calculate chord notes where the clicked note becomes the bass note.
    * This is more intuitive than clicking on the root note.
    */
-  static calculateChordNotesFromBassNote(
+  private static calculateChordNotesFromBassNote(
     bassIndex: ActualIndex,
     chordType: NoteGroupingId,
     inversionIndex: InversionIndex

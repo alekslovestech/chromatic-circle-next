@@ -4,5 +4,6 @@ export enum ChordQuality {
   Other = "Other",
   Major = "Chord_Maj",
   Minor = "Chord_Min",
+  Diminished = "Chord_Dim",
   Augmented = "Chord_Aug",
 }

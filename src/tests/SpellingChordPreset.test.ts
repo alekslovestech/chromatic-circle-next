@@ -126,12 +126,32 @@ describe("SpellingChordPreset - Chord preset-based note spelling", () => {
 
     describe("Diminished triads", () => {
       testChordSpelling(
-        "D dim in root position",
+        "D dim => flat",
         [2, 5, 8], // D, F, Ab
         [
           createNoteWithOctave("D", AccidentalType.None, 0),
           createNoteWithOctave("F", AccidentalType.None, 0),
           createNoteWithOctave("A", AccidentalType.Flat, 0),
+        ]
+      );
+
+      testChordSpelling(
+        "D#/Eb dim => sharp",
+        [3, 6, 9], // D#, F#, A
+        [
+          createNoteWithOctave("D", AccidentalType.Sharp, 0),
+          createNoteWithOctave("F", AccidentalType.Sharp, 0),
+          createNoteWithOctave("A", AccidentalType.None, 0),
+        ]
+      );
+
+      testChordSpelling(
+        "E dim => flat",
+        [4, 7, 10], // Eb, G, Bb
+        [
+          createNoteWithOctave("E", AccidentalType.None, 0),
+          createNoteWithOctave("G", AccidentalType.None, 0),
+          createNoteWithOctave("B", AccidentalType.Flat, 0),
         ]
       );
     });
