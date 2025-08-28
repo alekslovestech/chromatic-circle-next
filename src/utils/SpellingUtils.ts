@@ -13,7 +13,10 @@ import { IndexUtils } from "@/utils/IndexUtils";
 
 import { AccidentalPreferenceResolver } from "@/utils/resolvers/AccidentalPreferenceResolver";
 import { ActualNoteResolver } from "@/utils/resolvers/ActualNoteResolver";
-import { ChordReference } from "@/types/interfaces/ChordReference";
+import {
+  ChordReference,
+  makeChordReference,
+} from "@/types/interfaces/ChordReference";
 
 export class SpellingUtils {
   static computeSingleNoteFromChordPreset(
@@ -48,12 +51,12 @@ export class SpellingUtils {
       selectedChordType,
       selectedInversionIndex
     );
-    // Create a minimal ChordMatch for reuse
-    const chordRef: ChordReference = {
-      rootNote: baseIndex,
-      id: selectedChordType,
-      inversionIndex: selectedInversionIndex,
-    };
+
+    const chordRef = makeChordReference(
+      baseIndex,
+      selectedChordType,
+      selectedInversionIndex
+    );
 
     return this.computeSingleNoteFromChordPreset(
       chordIndices[0],

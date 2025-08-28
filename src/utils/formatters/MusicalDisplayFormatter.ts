@@ -6,6 +6,8 @@ import { ChordDisplayInfo } from "@/types/interfaces/ChordDisplayInfo";
 import {
   ChordReference,
   makeChordReference,
+  makeEmptyChordReference,
+  makeUnknownChordReference,
 } from "@/types/interfaces/ChordReference";
 
 import { MusicalKey } from "@/types/Keys/MusicalKey";
@@ -151,9 +153,7 @@ export class MusicalDisplayFormatter {
   static getChordReferenceFromIndices(
     indices: ActualIndex[]
   ): ChordReference | null {
-    if (indices.length === 0) {
-      return makeChordReference(0, SpecialType.None, 0);
-    }
+    if (indices.length === 0) return makeEmptyChordReference();
 
     const normalizedIndices = IndexUtils.normalizeIndices(indices);
 
@@ -169,7 +169,7 @@ export class MusicalDisplayFormatter {
     if (inversionMatch) return inversionMatch;
 
     // Fallback to unknown chord
-    return this.createUnknownChordReference(indices);
+    return makeUnknownChordReference(indices);
   }
 
   // Add a new method that also returns the original bass note
@@ -295,21 +295,6 @@ export class MusicalDisplayFormatter {
     while (bassNote < 0) bassNote += TWELVE;
 
     return ixActual(bassNote % TWELVE);
-  }
-
-  // New method for creating unknown chord references
-  private static createUnknownChordReference(
-    indices: ActualIndex[]
-  ): ChordReference {
-    if (indices.length === 0) {
-      return makeChordReference(0, ChordType.Unknown, 0);
-    }
-
-    // Use the lowest note as the root for unknown chords
-    const sortedIndices = [...indices].sort((a, b) => a - b);
-    const rootIndex = sortedIndices[0];
-
-    return makeChordReference(rootIndex, ChordType.Unknown, 0);
   }
 
   // Enhanced method for deriving chord names that handles unknown chords better
