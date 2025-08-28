@@ -83,7 +83,6 @@ export class SpellingUtils {
     );
   }
 
-  // Add a method that uses ChordMatch when available, falls back to reverse-engineering
   static computeNotesWithOptimalStrategy(
     selectedNoteIndices: ActualIndex[],
     selectedMusicalKey: MusicalKey,
