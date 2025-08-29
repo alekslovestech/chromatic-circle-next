@@ -18,6 +18,7 @@ import { InputMode } from "@/types/SettingModes";
 import { ChordUtils } from "@/utils/ChordUtils";
 
 import { useMusical } from "./MusicalContext";
+import { IndexUtils } from "@/utils/IndexUtils";
 export interface ChordPresetSettings {
   inputMode: InputMode;
   selectedChordType: NoteGroupingId;
@@ -32,7 +33,7 @@ const ChordPresetContext = createContext<ChordPresetSettings | null>(null);
 export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [inputMode, setInputMode] = useState<InputMode>(InputMode.ChordPresets);
+  const [inputMode, setInputMode] = useState<InputMode>(InputMode.Freeform);
   const [selectedChordType, setSelectedChordType] = useState<NoteGroupingId>(
     ChordType.Major
   );
@@ -42,24 +43,39 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
   const { selectedNoteIndices, setSelectedNoteIndices, setCurrentChordRef } =
     useMusical();
 
-  useEffect(() => {
+  // Consolidated inversion change handler
+  const handleInversionChange = (newInversionIndex: InversionIndex) => {
+    console.log(`handleInversionChange called with: ${newInversionIndex}`);
+
+    setSelectedInversionIndex(newInversionIndex);
+
+    // Only update chord-related state if we're in preset mode
     if (inputMode !== InputMode.Freeform && selectedNoteIndices.length > 0) {
-      const rootNoteIndex = selectedNoteIndices[0];
-      const chordRef = makeChordReference(
-        rootNoteIndex,
-        selectedChordType,
-        selectedInversionIndex
+      // Calculate the original root note from current voicing
+      const originalRootIndex = IndexUtils.bassNoteAtInversion(
+        selectedNoteIndices,
+        selectedInversionIndex // Use CURRENT inversion to find root
       );
+
+      // Calculate new note indices for the new inversion
+      const updatedIndices = ChordUtils.calculateChordNotesFromIndex(
+        originalRootIndex,
+        selectedChordType,
+        newInversionIndex
+      );
+
+      // Create new chord reference
+      const chordRef = makeChordReference(
+        originalRootIndex,
+        selectedChordType,
+        newInversionIndex
+      );
+
+      // Update both states atomically
+      setSelectedNoteIndices(updatedIndices);
       setCurrentChordRef(chordRef);
-    } else if (inputMode === InputMode.Freeform) {
-      setCurrentChordRef(undefined);
     }
-  }, [
-    selectedNoteIndices,
-    inputMode,
-    selectedChordType,
-    selectedInversionIndex,
-  ]);
+  };
 
   const handleInputModeChange = (newMode: InputMode) => {
     setInputMode(newMode);
@@ -114,21 +130,6 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
         rootNoteIndex,
         newChordType,
         selectedInversionIndex
-      );
-      setCurrentChordRef(chordRef);
-    }
-  };
-
-  const handleInversionChange = (newInversionIndex: InversionIndex) => {
-    setSelectedInversionIndex(newInversionIndex);
-
-    // Update currentChordMatch if we're in preset mode
-    if (inputMode !== InputMode.Freeform && selectedNoteIndices.length > 0) {
-      const rootNoteIndex = selectedNoteIndices[0];
-      const chordRef = makeChordReference(
-        rootNoteIndex,
-        selectedChordType,
-        newInversionIndex
       );
       setCurrentChordRef(chordRef);
     }

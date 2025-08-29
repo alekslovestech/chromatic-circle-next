@@ -1,7 +1,7 @@
 import { TWELVE, TWENTY4 } from "@/types/constants/NoteConstants";
 
 import { ChromaticIndex, subChromatic } from "@/types/ChromaticIndex";
-import { ActualIndex, InversionIndex } from "@/types/IndexTypes";
+import { ActualIndex, InversionIndex, ixInversion } from "@/types/IndexTypes";
 
 export class IndexUtils {
   static isBlackKey(actualIndex: ActualIndex | ChromaticIndex): boolean {
@@ -36,13 +36,23 @@ export class IndexUtils {
     return lowerFit.includes(indices[0]) ? lowerFit : upperFit;
   }
 
+  //indices of the original (uninverted chord) => bass note
+  static bassNoteAtInversion(
+    indices: ActualIndex[],
+    inversionIndex: InversionIndex
+  ): ActualIndex {
+    const reverseIndex = ixInversion(
+      (indices.length - inversionIndex) % indices.length
+    );
+    return indices[reverseIndex] as ActualIndex;
+  }
+
+  //indices of the inverted chord => root note
   static rootNoteAtInversion(
     indices: ActualIndex[],
     inversionIndex: InversionIndex
   ): ActualIndex {
-    return indices[
-      (indices.length - inversionIndex) % indices.length
-    ] as ActualIndex;
+    return indices[inversionIndex] as ActualIndex;
   }
 
   //put the first note at the end

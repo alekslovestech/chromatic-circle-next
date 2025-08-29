@@ -25,7 +25,7 @@ export class SpellingUtils {
     chordRef: ChordReference
   ): NoteWithOctave {
     // Direct computation for single note - no array creation
-    const rootIndex = IndexUtils.rootNoteAtInversion(
+    const rootIndex = IndexUtils.bassNoteAtInversion(
       chordIndices,
       chordRef.inversionIndex
     );

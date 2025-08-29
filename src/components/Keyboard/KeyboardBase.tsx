@@ -41,7 +41,7 @@ export const useKeyboardHandlers = () => {
       ) {
         return false;
       }
-      const rootNote = IndexUtils.rootNoteAtInversion(
+      const rootNote = IndexUtils.bassNoteAtInversion(
         selectedNoteIndices,
         selectedInversionIndex
       );

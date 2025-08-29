@@ -19,6 +19,7 @@ import {
   InversionIndex,
   ixActual,
   ixInversion,
+  actualToChromatic,
 } from "@/types/IndexTypes";
 import { NoteGrouping } from "@/types/NoteGrouping";
 import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
@@ -26,6 +27,8 @@ import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
 import { NoteConverter } from "@/utils/NoteConverter";
 import { IndexUtils } from "@/utils/IndexUtils";
 import { SpellingUtils } from "@/utils/SpellingUtils";
+import { AccidentalPreferenceResolver } from "@/utils/resolvers/AccidentalPreferenceResolver";
+import { ActualNoteResolver } from "@/utils/resolvers/ActualNoteResolver";
 
 import { NoteFormatter } from "./NoteFormatter";
 
@@ -94,7 +97,7 @@ export class MusicalDisplayFormatter {
     chordRef: ChordReference,
     chordDisplayMode: ChordDisplayMode
   ): string {
-    // Get spelled notes for root and bass using ChordReference
+    // Get root spelling using the existing method
     const rootNoteWithOctave = SpellingUtils.computeFirstNoteFromChordPreset(
       chordRef.rootNote,
       chordRef.id,
@@ -102,22 +105,34 @@ export class MusicalDisplayFormatter {
     );
     const rootSpelling = NoteFormatter.formatForDisplay(rootNoteWithOctave);
 
-    const bassNoteWithOctave = SpellingUtils.computeFirstNoteFromChordPreset(
-      chordRef.rootNote,
-      chordRef.id,
-      chordRef.inversionIndex
-    );
-    const bassSpelling = NoteFormatter.formatForDisplay(bassNoteWithOctave);
-
     // Build chord name using existing library function
     const chordTypeName = NoteGroupingLibrary.getId(
       chordRef.id,
       chordDisplayMode
     );
 
-    return rootSpelling === bassSpelling
-      ? `${rootSpelling}${chordTypeName}`
-      : `${rootSpelling}${chordTypeName}/${bassSpelling}`;
+    // Root position case
+    if (chordRef.inversionIndex === 0) {
+      return `${rootSpelling}${chordTypeName}`;
+    }
+
+    // Inversion case - use the same bass note calculation as deriveChordNameFromReference
+    const bassNote = this.calculateBassNoteFromReference(chordRef);
+
+    // For bass note spelling, we need to use the chord's accidental preference
+    const rootChromaticIndex = actualToChromatic(chordRef.rootNote);
+    const accidentalPreference =
+      AccidentalPreferenceResolver.getChordPresetSpellingPreference(
+        chordRef.id,
+        rootChromaticIndex
+      );
+    const bassNoteWithOctave = ActualNoteResolver.resolveAbsoluteNoteWithOctave(
+      bassNote,
+      accidentalPreference
+    );
+    const bassSpelling = NoteFormatter.formatForDisplay(bassNoteWithOctave);
+
+    return `${rootSpelling}${chordTypeName}/${bassSpelling}`;
   }
 
   // Backward compatibility wrapper (can be deprecated later)
@@ -130,7 +145,7 @@ export class MusicalDisplayFormatter {
     // Create ChordReference from the old parameters
     const rootNoteIndex =
       selectedNoteIndices.length > 0
-        ? IndexUtils.rootNoteAtInversion(
+        ? IndexUtils.bassNoteAtInversion(
             selectedNoteIndices,
             selectedInversionIndex
           )
@@ -236,7 +251,7 @@ export class MusicalDisplayFormatter {
     id: NoteGroupingId,
     inversionIndex: InversionIndex
   ): ChordReference {
-    const rootNoteAtInversion = IndexUtils.rootNoteAtInversion(
+    const rootNoteAtInversion = IndexUtils.bassNoteAtInversion(
       indices,
       inversionIndex
     );

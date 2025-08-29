@@ -38,7 +38,7 @@ describe("IndexUtils", () => {
     cases.forEach(({ desc, indices, inv, expected }) => {
       it(desc, () => {
         expect(
-          IndexUtils.rootNoteAtInversion(
+          IndexUtils.bassNoteAtInversion(
             ixActualArray(indices),
             ixInversion(inv)
           )
