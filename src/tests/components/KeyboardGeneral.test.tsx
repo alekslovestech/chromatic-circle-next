@@ -25,26 +25,27 @@ describe("KeyboardGeneral", () => {
 
   beforeEach(() => {
     renderComponent();
+    ReactTestUtils.clickKey("mode-singlenote");
   });
 
-  test.skip("test initial setup (G selected)", () => {
+  test("test initial setup (G selected)", () => {
     keyVerificationUtils.verifySelectedCircularKeys([7]);
     keyVerificationUtils.verifySelectedLinearKeys([7]);
   });
 
-  test.skip("switching mode to Freeform renders 1 note (still)", () => {
+  test("switching mode to Freeform renders 1 note (still)", () => {
     ReactTestUtils.clickKey("mode-freeform");
     keyVerificationUtils.verifySelectedLinearKeys([7]);
     keyVerificationUtils.verifySelectedCircularKeys([7]);
   });
 
-  test.skip("switching mode to Interval Presets renders 2 notes", () => {
+  test("switching mode to Interval Presets renders 2 notes", () => {
     ReactTestUtils.clickKey("mode-intervals");
     keyVerificationUtils.verifySelectedLinearKeys([7, 11]);
     keyVerificationUtils.verifySelectedCircularKeys([7, 11]);
   });
 
-  test.skip("switching mode to Interval Presets and then Freeform renders 2 notes (still)", () => {
+  test("switching mode to Interval Presets and then Freeform renders 2 notes (still)", () => {
     ReactTestUtils.clickKey("mode-intervals");
     ReactTestUtils.clickKey("mode-freeform");
 
@@ -52,13 +53,13 @@ describe("KeyboardGeneral", () => {
     keyVerificationUtils.verifySelectedCircularKeys([7, 11]);
   });
 
-  test.skip("switching mode to Chord Presets renders 3 notes", () => {
+  test("switching mode to Chord Presets renders 3 notes", () => {
     ReactTestUtils.clickKey("mode-chords");
     keyVerificationUtils.verifySelectedLinearKeys([7, 11, 14]);
     keyVerificationUtils.verifySelectedCircularKeys([7, 11, 2]);
   });
 
-  test.skip("switching mode to Chord Presets and then Freeform renders 3 notes (still)", () => {
+  test("switching mode to Chord Presets and then Freeform renders 3 notes (still)", () => {
     ReactTestUtils.clickKey("mode-chords");
     ReactTestUtils.clickKey("mode-freeform");
 

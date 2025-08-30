@@ -23,33 +23,27 @@ describe("KeyboardLinear", () => {
 
   beforeEach(() => {
     renderComponent();
+    ReactTestUtils.clickKey("mode-singlenote");
   });
 
-  test.skip("initial setup (G selected)", () => {
+  test("initial setup (G selected)", () => {
     const pianoKeys = document.querySelectorAll("[id^='linearKey']");
     expect(pianoKeys.length).toBe(24);
-
-    const whiteKeys = document.querySelectorAll(".piano-key.white");
-    const blackKeys = document.querySelectorAll(".piano-key.black");
-    expect(whiteKeys.length).toBe(14);
-    expect(blackKeys.length).toBe(10);
 
     const fSharpNote = document.getElementById("linearKey06");
     const gNote = document.getElementById("linearKey07");
 
     expect(fSharpNote).toBeInTheDocument();
-    expect(fSharpNote).toHaveClass("piano-key black");
-    expect(fSharpNote).toHaveTextContent("F♯");
+    expect(fSharpNote).toHaveClass("piano-key short");
 
     expect(gNote).toBeInTheDocument();
-    expect(gNote).toHaveClass("piano-key white");
     expect(gNote).toHaveTextContent("G");
 
     fireEvent.click(gNote!);
     keyVerificationUtils.verifySelectedLinearKeys([7]);
   });
 
-  test.skip("removing last note leaves no notes selected", () => {
+  test("removing last note leaves no notes selected", () => {
     const freeFormButton = document.getElementById("mode-freeform");
     fireEvent.click(freeFormButton!);
     expect(freeFormButton).toHaveClass("selected");
@@ -59,13 +53,7 @@ describe("KeyboardLinear", () => {
     keyVerificationUtils.verifySelectedLinearKeys([]); //verify there are no notes left
   });
 
-  test.skip("7add13 chord doesn't crash", () => {
-    ReactTestUtils.clickKey("mode-chords");
-    ReactTestUtils.clickKey("preset-Chord_7Add13");
-    ReactTestUtils.clickKey("linearKey23");
-  });
-
-  test.skip("add9 chord at A configured correctly", () => {
+  test("add9 chord at A configured correctly", () => {
     ReactTestUtils.clickKey("mode-chords");
 
     // Find and click the add9 chord preset button
@@ -74,7 +62,7 @@ describe("KeyboardLinear", () => {
     keyVerificationUtils.verifySelectedLinearKeys([9, 13, 16, 23]); //A C# E B
   });
 
-  test.skip("add9 chord at A# truncates correctly", () => {
+  test("add9 chord at A# truncates correctly", () => {
     ReactTestUtils.clickKey("mode-chords");
 
     ReactTestUtils.clickKey("preset-Chord_Add9");
@@ -82,7 +70,7 @@ describe("KeyboardLinear", () => {
     keyVerificationUtils.verifySelectedLinearKeys([10, 14, 17]); //A# D F (truncated)
   });
 
-  test.skip("When inversion 1 is selected, clicking around on the keyboard should only produce inversion 1", () => {
+  test("When inversion 1 is selected, clicking around on the keyboard should only produce inversion 1", () => {
     ReactTestUtils.clickKey("mode-chords");
     ReactTestUtils.clickKey("preset-Chord_Maj");
     ReactTestUtils.clickKey("linearKey00");

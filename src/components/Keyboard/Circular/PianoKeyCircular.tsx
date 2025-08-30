@@ -63,6 +63,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     true
   );
 
+  if (isSelected) baseClasses.push("selected"); //add for testing
   if (isScales) baseClasses.push("disabled");
 
   const id = KeyboardUtils.StringWithPaddedIndex("circularKey", chromaticIndex);

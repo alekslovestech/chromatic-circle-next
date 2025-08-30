@@ -47,8 +47,10 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
     false
   );
 
+  if (isSelected) baseClasses.push("selected"); //add for testing
   if (isShortKey) baseClasses.push("short");
   if (isScales) baseClasses.push("disabled");
+  if (isRootNote) baseClasses.push("root-note");
 
   const id = KeyboardUtils.StringWithPaddedIndex("linearKey", actualIndex);
   const noteText = isScales

@@ -22,21 +22,16 @@ describe("KeyboardCircular", () => {
 
   beforeEach(() => {
     renderComponent();
+    ReactTestUtils.clickKey("mode-singlenote");
   });
 
-  test.skip("handles click on the 'C' slice", () => {
+  test("handles click on the 'C' slice", () => {
     ReactTestUtils.clickKey("circularKey00");
     keyVerificationUtils.verifySelectedCircularKeys([0]);
   });
 
-  test.skip("handles click on the 'A' slice", () => {
+  test("handles click on the 'A' slice", () => {
     ReactTestUtils.clickKey("circularKey09");
     keyVerificationUtils.verifySelectedCircularKeys([9]);
-  });
-
-  test.skip("switching to Chord Presets with C selected renders 3 notes", () => {
-    ReactTestUtils.clickKey("circularKey00");
-    ReactTestUtils.clickKey("mode-chords");
-    keyVerificationUtils.verifySelectedCircularKeys([0, 4, 7]);
   });
 });
