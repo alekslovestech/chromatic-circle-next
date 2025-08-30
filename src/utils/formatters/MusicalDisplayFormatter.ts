@@ -26,6 +26,7 @@ import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
 
 import { NoteConverter } from "@/utils/NoteConverter";
 import { IndexUtils } from "@/utils/IndexUtils";
+import { ChordUtils } from "@/utils/ChordUtils";
 import { SpellingUtils } from "@/utils/SpellingUtils";
 import { AccidentalPreferenceResolver } from "@/utils/resolvers/AccidentalPreferenceResolver";
 import { ActualNoteResolver } from "@/utils/resolvers/ActualNoteResolver";
@@ -145,7 +146,7 @@ export class MusicalDisplayFormatter {
     // Create ChordReference from the old parameters
     const rootNoteIndex =
       selectedNoteIndices.length > 0
-        ? IndexUtils.bassNoteAtInversion(
+        ? ChordUtils.bassNoteAtInversion(
             selectedNoteIndices,
             selectedInversionIndex
           )
@@ -251,7 +252,7 @@ export class MusicalDisplayFormatter {
     id: NoteGroupingId,
     inversionIndex: InversionIndex
   ): ChordReference {
-    const rootNoteAtInversion = IndexUtils.bassNoteAtInversion(
+    const rootNoteAtInversion = ChordUtils.bassNoteAtInversion(
       indices,
       inversionIndex
     );

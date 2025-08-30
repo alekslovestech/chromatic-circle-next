@@ -42,7 +42,7 @@ export const ChordPresetSelector: React.FC = () => {
 
     const rootNote =
       selectedNoteIndices.length > 0
-        ? IndexUtils.bassNoteAtInversion(
+        ? ChordUtils.bassNoteAtInversion(
             selectedNoteIndices,
             selectedInversionIndex
           )

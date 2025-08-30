@@ -12,6 +12,25 @@ import {
 import { IndexUtils } from "./IndexUtils";
 
 export class ChordUtils {
+  //indices of the original (uninverted chord) => bass note
+  static bassNoteAtInversion(
+    indices: ActualIndex[],
+    inversionIndex: InversionIndex
+  ): ActualIndex {
+    const reverseIndex = ixInversion(
+      (indices.length - inversionIndex) % indices.length
+    );
+    return indices[reverseIndex] as ActualIndex;
+  }
+
+  //indices of the inverted chord => root note
+  static rootNoteAtInversion(
+    indices: ActualIndex[],
+    inversionIndex: InversionIndex
+  ): ActualIndex {
+    return indices[inversionIndex] as ActualIndex;
+  }
+
   static hasInversions = (id: NoteGroupingId): boolean => {
     const definition = NoteGroupingLibrary.getGroupingById(id);
     return definition?.offsets.length > 1;

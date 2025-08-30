@@ -9,7 +9,6 @@ import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { NoteWithOctave } from "@/types/interfaces/NoteWithOctave";
 
 import { ChordUtils } from "@/utils/ChordUtils";
-import { IndexUtils } from "@/utils/IndexUtils";
 
 import { AccidentalPreferenceResolver } from "@/utils/resolvers/AccidentalPreferenceResolver";
 import { ActualNoteResolver } from "@/utils/resolvers/ActualNoteResolver";
@@ -25,7 +24,7 @@ export class SpellingUtils {
     chordRef: ChordReference
   ): NoteWithOctave {
     // Direct computation for single note - no array creation
-    const rootIndex = IndexUtils.bassNoteAtInversion(
+    const rootIndex = ChordUtils.bassNoteAtInversion(
       chordIndices,
       chordRef.inversionIndex
     );
