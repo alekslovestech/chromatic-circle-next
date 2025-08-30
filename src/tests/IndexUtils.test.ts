@@ -39,7 +39,7 @@ describe("IndexUtils", () => {
     cases.forEach(({ desc, indices, inv, expected }) => {
       it(desc, () => {
         expect(
-          ChordUtils.bassNoteAtInversion(
+          ChordUtils.getBassNoteFromOriginalChord(
             ixActualArray(indices),
             ixInversion(inv)
           )

@@ -52,7 +52,8 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
     // Only update chord-related state if we're in preset mode
     if (inputMode !== InputMode.Freeform && selectedNoteIndices.length > 0) {
       // Calculate the original root note from current voicing
-      const originalRootIndex = IndexUtils.bassNoteAtInversion(
+      // FIXED: We have inverted chord indices and know the current inversion
+      const originalRootIndex = ChordUtils.getRootNoteFromInvertedChord(
         selectedNoteIndices,
         selectedInversionIndex // Use CURRENT inversion to find root
       );

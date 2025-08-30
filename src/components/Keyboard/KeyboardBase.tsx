@@ -41,7 +41,8 @@ export const useKeyboardHandlers = () => {
       ) {
         return false;
       }
-      const rootNote = ChordUtils.bassNoteAtInversion(
+      // FIXED: We have inverted chord indices and know the current inversion
+      const rootNote = ChordUtils.getRootNoteFromInvertedChord(
         selectedNoteIndices,
         selectedInversionIndex
       );

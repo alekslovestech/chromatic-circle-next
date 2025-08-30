@@ -40,9 +40,10 @@ export const ChordPresetSelector: React.FC = () => {
     setSelectedChordType(newPresetId);
     setSelectedInversionIndex(ixInversion(0));
 
+    // FIXED: We have inverted chord indices and know the current inversion level
     const rootNote =
       selectedNoteIndices.length > 0
-        ? ChordUtils.bassNoteAtInversion(
+        ? ChordUtils.getRootNoteFromInvertedChord(
             selectedNoteIndices,
             selectedInversionIndex
           )

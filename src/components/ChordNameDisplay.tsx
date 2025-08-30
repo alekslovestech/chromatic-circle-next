@@ -21,6 +21,7 @@ import { LAYOUT_PATTERNS } from "@/lib/design/LayoutPatterns";
 import { useBorder } from "@/lib/hooks";
 import { makeChordReference } from "@/types/interfaces/ChordReference";
 import { IndexUtils } from "@/utils/IndexUtils";
+import { ChordUtils } from "@/utils/ChordUtils";
 
 const MAX_CHORD_NAME_LENGTH = 7;
 const BREAK_CHARACTER = "\u200B";
@@ -60,7 +61,7 @@ export const ChordNameDisplay: React.FC = () => {
       const chordRef =
         currentChordRef ||
         makeChordReference(
-          IndexUtils.rootNoteAtInversion(
+          ChordUtils.getRootNoteFromInvertedChord(
             selectedNoteIndices,
             selectedInversionIndex
           ),

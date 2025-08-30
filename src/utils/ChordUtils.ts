@@ -12,23 +12,40 @@ import {
 import { IndexUtils } from "./IndexUtils";
 
 export class ChordUtils {
-  //indices of the original (uninverted chord) => bass note
-  static bassNoteAtInversion(
-    indices: ActualIndex[],
+  /**
+   * Given the original (uninverted) chord indices, calculate what the bass note would be at a specific inversion.
+   * Example: C-E-G (original) at inversion 1 → bass note is E
+   */
+  static getBassNoteFromOriginalChord(
+    originalChordIndices: ActualIndex[],
     inversionIndex: InversionIndex
   ): ActualIndex {
     const reverseIndex = ixInversion(
-      (indices.length - inversionIndex) % indices.length
+      (originalChordIndices.length - inversionIndex) %
+        originalChordIndices.length
     );
-    return indices[reverseIndex] as ActualIndex;
+    return originalChordIndices[reverseIndex] as ActualIndex;
   }
 
-  //indices of the inverted chord => root note
-  static rootNoteAtInversion(
-    indices: ActualIndex[],
+  /**
+   * Given inverted chord indices and the known inversion level, find the root note.
+   * Example: E-G-C (1st inversion) with inversionIndex=1 → root note is C (at position 1)
+   */
+  static getRootNoteFromInvertedChord(
+    invertedChordIndices: ActualIndex[],
     inversionIndex: InversionIndex
   ): ActualIndex {
-    return indices[inversionIndex] as ActualIndex;
+    return invertedChordIndices[inversionIndex] as ActualIndex;
+  }
+
+  /**
+   * Given inverted chord indices, find the bass note (always the first note).
+   * Example: E-G-C → bass note is E
+   */
+  static getBassNoteFromInvertedChord(
+    invertedChordIndices: ActualIndex[]
+  ): ActualIndex {
+    return invertedChordIndices[0] as ActualIndex;
   }
 
   static hasInversions = (id: NoteGroupingId): boolean => {

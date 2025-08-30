@@ -146,7 +146,7 @@ export class MusicalDisplayFormatter {
     // Create ChordReference from the old parameters
     const rootNoteIndex =
       selectedNoteIndices.length > 0
-        ? ChordUtils.bassNoteAtInversion(
+        ? ChordUtils.getRootNoteFromInvertedChord(
             selectedNoteIndices,
             selectedInversionIndex
           )
@@ -252,12 +252,28 @@ export class MusicalDisplayFormatter {
     id: NoteGroupingId,
     inversionIndex: InversionIndex
   ): ChordReference {
-    const rootNoteAtInversion = ChordUtils.bassNoteAtInversion(
-      indices,
-      inversionIndex
-    );
-    const rootNoteIndex = ixActual(rootNoteAtInversion % TWELVE);
-    return makeChordReference(rootNoteIndex, id, inversionIndex);
+    // In chord recognition context, we need to calculate the root note differently
+    // than in chord preset context. Here, indices are raw user input that matched
+    // a specific chord pattern at a specific inversion level.
+
+    if (inversionIndex === 0) {
+      // Root position - first note is the root
+      const rootNoteIndex = ixActual(indices[0] % TWELVE);
+      return makeChordReference(rootNoteIndex, id, inversionIndex);
+    } else {
+      // Inversion - need to calculate what the root would be in root position
+      const chordOffsets = ChordUtils.getOffsetsFromIdAndInversion(
+        id,
+        inversionIndex
+      );
+      const bassOffset = chordOffsets[0]; // First offset in inversion
+      const bassNote = indices[0]; // First note in user input (bass note)
+
+      // Calculate root: bassNote = rootNote + bassOffset, so rootNote = bassNote - bassOffset
+      const rootNote = ixActual(bassNote - bassOffset);
+      const rootNoteIndex = ixActual(rootNote % TWELVE);
+      return makeChordReference(rootNoteIndex, id, inversionIndex);
+    }
   }
 
   // Modified method that can take an optional bass note
