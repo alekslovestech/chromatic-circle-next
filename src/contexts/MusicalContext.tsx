@@ -12,7 +12,10 @@ import { ChordType } from "@/types/enums/ChordType";
 import { ActualIndex, ixActualArray } from "@/types/IndexTypes";
 import { DEFAULT_MUSICAL_KEY, MusicalKey } from "@/types/Keys/MusicalKey";
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
-import { ChordReference } from "@/types/interfaces/ChordReference";
+import {
+  ChordReference,
+  makeChordReference,
+} from "@/types/interfaces/ChordReference";
 
 import { ChordUtils } from "@/utils/ChordUtils";
 
@@ -38,7 +41,10 @@ export const MusicalProvider: React.FC<{ children: ReactNode }> = ({
     useState<MusicalKey>(DEFAULT_MUSICAL_KEY);
   const [currentChordRef, setCurrentChordRef] = useState<
     ChordReference | undefined
-  >(undefined);
+  >(
+    // Create initial chord reference to match the initial notes [7, 11, 14] = G major
+    isScales ? undefined : makeChordReference(7, ChordType.Major, 0) // G major root position
+  );
   const value: MusicalSettings = {
     selectedNoteIndices,
     selectedMusicalKey,

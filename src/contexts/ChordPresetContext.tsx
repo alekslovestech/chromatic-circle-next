@@ -15,10 +15,10 @@ import { useMusical } from "./MusicalContext";
 export interface ChordPresetSettings {
   inputMode: InputMode;
   selectedChordType: NoteGroupingId;
-  selectedInversionIndex: InversionIndex;
+  selectedInversionIndex: InversionIndex; // Add this back
   setInputMode: (mode: InputMode) => void;
   setSelectedChordType: (type: NoteGroupingId) => void;
-  setSelectedInversionIndex: (index: InversionIndex) => void;
+  setSelectedInversionIndex: (index: InversionIndex) => void; // Add this back
 }
 
 const ChordPresetContext = createContext<ChordPresetSettings | null>(null);
@@ -30,26 +30,23 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
   const [selectedChordType, setSelectedChordType] = useState<NoteGroupingId>(
     ChordType.Major
   );
-  const [selectedInversionIndex, setSelectedInversionIndex] =
-    useState<InversionIndex>(ixInversion(0));
-
-  const { selectedNoteIndices, setSelectedNoteIndices, setCurrentChordRef } =
-    useMusical();
+  const {
+    selectedNoteIndices,
+    setSelectedNoteIndices,
+    setCurrentChordRef,
+    currentChordRef,
+  } = useMusical();
 
   // Consolidated inversion change handler
   const handleInversionChange = (newInversionIndex: InversionIndex) => {
-    console.log(`handleInversionChange called with: ${newInversionIndex}`);
-
-    setSelectedInversionIndex(newInversionIndex);
-
     // Only update chord-related state if we're in preset mode
-    if (inputMode !== InputMode.Freeform && selectedNoteIndices.length > 0) {
-      // Calculate the original root note from current voicing
-      // FIXED: We have inverted chord indices and know the current inversion
-      const originalRootIndex = ChordUtils.getRootNoteFromInvertedChord(
-        selectedNoteIndices,
-        selectedInversionIndex // Use CURRENT inversion to find root
-      );
+    if (
+      inputMode !== InputMode.Freeform &&
+      selectedNoteIndices.length > 0 &&
+      currentChordRef
+    ) {
+      // Use the root note from the existing chord reference
+      const originalRootIndex = currentChordRef.rootNote;
 
       // Calculate new note indices for the new inversion
       const updatedIndices = ChordUtils.calculateChordNotesFromIndex(
@@ -58,7 +55,7 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
         newInversionIndex
       );
 
-      // Create new chord reference
+      // Create new chord reference with the same root
       const chordRef = makeChordReference(
         originalRootIndex,
         selectedChordType,
@@ -94,7 +91,6 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
         newChordType = selectedChordType;
     }
     setSelectedChordType(newChordType);
-    setSelectedInversionIndex(ixInversion(0));
 
     if (newMode !== InputMode.Freeform) {
       const updatedIndices = ChordUtils.calculateUpdatedIndices(
@@ -123,19 +119,22 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
       const chordRef = makeChordReference(
         rootNoteIndex,
         newChordType,
-        selectedInversionIndex
+        currentChordRef?.inversionIndex ?? ixInversion(0)
       );
       setCurrentChordRef(chordRef);
     }
   };
 
+  const selectedInversionIndex =
+    currentChordRef?.inversionIndex ?? ixInversion(0);
+
   const value: ChordPresetSettings = {
     inputMode,
     selectedChordType,
-    selectedInversionIndex,
+    selectedInversionIndex, // Add this
     setInputMode: handleInputModeChange,
     setSelectedChordType: handleChordTypeChange,
-    setSelectedInversionIndex: handleInversionChange,
+    setSelectedInversionIndex: handleInversionChange, // Add this
   };
 
   return (

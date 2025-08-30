@@ -85,7 +85,7 @@ describe("KeyboardLinear", () => {
     expect(secondOctaveC).toHaveClass("root-note");
 
     const secondOctaveD = document.getElementById("linearKey14");
-    // Click on different keys and expect inversion 1 to be maintained
+    // Click on different keys and expect inversion 1 to be maintained n
     fireEvent.click(secondOctaveD!); // Clicking on D in the 2nd octave
     keyVerificationUtils.verifySelectedLinearKeys([6, 9, 14]);
 

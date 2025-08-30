@@ -2,7 +2,6 @@ import { useCallback } from "react";
 import { ActualIndex } from "@/types/IndexTypes";
 
 import { InputMode } from "@/types/SettingModes";
-import { IndexUtils } from "@/utils/IndexUtils";
 import { ChordUtils } from "@/utils/ChordUtils";
 import { useMusical } from "@/contexts/MusicalContext";
 import { useChordPresets } from "@/contexts/ChordPresetContext";
@@ -11,7 +10,8 @@ export const CIRCLE_RADIUS = 5;
 export const useKeyboardHandlers = () => {
   const { selectedInversionIndex, selectedChordType, inputMode } =
     useChordPresets();
-  const { selectedNoteIndices, setSelectedNoteIndices } = useMusical();
+  const { selectedNoteIndices, setSelectedNoteIndices, currentChordRef } =
+    useMusical();
 
   const handleKeyClick = useCallback(
     (newIndex: ActualIndex) => {
@@ -37,18 +37,15 @@ export const useKeyboardHandlers = () => {
     (index: ActualIndex) => {
       if (
         inputMode === InputMode.Freeform ||
-        !ChordUtils.hasInversions(selectedChordType)
+        !ChordUtils.hasInversions(selectedChordType) ||
+        !currentChordRef
       ) {
         return false;
       }
-      // FIXED: We have inverted chord indices and know the current inversion
-      const rootNote = ChordUtils.getRootNoteFromInvertedChord(
-        selectedNoteIndices,
-        selectedInversionIndex
-      );
-      return index === rootNote;
+      // Use the rootNote directly from currentChordRef instead of trying to derive it
+      return index === currentChordRef.rootNote;
     },
-    [selectedNoteIndices, selectedInversionIndex, inputMode, selectedChordType]
+    [inputMode, selectedChordType, currentChordRef] // Remove selectedNoteIndices and selectedInversionIndex
   );
 
   return {

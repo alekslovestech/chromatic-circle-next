@@ -73,7 +73,6 @@ export class KeyboardUtils {
     if (currentChordRef) {
       const spelledNote = SpellingUtils.computeSingleNoteFromChordPreset(
         targetNoteIndex,
-        selectedNoteIndices,
         currentChordRef
       );
       return NoteFormatter.formatForDisplay(spelledNote);

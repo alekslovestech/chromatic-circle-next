@@ -28,17 +28,6 @@ export class ChordUtils {
   }
 
   /**
-   * Given inverted chord indices and the known inversion level, find the root note.
-   * Example: E-G-C (1st inversion) with inversionIndex=1 → root note is C (at position 1)
-   */
-  static getRootNoteFromInvertedChord(
-    invertedChordIndices: ActualIndex[],
-    inversionIndex: InversionIndex
-  ): ActualIndex {
-    return invertedChordIndices[inversionIndex] as ActualIndex;
-  }
-
-  /**
    * Given inverted chord indices, find the bass note (always the first note).
    * Example: E-G-C → bass note is E
    */

@@ -12,13 +12,14 @@ import { CircularVisualizations } from "./CircularVisualizations";
 import { PianoKeyCircular } from "./PianoKeyCircular";
 import { CircularVisMode } from "@/types/SettingModes";
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
+import { chromaticToActual } from "@/types/IndexTypes";
 
 const MAX_RADIUS = 100;
 const OUTER_RADIUS = 0.9 * MAX_RADIUS;
 const INNER_RADIUS = 0.5 * MAX_RADIUS;
 
 export const KeyboardCircular = () => {
-  const { handleKeyClick } = useKeyboardHandlers();
+  const { handleKeyClick, checkIsRootNote } = useKeyboardHandlers();
   const { selectedNoteIndices, selectedMusicalKey } = useMusical();
   //const { circularVisMode } = useDisplay();
   const numNotes = selectedNoteIndices.length;
@@ -100,15 +101,22 @@ export const KeyboardCircular = () => {
 
   return (
     <svg viewBox={coords.join(" ")} className="svg-container">
-      {Array.from({ length: TWELVE }).map((_, index) => (
-        <PianoKeyCircular
-          key={index}
-          chromaticIndex={ixChromatic(index)}
-          onClick={handleKeyClick}
-          outerRadius={OUTER_RADIUS}
-          innerRadius={INNER_RADIUS}
-        />
-      ))}
+      {Array.from({ length: TWELVE }).map((_, index) => {
+        const chromaticIndex = ixChromatic(index);
+        const actualIndex = chromaticToActual(chromaticIndex); // Need to convert for checkIsRootNote
+        const isRootNote = checkIsRootNote(actualIndex);
+
+        return (
+          <PianoKeyCircular
+            key={index}
+            chromaticIndex={chromaticIndex}
+            isRootNote={isRootNote}
+            onClick={handleKeyClick}
+            outerRadius={OUTER_RADIUS}
+            innerRadius={INNER_RADIUS}
+          />
+        );
+      })}
       {CircularVisualizations.draw(
         selectedNoteIndices,
         circularVisMode,

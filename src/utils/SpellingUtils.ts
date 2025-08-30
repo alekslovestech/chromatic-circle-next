@@ -1,3 +1,9 @@
+import {
+  ChordReference,
+  makeChordReference,
+} from "@/types/interfaces/ChordReference";
+import { NoteWithOctave } from "@/types/interfaces/NoteWithOctave";
+
 import { NoteGroupingId } from "@/types/NoteGroupingId";
 
 import {
@@ -6,29 +12,17 @@ import {
   InversionIndex,
 } from "@/types/IndexTypes";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
-import { NoteWithOctave } from "@/types/interfaces/NoteWithOctave";
 
 import { ChordUtils } from "@/utils/ChordUtils";
-
 import { AccidentalPreferenceResolver } from "@/utils/resolvers/AccidentalPreferenceResolver";
 import { ActualNoteResolver } from "@/utils/resolvers/ActualNoteResolver";
-import {
-  ChordReference,
-  makeChordReference,
-} from "@/types/interfaces/ChordReference";
 
 export class SpellingUtils {
   static computeSingleNoteFromChordPreset(
     targetNoteIndex: ActualIndex,
-    chordIndices: ActualIndex[],
     chordRef: ChordReference
   ): NoteWithOctave {
-    // Direct computation for single note - no array creation
-    // FIXED: We have inverted chord indices and know the inversion level
-    const rootIndex = ChordUtils.getRootNoteFromInvertedChord(
-      chordIndices,
-      chordRef.inversionIndex
-    );
+    const rootIndex = chordRef.rootNote;
     const rootChromaticIndex = actualToChromatic(rootIndex);
     const accidentalPreference =
       AccidentalPreferenceResolver.getChordPresetSpellingPreference(
@@ -58,11 +52,7 @@ export class SpellingUtils {
       selectedInversionIndex
     );
 
-    return this.computeSingleNoteFromChordPreset(
-      chordIndices[0],
-      chordIndices,
-      chordRef
-    );
+    return this.computeSingleNoteFromChordPreset(chordIndices[0], chordRef);
   }
 
   static computeNotesFromMusicalKey(
@@ -82,7 +72,7 @@ export class SpellingUtils {
     chordRef: ChordReference
   ): NoteWithOctave[] {
     return chordIndices.map((actualIndex) =>
-      this.computeSingleNoteFromChordPreset(actualIndex, chordIndices, chordRef)
+      this.computeSingleNoteFromChordPreset(actualIndex, chordRef)
     );
   }
 

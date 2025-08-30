@@ -136,35 +136,6 @@ export class MusicalDisplayFormatter {
     return `${rootSpelling}${chordTypeName}/${bassSpelling}`;
   }
 
-  // Backward compatibility wrapper (can be deprecated later)
-  static getChordPresetDisplayInfoLegacy(
-    selectedNoteIndices: ActualIndex[],
-    selectedChordType: NoteGroupingId,
-    selectedInversionIndex: InversionIndex,
-    chordDisplayMode: ChordDisplayMode
-  ): ChordDisplayInfo {
-    // Create ChordReference from the old parameters
-    const rootNoteIndex =
-      selectedNoteIndices.length > 0
-        ? ChordUtils.getRootNoteFromInvertedChord(
-            selectedNoteIndices,
-            selectedInversionIndex
-          )
-        : ixActual(0);
-
-    const chordRef = makeChordReference(
-      rootNoteIndex,
-      selectedChordType,
-      selectedInversionIndex
-    );
-
-    return this.getChordPresetDisplayInfo(
-      selectedNoteIndices,
-      chordRef,
-      chordDisplayMode
-    );
-  }
-
   // We need to modify getChordReferenceFromIndices to preserve the bass note information
   static getChordReferenceFromIndices(
     indices: ActualIndex[]
@@ -320,6 +291,9 @@ export class MusicalDisplayFormatter {
     }
 
     const inversionOffsets = definition.inversions[chordRef.inversionIndex];
+    if (!inversionOffsets || inversionOffsets.length === 0)
+      return chordRef.rootNote;
+
     const bassOffset = inversionOffsets[0]; // First note in inversion is the bass
 
     // Handle negative offsets properly

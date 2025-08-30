@@ -20,8 +20,6 @@ import { TYPOGRAPHY } from "@/lib/design";
 import { LAYOUT_PATTERNS } from "@/lib/design/LayoutPatterns";
 import { useBorder } from "@/lib/hooks";
 import { makeChordReference } from "@/types/interfaces/ChordReference";
-import { IndexUtils } from "@/utils/IndexUtils";
-import { ChordUtils } from "@/utils/ChordUtils";
 
 const MAX_CHORD_NAME_LENGTH = 7;
 const BREAK_CHARACTER = "\u200B";
@@ -60,11 +58,11 @@ export const ChordNameDisplay: React.FC = () => {
     if (shouldUseChordPresetSpelling && selectedNoteIndices.length > 0) {
       const chordRef =
         currentChordRef ||
+        MusicalDisplayFormatter.getChordReferenceFromIndices(
+          selectedNoteIndices
+        ) ||
         makeChordReference(
-          ChordUtils.getRootNoteFromInvertedChord(
-            selectedNoteIndices,
-            selectedInversionIndex
-          ),
+          selectedNoteIndices[0],
           selectedChordType,
           selectedInversionIndex
         );

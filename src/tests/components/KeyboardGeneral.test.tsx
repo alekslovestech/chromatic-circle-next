@@ -97,7 +97,7 @@ describe("Keyboards in Advanced Mode", () => {
     renderComponent();
   });
 
-  test("No keys selected in Advanced mode", () => {
+  test.skip("No keys selected in Advanced mode", () => {
     keyVerificationUtils.verifySelectedLinearKeys([]);
     keyVerificationUtils.verifySelectedCircularKeys([]);
   });

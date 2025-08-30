@@ -7,7 +7,6 @@ import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
 
 import { ChordUtils } from "@/utils/ChordUtils";
-import { IndexUtils } from "@/utils/IndexUtils";
 
 import { useChordPresets } from "@/contexts/ChordPresetContext";
 import { useMusical } from "@/contexts/MusicalContext";
@@ -18,17 +17,14 @@ import { useBorder } from "@/lib/hooks";
 import { InversionButton } from "../Buttons/InversionButton";
 import { SectionTitle } from "../Common/SectionTitle";
 import { ChordPresetButton } from "./ChordPresetButton";
+import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
 
 export const ChordPresetSelector: React.FC = () => {
-  const {
-    selectedChordType,
-    setSelectedChordType,
-    selectedInversionIndex,
-    setSelectedInversionIndex,
-    inputMode,
-  } = useChordPresets();
+  const { selectedChordType, setSelectedChordType, inputMode } =
+    useChordPresets();
 
-  const { selectedNoteIndices, setSelectedNoteIndices } = useMusical();
+  const { selectedNoteIndices, setSelectedNoteIndices, currentChordRef } =
+    useMusical();
   const border = useBorder();
   if (
     inputMode !== InputMode.ChordPresets &&
@@ -38,16 +34,16 @@ export const ChordPresetSelector: React.FC = () => {
 
   const handlePresetChange = (newPresetId: NoteGroupingId) => {
     setSelectedChordType(newPresetId);
-    setSelectedInversionIndex(ixInversion(0));
 
-    // FIXED: We have inverted chord indices and know the current inversion level
+    // Use currentChordRef.rootNote if available, otherwise fall back to chord recognition or default
     const rootNote =
-      selectedNoteIndices.length > 0
-        ? ChordUtils.getRootNoteFromInvertedChord(
-            selectedNoteIndices,
-            selectedInversionIndex
-          )
-        : ixActual(7);
+      currentChordRef?.rootNote ||
+      (selectedNoteIndices.length > 0
+        ? MusicalDisplayFormatter.getChordReferenceFromIndices(
+            selectedNoteIndices
+          )?.rootNote
+        : null) ||
+      ixActual(7);
 
     const updatedIndices = ChordUtils.calculateChordNotesFromIndex(
       rootNote,
