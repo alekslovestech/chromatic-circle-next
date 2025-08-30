@@ -18,13 +18,18 @@ import { InversionButton } from "../Buttons/InversionButton";
 import { SectionTitle } from "../Common/SectionTitle";
 import { ChordPresetButton } from "./ChordPresetButton";
 import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
+import { makeChordReference } from "@/types/interfaces/ChordReference";
 
 export const ChordPresetSelector: React.FC = () => {
   const { selectedChordType, setSelectedChordType, inputMode } =
     useChordPresets();
 
-  const { selectedNoteIndices, setSelectedNoteIndices, currentChordRef } =
-    useMusical();
+  const {
+    selectedNoteIndices,
+    setSelectedNoteIndices,
+    currentChordRef,
+    setCurrentChordRef,
+  } = useMusical();
   const border = useBorder();
   if (
     inputMode !== InputMode.ChordPresets &&
@@ -51,6 +56,14 @@ export const ChordPresetSelector: React.FC = () => {
       ixInversion(0)
     );
     setSelectedNoteIndices(updatedIndices);
+
+    // Create new chord reference with inversion 0
+    const newChordRef = makeChordReference(
+      rootNote,
+      newPresetId,
+      ixInversion(0)
+    );
+    setCurrentChordRef(newChordRef);
   };
 
   const renderIntervalPresetButtons = () => {
