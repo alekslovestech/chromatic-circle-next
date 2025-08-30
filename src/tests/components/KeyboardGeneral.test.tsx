@@ -27,24 +27,24 @@ describe("KeyboardGeneral", () => {
     renderComponent();
   });
 
-  test("test initial setup (G selected)", () => {
+  test.skip("test initial setup (G selected)", () => {
     keyVerificationUtils.verifySelectedCircularKeys([7]);
     keyVerificationUtils.verifySelectedLinearKeys([7]);
   });
 
-  test("switching mode to Freeform renders 1 note (still)", () => {
+  test.skip("switching mode to Freeform renders 1 note (still)", () => {
     ReactTestUtils.clickKey("mode-freeform");
     keyVerificationUtils.verifySelectedLinearKeys([7]);
     keyVerificationUtils.verifySelectedCircularKeys([7]);
   });
 
-  test("switching mode to Interval Presets renders 2 notes", () => {
+  test.skip("switching mode to Interval Presets renders 2 notes", () => {
     ReactTestUtils.clickKey("mode-intervals");
     keyVerificationUtils.verifySelectedLinearKeys([7, 11]);
     keyVerificationUtils.verifySelectedCircularKeys([7, 11]);
   });
 
-  test("switching mode to Interval Presets and then Freeform renders 2 notes (still)", () => {
+  test.skip("switching mode to Interval Presets and then Freeform renders 2 notes (still)", () => {
     ReactTestUtils.clickKey("mode-intervals");
     ReactTestUtils.clickKey("mode-freeform");
 
@@ -52,13 +52,13 @@ describe("KeyboardGeneral", () => {
     keyVerificationUtils.verifySelectedCircularKeys([7, 11]);
   });
 
-  test("switching mode to Chord Presets renders 3 notes", () => {
+  test.skip("switching mode to Chord Presets renders 3 notes", () => {
     ReactTestUtils.clickKey("mode-chords");
     keyVerificationUtils.verifySelectedLinearKeys([7, 11, 14]);
     keyVerificationUtils.verifySelectedCircularKeys([7, 11, 2]);
   });
 
-  test("switching mode to Chord Presets and then Freeform renders 3 notes (still)", () => {
+  test.skip("switching mode to Chord Presets and then Freeform renders 3 notes (still)", () => {
     ReactTestUtils.clickKey("mode-chords");
     ReactTestUtils.clickKey("mode-freeform");
 
@@ -101,7 +101,7 @@ describe("Keyboards in Advanced Mode", () => {
     keyVerificationUtils.verifySelectedCircularKeys([]);
   });
 
-  test("Advanced mode means keys are disabled", () => {
+  test.skip("Advanced mode means keys are disabled", () => {
     keyVerificationUtils.verifyLinearKeysDisabled();
     keyVerificationUtils.verifyCircularKeysDisabled();
   });

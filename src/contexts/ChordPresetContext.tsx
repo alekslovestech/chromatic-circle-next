@@ -1,12 +1,6 @@
 "use client";
 
-import React, {
-  createContext,
-  useState,
-  useContext,
-  ReactNode,
-  useEffect,
-} from "react";
+import React, { createContext, useState, useContext, ReactNode } from "react";
 
 import { ChordType } from "@/types/enums/ChordType";
 import { makeChordReference } from "@/types/interfaces/ChordReference";
@@ -18,7 +12,6 @@ import { InputMode } from "@/types/SettingModes";
 import { ChordUtils } from "@/utils/ChordUtils";
 
 import { useMusical } from "./MusicalContext";
-import { IndexUtils } from "@/utils/IndexUtils";
 export interface ChordPresetSettings {
   inputMode: InputMode;
   selectedChordType: NoteGroupingId;
@@ -33,7 +26,7 @@ const ChordPresetContext = createContext<ChordPresetSettings | null>(null);
 export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [inputMode, setInputMode] = useState<InputMode>(InputMode.Freeform);
+  const [inputMode, setInputMode] = useState<InputMode>(InputMode.ChordPresets);
   const [selectedChordType, setSelectedChordType] = useState<NoteGroupingId>(
     ChordType.Major
   );

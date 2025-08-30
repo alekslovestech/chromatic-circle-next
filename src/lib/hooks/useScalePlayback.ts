@@ -41,7 +41,6 @@ export const useScalePlayback = ({
   const userStoppedPlaybackRef = useRef(false);
 
   const stopScalePlayback = useCallback(() => {
-    console.log("AudioContext: Stopping scale playback");
     if (playbackTimerIdRef.current) {
       clearInterval(playbackTimerIdRef.current);
       playbackTimerIdRef.current = null;
@@ -96,8 +95,6 @@ export const useScalePlayback = ({
   ]);
 
   const startScalePlayback = useCallback(() => {
-    console.log("Starting scale playback");
-
     userStoppedPlaybackRef.current = false; // Reset the flag when starting
 
     if (!isAudioInitialized) {
@@ -133,7 +130,6 @@ export const useScalePlayback = ({
   ]);
 
   const pauseScalePlayback = useCallback(() => {
-    console.log("AudioContext: Pausing scale playback");
     if (playbackTimerIdRef.current) {
       clearInterval(playbackTimerIdRef.current);
       playbackTimerIdRef.current = null;
@@ -142,8 +138,6 @@ export const useScalePlayback = ({
   }, [setPlaybackState]);
 
   const resumeScalePlayback = useCallback(() => {
-    console.log("AudioContext: Resuming scale playback");
-
     if (!isAudioInitialized) {
       console.log("Audio not initialized yet, cannot resume scale playback");
       return;
@@ -179,30 +173,20 @@ export const useScalePlayback = ({
 
   // Stop playback when mode changes
   useEffect(() => {
-    console.log("🔄 Mode changed, stopping any ongoing playback");
     stopScalePlayback();
   }, [globalMode, stopScalePlayback]);
 
   // Auto-start scale playback when conditions are met
   useEffect(() => {
-    console.log(
-      "AudioContext: useEffect scalePreviewMode:",
-      scalePreviewMode,
-      "isAudioInitialized:",
-      isAudioInitialized
-    );
-
     if (scalePreviewMode && isAudioInitialized) {
       // Only auto-start if not manually stopped by user
       if (
         playbackState === PlaybackState.ScaleComplete &&
         !userStoppedPlaybackRef.current
       ) {
-        console.log("🎵 Auto-starting scale playback");
         startScalePlayback();
       }
     } else {
-      console.log("⏹️ Auto-stopping scale playback");
       stopScalePlayback();
     }
   }, [
@@ -217,11 +201,9 @@ export const useScalePlayback = ({
   useEffect(() => {
     // Reset user-stopped flag when musical key changes
     userStoppedPlaybackRef.current = false;
-    console.log("Musical key changed, resetting user-stopped flag");
 
     // Auto-start playback for the new scale if conditions are met
     if (scalePreviewMode && isAudioInitialized) {
-      console.log("🎵 Auto-starting playback for new musical key");
       startScalePlayback();
     }
   }, [

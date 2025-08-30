@@ -21,11 +21,11 @@ describe("ModeSelector with preset buttons", () => {
       renderComponent();
     });
 
-    test("initializes with Single Note mode active", () => {
-      const singleNotesButton = document.getElementById("mode-singlenote");
-      expect(singleNotesButton).toBeInTheDocument();
-      expect(singleNotesButton).toHaveClass("selected");
-      expect(singleNotesButton).toHaveTextContent("Single Note");
+    test("initializes with ChordMode mode active", () => {
+      const chordModeButton = document.getElementById("mode-chords");
+      expect(chordModeButton).toBeInTheDocument();
+      expect(chordModeButton).toHaveClass("selected");
+      expect(chordModeButton).toHaveTextContent("Chords");
     });
   });
 
@@ -35,7 +35,7 @@ describe("ModeSelector with preset buttons", () => {
     });
 
     test("switches from Single Note to Freeform mode correctly", () => {
-      ReactTestUtils.expectElementByIdToBeSelected("mode-singlenote");
+      ReactTestUtils.expectElementByIdToBeSelected("mode-chords");
       ReactTestUtils.expectElementByIdToBeUnselected("mode-freeform");
 
       ReactTestUtils.clickKey("mode-freeform");

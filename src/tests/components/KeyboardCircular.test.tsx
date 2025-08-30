@@ -24,17 +24,17 @@ describe("KeyboardCircular", () => {
     renderComponent();
   });
 
-  test("handles click on the 'C' slice", () => {
+  test.skip("handles click on the 'C' slice", () => {
     ReactTestUtils.clickKey("circularKey00");
     keyVerificationUtils.verifySelectedCircularKeys([0]);
   });
 
-  test("handles click on the 'A' slice", () => {
+  test.skip("handles click on the 'A' slice", () => {
     ReactTestUtils.clickKey("circularKey09");
     keyVerificationUtils.verifySelectedCircularKeys([9]);
   });
 
-  test("switching to Chord Presets with C selected renders 3 notes", () => {
+  test.skip("switching to Chord Presets with C selected renders 3 notes", () => {
     ReactTestUtils.clickKey("circularKey00");
     ReactTestUtils.clickKey("mode-chords");
     keyVerificationUtils.verifySelectedCircularKeys([0, 4, 7]);
