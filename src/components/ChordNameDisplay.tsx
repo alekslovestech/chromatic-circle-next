@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 
 import { SpecialType } from "@/types/enums/SpecialType";
 import { ChordType } from "@/types/enums/ChordType";
@@ -45,15 +45,15 @@ export const ChordNameDisplay: React.FC = () => {
     setChordDisplayMode(getOppositeDisplayMode(chordDisplayMode));
   }
 
-  const renderNoteGrouping = () => {
+  const displayInfo = useMemo(() => {
+    console.log("updating display info");
+    console.log("chordRef:", currentChordRef);
     const shouldUseChordPresetSpelling =
       isChordsOrIntervals &&
       selectedChordType !== SpecialType.None &&
       selectedChordType !== SpecialType.Note &&
       selectedChordType !== SpecialType.Freeform &&
       selectedChordType !== ChordType.Unknown;
-
-    let displayInfo: ChordDisplayInfo;
 
     if (shouldUseChordPresetSpelling && selectedNoteIndices.length > 0) {
       const chordRef =
@@ -67,21 +67,27 @@ export const ChordNameDisplay: React.FC = () => {
           selectedInversionIndex
         );
 
-      displayInfo = MusicalDisplayFormatter.getChordPresetDisplayInfo(
+      return MusicalDisplayFormatter.getChordPresetDisplayInfo(
         selectedNoteIndices,
         chordRef,
         ChordDisplayMode.Symbols
       );
     } else {
-      displayInfo = MusicalDisplayFormatter.getDisplayInfoFromIndices(
+      return MusicalDisplayFormatter.getDisplayInfoFromIndices(
         selectedNoteIndices,
         chordDisplayMode,
         selectedMusicalKey
       );
     }
-
-    return renderChordDisplay(displayInfo);
-  };
+  }, [
+    selectedNoteIndices,
+    selectedMusicalKey,
+    currentChordRef,
+    selectedChordType,
+    selectedInversionIndex,
+    isChordsOrIntervals,
+    chordDisplayMode,
+  ]);
 
   const renderChordDisplay = (displayInfo: ChordDisplayInfo) => {
     const { chordName, noteGroupingString } = displayInfo;
@@ -111,7 +117,7 @@ export const ChordNameDisplay: React.FC = () => {
         onClick={toggleChordDisplayMode}
         className={`cursor-pointer hover:text-buttons-textSelected transition-colors duration-200 ${LAYOUT_PATTERNS.fullSize}`}
       >
-        {renderNoteGrouping()}
+        {renderChordDisplay(displayInfo)}
       </div>
     </div>
   );
