@@ -93,10 +93,8 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
     setSelectedChordType(newChordType);
 
     if (newMode !== InputMode.Freeform) {
-      const updatedIndices = ChordUtils.calculateUpdatedIndices(
+      const updatedIndices = ChordUtils.calculateChordNotesFromBassNote(
         rootNoteIndex!,
-        false,
-        selectedNoteIndices,
         newChordType
       );
       setSelectedNoteIndices(updatedIndices);

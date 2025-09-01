@@ -56,30 +56,14 @@ export class ChordUtils {
     return definition.inversions[inversionIndex];
   }
 
-  static calculateUpdatedIndices(
-    newIndex: ActualIndex,
-    isFreeform: boolean,
-    selectedNoteIndices: ActualIndex[],
-    chordType: NoteGroupingId,
-    inversionIndex: InversionIndex = ixInversion(0)
-  ): ActualIndex[] {
-    return isFreeform
-      ? IndexUtils.ToggleNewIndex(selectedNoteIndices, newIndex as ActualIndex)
-      : this.calculateChordNotesFromBassNote(
-          newIndex,
-          chordType,
-          inversionIndex
-        );
-  }
-
   /**
    * Calculate chord notes where the clicked note becomes the bass note.
    * This is more intuitive than clicking on the root note.
    */
-  private static calculateChordNotesFromBassNote(
+  static calculateChordNotesFromBassNote(
     bassIndex: ActualIndex,
     chordType: NoteGroupingId,
-    inversionIndex: InversionIndex
+    inversionIndex: InversionIndex = ixInversion(0)
   ): ActualIndex[] {
     // Get the offsets for this chord type and inversion
     const chordOffsets = this.getOffsetsFromIdAndInversion(

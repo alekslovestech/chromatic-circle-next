@@ -5,23 +5,51 @@ import { InputMode } from "@/types/SettingModes";
 import { ChordUtils } from "@/utils/ChordUtils";
 import { useMusical } from "@/contexts/MusicalContext";
 import { useChordPresets } from "@/contexts/ChordPresetContext";
+import { addChromatic } from "@/types/ChromaticIndex";
+import { makeChordReference } from "@/types/interfaces/ChordReference";
+import { IndexUtils } from "@/utils/IndexUtils";
 
 export const CIRCLE_RADIUS = 5;
 export const useKeyboardHandlers = () => {
   const { selectedInversionIndex, selectedChordType, inputMode } =
     useChordPresets();
-  const { selectedNoteIndices, setSelectedNoteIndices, currentChordRef } =
-    useMusical();
+  const {
+    selectedNoteIndices,
+    setSelectedNoteIndices,
+    currentChordRef,
+    setCurrentChordRef,
+  } = useMusical();
 
   const handleKeyClick = useCallback(
     (newIndex: ActualIndex) => {
+      const updatedIndices =
+        inputMode === InputMode.Freeform
+          ? IndexUtils.ToggleNewIndex(
+              selectedNoteIndices,
+              newIndex as ActualIndex
+            )
+          : ChordUtils.calculateChordNotesFromBassNote(
+              newIndex,
+              selectedChordType,
+              selectedInversionIndex
+            );
+      /*
       const updatedIndices = ChordUtils.calculateUpdatedIndices(
         newIndex,
         inputMode === InputMode.Freeform,
         selectedNoteIndices,
         selectedChordType,
         selectedInversionIndex
-      );
+      );*/
+      if (currentChordRef && updatedIndices.length > 0) {
+        const newRoot = newIndex;
+        const updatedChordRef = makeChordReference(
+          newRoot,
+          currentChordRef.id,
+          currentChordRef.inversionIndex
+        );
+        setCurrentChordRef(updatedChordRef);
+      }
       setSelectedNoteIndices(updatedIndices);
     },
     [
