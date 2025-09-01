@@ -11,18 +11,18 @@ import { keyVerificationUtils } from "../reactutils/KeyboardVerificationUtils";
 import { SettingsPanelDefault } from "@/components/Settings/SettingsPanelDefault";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
 
-function verifyChordName(expectedChordName: string) {
+function verifyIntervalName(expectedIntervalName: string) {
   const chordNameNoteGrouping = document.getElementById(
     "chord-name-note-grouping"
   );
   const chordNameValue = document.getElementById("chord-name-value");
   expect(chordNameNoteGrouping).toBeInTheDocument();
   expect(chordNameValue).toBeInTheDocument();
-  expect(chordNameNoteGrouping).toHaveTextContent("Chord:");
-  expect(chordNameValue).toHaveTextContent(expectedChordName);
+  expect(chordNameNoteGrouping).toHaveTextContent("Interval:");
+  expect(chordNameValue).toHaveTextContent(expectedIntervalName);
 }
 
-describe("ChordUpdates", () => {
+describe("IntervalUpdates", () => {
   const renderComponent = () =>
     render(
       <RootProvider>
@@ -37,48 +37,26 @@ describe("ChordUpdates", () => {
 
   beforeEach(() => {
     renderComponent();
-    ReactTestUtils.clickKey("mode-chords");
+    ReactTestUtils.clickKey("mode-intervals");
   });
 
   describe("User interacts with the linear keyboard", () => {
-    test("Major chord default => click A on linear keyboard => A major", () => {
+    test("Major chord default => click A on linear keyboard => M3 (starting at A)", () => {
       ReactTestUtils.clickKey("linearKey09"); //click A
-      keyVerificationUtils.verifySelectedLinearKeys([9, 13, 16]); //A C# E
-      verifyChordName("A"); //A major
+      keyVerificationUtils.verifySelectedLinearKeys([9, 13]); //A C#
+      verifyIntervalName("M3");
     });
   });
 
   describe("User interacts with the transpose widget", () => {
     test("Transposing notes up should update the chord name", () => {
       ReactTestUtils.clickKey("transpose-up-button");
-      verifyChordName("A♭"); //A♭ major
+      verifyIntervalName("M3");
     });
 
-    test("Transposing notes down should update the chord name", () => {
+    test("Transposing notes down should update the interval name", () => {
       ReactTestUtils.clickKey("transpose-down-button");
-      verifyChordName("F♯"); //F# major
-    });
-
-    test("Inversion 1 of G => G/B", () => {
-      ReactTestUtils.clickKey("inversion-1");
-      verifyChordName("G/B");
-    });
-
-    test("Inversion 2 of G => G/C", () => {
-      ReactTestUtils.clickKey("inversion-2");
-      verifyChordName("G/D");
-    });
-
-    test("Inversion 1 of G, then transpose up => A♭/C", () => {
-      ReactTestUtils.clickKey("inversion-1");
-      ReactTestUtils.clickKey("transpose-up-button");
-      verifyChordName("A♭/C");
-    });
-
-    test("Inversion 1 of G, then transpose down => F#/A#", () => {
-      ReactTestUtils.clickKey("inversion-1");
-      ReactTestUtils.clickKey("transpose-down-button");
-      verifyChordName("F♯/A♯");
+      verifyIntervalName("M3");
     });
   });
 });
