@@ -46,8 +46,6 @@ export const ChordNameDisplay: React.FC = () => {
   }
 
   const displayInfo = useMemo(() => {
-    console.log("updating display info");
-    console.log("chordRef:", currentChordRef);
     const shouldUseChordPresetSpelling =
       isChordsOrIntervals &&
       selectedChordType !== SpecialType.None &&
