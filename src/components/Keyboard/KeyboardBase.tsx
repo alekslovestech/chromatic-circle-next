@@ -5,7 +5,10 @@ import { InputMode } from "@/types/SettingModes";
 import { ChordUtils } from "@/utils/ChordUtils";
 import { useMusical } from "@/contexts/MusicalContext";
 import { useChordPresets } from "@/contexts/ChordPresetContext";
-import { makeChordReference } from "@/types/interfaces/ChordReference";
+import {
+  ChordReference,
+  makeChordReference,
+} from "@/types/interfaces/ChordReference";
 import { IndexUtils } from "@/utils/IndexUtils";
 
 export const CIRCLE_RADIUS = 5;
@@ -21,34 +24,27 @@ export const useKeyboardHandlers = () => {
 
   const handleKeyClick = useCallback(
     (newIndex: ActualIndex) => {
-      const updatedIndices =
-        inputMode === InputMode.Freeform
-          ? IndexUtils.ToggleNewIndex(
-              selectedNoteIndices,
-              newIndex as ActualIndex
-            )
-          : ChordUtils.calculateChordNotesFromBassNote(
-              newIndex,
-              selectedChordType,
-              selectedInversionIndex
-            );
-      /*
-      const updatedIndices = ChordUtils.calculateUpdatedIndices(
-        newIndex,
-        inputMode === InputMode.Freeform,
-        selectedNoteIndices,
-        selectedChordType,
-        selectedInversionIndex
-      );*/
-      if (currentChordRef && updatedIndices.length > 0) {
-        const newRoot = newIndex;
-        const updatedChordRef = makeChordReference(
-          newRoot,
-          currentChordRef.id,
-          currentChordRef.inversionIndex
+      let updatedIndices: ActualIndex[] = [];
+      let updatedChordRef: ChordReference | undefined;
+      if (inputMode === InputMode.Freeform) {
+        updatedIndices = IndexUtils.ToggleNewIndex(
+          selectedNoteIndices,
+          newIndex as ActualIndex
         );
-        setCurrentChordRef(updatedChordRef);
+      } //SingleNote, IntervalPresets, ChordPresets
+      else {
+        updatedChordRef = makeChordReference(
+          newIndex,
+          currentChordRef!.id,
+          currentChordRef!.inversionIndex
+        );
+        updatedIndices = ChordUtils.calculateChordNotesFromBassNote(
+          newIndex,
+          selectedChordType,
+          selectedInversionIndex
+        );
       }
+      setCurrentChordRef(updatedChordRef);
       setSelectedNoteIndices(updatedIndices);
     },
     [
