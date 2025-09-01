@@ -5,7 +5,6 @@ import { InputMode } from "@/types/SettingModes";
 import { ChordUtils } from "@/utils/ChordUtils";
 import { useMusical } from "@/contexts/MusicalContext";
 import { useChordPresets } from "@/contexts/ChordPresetContext";
-import { addChromatic } from "@/types/ChromaticIndex";
 import { makeChordReference } from "@/types/interfaces/ChordReference";
 import { IndexUtils } from "@/utils/IndexUtils";
 
