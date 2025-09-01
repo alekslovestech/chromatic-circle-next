@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react";
 
-import { ReactTestUtils } from "./reactutils/ReactTestUtils";
+import { ReactTestUtils } from "../reactutils/ReactTestUtils";
 
 import { RootProvider } from "@/contexts/RootContext";
 

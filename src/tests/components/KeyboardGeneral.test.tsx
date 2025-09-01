@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
-import { keyVerificationUtils } from "./reactutils/KeyboardVerificationUtils";
-import { ReactTestUtils } from "./reactutils/ReactTestUtils";
+import { keyVerificationUtils } from "../reactutils/KeyboardVerificationUtils";
+import { ReactTestUtils } from "../reactutils/ReactTestUtils";
 
 import { RootProvider } from "@/contexts/RootContext";
 
