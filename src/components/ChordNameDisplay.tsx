@@ -97,13 +97,18 @@ export const ChordNameDisplay: React.FC = () => {
         : chordName;
     return (
       <div
+        id="chord-name-description"
         className={`chord-name-description ${LAYOUT_PATTERNS.centerFlexCol} ${LAYOUT_PATTERNS.fullSize}`}
       >
-        <div className={`${TYPOGRAPHY.controlLabel}`}>
+        <div
+          id="chord-name-note-grouping"
+          className={`${TYPOGRAPHY.controlLabel}`}
+        >
           {`${noteGroupingString}:`}
         </div>
         <div
-          className={`chord-name-value ${TYPOGRAPHY.displayText} max-w-full text-center break-words`}
+          id="chord-name-value"
+          className={`${TYPOGRAPHY.displayText} max-w-full text-center break-words`}
         >
           {chordNameDisplay}
         </div>
@@ -112,7 +117,10 @@ export const ChordNameDisplay: React.FC = () => {
   };
 
   return (
-    <div className={`chord-display ${LAYOUT_PATTERNS.fullSize} ${border}`}>
+    <div
+      id="chord-name-display"
+      className={`${LAYOUT_PATTERNS.fullSize} ${border}`}
+    >
       <div
         onClick={toggleChordDisplayMode}
         className={`cursor-pointer hover:text-buttons-textSelected transition-colors duration-200 ${LAYOUT_PATTERNS.fullSize}`}

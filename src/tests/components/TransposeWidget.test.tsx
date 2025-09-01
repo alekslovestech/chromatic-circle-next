@@ -26,11 +26,18 @@ describe("Test Transpose Widget with preset buttons", () => {
       ReactTestUtils.clickKey("mode-chords"); //default G major
     });
 
-    test("Transposing notes should update the chord name", () => {
+    test("Transposing notes up should update the chord name", () => {
       ReactTestUtils.clickKey("transpose-up-button");
-      const chordNameValue = document.querySelector(".chord-name-value");
+      const chordNameValue = document.getElementById("chord-name-value");
       expect(chordNameValue).toBeInTheDocument();
       expect(chordNameValue).toHaveTextContent("A♭"); //A♭ major
+    });
+
+    test("Transposing notes down should update the chord name", () => {
+      ReactTestUtils.clickKey("transpose-down-button");
+      const chordNameValue = document.getElementById("chord-name-value");
+      expect(chordNameValue).toBeInTheDocument();
+      expect(chordNameValue).toHaveTextContent("F♯"); //F# major
     });
   });
 });
