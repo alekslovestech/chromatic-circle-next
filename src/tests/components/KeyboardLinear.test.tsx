@@ -1,15 +1,14 @@
 import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
-import { ReactTestUtils } from "../reactutils/ReactTestUtils";
-import { keyVerificationUtils } from "../reactutils/KeyboardVerificationUtils";
-
 import { RootProvider } from "@/contexts/RootContext";
 
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { InputModeSelector } from "@/components/Settings/InputModeSelector";
 import { ChordPresetSelector } from "@/components/Settings/ChordPresetsSelector";
-//import { ChordNameDisplay } from "@/components/ChordNameDisplay";
+
+import { ReactTestUtils } from "@/tests/reactutils/ReactTestUtils";
+import { keyVerificationUtils } from "@/tests/reactutils/KeyboardVerificationUtils";
 
 //scenarios where we only test the linear keyboard
 describe("KeyboardLinear", () => {
@@ -19,7 +18,6 @@ describe("KeyboardLinear", () => {
         <KeyboardLinear />
         <InputModeSelector />
         <ChordPresetSelector />
-        {/*<ChordNameDisplay />*/}
       </RootProvider>
     );
 
@@ -70,22 +68,6 @@ describe("KeyboardLinear", () => {
     ReactTestUtils.clickKey("preset-Chord_Add9");
     ReactTestUtils.clickKey("linearKey10");
     keyVerificationUtils.verifySelectedLinearKeys([10, 14, 17]); //A# D F (truncated)
-  });
-
-  test.skip("Major chord default => A major", () => {
-    ReactTestUtils.clickKey("mode-chords");
-    ReactTestUtils.clickKey("linearKey09"); //click A
-    keyVerificationUtils.verifySelectedLinearKeys([9, 13, 16]); //A C# E
-    const chordNameNoteGrouping = document.getElementById(
-      "chord-name-note-grouping"
-    );
-    const chordNameValue = document.getElementById("chord-name-value");
-
-    expect(chordNameNoteGrouping).toBeInTheDocument();
-    expect(chordNameValue).toBeInTheDocument();
-
-    expect(chordNameNoteGrouping).toHaveTextContent("Chord:");
-    expect(chordNameValue).toHaveTextContent("A"); //A major
   });
 
   test.skip("When inversion 1 is selected, clicking around on the keyboard should only produce inversion 1", () => {
