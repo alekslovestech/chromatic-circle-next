@@ -11,7 +11,6 @@ import { InputMode } from "@/types/SettingModes";
 import { ChordUtils } from "@/utils/ChordUtils";
 
 import { useMusical } from "./MusicalContext";
-import { assert } from "console";
 export interface ChordPresetSettings {
   inputMode: InputMode;
   setInputMode: (mode: InputMode) => void;
@@ -46,7 +45,7 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
         newChordType = "Freeform" as NoteGroupingId;
         break;
       default:
-        assert(false, "Invalid input mode");
+        console.assert(false, "Invalid input mode");
     }
     setCurrentChordRef(makeChordReference(rootNoteIndex!, newChordType));
 
@@ -64,27 +63,6 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
       setCurrentChordRef(undefined);
     }
   };
-
-  /*
-  // Replace the direct setters with wrapped ones
-  const handleChordTypeChange = (newChordType: NoteGroupingId) => {
-    setSelectedChordType(newChordType);
-
-    // Update currentChordMatch if we're in preset mode
-    if (inputMode !== InputMode.Freeform && selectedNoteIndices.length > 0) {
-      const rootNoteIndex = selectedNoteIndices[0];
-      const chordRef = makeChordReference(
-        rootNoteIndex,
-        newChordType,
-        currentChordRef?.inversionIndex ?? ixInversion(0)
-      );
-      setCurrentChordRef(chordRef);
-    }
-  };
-  */
-
-  /*const selectedInversionIndex =
-    currentChordRef?.inversionIndex ?? ixInversion(0);*/
 
   const value: ChordPresetSettings = {
     inputMode,

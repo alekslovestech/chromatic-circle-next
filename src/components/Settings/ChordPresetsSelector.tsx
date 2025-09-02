@@ -19,7 +19,6 @@ import { SectionTitle } from "../Common/SectionTitle";
 import { ChordPresetButton } from "./ChordPresetButton";
 import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
 import { makeChordReference } from "@/types/interfaces/ChordReference";
-import { assert } from "console";
 
 export const ChordPresetSelector: React.FC = () => {
   const { inputMode } = useChordPresets();
@@ -108,7 +107,7 @@ export const ChordPresetSelector: React.FC = () => {
   };
 
   const renderInversionButtons = () => {
-    assert(currentChordRef?.id, "currentChordRef?.id is required");
+    console.assert(currentChordRef?.id, "currentChordRef?.id is required");
     const presetDefinition = NoteGroupingLibrary.getGroupingById(
       currentChordRef!.id
     );
