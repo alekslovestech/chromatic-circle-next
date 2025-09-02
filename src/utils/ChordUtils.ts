@@ -10,6 +10,10 @@ import {
 } from "../types/IndexTypes";
 
 import { IndexUtils } from "./IndexUtils";
+import {
+  ChordReference,
+  makeChordReference,
+} from "@/types/interfaces/ChordReference";
 
 export class ChordUtils {
   /**
@@ -78,25 +82,20 @@ export class ChordUtils {
     // bassIndex = rootIndex + bassOffset, so rootIndex = bassIndex - bassOffset
     const rootIndex = ixActual(bassIndex - bassOffset);
 
+    const chordRef = makeChordReference(rootIndex, chordType, inversionIndex);
     // Now calculate the chord from this root, which will handle octave fitting
-    return this.calculateChordNotesFromIndex(
-      rootIndex,
-      chordType,
-      inversionIndex
-    );
+    return this.calculateChordNotesFromChordReference(chordRef);
   }
 
-  static calculateChordNotesFromIndex(
-    rootIndex: ActualIndex,
-    chordType: NoteGroupingId,
-    inversionIndex: InversionIndex
+  static calculateChordNotesFromChordReference(
+    chordReference: ChordReference
   ): ActualIndex[] {
     const chordOffsets = ChordUtils.getOffsetsFromIdAndInversion(
-      chordType,
-      inversionIndex
+      chordReference.id,
+      chordReference.inversionIndex
     );
     const newNotes = chordOffsets.map(
-      (offset: number) => (offset + rootIndex) as ActualIndex
+      (offset: number) => (offset + chordReference.rootNote) as ActualIndex
     );
     return ixActualArray(IndexUtils.fitChordToAbsoluteRange(newNotes));
   }

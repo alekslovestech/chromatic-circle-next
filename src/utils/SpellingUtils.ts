@@ -40,17 +40,14 @@ export class SpellingUtils {
     selectedChordType: NoteGroupingId,
     selectedInversionIndex: InversionIndex
   ): NoteWithOctave {
-    const chordIndices = ChordUtils.calculateChordNotesFromIndex(
-      baseIndex,
-      selectedChordType,
-      selectedInversionIndex
-    );
-
     const chordRef = makeChordReference(
       baseIndex,
       selectedChordType,
       selectedInversionIndex
     );
+
+    const chordIndices =
+      ChordUtils.calculateChordNotesFromChordReference(chordRef);
 
     return this.computeSingleNoteFromChordPreset(chordIndices[0], chordRef);
   }

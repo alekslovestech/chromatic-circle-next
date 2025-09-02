@@ -11,15 +11,11 @@ import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormat
 
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
-import {
-  useChordPresets,
-  useIsChordsOrIntervals,
-} from "@/contexts/ChordPresetContext";
+import { useIsChordsOrIntervals } from "@/contexts/ChordPresetContext";
 
 import { TYPOGRAPHY } from "@/lib/design";
 import { LAYOUT_PATTERNS } from "@/lib/design/LayoutPatterns";
 import { useBorder } from "@/lib/hooks";
-import { makeChordReference } from "@/types/interfaces/ChordReference";
 
 const MAX_CHORD_NAME_LENGTH = 7;
 const BREAK_CHARACTER = "\u200B";
@@ -27,7 +23,6 @@ export const ChordNameDisplay: React.FC = () => {
   const { selectedNoteIndices, selectedMusicalKey, currentChordRef } =
     useMusical();
   const { chordDisplayMode, setChordDisplayMode } = useDisplay();
-  const { selectedChordType, selectedInversionIndex } = useChordPresets();
   const isChordsOrIntervals = useIsChordsOrIntervals();
   const border = useBorder();
 
@@ -46,28 +41,24 @@ export const ChordNameDisplay: React.FC = () => {
   }
 
   const displayInfo = useMemo(() => {
+    const chordRefId = currentChordRef?.id;
     const shouldUseChordPresetSpelling =
       isChordsOrIntervals &&
-      selectedChordType !== SpecialType.None &&
-      selectedChordType !== SpecialType.Note &&
-      selectedChordType !== SpecialType.Freeform &&
-      selectedChordType !== ChordType.Unknown;
+      chordRefId !== SpecialType.None &&
+      chordRefId !== SpecialType.Note &&
+      chordRefId !== SpecialType.Freeform &&
+      chordRefId !== ChordType.Unknown;
 
     if (shouldUseChordPresetSpelling && selectedNoteIndices.length > 0) {
       const chordRef =
         currentChordRef ||
         MusicalDisplayFormatter.getChordReferenceFromIndices(
           selectedNoteIndices
-        ) ||
-        makeChordReference(
-          selectedNoteIndices[0],
-          selectedChordType,
-          selectedInversionIndex
         );
 
       return MusicalDisplayFormatter.getChordPresetDisplayInfo(
         selectedNoteIndices,
-        chordRef,
+        chordRef!,
         ChordDisplayMode.Symbols
       );
     } else {
@@ -81,8 +72,6 @@ export const ChordNameDisplay: React.FC = () => {
     selectedNoteIndices,
     selectedMusicalKey,
     currentChordRef,
-    selectedChordType,
-    selectedInversionIndex,
     isChordsOrIntervals,
     chordDisplayMode,
   ]);

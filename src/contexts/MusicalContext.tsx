@@ -9,7 +9,7 @@ import React, {
 } from "react";
 
 import { ChordType } from "@/types/enums/ChordType";
-import { ActualIndex, ixActualArray } from "@/types/IndexTypes";
+import { ActualIndex, InversionIndex, ixActualArray } from "@/types/IndexTypes";
 import { DEFAULT_MUSICAL_KEY, MusicalKey } from "@/types/Keys/MusicalKey";
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 import {
@@ -18,6 +18,7 @@ import {
 } from "@/types/interfaces/ChordReference";
 
 import { ChordUtils } from "@/utils/ChordUtils";
+import { NoteGroupingId } from "@/types/NoteGroupingId";
 
 export interface MusicalSettings {
   selectedNoteIndices: ActualIndex[];
@@ -26,6 +27,11 @@ export interface MusicalSettings {
   setSelectedNoteIndices: (indices: ActualIndex[]) => void;
   setSelectedMusicalKey: (key: MusicalKey) => void;
   setCurrentChordRef: (chordRef?: ChordReference) => void;
+
+  // New ergonomic setters
+  setChordRootNote: (rootNote: ActualIndex) => void;
+  setChordType: (chordType: NoteGroupingId) => void;
+  setChordInversion: (inversionIndex: InversionIndex) => void;
 }
 
 const MusicalContext = createContext<MusicalSettings | null>(null);
@@ -45,6 +51,31 @@ export const MusicalProvider: React.FC<{ children: ReactNode }> = ({
     // Create initial chord reference to match the initial notes [7, 11, 14] = G major
     isScales ? undefined : makeChordReference(7, ChordType.Major, 0) // G major root position
   );
+
+  const setChordRootNote = (rootNote: ActualIndex) => {
+    if (!currentChordRef) return;
+    setCurrentChordRef({
+      ...currentChordRef,
+      rootNote,
+    });
+  };
+
+  const setChordType = (id: NoteGroupingId) => {
+    if (!currentChordRef) return;
+    setCurrentChordRef({
+      ...currentChordRef,
+      id,
+    });
+  };
+
+  const setChordInversion = (inversionIndex: InversionIndex) => {
+    if (!currentChordRef) return;
+    setCurrentChordRef({
+      ...currentChordRef,
+      inversionIndex,
+    });
+  };
+
   const value: MusicalSettings = {
     selectedNoteIndices,
     selectedMusicalKey,
@@ -52,6 +83,9 @@ export const MusicalProvider: React.FC<{ children: ReactNode }> = ({
     setSelectedNoteIndices,
     setSelectedMusicalKey,
     setCurrentChordRef,
+    setChordRootNote,
+    setChordType,
+    setChordInversion,
   };
 
   useEffect(() => {

@@ -13,6 +13,7 @@ import { MusicalKey } from "../types/Keys/MusicalKey";
 import { ChordDisplayMode } from "../types/SettingModes";
 import { ChordUtils } from "../utils/ChordUtils";
 import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
+import { makeChordReference } from "@/types/interfaces/ChordReference";
 
 function verifyChordNameWithMode(
   expectedChordName: string,
@@ -47,11 +48,8 @@ function verifyChordNotesFromIndex(
   chordType: ChordType,
   inversion: InversionIndex = ixInversion(0)
 ) {
-  const result = ChordUtils.calculateChordNotesFromIndex(
-    ixActual(index),
-    chordType,
-    inversion
-  );
+  const chordRef = makeChordReference(ixActual(index), chordType, inversion);
+  const result = ChordUtils.calculateChordNotesFromChordReference(chordRef);
   expect(result).toEqual(expectedNotes);
 }
 

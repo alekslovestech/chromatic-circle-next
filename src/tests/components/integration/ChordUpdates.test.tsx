@@ -6,10 +6,11 @@ import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { InputModeSelector } from "@/components/Settings/InputModeSelector";
 import { ChordPresetSelector } from "@/components/Settings/ChordPresetsSelector";
 import { ChordNameDisplay } from "@/components/ChordNameDisplay";
-import { ReactTestUtils } from "../../reactutils/ReactTestUtils";
-import { keyVerificationUtils } from "../../reactutils/KeyboardVerificationUtils";
 import { SettingsPanelDefault } from "@/components/Settings/SettingsPanelDefault";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
+
+import { ReactTestUtils } from "@/tests/reactutils/ReactTestUtils";
+import { keyVerificationUtils } from "@/tests/reactutils/KeyboardVerificationUtils";
 
 function verifyChordName(expectedChordName: string) {
   const chordNameNoteGrouping = document.getElementById(
@@ -64,7 +65,7 @@ describe("ChordUpdates", () => {
       verifyChordName("G/B");
     });
 
-    test("Inversion 2 of G => G/C", () => {
+    test("Inversion 2 of G => G/D", () => {
       ReactTestUtils.clickKey("inversion-2");
       verifyChordName("G/D");
     });
@@ -79,6 +80,12 @@ describe("ChordUpdates", () => {
       ReactTestUtils.clickKey("inversion-1");
       ReactTestUtils.clickKey("transpose-down-button");
       verifyChordName("F♯/A♯");
+    });
+
+    test("Inversion 1 of G, then click A", () => {
+      ReactTestUtils.clickKey("inversion-1"); //G/B
+      ReactTestUtils.clickKey("linearKey09"); //click A
+      verifyChordName("F/A");
     });
   });
 });

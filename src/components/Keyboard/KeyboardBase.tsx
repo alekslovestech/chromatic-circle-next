@@ -13,8 +13,7 @@ import { IndexUtils } from "@/utils/IndexUtils";
 
 export const CIRCLE_RADIUS = 5;
 export const useKeyboardHandlers = () => {
-  const { selectedInversionIndex, selectedChordType, inputMode } =
-    useChordPresets();
+  const { inputMode } = useChordPresets();
   const {
     selectedNoteIndices,
     setSelectedNoteIndices,
@@ -23,44 +22,38 @@ export const useKeyboardHandlers = () => {
   } = useMusical();
 
   const handleKeyClick = useCallback(
-    (newIndex: ActualIndex) => {
+    (newRootIndex: ActualIndex) => {
       let updatedIndices: ActualIndex[] = [];
       let updatedChordRef: ChordReference | undefined;
       if (inputMode === InputMode.Freeform) {
         updatedIndices = IndexUtils.ToggleNewIndex(
           selectedNoteIndices,
-          newIndex as ActualIndex
+          newRootIndex as ActualIndex
         );
+        setSelectedNoteIndices(updatedIndices);
       } //SingleNote, IntervalPresets, ChordPresets
       else {
         updatedChordRef = makeChordReference(
-          newIndex,
+          newRootIndex,
           currentChordRef!.id,
           currentChordRef!.inversionIndex
         );
-        updatedIndices = ChordUtils.calculateChordNotesFromBassNote(
-          newIndex,
-          selectedChordType,
-          selectedInversionIndex
-        );
+        setCurrentChordRef(updatedChordRef);
+
+        updatedIndices =
+          ChordUtils.calculateChordNotesFromChordReference(updatedChordRef);
+
+        setSelectedNoteIndices(updatedIndices);
       }
-      setCurrentChordRef(updatedChordRef);
-      setSelectedNoteIndices(updatedIndices);
     },
-    [
-      inputMode,
-      selectedNoteIndices,
-      selectedChordType,
-      selectedInversionIndex,
-      setSelectedNoteIndices,
-    ]
+    [inputMode, selectedNoteIndices, setSelectedNoteIndices]
   );
 
   const checkIsRootNote = useCallback(
     (index: ActualIndex) => {
       if (
         inputMode === InputMode.Freeform ||
-        !ChordUtils.hasInversions(selectedChordType) ||
+        !ChordUtils.hasInversions(currentChordRef!.id) ||
         !currentChordRef
       ) {
         return false;
@@ -68,7 +61,7 @@ export const useKeyboardHandlers = () => {
       // Use the rootNote directly from currentChordRef instead of trying to derive it
       return index === currentChordRef.rootNote;
     },
-    [inputMode, selectedChordType, currentChordRef] // Remove selectedNoteIndices and selectedInversionIndex
+    [inputMode, currentChordRef]
   );
 
   return {

@@ -19,10 +19,10 @@ import { SectionTitle } from "../Common/SectionTitle";
 import { ChordPresetButton } from "./ChordPresetButton";
 import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
 import { makeChordReference } from "@/types/interfaces/ChordReference";
+import { assert } from "console";
 
 export const ChordPresetSelector: React.FC = () => {
-  const { selectedChordType, setSelectedChordType, inputMode } =
-    useChordPresets();
+  const { inputMode } = useChordPresets();
 
   const {
     selectedNoteIndices,
@@ -38,7 +38,7 @@ export const ChordPresetSelector: React.FC = () => {
     return null;
 
   const handlePresetChange = (newPresetId: NoteGroupingId) => {
-    setSelectedChordType(newPresetId);
+    //setSelectedChordType(newPresetId);
 
     // Use currentChordRef.rootNote if available, otherwise fall back to chord recognition or default
     const rootNote =
@@ -50,19 +50,12 @@ export const ChordPresetSelector: React.FC = () => {
         : null) ||
       ixActual(7);
 
-    const updatedIndices = ChordUtils.calculateChordNotesFromIndex(
-      rootNote,
-      newPresetId,
-      ixInversion(0)
-    );
+    // Create new chord reference with inversion 0
+    const newChordRef = makeChordReference(rootNote, newPresetId);
+    const updatedIndices =
+      ChordUtils.calculateChordNotesFromChordReference(newChordRef);
     setSelectedNoteIndices(updatedIndices);
 
-    // Create new chord reference with inversion 0
-    const newChordRef = makeChordReference(
-      rootNote,
-      newPresetId,
-      ixInversion(0)
-    );
     setCurrentChordRef(newChordRef);
   };
 
@@ -82,7 +75,7 @@ export const ChordPresetSelector: React.FC = () => {
             <ChordPresetButton
               key={presetId}
               presetId={presetId}
-              selected={presetId === selectedChordType}
+              selected={presetId === currentChordRef?.id}
               onClick={handlePresetChange}
             />
           ))}
@@ -106,7 +99,7 @@ export const ChordPresetSelector: React.FC = () => {
             <ChordPresetButton
               key={presetId}
               presetId={presetId}
-              selected={presetId === selectedChordType}
+              selected={presetId === currentChordRef?.id}
               onClick={handlePresetChange}
             />
           ))}
@@ -115,8 +108,10 @@ export const ChordPresetSelector: React.FC = () => {
   };
 
   const renderInversionButtons = () => {
-    const presetDefinition =
-      NoteGroupingLibrary.getGroupingById(selectedChordType);
+    assert(currentChordRef?.id, "currentChordRef?.id is required");
+    const presetDefinition = NoteGroupingLibrary.getGroupingById(
+      currentChordRef!.id
+    );
     if (presetDefinition && presetDefinition.hasInversions) {
       const inversionCount = presetDefinition.inversions.length;
       return (

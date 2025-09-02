@@ -6,10 +6,12 @@ import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { InputModeSelector } from "@/components/Settings/InputModeSelector";
 import { ChordPresetSelector } from "@/components/Settings/ChordPresetsSelector";
 import { ChordNameDisplay } from "@/components/ChordNameDisplay";
-import { ReactTestUtils } from "../../reactutils/ReactTestUtils";
-import { keyVerificationUtils } from "../../reactutils/KeyboardVerificationUtils";
+
 import { SettingsPanelDefault } from "@/components/Settings/SettingsPanelDefault";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
+
+import { ReactTestUtils } from "@/tests/reactutils/ReactTestUtils";
+import { keyVerificationUtils } from "@/tests/reactutils/KeyboardVerificationUtils";
 
 function verifyNoteName(expectedNoteName: string) {
   const chordNameNoteGrouping = document.getElementById(
