@@ -107,9 +107,10 @@ export const ChordPresetSelector: React.FC = () => {
   };
 
   const renderInversionButtons = () => {
-    console.assert(currentChordRef?.id, "currentChordRef?.id is required");
+    if (!currentChordRef) return null;
+
     const presetDefinition = NoteGroupingLibrary.getGroupingById(
-      currentChordRef!.id
+      currentChordRef.id
     );
     if (presetDefinition && presetDefinition.hasInversions) {
       const inversionCount = presetDefinition.inversions.length;

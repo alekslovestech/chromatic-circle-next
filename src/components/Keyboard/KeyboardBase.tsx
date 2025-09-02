@@ -5,10 +5,6 @@ import { InputMode } from "@/types/SettingModes";
 import { ChordUtils } from "@/utils/ChordUtils";
 import { useMusical } from "@/contexts/MusicalContext";
 import { useChordPresets } from "@/contexts/ChordPresetContext";
-import {
-  ChordReference,
-  makeChordReference,
-} from "@/types/interfaces/ChordReference";
 import { IndexUtils } from "@/utils/IndexUtils";
 
 export const CIRCLE_RADIUS = 5;
@@ -18,47 +14,50 @@ export const useKeyboardHandlers = () => {
     selectedNoteIndices,
     setSelectedNoteIndices,
     currentChordRef,
-    setCurrentChordRef,
+    setChordRootNote, // Use the new setter
   } = useMusical();
 
   const handleKeyClick = useCallback(
     (newRootIndex: ActualIndex) => {
-      let updatedIndices: ActualIndex[] = [];
-      let updatedChordRef: ChordReference | undefined;
       if (inputMode === InputMode.Freeform) {
-        updatedIndices = IndexUtils.ToggleNewIndex(
+        const updatedIndices = IndexUtils.ToggleNewIndex(
           selectedNoteIndices,
           newRootIndex as ActualIndex
         );
         setSelectedNoteIndices(updatedIndices);
-      } //SingleNote, IntervalPresets, ChordPresets
-      else {
-        updatedChordRef = makeChordReference(
-          newRootIndex,
-          currentChordRef!.id,
-          currentChordRef!.inversionIndex
-        );
-        setCurrentChordRef(updatedChordRef);
+      } else if (currentChordRef) {
+        // Add null check
+        // Use the new ergonomic setter instead of makeChordReference
+        setChordRootNote(newRootIndex);
 
-        updatedIndices =
+        // Still need to update note indices
+        const updatedChordRef = {
+          ...currentChordRef,
+          rootNote: newRootIndex,
+        };
+        const updatedIndices =
           ChordUtils.calculateChordNotesFromChordReference(updatedChordRef);
-
         setSelectedNoteIndices(updatedIndices);
       }
     },
-    [inputMode, selectedNoteIndices, setSelectedNoteIndices]
+    [
+      inputMode,
+      selectedNoteIndices,
+      setSelectedNoteIndices,
+      currentChordRef,
+      setChordRootNote,
+    ]
   );
 
   const checkIsRootNote = useCallback(
     (index: ActualIndex) => {
       if (
         inputMode === InputMode.Freeform ||
-        !ChordUtils.hasInversions(currentChordRef!.id) ||
-        !currentChordRef
+        !currentChordRef || // Check currentChordRef first
+        !ChordUtils.hasInversions(currentChordRef.id)
       ) {
         return false;
       }
-      // Use the rootNote directly from currentChordRef instead of trying to derive it
       return index === currentChordRef.rootNote;
     },
     [inputMode, currentChordRef]
