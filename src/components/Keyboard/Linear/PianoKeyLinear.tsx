@@ -62,7 +62,6 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
     : KeyboardUtils.computeNoteTextForDefaultMode(
         chromaticIndex,
         isSelected,
-        selectedNoteIndices,
         selectedMusicalKey,
         currentChordRef
       );

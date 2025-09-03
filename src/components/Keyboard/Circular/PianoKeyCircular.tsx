@@ -80,7 +80,6 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     : KeyboardUtils.computeNoteTextForDefaultMode(
         chromaticIndex,
         isSelected,
-        selectedNoteIndices,
         selectedMusicalKey,
         currentChordRef!
       );

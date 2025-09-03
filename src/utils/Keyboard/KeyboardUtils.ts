@@ -50,10 +50,10 @@ export class KeyboardUtils {
   static computeNoteTextForDefaultMode(
     chromaticIndex: ChromaticIndex,
     isSelected: boolean,
-    selectedNoteIndices: ActualIndex[],
     selectedMusicalKey: MusicalKey,
     currentChordRef?: ChordReference
   ): string {
+    if (!isSelected) return "";
     const isBlackKey = IndexUtils.isBlackKey(chromaticIndex);
 
     // White keys: always show note text using key signature
@@ -66,7 +66,6 @@ export class KeyboardUtils {
     }
 
     // Black keys: only show when selected
-    if (!isSelected) return "";
 
     const targetNoteIndex = chromaticToActual(chromaticIndex);
 
