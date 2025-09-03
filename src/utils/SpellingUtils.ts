@@ -1,5 +1,10 @@
+import {
+  ChordReference,
+  makeChordReference,
+} from "@/types/interfaces/ChordReference";
+import { NoteWithOctave } from "@/types/interfaces/NoteWithOctave";
+
 import { NoteGroupingId } from "@/types/NoteGroupingId";
-import { ChordMatch } from "@/types/interfaces/ChordMatch";
 
 import {
   ActualIndex,
@@ -7,30 +12,21 @@ import {
   InversionIndex,
 } from "@/types/IndexTypes";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
-import { NoteWithOctave } from "@/types/interfaces/NoteWithOctave";
 
 import { ChordUtils } from "@/utils/ChordUtils";
-import { IndexUtils } from "@/utils/IndexUtils";
-
 import { AccidentalPreferenceResolver } from "@/utils/resolvers/AccidentalPreferenceResolver";
 import { ActualNoteResolver } from "@/utils/resolvers/ActualNoteResolver";
-import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
 
 export class SpellingUtils {
   static computeSingleNoteFromChordPreset(
     targetNoteIndex: ActualIndex,
-    chordIndices: ActualIndex[],
-    chordMatch: ChordMatch
+    chordRef: ChordReference
   ): NoteWithOctave {
-    // Direct computation for single note - no array creation
-    const rootIndex = IndexUtils.rootNoteAtInversion(
-      chordIndices,
-      chordMatch.inversionIndex
-    );
+    const rootIndex = chordRef.rootNote;
     const rootChromaticIndex = actualToChromatic(rootIndex);
     const accidentalPreference =
       AccidentalPreferenceResolver.getChordPresetSpellingPreference(
-        chordMatch.definition.id,
+        chordRef.id,
         rootChromaticIndex
       );
     return ActualNoteResolver.resolveAbsoluteNoteWithOctave(
@@ -44,23 +40,16 @@ export class SpellingUtils {
     selectedChordType: NoteGroupingId,
     selectedInversionIndex: InversionIndex
   ): NoteWithOctave {
-    const chordIndices = ChordUtils.calculateChordNotesFromIndex(
+    const chordRef = makeChordReference(
       baseIndex,
       selectedChordType,
       selectedInversionIndex
     );
-    // Create a minimal ChordMatch for reuse
-    const chordMatch: ChordMatch = {
-      rootNote: baseIndex,
-      definition: NoteGroupingLibrary.getGroupingById(selectedChordType),
-      inversionIndex: selectedInversionIndex,
-    };
 
-    return this.computeSingleNoteFromChordPreset(
-      chordIndices[0],
-      chordIndices,
-      chordMatch
-    );
+    const chordIndices =
+      ChordUtils.calculateChordNotesFromChordReference(chordRef);
+
+    return this.computeSingleNoteFromChordPreset(chordIndices[0], chordRef);
   }
 
   static computeNotesFromMusicalKey(
@@ -77,25 +66,20 @@ export class SpellingUtils {
 
   static computeNotesFromChordPreset(
     chordIndices: ActualIndex[],
-    chordMatch: ChordMatch
+    chordRef: ChordReference
   ): NoteWithOctave[] {
     return chordIndices.map((actualIndex) =>
-      this.computeSingleNoteFromChordPreset(
-        actualIndex,
-        chordIndices,
-        chordMatch
-      )
+      this.computeSingleNoteFromChordPreset(actualIndex, chordRef)
     );
   }
 
-  // Add a method that uses ChordMatch when available, falls back to reverse-engineering
   static computeNotesWithOptimalStrategy(
     selectedNoteIndices: ActualIndex[],
     selectedMusicalKey: MusicalKey,
-    currentChordMatch?: ChordMatch
+    currentChordRef?: ChordReference
   ): NoteWithOctave[] {
-    return currentChordMatch
-      ? this.computeNotesFromChordPreset(selectedNoteIndices, currentChordMatch)
+    return currentChordRef
+      ? this.computeNotesFromChordPreset(selectedNoteIndices, currentChordRef)
       : this.computeNotesFromMusicalKey(
           selectedNoteIndices,
           selectedMusicalKey

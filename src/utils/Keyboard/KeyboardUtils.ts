@@ -1,5 +1,4 @@
 import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
-import { ChordMatch } from "@/types/interfaces/ChordMatch";
 
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
@@ -7,9 +6,9 @@ import { MusicalKey } from "@/types/Keys/MusicalKey";
 
 import { SpellingUtils } from "@/utils/SpellingUtils";
 import { NoteFormatter } from "@/utils/formatters/NoteFormatter";
-import { IndexUtils } from "@/utils/IndexUtils";
 import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
 import { ActualNoteResolver } from "../resolvers/ActualNoteResolver";
+import { ChordReference } from "@/types/interfaces/ChordReference";
 
 export class KeyboardUtils {
   static StringWithPaddedIndex(prefix: string, index: number): string {
@@ -50,31 +49,16 @@ export class KeyboardUtils {
   static computeNoteTextForDefaultMode(
     chromaticIndex: ChromaticIndex,
     isSelected: boolean,
-    selectedNoteIndices: ActualIndex[],
     selectedMusicalKey: MusicalKey,
-    currentChordMatch?: ChordMatch
+    currentChordRef?: ChordReference
   ): string {
-    const isBlackKey = IndexUtils.isBlackKey(chromaticIndex);
-
-    // White keys: always show note text using key signature
-    if (!isBlackKey) {
-      return MusicalKeyFormatter.formatNoteForDisplay(
-        selectedMusicalKey,
-        chromaticIndex,
-        KeyDisplayMode.NoteNames
-      );
-    }
-
-    // Black keys: only show when selected
     if (!isSelected) return "";
-
     const targetNoteIndex = chromaticToActual(chromaticIndex);
 
-    if (currentChordMatch) {
+    if (currentChordRef) {
       const spelledNote = SpellingUtils.computeSingleNoteFromChordPreset(
         targetNoteIndex,
-        selectedNoteIndices,
-        currentChordMatch
+        currentChordRef
       );
       return NoteFormatter.formatForDisplay(spelledNote);
     } else {

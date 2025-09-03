@@ -1,12 +1,13 @@
-import { ixChromatic } from "../types/ChromaticIndex";
+import { ixChromatic } from "@/types/ChromaticIndex";
 import {
   actualIndexToChromaticAndOctave,
   chromaticToActual,
   ixActual,
   ixActualArray,
   ixInversion,
-} from "../types/IndexTypes";
-import { IndexUtils } from "../utils/IndexUtils";
+} from "@/types/IndexTypes";
+import { IndexUtils } from "@/utils/IndexUtils";
+import { ChordUtils } from "@/utils/ChordUtils";
 
 describe("IndexUtils", () => {
   describe("normalizeIndices", () => {
@@ -38,7 +39,7 @@ describe("IndexUtils", () => {
     cases.forEach(({ desc, indices, inv, expected }) => {
       it(desc, () => {
         expect(
-          IndexUtils.rootNoteAtInversion(
+          ChordUtils.getBassNoteFromOriginalChord(
             ixActualArray(indices),
             ixInversion(inv)
           )

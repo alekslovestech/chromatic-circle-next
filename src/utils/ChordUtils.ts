@@ -10,8 +10,37 @@ import {
 } from "../types/IndexTypes";
 
 import { IndexUtils } from "./IndexUtils";
+import {
+  ChordReference,
+  makeChordReference,
+} from "@/types/interfaces/ChordReference";
 
 export class ChordUtils {
+  /**
+   * Given the original (uninverted) chord indices, calculate what the bass note would be at a specific inversion.
+   * Example: C-E-G (original) at inversion 1 → bass note is E
+   */
+  static getBassNoteFromOriginalChord(
+    originalChordIndices: ActualIndex[],
+    inversionIndex: InversionIndex
+  ): ActualIndex {
+    const reverseIndex = ixInversion(
+      (originalChordIndices.length - inversionIndex) %
+        originalChordIndices.length
+    );
+    return originalChordIndices[reverseIndex] as ActualIndex;
+  }
+
+  /**
+   * Given inverted chord indices, find the bass note (always the first note).
+   * Example: E-G-C → bass note is E
+   */
+  static getBassNoteFromInvertedChord(
+    invertedChordIndices: ActualIndex[]
+  ): ActualIndex {
+    return invertedChordIndices[0] as ActualIndex;
+  }
+
   static hasInversions = (id: NoteGroupingId): boolean => {
     const definition = NoteGroupingLibrary.getGroupingById(id);
     return definition?.offsets.length > 1;
@@ -31,30 +60,14 @@ export class ChordUtils {
     return definition.inversions[inversionIndex];
   }
 
-  static calculateUpdatedIndices(
-    newIndex: ActualIndex,
-    isFreeform: boolean,
-    selectedNoteIndices: ActualIndex[],
-    chordType: NoteGroupingId,
-    inversionIndex: InversionIndex = ixInversion(0)
-  ): ActualIndex[] {
-    return isFreeform
-      ? IndexUtils.ToggleNewIndex(selectedNoteIndices, newIndex as ActualIndex)
-      : this.calculateChordNotesFromBassNote(
-          newIndex,
-          chordType,
-          inversionIndex
-        );
-  }
-
   /**
    * Calculate chord notes where the clicked note becomes the bass note.
    * This is more intuitive than clicking on the root note.
    */
-  private static calculateChordNotesFromBassNote(
+  static calculateChordNotesFromBassNote(
     bassIndex: ActualIndex,
     chordType: NoteGroupingId,
-    inversionIndex: InversionIndex
+    inversionIndex: InversionIndex = ixInversion(0)
   ): ActualIndex[] {
     // Get the offsets for this chord type and inversion
     const chordOffsets = this.getOffsetsFromIdAndInversion(
@@ -69,25 +82,20 @@ export class ChordUtils {
     // bassIndex = rootIndex + bassOffset, so rootIndex = bassIndex - bassOffset
     const rootIndex = ixActual(bassIndex - bassOffset);
 
+    const chordRef = makeChordReference(rootIndex, chordType, inversionIndex);
     // Now calculate the chord from this root, which will handle octave fitting
-    return this.calculateChordNotesFromIndex(
-      rootIndex,
-      chordType,
-      inversionIndex
-    );
+    return this.calculateChordNotesFromChordReference(chordRef);
   }
 
-  static calculateChordNotesFromIndex(
-    rootIndex: ActualIndex,
-    chordType: NoteGroupingId,
-    inversionIndex: InversionIndex
+  static calculateChordNotesFromChordReference(
+    chordReference: ChordReference
   ): ActualIndex[] {
     const chordOffsets = ChordUtils.getOffsetsFromIdAndInversion(
-      chordType,
-      inversionIndex
+      chordReference.id,
+      chordReference.inversionIndex
     );
     const newNotes = chordOffsets.map(
-      (offset: number) => (offset + rootIndex) as ActualIndex
+      (offset: number) => (offset + chordReference.rootNote) as ActualIndex
     );
     return ixActualArray(IndexUtils.fitChordToAbsoluteRange(newNotes));
   }

@@ -1,8 +1,9 @@
-import { ixActualArray } from "../types/IndexTypes";
-import { DEFAULT_MUSICAL_KEY, MusicalKey } from "../types/Keys/MusicalKey";
-import { ChordDisplayMode } from "../types/SettingModes";
+import { ScaleModeType } from "@/types/enums/ScaleModeType";
 
-import { ScaleModeType } from "../types/enums/ScaleModeType";
+import { ixActualArray } from "@/types/IndexTypes";
+import { DEFAULT_MUSICAL_KEY, MusicalKey } from "@/types/Keys/MusicalKey";
+import { ChordDisplayMode } from "@/types/SettingModes";
+
 import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
 
 function verifyDisplayInfo(

@@ -1,7 +1,7 @@
 import { TWELVE, TWENTY4 } from "@/types/constants/NoteConstants";
 
 import { ChromaticIndex, subChromatic } from "@/types/ChromaticIndex";
-import { ActualIndex, InversionIndex } from "@/types/IndexTypes";
+import { ActualIndex } from "@/types/IndexTypes";
 
 export class IndexUtils {
   static isBlackKey(actualIndex: ActualIndex | ChromaticIndex): boolean {
@@ -34,15 +34,6 @@ export class IndexUtils {
 
     // If both fits have the same number of notes, prefer the one that includes the lowest note
     return lowerFit.includes(indices[0]) ? lowerFit : upperFit;
-  }
-
-  static rootNoteAtInversion(
-    indices: ActualIndex[],
-    inversionIndex: InversionIndex
-  ): ActualIndex {
-    return indices[
-      (indices.length - inversionIndex) % indices.length
-    ] as ActualIndex;
   }
 
   //put the first note at the end

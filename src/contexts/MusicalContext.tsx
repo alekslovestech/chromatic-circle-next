@@ -9,20 +9,34 @@ import React, {
 } from "react";
 
 import { ChordType } from "@/types/enums/ChordType";
-import { ChordMatch } from "@/types/interfaces/ChordMatch";
-import { ActualIndex, ixActualArray } from "@/types/IndexTypes";
+import {
+  ActualIndex,
+  InversionIndex,
+  ixActual,
+  ixActualArray,
+} from "@/types/IndexTypes";
 import { DEFAULT_MUSICAL_KEY, MusicalKey } from "@/types/Keys/MusicalKey";
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
+import {
+  ChordReference,
+  makeChordReference,
+} from "@/types/interfaces/ChordReference";
 
 import { ChordUtils } from "@/utils/ChordUtils";
+import { NoteGroupingId } from "@/types/NoteGroupingId";
 
 export interface MusicalSettings {
   selectedNoteIndices: ActualIndex[];
   selectedMusicalKey: MusicalKey;
-  currentChordMatch?: ChordMatch;
-  setSelectedNoteIndices: (indices: ActualIndex[]) => void;
+  currentChordRef?: ChordReference;
+  setSelectedNoteIndices: (indices: ActualIndex[]) => void; // Remove this
   setSelectedMusicalKey: (key: MusicalKey) => void;
-  setCurrentChordMatch: (chordMatch?: ChordMatch) => void;
+  setCurrentChordRef: (chordRef?: ChordReference) => void;
+
+  setChordRootNote: (rootNote: ActualIndex) => void;
+  setChordType: (chordType: NoteGroupingId) => void;
+  setChordInversion: (inversionIndex: InversionIndex) => void;
+  setChordBassNote: (bassNote: ActualIndex) => void;
 }
 
 const MusicalContext = createContext<MusicalSettings | null>(null);
@@ -36,29 +50,76 @@ export const MusicalProvider: React.FC<{ children: ReactNode }> = ({
   );
   const [selectedMusicalKey, setSelectedMusicalKey] =
     useState<MusicalKey>(DEFAULT_MUSICAL_KEY);
-  const [currentChordMatch, setCurrentChordMatch] = useState<
-    ChordMatch | undefined
-  >(undefined);
+  const [currentChordRef, setCurrentChordRef] = useState<
+    ChordReference | undefined
+  >(
+    // Create initial chord reference to match the initial notes [7, 11, 14] = G major
+    isScales ? undefined : makeChordReference(7, ChordType.Major, 0) // G major root position
+  );
+
+  const setChordRootNote = (rootNote: ActualIndex) => {
+    if (!currentChordRef) return;
+    setCurrentChordRef({
+      ...currentChordRef,
+      rootNote,
+    });
+  };
+
+  const setChordType = (id: NoteGroupingId) => {
+    if (!currentChordRef) return;
+    setCurrentChordRef({
+      ...currentChordRef,
+      id,
+    });
+  };
+
+  const setChordInversion = (inversionIndex: InversionIndex) => {
+    if (!currentChordRef) return;
+    setCurrentChordRef({
+      ...currentChordRef,
+      inversionIndex,
+    });
+  };
+
+  const setChordBassNote = (bassNote: ActualIndex) => {
+    if (!currentChordRef) return;
+
+    // Calculate what the root note should be for this bass note
+    const chordOffsets = ChordUtils.getOffsetsFromIdAndInversion(
+      currentChordRef.id,
+      currentChordRef.inversionIndex
+    );
+    const bassOffset = chordOffsets[0];
+    const newRootNote = ixActual(bassNote - bassOffset);
+
+    // update the chord reference - let useEffect handle note indices
+    setCurrentChordRef({
+      ...currentChordRef,
+      rootNote: newRootNote,
+    });
+  };
+
   const value: MusicalSettings = {
     selectedNoteIndices,
     selectedMusicalKey,
-    currentChordMatch,
+    currentChordRef,
     setSelectedNoteIndices,
     setSelectedMusicalKey,
-    setCurrentChordMatch,
+    setCurrentChordRef,
+    setChordRootNote,
+    setChordType,
+    setChordInversion,
+    setChordBassNote, // Add to the value object
   };
 
+  // This useEffect will automatically calculate note indices from chord reference
   useEffect(() => {
-    if (selectedNoteIndices.length === 0) return;
-    const rootNoteIndex = selectedNoteIndices[0];
-    const updatedIndices = ChordUtils.calculateUpdatedIndices(
-      rootNoteIndex,
-      false,
-      selectedNoteIndices,
-      ChordType.Major
-    );
+    if (!currentChordRef) return;
+
+    const updatedIndices =
+      ChordUtils.calculateChordNotesFromChordReference(currentChordRef);
     setSelectedNoteIndices(updatedIndices);
-  }, []); //update indices on mount
+  }, [currentChordRef]);
 
   return (
     <MusicalContext.Provider value={value}>{children}</MusicalContext.Provider>

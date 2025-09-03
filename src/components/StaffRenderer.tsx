@@ -17,7 +17,7 @@ interface StaffRendererProps {
 export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
   const staffDivRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { selectedNoteIndices, selectedMusicalKey, currentChordMatch } =
+  const { selectedNoteIndices, selectedMusicalKey, currentChordRef } =
     useMusical();
   const isScalesMode = useIsScalePreviewMode();
   const border = useBorder();
@@ -60,7 +60,7 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
     const notesWithOctaves = SpellingUtils.computeNotesWithOptimalStrategy(
       selectedNoteIndices,
       canonicalIonianKey,
-      currentChordMatch
+      currentChordRef
     );
 
     // Step 2: Render NoteWithOctave[] to VexFlow - pure rendering logic
@@ -78,12 +78,7 @@ export const StaffRenderer: React.FC<StaffRendererProps> = ({ style }) => {
       .joinVoices([voice])
       .format([voice], containerWidth - 20);
     voice.draw(context, stave);
-  }, [
-    selectedNoteIndices,
-    selectedMusicalKey,
-    currentChordMatch,
-    isScalesMode,
-  ]);
+  }, [selectedNoteIndices, selectedMusicalKey, currentChordRef, isScalesMode]);
 
   return (
     <div

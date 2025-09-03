@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 
 import { SpecialType } from "@/types/enums/SpecialType";
 import { ChordType } from "@/types/enums/ChordType";
@@ -11,10 +11,7 @@ import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormat
 
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
-import {
-  useChordPresets,
-  useIsChordsOrIntervals,
-} from "@/contexts/ChordPresetContext";
+import { useIsChordsOrIntervals } from "@/contexts/ChordPresetContext";
 
 import { TYPOGRAPHY } from "@/lib/design";
 import { LAYOUT_PATTERNS } from "@/lib/design/LayoutPatterns";
@@ -23,9 +20,9 @@ import { useBorder } from "@/lib/hooks";
 const MAX_CHORD_NAME_LENGTH = 7;
 const BREAK_CHARACTER = "\u200B";
 export const ChordNameDisplay: React.FC = () => {
-  const { selectedNoteIndices, selectedMusicalKey } = useMusical();
+  const { selectedNoteIndices, selectedMusicalKey, currentChordRef } =
+    useMusical();
   const { chordDisplayMode, setChordDisplayMode } = useDisplay();
-  const { selectedChordType, selectedInversionIndex } = useChordPresets();
   const isChordsOrIntervals = useIsChordsOrIntervals();
   const border = useBorder();
 
@@ -43,30 +40,41 @@ export const ChordNameDisplay: React.FC = () => {
     setChordDisplayMode(getOppositeDisplayMode(chordDisplayMode));
   }
 
-  const renderNoteGrouping = () => {
+  const displayInfo = useMemo(() => {
+    const chordRefId = currentChordRef?.id;
     const shouldUseChordPresetSpelling =
       isChordsOrIntervals &&
-      selectedChordType !== SpecialType.None &&
-      selectedChordType !== SpecialType.Note &&
-      selectedChordType !== SpecialType.Freeform &&
-      selectedChordType !== ChordType.Unknown;
+      chordRefId !== SpecialType.None &&
+      chordRefId !== SpecialType.Note &&
+      chordRefId !== SpecialType.Freeform &&
+      chordRefId !== ChordType.Unknown;
 
-    const displayInfo =
-      shouldUseChordPresetSpelling && selectedNoteIndices.length > 0
-        ? MusicalDisplayFormatter.getChordPresetDisplayInfo(
-            selectedNoteIndices,
-            selectedChordType,
-            selectedInversionIndex,
-            ChordDisplayMode.Symbols
-          )
-        : MusicalDisplayFormatter.getDisplayInfoFromIndices(
-            selectedNoteIndices,
-            chordDisplayMode,
-            selectedMusicalKey
-          );
+    if (shouldUseChordPresetSpelling && selectedNoteIndices.length > 0) {
+      const chordRef =
+        currentChordRef ||
+        MusicalDisplayFormatter.getChordReferenceFromIndices(
+          selectedNoteIndices
+        );
 
-    return renderChordDisplay(displayInfo);
-  };
+      return MusicalDisplayFormatter.getChordPresetDisplayInfo(
+        selectedNoteIndices,
+        chordRef!,
+        ChordDisplayMode.Symbols
+      );
+    } else {
+      return MusicalDisplayFormatter.getDisplayInfoFromIndices(
+        selectedNoteIndices,
+        chordDisplayMode,
+        selectedMusicalKey
+      );
+    }
+  }, [
+    selectedNoteIndices,
+    selectedMusicalKey,
+    currentChordRef,
+    isChordsOrIntervals,
+    chordDisplayMode,
+  ]);
 
   const renderChordDisplay = (displayInfo: ChordDisplayInfo) => {
     const { chordName, noteGroupingString } = displayInfo;
@@ -76,13 +84,18 @@ export const ChordNameDisplay: React.FC = () => {
         : chordName;
     return (
       <div
+        id="chord-name-description"
         className={`chord-name-description ${LAYOUT_PATTERNS.centerFlexCol} ${LAYOUT_PATTERNS.fullSize}`}
       >
-        <div className={`${TYPOGRAPHY.controlLabel}`}>
+        <div
+          id="chord-name-note-grouping"
+          className={`${TYPOGRAPHY.controlLabel}`}
+        >
           {`${noteGroupingString}:`}
         </div>
         <div
-          className={`chord-name-value ${TYPOGRAPHY.displayText} max-w-full text-center break-words`}
+          id="chord-name-value"
+          className={`${TYPOGRAPHY.displayText} max-w-full text-center break-words`}
         >
           {chordNameDisplay}
         </div>
@@ -91,12 +104,15 @@ export const ChordNameDisplay: React.FC = () => {
   };
 
   return (
-    <div className={`chord-display ${LAYOUT_PATTERNS.fullSize} ${border}`}>
+    <div
+      id="chord-name-display"
+      className={`${LAYOUT_PATTERNS.fullSize} ${border}`}
+    >
       <div
         onClick={toggleChordDisplayMode}
         className={`cursor-pointer hover:text-buttons-textSelected transition-colors duration-200 ${LAYOUT_PATTERNS.fullSize}`}
       >
-        {renderNoteGrouping()}
+        {renderChordDisplay(displayInfo)}
       </div>
     </div>
   );

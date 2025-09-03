@@ -18,6 +18,7 @@ import { useDisplay } from "@/contexts/DisplayContext";
 
 interface CircularKeyProps {
   chromaticIndex: ChromaticIndex;
+  isRootNote: boolean;
   outerRadius: number;
   innerRadius: number;
   onClick: (index: ActualIndex) => void;
@@ -25,11 +26,12 @@ interface CircularKeyProps {
 
 export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   chromaticIndex,
+  isRootNote,
   outerRadius,
   innerRadius,
   onClick,
 }) => {
-  const { selectedMusicalKey, selectedNoteIndices, currentChordMatch } =
+  const { selectedMusicalKey, selectedNoteIndices, currentChordRef } =
     useMusical();
   const { monochromeMode } = useDisplay();
   const pathData = ArcPathVisualizer.getArcPathData(
@@ -63,7 +65,10 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     true
   );
 
+  if (isSelected) baseClasses.push("selected"); //add for testing
   if (isScales) baseClasses.push("disabled");
+  if (isBlack) baseClasses.push("short");
+  if (isRootNote) baseClasses.push("root-note");
 
   const id = KeyboardUtils.StringWithPaddedIndex("circularKey", chromaticIndex);
   const noteText = isScales
@@ -75,9 +80,8 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     : KeyboardUtils.computeNoteTextForDefaultMode(
         chromaticIndex,
         isSelected,
-        selectedNoteIndices,
         selectedMusicalKey,
-        currentChordMatch
+        currentChordRef!
       );
 
   return (

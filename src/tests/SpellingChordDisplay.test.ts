@@ -2,6 +2,12 @@ import { ixActualArray } from "@/types/IndexTypes";
 
 import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
 import { ChordDisplayMode } from "@/types/SettingModes";
+import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
+import {
+  ChordReference,
+  makeChordReference,
+} from "@/types/interfaces/ChordReference";
+import { ChordType } from "@/types/enums/ChordType";
 
 describe("SpellingChordDisplay - Chord display info", () => {
   // Helper function to make tests cleaner
@@ -12,11 +18,33 @@ describe("SpellingChordDisplay - Chord display info", () => {
   ) {
     test(description, () => {
       const indices = ixActualArray(chordIndices);
-      const chordMatch = MusicalDisplayFormatter.getMatchFromIndices(indices);
+      const chordRef =
+        MusicalDisplayFormatter.getChordReferenceFromIndices(indices);
       const result = MusicalDisplayFormatter.getChordPresetDisplayInfo(
         indices,
-        chordMatch.definition.id,
-        chordMatch.inversionIndex,
+        chordRef!,
+        ChordDisplayMode.Symbols
+      );
+
+      expect(result.chordName).toBe(expectedChordName);
+    });
+  }
+
+  function testChordDisplayInfoFromChordReference(
+    description: string,
+    chordRef: ChordReference,
+    expectedChordName: string
+  ) {
+    test(description, () => {
+      const definition = NoteGroupingLibrary.getGroupingById(chordRef.id);
+      const indices = definition
+        ? ixActualArray(
+            definition.offsets.map((offset) => chordRef.rootNote + offset)
+          )
+        : [];
+      const result = MusicalDisplayFormatter.getChordPresetDisplayInfo(
+        indices,
+        chordRef!,
         ChordDisplayMode.Symbols
       );
 
@@ -43,6 +71,12 @@ describe("SpellingChordDisplay - Chord display info", () => {
         "G major triad in first inversion",
         [11, 14, 19], // B, D, G
         "G/B"
+      );
+
+      testChordDisplayInfo(
+        "G major triad in second inversion",
+        [2, 7, 11], // D, G, B
+        "G/D"
       );
     });
 
@@ -84,6 +118,26 @@ describe("SpellingChordDisplay - Chord display info", () => {
       "G# aug => Ab",
       [8, 12, 16], // Ab, C, E
       "A♭+"
+    );
+  });
+
+  describe("Major triads from chord reference", () => {
+    testChordDisplayInfoFromChordReference(
+      "G major triad in root position",
+      makeChordReference(7, ChordType.Major, 0),
+      "G"
+    );
+
+    testChordDisplayInfoFromChordReference(
+      "G major triad in first inversion",
+      makeChordReference(7, ChordType.Major, 1),
+      "G/B"
+    );
+
+    testChordDisplayInfoFromChordReference(
+      "G major triad in second inversion",
+      makeChordReference(7, ChordType.Major, 2),
+      "G/D"
     );
   });
 });

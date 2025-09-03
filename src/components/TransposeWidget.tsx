@@ -5,6 +5,8 @@ import { useMusical } from "@/contexts/MusicalContext";
 
 import { Button } from "./Common/Button";
 import { TYPOGRAPHY } from "@/lib/design";
+import { makeChordReference } from "@/types/interfaces/ChordReference";
+import { addChromatic } from "@/types/ChromaticIndex";
 
 type TransposeDirection = "up" | "down";
 export type TransposeTarget = "key" | "notes";
@@ -26,6 +28,8 @@ const TransposeButton: React.FC<TransposeButtonProps> = ({
     setSelectedNoteIndices,
     selectedMusicalKey,
     setSelectedMusicalKey,
+    currentChordRef,
+    setCurrentChordRef,
   } = useMusical();
 
   const onClick = () => {
@@ -34,7 +38,20 @@ const TransposeButton: React.FC<TransposeButtonProps> = ({
       const transposedIndices = ixActualArray(
         IndexUtils.shiftIndices(selectedNoteIndices, amount)
       );
+
       setSelectedNoteIndices(transposedIndices);
+
+      // ADDED: Update chord reference to match transposed notes
+      if (currentChordRef && transposedIndices.length > 0) {
+        const oldRoot = currentChordRef?.rootNote;
+        const newRoot = addChromatic(oldRoot!, amount);
+        const updatedChordRef = makeChordReference(
+          newRoot,
+          currentChordRef.id,
+          currentChordRef.inversionIndex
+        );
+        setCurrentChordRef(updatedChordRef);
+      }
     } else {
       // Transpose musical key
       const newKey = selectedMusicalKey.getTransposedKey(amount);

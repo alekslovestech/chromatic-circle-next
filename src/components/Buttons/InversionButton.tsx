@@ -1,30 +1,15 @@
-import { useMusical } from "@/contexts/MusicalContext";
-import { useChordPresets } from "@/contexts/ChordPresetContext";
 import { InversionIndex } from "@/types/IndexTypes";
-import { ChordUtils } from "@/utils/ChordUtils";
-import { IndexUtils } from "@/utils/IndexUtils";
 import { Button } from "../Common/Button";
+import { useMusical } from "@/contexts/MusicalContext";
 
 export const InversionButton: React.FC<{ inversionIndex: InversionIndex }> = ({
   inversionIndex,
 }) => {
-  const { selectedNoteIndices, setSelectedNoteIndices } = useMusical();
-  const { selectedChordType } = useChordPresets();
-  const { selectedInversionIndex, setSelectedInversionIndex } =
-    useChordPresets();
+  const { currentChordRef, setChordInversion } = useMusical();
 
+  if (!currentChordRef) return null;
   const handleInversionChange = (newInversionIndex: InversionIndex) => {
-    const originalRootIndex = IndexUtils.rootNoteAtInversion(
-      selectedNoteIndices,
-      selectedInversionIndex
-    );
-    setSelectedInversionIndex(newInversionIndex);
-    const updatedIndices = ChordUtils.calculateChordNotesFromIndex(
-      originalRootIndex,
-      selectedChordType,
-      newInversionIndex
-    );
-    setSelectedNoteIndices(updatedIndices);
+    setChordInversion(newInversionIndex);
   };
 
   return (
@@ -34,7 +19,7 @@ export const InversionButton: React.FC<{ inversionIndex: InversionIndex }> = ({
       size="sm"
       variant="option"
       onClick={() => handleInversionChange(inversionIndex)}
-      selected={selectedInversionIndex === inversionIndex}
+      selected={currentChordRef!.inversionIndex === inversionIndex}
     >
       {inversionIndex}
     </Button>
