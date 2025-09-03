@@ -33,7 +33,6 @@ export interface MusicalSettings {
   setSelectedMusicalKey: (key: MusicalKey) => void;
   setCurrentChordRef: (chordRef?: ChordReference) => void;
 
-  // New ergonomic setters
   setChordRootNote: (rootNote: ActualIndex) => void;
   setChordType: (chordType: NoteGroupingId) => void;
   setChordInversion: (inversionIndex: InversionIndex) => void;
@@ -58,7 +57,6 @@ export const MusicalProvider: React.FC<{ children: ReactNode }> = ({
     isScales ? undefined : makeChordReference(7, ChordType.Major, 0) // G major root position
   );
 
-  // Simplify the setters - they only update the chord reference
   const setChordRootNote = (rootNote: ActualIndex) => {
     if (!currentChordRef) return;
     setCurrentChordRef({
@@ -86,16 +84,6 @@ export const MusicalProvider: React.FC<{ children: ReactNode }> = ({
   const setChordBassNote = (bassNote: ActualIndex) => {
     if (!currentChordRef) return;
 
-    // Calculate new chord where the clicked note becomes the bass note
-    const updatedIndices = ChordUtils.calculateChordNotesFromBassNote(
-      bassNote,
-      currentChordRef.id,
-      currentChordRef.inversionIndex
-    );
-
-    // Update the note indices
-    setSelectedNoteIndices(updatedIndices);
-
     // Calculate what the root note should be for this bass note
     const chordOffsets = ChordUtils.getOffsetsFromIdAndInversion(
       currentChordRef.id,
@@ -104,7 +92,7 @@ export const MusicalProvider: React.FC<{ children: ReactNode }> = ({
     const bassOffset = chordOffsets[0];
     const newRootNote = ixActual(bassNote - bassOffset);
 
-    // Update the chord reference
+    // update the chord reference - let useEffect handle note indices
     setCurrentChordRef({
       ...currentChordRef,
       rootNote: newRootNote,
@@ -124,14 +112,14 @@ export const MusicalProvider: React.FC<{ children: ReactNode }> = ({
     setChordBassNote, // Add to the value object
   };
 
-  // Add effect to automatically sync note indices with chord reference
+  // This useEffect will automatically calculate note indices from chord reference
   useEffect(() => {
     if (!currentChordRef) return;
 
     const updatedIndices =
       ChordUtils.calculateChordNotesFromChordReference(currentChordRef);
     setSelectedNoteIndices(updatedIndices);
-  }, [currentChordRef]); // React to chord reference changes
+  }, [currentChordRef]);
 
   return (
     <MusicalContext.Provider value={value}>{children}</MusicalContext.Provider>
