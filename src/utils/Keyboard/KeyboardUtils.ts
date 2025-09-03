@@ -54,19 +54,6 @@ export class KeyboardUtils {
     currentChordRef?: ChordReference
   ): string {
     if (!isSelected) return "";
-    const isBlackKey = IndexUtils.isBlackKey(chromaticIndex);
-
-    // White keys: always show note text using key signature
-    if (!isBlackKey) {
-      return MusicalKeyFormatter.formatNoteForDisplay(
-        selectedMusicalKey,
-        chromaticIndex,
-        KeyDisplayMode.NoteNames
-      );
-    }
-
-    // Black keys: only show when selected
-
     const targetNoteIndex = chromaticToActual(chromaticIndex);
 
     if (currentChordRef) {
