@@ -14,38 +14,38 @@ export const useKeyboardHandlers = () => {
     selectedNoteIndices,
     setSelectedNoteIndices,
     currentChordRef,
-    setChordRootNote, // Use the new setter
+    setChordRootNote,
+    setChordBassNote, // Add this import
   } = useMusical();
 
   const handleKeyClick = useCallback(
-    (newRootIndex: ActualIndex) => {
+    (clickedIndex: ActualIndex) => {
       if (inputMode === InputMode.Freeform) {
+        // Freeform mode: directly toggle notes (no chord reference)
         const updatedIndices = IndexUtils.ToggleNewIndex(
           selectedNoteIndices,
-          newRootIndex as ActualIndex
+          clickedIndex as ActualIndex
         );
         setSelectedNoteIndices(updatedIndices);
       } else if (currentChordRef) {
-        // Add null check
-        // Use the new ergonomic setter instead of makeChordReference
-        setChordRootNote(newRootIndex);
-
-        // Still need to update note indices
-        const updatedChordRef = {
-          ...currentChordRef,
-          rootNote: newRootIndex,
-        };
-        const updatedIndices =
-          ChordUtils.calculateChordNotesFromChordReference(updatedChordRef);
-        setSelectedNoteIndices(updatedIndices);
+        // Chord mode: update via chord reference (reactive pattern)
+        if (currentChordRef.inversionIndex === 0) {
+          // Root position: clicked note becomes the new root note
+          setChordRootNote(clickedIndex);
+        } else {
+          // Inversion: clicked note becomes the new bass note
+          setChordBassNote(clickedIndex);
+        }
+        // Note: Don't call setSelectedNoteIndices here - let the useEffect handle it
       }
     },
     [
       inputMode,
       selectedNoteIndices,
-      setSelectedNoteIndices,
+      setSelectedNoteIndices, // Still needed for freeform mode
       currentChordRef,
       setChordRootNote,
+      setChordBassNote,
     ]
   );
 

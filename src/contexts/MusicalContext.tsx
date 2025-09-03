@@ -9,7 +9,12 @@ import React, {
 } from "react";
 
 import { ChordType } from "@/types/enums/ChordType";
-import { ActualIndex, InversionIndex, ixActualArray } from "@/types/IndexTypes";
+import {
+  ActualIndex,
+  InversionIndex,
+  ixActual,
+  ixActualArray,
+} from "@/types/IndexTypes";
 import { DEFAULT_MUSICAL_KEY, MusicalKey } from "@/types/Keys/MusicalKey";
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 import {
@@ -24,7 +29,7 @@ export interface MusicalSettings {
   selectedNoteIndices: ActualIndex[];
   selectedMusicalKey: MusicalKey;
   currentChordRef?: ChordReference;
-  setSelectedNoteIndices: (indices: ActualIndex[]) => void;
+  setSelectedNoteIndices: (indices: ActualIndex[]) => void; // Remove this
   setSelectedMusicalKey: (key: MusicalKey) => void;
   setCurrentChordRef: (chordRef?: ChordReference) => void;
 
@@ -32,6 +37,7 @@ export interface MusicalSettings {
   setChordRootNote: (rootNote: ActualIndex) => void;
   setChordType: (chordType: NoteGroupingId) => void;
   setChordInversion: (inversionIndex: InversionIndex) => void;
+  setChordBassNote: (bassNote: ActualIndex) => void;
 }
 
 const MusicalContext = createContext<MusicalSettings | null>(null);
@@ -52,6 +58,7 @@ export const MusicalProvider: React.FC<{ children: ReactNode }> = ({
     isScales ? undefined : makeChordReference(7, ChordType.Major, 0) // G major root position
   );
 
+  // Simplify the setters - they only update the chord reference
   const setChordRootNote = (rootNote: ActualIndex) => {
     if (!currentChordRef) return;
     setCurrentChordRef({
@@ -76,6 +83,34 @@ export const MusicalProvider: React.FC<{ children: ReactNode }> = ({
     });
   };
 
+  const setChordBassNote = (bassNote: ActualIndex) => {
+    if (!currentChordRef) return;
+
+    // Calculate new chord where the clicked note becomes the bass note
+    const updatedIndices = ChordUtils.calculateChordNotesFromBassNote(
+      bassNote,
+      currentChordRef.id,
+      currentChordRef.inversionIndex
+    );
+
+    // Update the note indices
+    setSelectedNoteIndices(updatedIndices);
+
+    // Calculate what the root note should be for this bass note
+    const chordOffsets = ChordUtils.getOffsetsFromIdAndInversion(
+      currentChordRef.id,
+      currentChordRef.inversionIndex
+    );
+    const bassOffset = chordOffsets[0];
+    const newRootNote = ixActual(bassNote - bassOffset);
+
+    // Update the chord reference
+    setCurrentChordRef({
+      ...currentChordRef,
+      rootNote: newRootNote,
+    });
+  };
+
   const value: MusicalSettings = {
     selectedNoteIndices,
     selectedMusicalKey,
@@ -86,17 +121,17 @@ export const MusicalProvider: React.FC<{ children: ReactNode }> = ({
     setChordRootNote,
     setChordType,
     setChordInversion,
+    setChordBassNote, // Add to the value object
   };
 
+  // Add effect to automatically sync note indices with chord reference
   useEffect(() => {
-    if (selectedNoteIndices.length === 0) return;
-    const bassNoteIndex = selectedNoteIndices[0];
-    const updatedIndices = ChordUtils.calculateChordNotesFromBassNote(
-      bassNoteIndex,
-      ChordType.Major
-    );
+    if (!currentChordRef) return;
+
+    const updatedIndices =
+      ChordUtils.calculateChordNotesFromChordReference(currentChordRef);
     setSelectedNoteIndices(updatedIndices);
-  }, []); //update indices on mount
+  }, [currentChordRef]); // React to chord reference changes
 
   return (
     <MusicalContext.Provider value={value}>{children}</MusicalContext.Provider>

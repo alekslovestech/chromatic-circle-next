@@ -87,5 +87,16 @@ describe("ChordUpdates", () => {
       ReactTestUtils.clickKey("linearKey09"); //click A
       verifyChordName("F/A");
     });
+
+    test("Pressing inversion buttons should update the displayed notes", () => {
+      // Start with G major in root position [7, 11, 14] = G, B, D
+      keyVerificationUtils.verifySelectedLinearKeys([7, 11, 14]);
+      verifyChordName("G");
+
+      // Click inversion 1 button - should show [11, 14, 19] = B, D, G
+      ReactTestUtils.clickKey("inversion-1");
+      keyVerificationUtils.verifySelectedLinearKeys([11, 14, 19]);
+      verifyChordName("G/B");
+    });
   });
 });

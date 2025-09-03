@@ -6,7 +6,6 @@ import { MusicalKey } from "@/types/Keys/MusicalKey";
 
 import { SpellingUtils } from "@/utils/SpellingUtils";
 import { NoteFormatter } from "@/utils/formatters/NoteFormatter";
-import { IndexUtils } from "@/utils/IndexUtils";
 import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
 import { ActualNoteResolver } from "../resolvers/ActualNoteResolver";
 import { ChordReference } from "@/types/interfaces/ChordReference";
