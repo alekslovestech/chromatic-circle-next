@@ -49,11 +49,11 @@ export const useKeyboardHandlers = () => {
     ]
   );
 
-  const checkIsRootNote = useCallback(
+  const checkIsBassNote = useCallback(
     (index: ActualIndex) => {
       if (
         inputMode === InputMode.Freeform ||
-        !currentChordRef || // Check currentChordRef first
+        !currentChordRef ||
         !ChordUtils.hasInversions(currentChordRef.id)
       ) {
         return false;
@@ -65,6 +65,6 @@ export const useKeyboardHandlers = () => {
 
   return {
     handleKeyClick,
-    checkIsRootNote,
+    checkIsBassNote,
   };
 };

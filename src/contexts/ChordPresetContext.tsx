@@ -8,12 +8,25 @@ import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { SpecialType } from "@/types/enums/SpecialType";
 import { InputMode } from "@/types/SettingModes";
 
-import { ChordUtils } from "@/utils/ChordUtils";
-
 import { useMusical } from "./MusicalContext";
+import { IntervalType } from "@/types/enums/IntervalType";
+import { ChordType } from "@/types/enums/ChordType";
 export interface ChordPresetSettings {
   inputMode: InputMode;
   setInputMode: (mode: InputMode) => void;
+}
+
+function getDefaultChordTypeForInputMode(newMode: InputMode): NoteGroupingId {
+  switch (newMode) {
+    case InputMode.IntervalPresets:
+      return IntervalType.Major3;
+    case InputMode.ChordPresets:
+      return ChordType.Major;
+    case InputMode.SingleNote:
+      return SpecialType.Note;
+    default:
+      return SpecialType.None;
+  }
 }
 
 const ChordPresetContext = createContext<ChordPresetSettings | null>(null);
@@ -29,37 +42,11 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
     setInputMode(newMode);
 
     const rootNoteIndex = selectedNoteIndices[0] || null;
-    let newChordType: NoteGroupingId = SpecialType.None;
+    const newChordType = getDefaultChordTypeForInputMode(newMode);
 
-    switch (newMode) {
-      case InputMode.IntervalPresets:
-        newChordType = "Interval_Maj3" as NoteGroupingId;
-        break;
-      case InputMode.ChordPresets:
-        newChordType = "Chord_Maj" as NoteGroupingId;
-        break;
-      case InputMode.SingleNote:
-        newChordType = "Note" as NoteGroupingId;
-        break;
-      case InputMode.Freeform:
-        newChordType = "Freeform" as NoteGroupingId;
-        break;
-      default:
-        console.assert(false, "Invalid input mode");
-    }
-    setCurrentChordRef(makeChordReference(rootNoteIndex!, newChordType));
-
-    if (newMode !== InputMode.Freeform) {
-      const updatedIndices = ChordUtils.calculateChordNotesFromBassNote(
-        rootNoteIndex!,
-        newChordType
-      );
-      setSelectedNoteIndices(updatedIndices);
-
-      const chordRef = makeChordReference(rootNoteIndex!, newChordType, 0);
-      setCurrentChordRef(chordRef);
+    if (newMode !== InputMode.Freeform && rootNoteIndex !== null) {
+      setCurrentChordRef(makeChordReference(rootNoteIndex, newChordType, 0));
     } else {
-      // In freeform mode, clear the chord match
       setCurrentChordRef(undefined);
     }
   };

@@ -19,7 +19,7 @@ const OUTER_RADIUS = 0.9 * MAX_RADIUS;
 const INNER_RADIUS = 0.5 * MAX_RADIUS;
 
 export const KeyboardCircular = () => {
-  const { handleKeyClick, checkIsRootNote } = useKeyboardHandlers();
+  const { handleKeyClick, checkIsBassNote } = useKeyboardHandlers();
   const { selectedNoteIndices, selectedMusicalKey } = useMusical();
   //const { circularVisMode } = useDisplay();
   const numNotes = selectedNoteIndices.length;
@@ -104,13 +104,13 @@ export const KeyboardCircular = () => {
       {Array.from({ length: TWELVE }).map((_, index) => {
         const chromaticIndex = ixChromatic(index);
         const actualIndex = chromaticToActual(chromaticIndex); // Need to convert for checkIsRootNote
-        const isRootNote = checkIsRootNote(actualIndex);
+        const isBassNote = checkIsBassNote(actualIndex);
 
         return (
           <PianoKeyCircular
             key={index}
             chromaticIndex={chromaticIndex}
-            isRootNote={isRootNote}
+            isBassNote={isBassNote} // Rename prop
             onClick={handleKeyClick}
             outerRadius={OUTER_RADIUS}
             innerRadius={INNER_RADIUS}

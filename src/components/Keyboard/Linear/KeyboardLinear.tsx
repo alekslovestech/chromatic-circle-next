@@ -10,7 +10,7 @@ import { PianoKeyLinear } from "@/components/Keyboard/Linear/PianoKeyLinear";
 import { useMusical } from "@/contexts/MusicalContext";
 
 export const KeyboardLinear = () => {
-  const { handleKeyClick, checkIsRootNote } = useKeyboardHandlers();
+  const { handleKeyClick, checkIsBassNote } = useKeyboardHandlers();
   const { selectedMusicalKey } = useMusical();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -79,21 +79,19 @@ export const KeyboardLinear = () => {
     actualIndex < TWENTY4;
     actualIndex++
   ) {
-    const isRootNote = checkIsRootNote(actualIndex);
+    //TODO: consider highlighting the ROOT note for the linear keyboard, and the BASS note for the circular keyboard
+    //complication: that might be confusing for the user, and it's less important on the linear keyboard.
+    const isBassNote = checkIsBassNote(actualIndex);
 
     keys.push(
       <PianoKeyLinear
         key={actualIndex}
         actualIndex={actualIndex}
-        isRootNote={isRootNote}
+        isBassNote={isBassNote}
         onClick={handleKeyClick}
       />
     );
   }
-  /*const testElement = (
-    <div className="bg-red-500 text-white p-4">TAILWIND TEST</div>
-  );
-  keys.push(testElement);*/
 
   return (
     <div ref={containerRef} className="keyboardlinear">
