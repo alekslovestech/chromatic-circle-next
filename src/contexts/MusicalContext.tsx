@@ -31,7 +31,6 @@ export interface MusicalSettings {
   selectedNoteIndices: ActualIndex[]; // Read-only
   selectedMusicalKey: MusicalKey;
   currentChordRef?: ChordReference;
-  // Remove: setSelectedNoteIndices: (indices: ActualIndex[]) => void;
   setSelectedMusicalKey: (key: MusicalKey) => void;
   setCurrentChordRef: (chordRef?: ChordReference) => void;
   setChordRootNote: (rootNote: ActualIndex) => void;

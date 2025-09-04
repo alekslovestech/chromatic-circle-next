@@ -21,12 +21,8 @@ import { makeChordReference } from "@/types/interfaces/ChordReference";
 export const ChordPresetSelector: React.FC = () => {
   const { inputMode } = useChordPresets();
 
-  const {
-    selectedNoteIndices,
-    //setSelectedNoteIndices,
-    currentChordRef,
-    setCurrentChordRef,
-  } = useMusical();
+  const { selectedNoteIndices, currentChordRef, setCurrentChordRef } =
+    useMusical();
   const border = useBorder();
   if (
     inputMode !== InputMode.ChordPresets &&
@@ -49,9 +45,6 @@ export const ChordPresetSelector: React.FC = () => {
 
     // Create new chord reference with inversion 0
     const newChordRef = makeChordReference(rootNote, newPresetId);
-    /*const updatedIndices =
-      ChordUtils.calculateChordNotesFromChordReference(newChordRef);
-    setSelectedNoteIndices(updatedIndices);*/
 
     setCurrentChordRef(newChordRef);
   };

@@ -29,7 +29,6 @@ export const useKeyboardHandlers = () => {
           // Inversion: clicked note becomes the new bass note
           setChordBassNote(clickedIndex);
         }
-        // Note: Don't call setSelectedNoteIndices here - let the useEffect handle it
       }
     },
     [inputMode, toggleNote, currentChordRef, setChordRootNote, setChordBassNote]
