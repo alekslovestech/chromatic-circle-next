@@ -6,6 +6,7 @@ import React, {
   useContext,
   ReactNode,
   useEffect,
+  useCallback,
 } from "react";
 
 import { ChordType } from "@/types/enums/ChordType";
@@ -24,19 +25,24 @@ import {
 
 import { ChordUtils } from "@/utils/ChordUtils";
 import { NoteGroupingId } from "@/types/NoteGroupingId";
+import { IndexUtils } from "@/utils/IndexUtils";
 
 export interface MusicalSettings {
-  selectedNoteIndices: ActualIndex[];
+  selectedNoteIndices: ActualIndex[]; // Read-only
   selectedMusicalKey: MusicalKey;
   currentChordRef?: ChordReference;
-  setSelectedNoteIndices: (indices: ActualIndex[]) => void; // Remove this
+  // Remove: setSelectedNoteIndices: (indices: ActualIndex[]) => void;
   setSelectedMusicalKey: (key: MusicalKey) => void;
   setCurrentChordRef: (chordRef?: ChordReference) => void;
-
   setChordRootNote: (rootNote: ActualIndex) => void;
   setChordType: (chordType: NoteGroupingId) => void;
   setChordInversion: (inversionIndex: InversionIndex) => void;
   setChordBassNote: (bassNote: ActualIndex) => void;
+
+  // Freeform-only operations
+  toggleNote: (note: ActualIndex) => void;
+  clearNotes: () => void;
+  setNotesDirectly: (notes: ActualIndex[]) => void; // For transpose, etc.
 }
 
 const MusicalContext = createContext<MusicalSettings | null>(null);
@@ -99,17 +105,32 @@ export const MusicalProvider: React.FC<{ children: ReactNode }> = ({
     });
   };
 
+  const toggleNote = useCallback((note: ActualIndex) => {
+    setSelectedNoteIndices((prev) => IndexUtils.ToggleNewIndex(prev, note));
+  }, []);
+
+  const clearNotes = useCallback(() => {
+    setSelectedNoteIndices([]);
+  }, []);
+
+  const setNotesDirectly = useCallback((notes: ActualIndex[]) => {
+    // Only allow in freeform mode or for system operations
+    setSelectedNoteIndices(notes);
+  }, []);
+
   const value: MusicalSettings = {
     selectedNoteIndices,
     selectedMusicalKey,
     currentChordRef,
-    setSelectedNoteIndices,
     setSelectedMusicalKey,
     setCurrentChordRef,
     setChordRootNote,
     setChordType,
     setChordInversion,
     setChordBassNote, // Add to the value object
+    toggleNote,
+    clearNotes,
+    setNotesDirectly,
   };
 
   // This useEffect will automatically calculate note indices from chord reference

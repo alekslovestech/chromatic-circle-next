@@ -35,8 +35,7 @@ export const ChordPresetProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [inputMode, setInputMode] = useState<InputMode>(InputMode.ChordPresets);
-  const { selectedNoteIndices, setSelectedNoteIndices, setCurrentChordRef } =
-    useMusical();
+  const { selectedNoteIndices, setCurrentChordRef } = useMusical();
 
   const handleInputModeChange = (newMode: InputMode) => {
     setInputMode(newMode);

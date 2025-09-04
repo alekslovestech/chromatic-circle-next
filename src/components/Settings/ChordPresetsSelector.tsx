@@ -6,8 +6,6 @@ import { ixActual, ixInversion } from "@/types/IndexTypes";
 import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
 
-import { ChordUtils } from "@/utils/ChordUtils";
-
 import { useChordPresets } from "@/contexts/ChordPresetContext";
 import { useMusical } from "@/contexts/MusicalContext";
 
@@ -25,7 +23,7 @@ export const ChordPresetSelector: React.FC = () => {
 
   const {
     selectedNoteIndices,
-    setSelectedNoteIndices,
+    //setSelectedNoteIndices,
     currentChordRef,
     setCurrentChordRef,
   } = useMusical();
@@ -51,9 +49,9 @@ export const ChordPresetSelector: React.FC = () => {
 
     // Create new chord reference with inversion 0
     const newChordRef = makeChordReference(rootNote, newPresetId);
-    const updatedIndices =
+    /*const updatedIndices =
       ChordUtils.calculateChordNotesFromChordReference(newChordRef);
-    setSelectedNoteIndices(updatedIndices);
+    setSelectedNoteIndices(updatedIndices);*/
 
     setCurrentChordRef(newChordRef);
   };
