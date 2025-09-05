@@ -18,7 +18,7 @@ interface UseChordProgressionPlaybackProps {
 export const useChordProgressionPlayback = ({
   setPlaybackState,
 }: UseChordProgressionPlaybackProps) => {
-  const { selectedMusicalKey, setSelectedNoteIndices } = useMusical();
+  const { selectedMusicalKey, setNotesDirectly } = useMusical();
 
   const [selectedProgression, setSelectedProgression] =
     useState<ChordProgressionType | null>(null);
@@ -36,11 +36,11 @@ export const useChordProgressionPlayback = ({
     );
 
     // Update the visual selection (just like scale playback does)
-    setSelectedNoteIndices([chromaticToActual(currentChord.chromaticIndex)]);
+    setNotesDirectly([chromaticToActual(currentChord.chromaticIndex)]);
 
     // Move to next chord (or loop back to start)
     chordIndexRef.current = (chordIndexRef.current + 1) % progression.length;
-  }, [selectedProgression, selectedMusicalKey, setSelectedNoteIndices]);
+  }, [selectedProgression, selectedMusicalKey, setNotesDirectly]);
 
   const startProgressionPlayback = useCallback(() => {
     if (!selectedProgression) return;
