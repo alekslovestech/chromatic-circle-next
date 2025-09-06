@@ -59,7 +59,8 @@ export const ChordNameDisplay: React.FC = () => {
       return MusicalDisplayFormatter.getChordPresetDisplayInfo(
         selectedNoteIndices,
         chordRef!,
-        ChordDisplayMode.Symbols
+        chordDisplayMode
+        //ChordDisplayMode.Symbols
       );
     } else {
       return MusicalDisplayFormatter.getDisplayInfoFromIndices(

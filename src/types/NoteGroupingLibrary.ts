@@ -29,17 +29,11 @@ class NoteGroupingLibrarySingleton {
         // For intervals: use longForm ("Major 3rd"), for chords: use shortForm ("Maj")
         return grouping.getNoteGroupingType() === NoteGroupingType.Interval
           ? grouping.longForm
-          : grouping.shortForm;
+          : this.shortenMinMaj(grouping.shortForm);
       case ChordDisplayMode.Symbols:
         return grouping.symbolForm;
       case ChordDisplayMode.Letters_Short:
-        const shortForm = grouping.shortForm;
-        const displayId =
-          shortForm.toLowerCase() === "min"
-            ? "m"
-            : shortForm.toLowerCase() === "maj"
-            ? ""
-            : shortForm;
+        const displayId = this.shortenMinMaj(grouping.shortForm);
         return displayId;
       case ChordDisplayMode.DisplayName:
         return grouping.longForm;
@@ -48,6 +42,14 @@ class NoteGroupingLibrarySingleton {
       default:
         return "";
     }
+  }
+
+  private shortenMinMaj(name: string): string {
+    return name.toLowerCase() === "min"
+      ? "m"
+      : name.toLowerCase() === "maj"
+      ? ""
+      : name;
   }
 
   public getAllIds(): NoteGroupingId[] {

@@ -6,8 +6,6 @@ import { ixActual, ixInversion } from "@/types/IndexTypes";
 import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
 
-import { ChordUtils } from "@/utils/ChordUtils";
-
 import { useChordPresets } from "@/contexts/ChordPresetContext";
 import { useMusical } from "@/contexts/MusicalContext";
 
@@ -23,12 +21,8 @@ import { makeChordReference } from "@/types/interfaces/ChordReference";
 export const ChordPresetSelector: React.FC = () => {
   const { inputMode } = useChordPresets();
 
-  const {
-    selectedNoteIndices,
-    setSelectedNoteIndices,
-    currentChordRef,
-    setCurrentChordRef,
-  } = useMusical();
+  const { selectedNoteIndices, currentChordRef, setCurrentChordRef } =
+    useMusical();
   const border = useBorder();
   if (
     inputMode !== InputMode.ChordPresets &&
@@ -37,23 +31,17 @@ export const ChordPresetSelector: React.FC = () => {
     return null;
 
   const handlePresetChange = (newPresetId: NoteGroupingId) => {
-    //setSelectedChordType(newPresetId);
-
     // Use currentChordRef.rootNote if available, otherwise fall back to chord recognition or default
     const rootNote =
-      currentChordRef?.rootNote ||
+      currentChordRef?.rootNote ??
       (selectedNoteIndices.length > 0
         ? MusicalDisplayFormatter.getChordReferenceFromIndices(
             selectedNoteIndices
           )?.rootNote
-        : null) ||
-      ixActual(7);
+        : ixActual(7));
 
     // Create new chord reference with inversion 0
-    const newChordRef = makeChordReference(rootNote, newPresetId);
-    const updatedIndices =
-      ChordUtils.calculateChordNotesFromChordReference(newChordRef);
-    setSelectedNoteIndices(updatedIndices);
+    const newChordRef = makeChordReference(rootNote!, newPresetId);
 
     setCurrentChordRef(newChordRef);
   };

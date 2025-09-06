@@ -25,7 +25,6 @@ const TransposeButton: React.FC<TransposeButtonProps> = ({
   const title = `Transpose ${target} ${direction}`;
   const {
     selectedNoteIndices,
-    setSelectedNoteIndices,
     selectedMusicalKey,
     setSelectedMusicalKey,
     currentChordRef,
@@ -38,8 +37,6 @@ const TransposeButton: React.FC<TransposeButtonProps> = ({
       const transposedIndices = ixActualArray(
         IndexUtils.shiftIndices(selectedNoteIndices, amount)
       );
-
-      setSelectedNoteIndices(transposedIndices);
 
       // ADDED: Update chord reference to match transposed notes
       if (currentChordRef && transposedIndices.length > 0) {

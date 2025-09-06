@@ -2,10 +2,9 @@ import { useMusical } from "@/contexts/MusicalContext";
 import { Button } from "../Common/Button";
 
 export const ClearButton: React.FC = () => {
-  const { setSelectedNoteIndices } = useMusical();
-
+  const { clearNotes } = useMusical();
   const handleClear = () => {
-    setSelectedNoteIndices([]);
+    clearNotes();
   };
   return (
     <Button size="sm" variant="action" onClick={handleClear}>
