@@ -126,7 +126,7 @@ export const MusicalProvider: React.FC<{ children: ReactNode }> = ({
     setChordRootNote,
     setChordType,
     setChordInversion,
-    setChordBassNote, // Add to the value object
+    setChordBassNote,
     toggleNote,
     clearNotes,
     setNotesDirectly,
