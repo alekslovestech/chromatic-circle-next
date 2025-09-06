@@ -1,8 +1,7 @@
-import { InputMode } from "@/types/SettingModes";
 import { LAYOUT_PATTERNS } from "@/lib/design";
 import { useBorder } from "@/lib/hooks";
 
-import { useChordPresets } from "@/contexts/ChordPresetContext";
+import { useIsFreeformMode } from "@/contexts/ChordPresetContext";
 
 import { ClearButton } from "../Buttons/ClearButton";
 import { PlayNotesButton } from "../Buttons/PlayNotesButton";
@@ -13,8 +12,7 @@ import { TransposeWidget } from "../TransposeWidget";
 export const SettingsPanelDefault = () => {
   const settingsGap = "gap-tight";
   const border = useBorder();
-  const { inputMode } = useChordPresets();
-  const isFreeformMode = inputMode === InputMode.Freeform;
+  const isFreeformMode = useIsFreeformMode();
   return (
     <div
       id="settings-panel-default"

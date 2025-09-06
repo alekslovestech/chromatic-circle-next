@@ -1,14 +1,13 @@
 import { useCallback } from "react";
 import { ActualIndex } from "@/types/IndexTypes";
 
-import { InputMode } from "@/types/SettingModes";
 import { ChordUtils } from "@/utils/ChordUtils";
 import { useMusical } from "@/contexts/MusicalContext";
-import { useChordPresets } from "@/contexts/ChordPresetContext";
+import { useIsFreeformMode } from "@/contexts/ChordPresetContext";
 
 export const CIRCLE_RADIUS = 5;
 export const useKeyboardHandlers = () => {
-  const { inputMode } = useChordPresets();
+  const isFreeformMode = useIsFreeformMode();
   const {
     currentChordRef,
     toggleNote,
@@ -18,7 +17,7 @@ export const useKeyboardHandlers = () => {
 
   const handleKeyClick = useCallback(
     (clickedIndex: ActualIndex) => {
-      if (inputMode === InputMode.Freeform) {
+      if (isFreeformMode) {
         toggleNote(clickedIndex);
       } else if (currentChordRef) {
         // Chord mode: update via chord reference (reactive pattern)
@@ -31,13 +30,13 @@ export const useKeyboardHandlers = () => {
         }
       }
     },
-    [inputMode, toggleNote, currentChordRef, setChordRootNote, setChordBassNote]
+    [toggleNote, currentChordRef, setChordRootNote, setChordBassNote]
   );
 
   const checkIsBassNote = useCallback(
     (index: ActualIndex) => {
       if (
-        inputMode === InputMode.Freeform ||
+        isFreeformMode ||
         !currentChordRef ||
         !ChordUtils.hasInversions(currentChordRef.id)
       ) {
@@ -45,7 +44,7 @@ export const useKeyboardHandlers = () => {
       }
       return index === currentChordRef.rootNote;
     },
-    [inputMode, currentChordRef]
+    [currentChordRef]
   );
 
   return {

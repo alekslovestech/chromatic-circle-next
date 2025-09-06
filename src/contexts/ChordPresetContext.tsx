@@ -70,6 +70,11 @@ export const useIsChordsOrIntervals = () => {
   );
 };
 
+export const useIsFreeformMode = () => {
+  const { inputMode } = useChordPresets();
+  return inputMode === InputMode.Freeform;
+};
+
 export const useChordPresets = () => {
   const context = useContext(ChordPresetContext);
   if (!context) {
