@@ -31,20 +31,17 @@ export const ChordPresetSelector: React.FC = () => {
     return null;
 
   const handlePresetChange = (newPresetId: NoteGroupingId) => {
-    //setSelectedChordType(newPresetId);
-
     // Use currentChordRef.rootNote if available, otherwise fall back to chord recognition or default
     const rootNote =
-      currentChordRef?.rootNote ||
+      currentChordRef?.rootNote ??
       (selectedNoteIndices.length > 0
         ? MusicalDisplayFormatter.getChordReferenceFromIndices(
             selectedNoteIndices
           )?.rootNote
-        : null) ||
-      ixActual(7);
+        : ixActual(7));
 
     // Create new chord reference with inversion 0
-    const newChordRef = makeChordReference(rootNote, newPresetId);
+    const newChordRef = makeChordReference(rootNote!, newPresetId);
 
     setCurrentChordRef(newChordRef);
   };
