@@ -7,11 +7,16 @@ export enum InputMode {
 }
 
 export enum ChordDisplayMode {
-  Letters_Long = "Verbose",
-  Symbols = "Abbreviated",
-  Letters_Short = "DisplayId",
-  DisplayName = "DisplayName",
-  ElementId = "ElementId",
+  Letters = "Letters", // e.g., "Cm", "C°"
+  Symbols = "Symbols", // e.g., "C-", "C°"
+}
+
+// New enum for internal chord type formatting contexts
+export enum ChordTypeContext {
+  PresetButton = "PresetButton", // "Maj", "min", "dim", "Aug"
+  ChordName = "ChordName", // "", "m", "°", "+"
+  LongForm = "LongForm", // "Major Triad", "Minor Triad"
+  ElementId = "ElementId", // For HTML IDs
 }
 
 export enum CircularVisMode {

@@ -3,6 +3,7 @@ import { NoteGroupingType } from "./enums/NoteGroupingType";
 
 import { IndexUtils } from "../utils/IndexUtils";
 import { ixOffsetArray, OffsetIndex } from "./IndexTypes";
+import { ChordDisplayMode, ChordTypeContext } from "./SettingModes";
 
 export class NoteGrouping {
   public readonly inversions: OffsetIndex[][];
@@ -87,5 +88,58 @@ export class NoteGrouping {
       hasInversions,
       isVisiblePreset
     );
+  }
+
+  /**
+   * Gets the chord type name for a specific context and display mode.
+   */
+  getChordTypeName(
+    context: ChordTypeContext,
+    displayMode: ChordDisplayMode
+  ): string {
+    switch (context) {
+      case ChordTypeContext.PresetButton:
+        // For intervals, show long form; for chords, show short form
+        return this.getNoteGroupingType() === NoteGroupingType.Interval
+          ? this.longForm // "Major 3rd", "Minor 3rd"
+          : this.shortForm; // "Maj", "min", "dim", "Aug"
+
+      case ChordTypeContext.ChordName:
+        // Chord names use standard notation, respecting display mode
+        if (displayMode === ChordDisplayMode.Symbols) {
+          return this.symbolForm; // "", "m", "°", "+"
+        } else {
+          // For letters mode, convert to standard chord notation
+          return this.getStandardChordNotation(); // "", "m", "dim", "aug"
+        }
+
+      case ChordTypeContext.LongForm:
+        return this.longForm; // "Major Triad", "Minor Triad"
+
+      case ChordTypeContext.ElementId:
+        return `${this.id}`;
+
+      default:
+        return "";
+    }
+  }
+
+  /**
+   * Converts shortForm to standard chord notation.
+   */
+  private getStandardChordNotation(): string {
+    const short = this.shortForm.toLowerCase();
+    switch (short) {
+      case "maj":
+        return "";
+      case "min":
+        return "m";
+      case "dim":
+        return "dim"; // or "°" if you prefer
+      case "aug":
+        return "aug"; // or "+" if you prefer
+      default:
+        return this.shortForm;
+    }
   }
 }

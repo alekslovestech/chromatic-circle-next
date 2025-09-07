@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { NoteGroupingId } from "@/types/NoteGroupingId";
-import { ChordDisplayMode } from "@/types/SettingModes";
 import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
 import { Button } from "../Common/Button";
 
@@ -16,19 +15,9 @@ export const ChordPresetButton: React.FC<PresetButtonProps> = ({
   selected,
   onClick,
 }) => {
-  const elementId = NoteGroupingLibrary.getId(
-    presetId,
-    ChordDisplayMode.ElementId
-  );
-  const displayName = NoteGroupingLibrary.getId(
-    presetId,
-    ChordDisplayMode.DisplayName
-  );
-  // For preset buttons, use full chord names: "Maj", "min", "dim", "Aug"
-  const letters = NoteGroupingLibrary.getId(
-    presetId,
-    ChordDisplayMode.Letters_Long
-  );
+  const elementId = NoteGroupingLibrary.getElementId(presetId);
+  const displayName = NoteGroupingLibrary.getDisplayName(presetId);
+  const buttonText = NoteGroupingLibrary.getPresetButtonName(presetId);
 
   return (
     <Button
@@ -40,7 +29,7 @@ export const ChordPresetButton: React.FC<PresetButtonProps> = ({
       onClick={() => onClick(presetId)}
       title={displayName}
     >
-      {letters}
+      {buttonText}
     </Button>
   );
 };

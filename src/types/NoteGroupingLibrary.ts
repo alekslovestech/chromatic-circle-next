@@ -1,5 +1,4 @@
 import { NoteGroupingId } from "./NoteGroupingId";
-import { NoteGroupingType } from "./enums/NoteGroupingType";
 import { SpecialType } from "./enums/SpecialType";
 import { IntervalType } from "./enums/IntervalType";
 import { ChordType } from "./enums/ChordType";
@@ -7,7 +6,7 @@ import { ChordType } from "./enums/ChordType";
 import { CHORD_OFFSET_PATTERNS } from "./constants/ChordOffsetPatterns";
 import { ixOffsetArray } from "./IndexTypes";
 import { NoteGrouping } from "./NoteGrouping";
-import { ChordDisplayMode } from "./SettingModes";
+import { ChordDisplayMode, ChordTypeContext } from "./SettingModes";
 class NoteGroupingLibrarySingleton {
   public getGroupingById(id: NoteGroupingId): NoteGrouping {
     const found = NoteGroupingLibrarySingleton.library.find(
@@ -19,40 +18,35 @@ class NoteGroupingLibrarySingleton {
     return found;
   }
 
-  public getId(
-    key: NoteGroupingId,
-    chordDisplayMode: ChordDisplayMode,
-    shortenMinMaj: boolean = false
+  // Replace the confusing getId method with semantic methods
+
+  getChordTypeName(
+    id: NoteGroupingId,
+    context: ChordTypeContext,
+    displayMode: ChordDisplayMode = ChordDisplayMode.Letters
   ): string {
-    const grouping = this.getGroupingById(key);
-    switch (chordDisplayMode) {
-      case ChordDisplayMode.Letters_Long:
-        // For intervals: use longForm ("Major 3rd"), for chords: use shortForm ("Maj")
-        return grouping.getNoteGroupingType() === NoteGroupingType.Interval
-          ? grouping.longForm
-          : shortenMinMaj
-          ? this.shortenMinMaj(grouping.shortForm)
-          : grouping.shortForm;
-      case ChordDisplayMode.Symbols:
-        return grouping.symbolForm;
-      case ChordDisplayMode.Letters_Short:
-        const displayId = this.shortenMinMaj(grouping.shortForm);
-        return displayId;
-      case ChordDisplayMode.DisplayName:
-        return grouping.longForm;
-      case ChordDisplayMode.ElementId:
-        return `${grouping.id}`;
-      default:
-        return "";
-    }
+    const grouping = this.getGroupingById(id);
+    return grouping.getChordTypeName(context, displayMode);
   }
 
-  private shortenMinMaj(name: string): string {
-    return name.toLowerCase() === "min"
-      ? "m"
-      : name.toLowerCase() === "maj"
-      ? ""
-      : name;
+  // Convenience methods for common use cases
+  getPresetButtonName(id: NoteGroupingId): string {
+    return this.getChordTypeName(id, ChordTypeContext.PresetButton);
+  }
+
+  getChordNameSuffix(
+    id: NoteGroupingId,
+    displayMode: ChordDisplayMode
+  ): string {
+    return this.getChordTypeName(id, ChordTypeContext.ChordName, displayMode);
+  }
+
+  getDisplayName(id: NoteGroupingId): string {
+    return this.getChordTypeName(id, ChordTypeContext.LongForm);
+  }
+
+  getElementId(id: NoteGroupingId): string {
+    return this.getChordTypeName(id, ChordTypeContext.ElementId);
   }
 
   public getAllIds(): NoteGroupingId[] {

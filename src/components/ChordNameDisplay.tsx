@@ -29,10 +29,10 @@ export const ChordNameDisplay: React.FC = () => {
   const getOppositeDisplayMode = (
     prevDisplayMode: ChordDisplayMode
   ): ChordDisplayMode => {
-    if (prevDisplayMode === ChordDisplayMode.Letters_Short)
+    if (prevDisplayMode === ChordDisplayMode.Letters)
       return ChordDisplayMode.Symbols;
     if (prevDisplayMode === ChordDisplayMode.Symbols)
-      return ChordDisplayMode.Letters_Short;
+      return ChordDisplayMode.Letters;
     return prevDisplayMode; //no change
   };
 

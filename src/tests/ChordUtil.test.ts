@@ -18,7 +18,7 @@ import { makeChordReference } from "@/types/interfaces/ChordReference";
 function verifyChordNameWithMode(
   expectedChordName: string,
   indices: number[],
-  displayMode: ChordDisplayMode = ChordDisplayMode.Letters_Short,
+  displayMode: ChordDisplayMode = ChordDisplayMode.Letters,
   musicalKey: MusicalKey = DEFAULT_MUSICAL_KEY
 ) {
   const actualIndices = ixActualArray(indices);
@@ -76,19 +76,19 @@ describe("ChordUtils", () => {
       {
         expected: "Edim",
         indices: [4, 7, 10],
-        mode: ChordDisplayMode.Letters_Short,
+        mode: ChordDisplayMode.Letters,
       },
       { expected: "E°", indices: [4, 7, 10], mode: ChordDisplayMode.Symbols },
       {
         expected: "D♭",
         indices: [1, 5, 8],
-        mode: ChordDisplayMode.Letters_Short,
+        mode: ChordDisplayMode.Letters,
         key: MusicalKey.fromClassicalMode("Db", KeyType.Major),
       },
       {
         expected: "C7",
         indices: [0, 4, 7, 10],
-        mode: ChordDisplayMode.Letters_Long,
+        mode: ChordDisplayMode.Letters,
       },
       {
         expected: "C7",
