@@ -1,15 +1,19 @@
 "use client";
 import React from "react";
 
-import { useIsChordsOrIntervals } from "@/contexts/ChordPresetContext";
+import {
+  useIsChordsOrIntervals,
+  useIsFreeformMode,
+} from "@/contexts/ChordPresetContext";
 
 import { InputModeSelector } from "./InputModeSelector";
 import { ChordPresetSelector } from "./ChordPresetsSelector";
 import { LAYOUT_PATTERNS } from "@/lib/design/LayoutPatterns";
+import { MusicalKeySelector } from "../MusicalKeySelector";
 
 export const InputSettings: React.FC = () => {
   const showPresets = useIsChordsOrIntervals();
-
+  const isFreeformMode = useIsFreeformMode();
   return (
     <div
       className={`settings-container flex flex-row ${LAYOUT_PATTERNS.fullSize} gap-loose`}
@@ -20,7 +24,11 @@ export const InputSettings: React.FC = () => {
       <div
         className={`presets-container w-2/3 h-full ${LAYOUT_PATTERNS.centerFlex}`}
       >
-        {showPresets ? <ChordPresetSelector /> : <div className="h-full" />}
+        {showPresets ? (
+          <ChordPresetSelector />
+        ) : (
+          isFreeformMode && <MusicalKeySelector useDropdownSelector={false} />
+        )}
       </div>
     </div>
   );

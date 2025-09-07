@@ -2,6 +2,7 @@
 import { ixActualArray } from "@/types/IndexTypes";
 import { IndexUtils } from "@/utils/IndexUtils";
 import { useMusical } from "@/contexts/MusicalContext";
+import { useIsFreeformMode } from "@/contexts/ChordPresetContext";
 
 import { Button } from "./Common/Button";
 import { TYPOGRAPHY } from "@/lib/design";
@@ -23,13 +24,14 @@ const TransposeButton: React.FC<TransposeButtonProps> = ({
   const amount = direction === "up" ? 1 : -1;
   const symbol = target === "notes" ? "♫" : "𝄞";
   const title = `Transpose ${target} ${direction}`;
+  const isFreeformMode = useIsFreeformMode();
   const {
     selectedNoteIndices,
-    setSelectedNoteIndices,
     selectedMusicalKey,
     setSelectedMusicalKey,
     currentChordRef,
     setCurrentChordRef,
+    setNotesDirectly,
   } = useMusical();
 
   const onClick = () => {
@@ -39,12 +41,13 @@ const TransposeButton: React.FC<TransposeButtonProps> = ({
         IndexUtils.shiftIndices(selectedNoteIndices, amount)
       );
 
-      setSelectedNoteIndices(transposedIndices);
-
-      // ADDED: Update chord reference to match transposed notes
-      if (currentChordRef && transposedIndices.length > 0) {
-        const oldRoot = currentChordRef?.rootNote;
-        const newRoot = addChromatic(oldRoot!, amount);
+      if (isFreeformMode) {
+        // In freeform mode, directly update the selected notes
+        setNotesDirectly(transposedIndices);
+      } else if (currentChordRef && transposedIndices.length > 0) {
+        // In preset mode, update chord reference to match transposed notes
+        const oldRoot = currentChordRef.rootNote;
+        const newRoot = addChromatic(oldRoot, amount);
         const updatedChordRef = makeChordReference(
           newRoot,
           currentChordRef.id,

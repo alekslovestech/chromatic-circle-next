@@ -31,7 +31,7 @@ export const useScalePlayback = ({
     ScalePlaybackMode.SingleNote
   );
 
-  const { selectedMusicalKey, setSelectedNoteIndices } = useMusical();
+  const { selectedMusicalKey, setNotesDirectly } = useMusical();
   const { scalePreviewMode } = useDisplay();
   const globalMode = useGlobalMode();
 
@@ -59,7 +59,7 @@ export const useScalePlayback = ({
       );
       console.log("PlayScaleStep: landing on the tonic");
       const actualTonicIndex = chromaticToActual(selectedMusicalKey.tonicIndex);
-      setSelectedNoteIndices([actualTonicIndex]);
+      setNotesDirectly([actualTonicIndex]);
       stopScalePlayback();
       landingNoteRef.current = false;
       return;
@@ -72,7 +72,7 @@ export const useScalePlayback = ({
       currentScaleDegreeIndex,
       scalePlaybackMode
     );
-    setSelectedNoteIndices(noteIndices);
+    setNotesDirectly(noteIndices);
 
     //if we've played the last note (e.g. 7th degree), prepare to land on the tonic
     if (
@@ -89,7 +89,7 @@ export const useScalePlayback = ({
     );
   }, [
     selectedMusicalKey,
-    setSelectedNoteIndices,
+    setNotesDirectly,
     stopScalePlayback,
     scalePlaybackMode,
   ]);

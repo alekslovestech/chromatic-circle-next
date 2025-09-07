@@ -15,13 +15,13 @@ import { useDisplay } from "@/contexts/DisplayContext";
 
 interface PianoKeyProps {
   actualIndex: ActualIndex;
-  isRootNote: boolean;
+  isBassNote: boolean;
   onClick: (index: ActualIndex) => void;
 }
 
 export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   actualIndex,
-  isRootNote,
+  isBassNote,
   onClick,
 }) => {
   const { selectedMusicalKey, selectedNoteIndices, currentChordRef } =
@@ -41,7 +41,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
     isScales,
     selectedMusicalKey,
     monochromeMode,
-    isRootNote,
+    isBassNote,
     isShortKey,
     isSelected,
     false
@@ -50,7 +50,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   if (isSelected) baseClasses.push("selected"); //add for testing
   if (isShortKey) baseClasses.push("short");
   if (isScales) baseClasses.push("disabled");
-  if (isRootNote) baseClasses.push("root-note");
+  if (isBassNote) baseClasses.push("root-note");
 
   const id = KeyboardUtils.StringWithPaddedIndex("linearKey", actualIndex);
   const noteText = isScales

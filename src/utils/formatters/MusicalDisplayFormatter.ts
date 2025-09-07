@@ -13,7 +13,7 @@ import {
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 
 import { isIntervalType, NoteGroupingId } from "@/types/NoteGroupingId";
-import { ChordDisplayMode } from "@/types/SettingModes";
+import { ChordDisplayMode, ChordTypeContext } from "@/types/SettingModes";
 import {
   ActualIndex,
   InversionIndex,
@@ -72,9 +72,9 @@ export class MusicalDisplayFormatter {
     }
 
     if (selectedNoteIndices.length === 2) {
-      const chordTypeName = NoteGroupingLibrary.getId(
+      const chordTypeName = NoteGroupingLibrary.getChordTypeName(
         chordRef.id,
-        ChordDisplayMode.Letters_Short
+        ChordTypeContext.ChordName
       );
       return { noteGroupingString: "Interval", chordName: chordTypeName };
     }
@@ -94,6 +94,19 @@ export class MusicalDisplayFormatter {
     };
   }
 
+  /**
+   * Gets chord type name for display.
+   * For chord names, uses standard notation: Major="", Minor="m", etc.
+   * For preset buttons, uses full names: Major="Maj", Minor="min", etc.
+   */
+  private static getChordTypeName(
+    chordId: NoteGroupingId,
+    displayMode: ChordDisplayMode
+  ): string {
+    // Use the new method instead of the old getId
+    return NoteGroupingLibrary.getChordNameSuffix(chordId, displayMode);
+  }
+
   private static buildChordNameFromReference(
     chordRef: ChordReference,
     chordDisplayMode: ChordDisplayMode
@@ -106,11 +119,8 @@ export class MusicalDisplayFormatter {
     );
     const rootSpelling = NoteFormatter.formatForDisplay(rootNoteWithOctave);
 
-    // Build chord name using existing library function
-    const chordTypeName = NoteGroupingLibrary.getId(
-      chordRef.id,
-      chordDisplayMode
-    );
+    // For chord names, use standard short form: "" for major, "m" for minor
+    const chordTypeName = this.getChordTypeName(chordRef.id, chordDisplayMode);
 
     // Root position case
     if (chordRef.inversionIndex === 0) {
@@ -247,7 +257,6 @@ export class MusicalDisplayFormatter {
     }
   }
 
-  // Modified method that can take an optional bass note
   static deriveChordNameFromReference(
     chordRef: ChordReference,
     displayMode: ChordDisplayMode,
@@ -263,15 +272,22 @@ export class MusicalDisplayFormatter {
     if (chordRef.id === SpecialType.None) return "Ø";
     if (chordRef.id === ChordType.Unknown) return `${rootNoteName}(?)`;
 
-    if (isIntervalType(chordRef.id))
-      return NoteGroupingLibrary.getId(chordRef.id, displayMode);
+    // Clean, semantic chord name generation
+    const chordTypeSuffix = NoteGroupingLibrary.getChordNameSuffix(
+      chordRef.id,
+      displayMode
+    );
 
-    const chordTypeName = NoteGroupingLibrary.getId(chordRef.id, displayMode);
+    if (isIntervalType(chordRef.id)) {
+      return chordTypeSuffix;
+    }
 
     // Root position case
-    if (chordRef.inversionIndex === 0) return `${rootNoteName}${chordTypeName}`;
+    if (chordRef.inversionIndex === 0) {
+      return `${rootNoteName}${chordTypeSuffix}`;
+    }
 
-    // Inversion case - use provided bass note or calculate it
+    // Inversion case
     const actualBassNote =
       bassNote ?? this.calculateBassNoteFromReference(chordRef);
     const bassNoteName = NoteConverter.getNoteTextFromActualIndex(
@@ -279,7 +295,7 @@ export class MusicalDisplayFormatter {
       selectedAccidental
     );
 
-    return `${rootNoteName}${chordTypeName}/${bassNoteName}`;
+    return `${rootNoteName}${chordTypeSuffix}/${bassNoteName}`;
   }
 
   private static calculateBassNoteFromReference(

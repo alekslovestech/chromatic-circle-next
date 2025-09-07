@@ -18,7 +18,7 @@ import { useDisplay } from "@/contexts/DisplayContext";
 
 interface CircularKeyProps {
   chromaticIndex: ChromaticIndex;
-  isRootNote: boolean;
+  isBassNote: boolean;
   outerRadius: number;
   innerRadius: number;
   onClick: (index: ActualIndex) => void;
@@ -26,7 +26,7 @@ interface CircularKeyProps {
 
 export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   chromaticIndex,
-  isRootNote,
+  isBassNote,
   outerRadius,
   innerRadius,
   onClick,
@@ -68,7 +68,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   if (isSelected) baseClasses.push("selected"); //add for testing
   if (isScales) baseClasses.push("disabled");
   if (isBlack) baseClasses.push("short");
-  if (isRootNote) baseClasses.push("root-note");
+  if (isBassNote) baseClasses.push("root-note");
 
   const id = KeyboardUtils.StringWithPaddedIndex("circularKey", chromaticIndex);
   const noteText = isScales
