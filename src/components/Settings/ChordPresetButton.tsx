@@ -24,6 +24,7 @@ export const ChordPresetButton: React.FC<PresetButtonProps> = ({
     presetId,
     ChordDisplayMode.DisplayName
   );
+  // For preset buttons, use full chord names: "Maj", "min", "dim", "Aug"
   const letters = NoteGroupingLibrary.getId(
     presetId,
     ChordDisplayMode.Letters_Long

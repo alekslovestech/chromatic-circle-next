@@ -74,7 +74,8 @@ export class MusicalDisplayFormatter {
     if (selectedNoteIndices.length === 2) {
       const chordTypeName = NoteGroupingLibrary.getId(
         chordRef.id,
-        ChordDisplayMode.Letters_Short
+        ChordDisplayMode.Letters_Short,
+        true
       );
       return { noteGroupingString: "Interval", chordName: chordTypeName };
     }
@@ -94,6 +95,19 @@ export class MusicalDisplayFormatter {
     };
   }
 
+  /**
+   * Gets chord type name for display.
+   * For chord names, uses standard notation: Major="", Minor="m", etc.
+   * For preset buttons, uses full names: Major="Maj", Minor="min", etc.
+   */
+  private static getChordTypeName(
+    chordId: NoteGroupingId,
+    displayMode: ChordDisplayMode,
+    useShortForm: boolean = true
+  ): string {
+    return NoteGroupingLibrary.getId(chordId, displayMode, useShortForm);
+  }
+
   private static buildChordNameFromReference(
     chordRef: ChordReference,
     chordDisplayMode: ChordDisplayMode
@@ -106,10 +120,11 @@ export class MusicalDisplayFormatter {
     );
     const rootSpelling = NoteFormatter.formatForDisplay(rootNoteWithOctave);
 
-    // Build chord name using existing library function
-    const chordTypeName = NoteGroupingLibrary.getId(
+    // For chord names, use standard short form: "" for major, "m" for minor
+    const chordTypeName = this.getChordTypeName(
       chordRef.id,
-      chordDisplayMode
+      chordDisplayMode,
+      true // useShortForm = true for chord names
     );
 
     // Root position case
@@ -247,7 +262,6 @@ export class MusicalDisplayFormatter {
     }
   }
 
-  // Modified method that can take an optional bass note
   static deriveChordNameFromReference(
     chordRef: ChordReference,
     displayMode: ChordDisplayMode,
@@ -266,7 +280,12 @@ export class MusicalDisplayFormatter {
     if (isIntervalType(chordRef.id))
       return NoteGroupingLibrary.getId(chordRef.id, displayMode);
 
-    const chordTypeName = NoteGroupingLibrary.getId(chordRef.id, displayMode);
+    // For chord names, use standard short form: "" for major, "m" for minor
+    const chordTypeName = this.getChordTypeName(
+      chordRef.id,
+      displayMode,
+      true // useShortForm = true for chord names
+    );
 
     // Root position case
     if (chordRef.inversionIndex === 0) return `${rootNoteName}${chordTypeName}`;

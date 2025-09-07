@@ -21,7 +21,8 @@ class NoteGroupingLibrarySingleton {
 
   public getId(
     key: NoteGroupingId,
-    chordDisplayMode: ChordDisplayMode
+    chordDisplayMode: ChordDisplayMode,
+    shortenMinMaj: boolean = false
   ): string {
     const grouping = this.getGroupingById(key);
     switch (chordDisplayMode) {
@@ -29,7 +30,9 @@ class NoteGroupingLibrarySingleton {
         // For intervals: use longForm ("Major 3rd"), for chords: use shortForm ("Maj")
         return grouping.getNoteGroupingType() === NoteGroupingType.Interval
           ? grouping.longForm
-          : this.shortenMinMaj(grouping.shortForm);
+          : shortenMinMaj
+          ? this.shortenMinMaj(grouping.shortForm)
+          : grouping.shortForm;
       case ChordDisplayMode.Symbols:
         return grouping.symbolForm;
       case ChordDisplayMode.Letters_Short:
