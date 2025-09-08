@@ -64,6 +64,8 @@ module.exports = {
           bgBlackSelected: "rgb(107, 170, 204)", //"#6BB4C7",
           textOnWhite: "rgb(51, 51, 51)", //"#333333",
           textOnBlack: "rgb(245, 245, 245)", //"#F5F5F5",
+          textOnWhiteFaded: "rgba(100, 100, 110, 0.5)", //"#64646E",
+          textOnBlackFaded: "rgba(200, 200, 210, 0.5)", //"#C8C8D2",
           bgHover: "rgb(240, 240, 240)", //"#f0f0f0",
           borderColor: "rgb(110, 110, 110)", //"#6E6E6E",
 

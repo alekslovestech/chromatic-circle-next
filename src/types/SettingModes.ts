@@ -7,8 +7,8 @@ export enum InputMode {
 }
 
 export enum ChordDisplayMode {
-  Letters = "Letters", // e.g., "Cm", "C°"
-  Symbols = "Symbols", // e.g., "C-", "C°"
+  Letters = "Letters", // e.g., "Cm", "Cdim"
+  Symbols = "Symbols", // e.g., "C+", "C°"
 }
 
 // New enum for internal chord type formatting contexts

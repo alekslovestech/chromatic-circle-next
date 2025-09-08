@@ -1,4 +1,5 @@
 import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
+import { ChordReference } from "@/types/interfaces/ChordReference";
 
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
@@ -7,8 +8,8 @@ import { MusicalKey } from "@/types/Keys/MusicalKey";
 import { SpellingUtils } from "@/utils/SpellingUtils";
 import { NoteFormatter } from "@/utils/formatters/NoteFormatter";
 import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
-import { ActualNoteResolver } from "../resolvers/ActualNoteResolver";
-import { ChordReference } from "@/types/interfaces/ChordReference";
+import { ActualNoteResolver } from "@/utils/resolvers/ActualNoteResolver";
+import { ChromaticNoteResolver } from "@/utils/resolvers/ChromaticNoteResolver";
 
 export class KeyboardUtils {
   static StringWithPaddedIndex(prefix: string, index: number): string {
@@ -52,7 +53,13 @@ export class KeyboardUtils {
     selectedMusicalKey: MusicalKey,
     currentChordRef?: ChordReference
   ): string {
-    if (!isSelected) return "";
+    if (!isSelected) {
+      const resolvedNote = ChromaticNoteResolver.resolveAbsoluteNote(
+        chromaticIndex,
+        selectedMusicalKey.getDefaultAccidental()
+      );
+      return NoteFormatter.formatForDisplay(resolvedNote);
+    }
     const targetNoteIndex = chromaticToActual(chromaticIndex);
 
     if (currentChordRef) {
