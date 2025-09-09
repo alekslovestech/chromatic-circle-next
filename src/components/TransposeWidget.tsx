@@ -1,13 +1,19 @@
 "use client";
+
 import { ixActualArray } from "@/types/IndexTypes";
 import { IndexUtils } from "@/utils/IndexUtils";
 import { useMusical } from "@/contexts/MusicalContext";
-import { useIsFreeformMode } from "@/contexts/ChordPresetContext";
+import {
+  useChordPresets,
+  useIsFreeformMode,
+} from "@/contexts/ChordPresetContext";
 
 import { Button } from "./Common/Button";
 import { TYPOGRAPHY } from "@/lib/design";
 import { makeChordReference } from "@/types/interfaces/ChordReference";
 import { addChromatic } from "@/types/ChromaticIndex";
+import { track } from "@/lib/track";
+import { useGlobalMode } from "@/lib/hooks/useGlobalMode";
 
 type TransposeDirection = "up" | "down";
 export type TransposeTarget = "key" | "notes";
@@ -33,8 +39,13 @@ const TransposeButton: React.FC<TransposeButtonProps> = ({
     setCurrentChordRef,
     setNotesDirectly,
   } = useMusical();
-
+  const globalMode = useGlobalMode();
+  const { inputMode } = useChordPresets();
   const onClick = () => {
+    track("transpose_interacted", {
+      global_mode: globalMode,
+      input_mode: inputMode,
+    });
     if (target === "notes") {
       // Transpose selected notes
       const transposedIndices = ixActualArray(

@@ -1,12 +1,6 @@
 "use client";
+import { GlobalMode } from "@/types/enums/GlobalMode";
 import { usePathname } from "next/navigation";
-
-export enum GlobalMode {
-  Default = "Default",
-  Scales = "Scales",
-  ChordProgressions = "ChordProgressions",
-  Demo = "Demo",
-}
 
 export const useGlobalMode = () => {
   const pathname = usePathname();

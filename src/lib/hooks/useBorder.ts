@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useGlobalMode, GlobalMode } from "./useGlobalMode";
+import { GlobalMode } from "@/types/enums/GlobalMode";
+
+import { useGlobalMode } from "./useGlobalMode";
 
 export const useBorder = () => {
   const globalMode = useGlobalMode();

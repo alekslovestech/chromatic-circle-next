@@ -1,6 +1,8 @@
+import { InputMode } from "@/types/enums/InputMode";
+import { CircularVisMode } from "@/types/SettingModes";
 import { useDisplay } from "@/contexts/DisplayContext";
 import { useChordPresets } from "@/contexts/ChordPresetContext";
-import { CircularVisMode, InputMode } from "@/types/SettingModes";
+
 import { CircularVisIcons } from "@/utils/Keyboard/Circular/CircularVisIcons";
 import { Button } from "../Common/Button";
 

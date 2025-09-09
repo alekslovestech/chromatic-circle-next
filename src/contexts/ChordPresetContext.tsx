@@ -5,12 +5,12 @@ import React, { createContext, useState, useContext, ReactNode } from "react";
 import { makeChordReference } from "@/types/interfaces/ChordReference";
 
 import { NoteGroupingId } from "@/types/NoteGroupingId";
+import { InputMode } from "@/types/enums/InputMode";
 import { SpecialType } from "@/types/enums/SpecialType";
-import { InputMode } from "@/types/SettingModes";
-
-import { useMusical } from "./MusicalContext";
 import { IntervalType } from "@/types/enums/IntervalType";
 import { ChordType } from "@/types/enums/ChordType";
+
+import { useMusical } from "./MusicalContext";
 export interface ChordPresetSettings {
   inputMode: InputMode;
   setInputMode: (mode: InputMode) => void;

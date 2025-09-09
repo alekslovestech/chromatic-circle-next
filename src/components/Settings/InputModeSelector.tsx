@@ -3,7 +3,7 @@
 import React from "react";
 
 import { LAYOUT_PATTERNS } from "@/lib/design";
-import { InputMode } from "@/types/SettingModes";
+import { InputMode } from "@/types/enums/InputMode";
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 import { useBorder } from "@/lib/hooks";
 

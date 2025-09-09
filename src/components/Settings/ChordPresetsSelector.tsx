@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-import { InputMode } from "@/types/SettingModes";
+import { InputMode } from "@/types/enums/InputMode";
 import { ixActual, ixInversion } from "@/types/IndexTypes";
 import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
@@ -10,13 +10,14 @@ import { useChordPresets } from "@/contexts/ChordPresetContext";
 import { useMusical } from "@/contexts/MusicalContext";
 
 import { LAYOUT_PATTERNS } from "@/lib/design";
-import { useBorder } from "@/lib/hooks";
+import { useBorder, useGlobalMode } from "@/lib/hooks";
 
 import { InversionButton } from "../Buttons/InversionButton";
 import { SectionTitle } from "../Common/SectionTitle";
 import { ChordPresetButton } from "./ChordPresetButton";
 import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
 import { makeChordReference } from "@/types/interfaces/ChordReference";
+import { track } from "@/lib/track";
 
 export const ChordPresetSelector: React.FC = () => {
   const { inputMode } = useChordPresets();
@@ -24,6 +25,7 @@ export const ChordPresetSelector: React.FC = () => {
   const { selectedNoteIndices, currentChordRef, setCurrentChordRef } =
     useMusical();
   const border = useBorder();
+  const globalMode = useGlobalMode();
   if (
     inputMode !== InputMode.ChordPresets &&
     inputMode !== InputMode.IntervalPresets
@@ -31,6 +33,10 @@ export const ChordPresetSelector: React.FC = () => {
     return null;
 
   const handlePresetChange = (newPresetId: NoteGroupingId) => {
+    track("chord_preset_changed", {
+      global_mode: globalMode,
+      input_mode: inputMode,
+    });
     // Use currentChordRef.rootNote if available, otherwise fall back to chord recognition or default
     const rootNote =
       currentChordRef?.rootNote ??
