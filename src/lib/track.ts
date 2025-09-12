@@ -9,5 +9,9 @@ type Ctx = {
 };
 
 export function track(name: string, props: Ctx = {}) {
-  ph.capture(name, props);
+  if (ph.__loaded) {
+    ph.capture(name, props);
+  } else {
+    console.warn("[TRACK] PostHog not loaded, event not sent");
+  }
 }

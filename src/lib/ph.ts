@@ -1,23 +1,31 @@
 import posthog from "posthog-js";
 
+const isDevelopment = process.env.NODE_ENV === "development";
+
 export function initPH() {
-  // Don't initialize on server-side
   if (typeof window === "undefined") return;
 
-  // Only initialize once
-  if (process.env.NEXT_PUBLIC_POSTHOG_KEY && !posthog.isFeatureEnabled) {
+  if (process.env.NEXT_PUBLIC_POSTHOG_KEY && !posthog.__loaded) {
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
-      api_host: "https://app.posthog.com",
+      api_host: process.env.NEXT_PUBLIC_POSTHOG_API_HOST,
+      person_profiles: "always", //include anonymous users
       loaded: (posthog) => {
-        if (process.env.NODE_ENV === "development") {
-          // Disable capturing in development
-          posthog.opt_out_capturing();
+        if (isDevelopment) {
+          console.log("[PostHog] Successfully loaded!");
         }
+        posthog.register({
+          environment: isDevelopment ? "development" : "production",
+        });
       },
-      autocapture: false, // Keep tracking explicit and clean
-      capture_pageview: false, // Handle pageviews manually
+      autocapture: false,
+      capture_pageview: false,
       persistence: "localStorage",
+      debug: isDevelopment,
+      disable_session_recording: true,
+      disable_surveys: true,
     });
+  } else if (!process.env.NEXT_PUBLIC_POSTHOG_KEY) {
+    console.warn("[PostHog] NEXT_PUBLIC_POSTHOG_KEY not found");
   }
 }
 

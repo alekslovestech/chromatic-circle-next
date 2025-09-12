@@ -1,7 +1,8 @@
 "use client";
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import { useGlobalMode } from "@/lib/hooks";
+import { initPH } from "@/lib/ph";
 
 import { DisplayProvider } from "./DisplayContext";
 import { MusicalProvider } from "./MusicalContext";
@@ -12,6 +13,11 @@ export const RootProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const globalMode = useGlobalMode();
+
+  // Initialize PostHog on mount
+  useEffect(() => {
+    initPH();
+  }, []);
 
   return (
     <MusicalProvider key={`musical-${globalMode}`}>
