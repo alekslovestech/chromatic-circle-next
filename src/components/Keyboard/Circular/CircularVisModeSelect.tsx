@@ -1,6 +1,8 @@
 "use client";
 import { useEffect } from "react";
-import { CircularVisMode, InputMode } from "@/types/SettingModes";
+import { InputMode } from "@/types/enums/InputMode";
+import { CircularVisMode } from "@/types/SettingModes";
+
 import { useDisplay } from "@/contexts/DisplayContext";
 import { useChordPresets } from "@/contexts/ChordPresetContext";
 

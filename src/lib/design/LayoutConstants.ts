@@ -1,4 +1,4 @@
-import { GlobalMode } from "../hooks";
+import { GlobalMode } from "@/types/enums/GlobalMode";
 
 const STAFF_HEIGHT_PX = "90px";
 const MIN_SETTINGS_HEIGHT_DEFAULT = "220px";

@@ -1,11 +1,3 @@
-export enum InputMode {
-  None = "None",
-  Freeform = "Freeform",
-  SingleNote = "Single Note",
-  IntervalPresets = "Intervals",
-  ChordPresets = "Chords",
-}
-
 export enum ChordDisplayMode {
   Letters = "Letters", // e.g., "Cm", "Cdim"
   Symbols = "Symbols", // e.g., "C+", "C°"
