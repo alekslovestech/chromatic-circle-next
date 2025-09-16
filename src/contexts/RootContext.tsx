@@ -2,7 +2,8 @@
 
 import React, { ReactNode, useEffect } from "react";
 import { useGlobalMode } from "@/lib/hooks";
-import { initPH } from "@/lib/ph";
+import { initPH, ph } from "@/lib/ph";
+import { usePathname } from "next/navigation";
 
 import { DisplayProvider } from "./DisplayContext";
 import { MusicalProvider } from "./MusicalContext";
@@ -13,11 +14,23 @@ export const RootProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const globalMode = useGlobalMode();
+  const pathname = usePathname();
 
   // Initialize PostHog on mount
   useEffect(() => {
     initPH();
   }, []);
+
+  // Track page views when route changes
+  useEffect(() => {
+    if (ph.__loaded && pathname) {
+      ph.capture("$pageview", {
+        $current_url: window.location.href,
+        pathname: pathname,
+        global_mode: globalMode,
+      });
+    }
+  }, [pathname, globalMode]);
 
   return (
     <MusicalProvider key={`musical-${globalMode}`}>
