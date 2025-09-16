@@ -1,4 +1,5 @@
 import posthog from "posthog-js";
+import packageJson from "../../package.json";
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
@@ -15,6 +16,7 @@ export function initPH() {
         }
         posthog.register({
           environment: isDevelopment ? "development" : "production",
+          version: packageJson.version,
         });
       },
       autocapture: false,
