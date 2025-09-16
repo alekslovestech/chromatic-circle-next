@@ -39,7 +39,12 @@ export default function Home() {
           <StaffRenderer />
           <ChordNameDisplay />
         </div>
-
+        <div
+          className={`DefaultPage-settings-container ${COMMON_STYLES.settingsPanel} ${border}`}
+          style={{ gridArea: "settings" }}
+        >
+          <InputSettings />
+        </div>
         <div
           className={`DefaultPage-circular-container ${COMMON_STYLES.circularContainer} ${border}`}
           style={{ gridArea: "circular" }}
@@ -75,13 +80,6 @@ export default function Home() {
           >
             <KeyboardLinear />
           </div>
-        </div>
-
-        <div
-          className={`DefaultPage-settings-container ${COMMON_STYLES.settingsPanel} ${border}`}
-          style={{ gridArea: "settings" }}
-        >
-          <InputSettings />
         </div>
       </div>
     </div>
