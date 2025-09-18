@@ -75,11 +75,7 @@ export default function Home() {
           className={`DefaultPage-linear-container ${COMMON_STYLES.linearContainer} ${border}`}
           style={{ gridArea: "linear" }}
         >
-          <div
-            className={`DefaultPage-linear-inner ${COMMON_STYLES.linearInner} ${border}`}
-          >
-            <KeyboardLinear />
-          </div>
+          <KeyboardLinear />
         </div>
       </div>
     </div>
