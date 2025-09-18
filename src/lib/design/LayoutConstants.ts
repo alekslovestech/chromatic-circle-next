@@ -2,7 +2,7 @@ import { GlobalMode } from "@/types/enums/GlobalMode";
 
 const STAFF_HEIGHT_PX = "90px";
 const MIN_SETTINGS_HEIGHT_DEFAULT = "220px";
-const MIN_SETTINGS_HEIGHT_SCALES = "140px";
+const MIN_SETTINGS_HEIGHT_SCALES = "160px";
 
 // Use the existing GlobalMode concept - layout is derived from app mode
 type GridAreaConfig = {
@@ -38,12 +38,12 @@ const SCALES_GRID_AREAS: GridAreaConfig = {
 };
 
 const DEFAULT_ROWS: GridRowsConfig = {
-  portrait: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT_DEFAULT}, 1.5fr) 1fr`,
+  portrait: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT_DEFAULT}, 0.5fr) 2fr auto`,
   landscape: `${STAFF_HEIGHT_PX} 1.8fr 1.2fr`, // More balanced: 60% vs 40%
 };
 
 const SCALES_ROWS: GridRowsConfig = {
-  portrait: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT_SCALES}, 1fr) 1fr`,
+  portrait: `${STAFF_HEIGHT_PX} minmax(${MIN_SETTINGS_HEIGHT_SCALES}, 0.5fr) 2fr auto`,
   landscape: `${STAFF_HEIGHT_PX} 1.8fr 1.2fr`, // Same ratio for consistency
 };
 
