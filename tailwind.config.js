@@ -60,8 +60,8 @@ module.exports = {
         keys: {
           bgWhite: "rgb(250, 250, 246)", //"#fafaf6",
           bgBlack: "rgb(68, 68, 68)", //"#444444",
-          bgWhiteSelected: "rgb(168, 213, 226)", //"#A8D5E2",
-          bgBlackSelected: "rgb(107, 170, 204)", //"#6BB4C7",
+          bgWhiteSelected: "rgb(190, 227, 236)", //"#BEE3EC",
+          bgBlackSelected: "rgb(90, 156, 179)", //"#5A9CB3",
           textOnWhite: "rgb(51, 51, 51)", //"#333333",
           textOnBlack: "rgb(245, 245, 245)", //"#F5F5F5",
           textOnWhiteFaded: "rgba(100, 100, 110, 0.5)", //"#64646E",

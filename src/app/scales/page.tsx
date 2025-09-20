@@ -60,11 +60,7 @@ export default function ScalesdPage() {
           className={`ScalesPage-linear-container ${COMMON_STYLES.linearContainer} ${border}`}
           style={{ gridArea: "linear" }}
         >
-          <div
-            className={`ScalesPage-linear-inner ${COMMON_STYLES.linearInner} ${border}`}
-          >
-            <KeyboardLinear />
-          </div>
+          <KeyboardLinear />
         </div>
 
         <div
