@@ -15,6 +15,9 @@ import { KeyboardUtils } from "@/utils/Keyboard/KeyboardUtils";
 
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
+import { track } from "@/lib/track";
+import { useGlobalMode } from "@/lib/hooks/useGlobalMode";
+import { useChordPresets } from "@/contexts/ChordPresetContext";
 
 interface CircularKeyProps {
   chromaticIndex: ChromaticIndex;
@@ -34,6 +37,8 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   const { selectedMusicalKey, selectedNoteIndices, currentChordRef } =
     useMusical();
   const { monochromeMode } = useDisplay();
+  const globalMode = useGlobalMode();
+  const { inputMode } = useChordPresets();
   const pathData = ArcPathVisualizer.getArcPathData(
     chromaticIndex,
     outerRadius,
@@ -84,13 +89,20 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
         currentChordRef!
       );
 
+  const handleClick = () => {
+    track("keyboard_interacted", {
+      global_mode: globalMode,
+      input_mode: inputMode,
+      keyboard_ui: "circular",
+    });
+    onClick(chromaticToActual(chromaticIndex)); //forward to keyboardbase
+  };
+
   return (
     <g
       id={id}
       className={`${baseClasses.join(" ")}  !${keyColors.border}`}
-      onClick={() => {
-        onClick(chromaticToActual(chromaticIndex));
-      }}
+      onClick={handleClick}
     >
       <path
         d={pathData}

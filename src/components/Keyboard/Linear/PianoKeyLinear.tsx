@@ -12,6 +12,9 @@ import { KeyboardUtils } from "@/utils/Keyboard/KeyboardUtils";
 
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
+import { track } from "@/lib/track";
+import { useGlobalMode } from "@/lib/hooks/useGlobalMode";
+import { useChordPresets } from "@/contexts/ChordPresetContext";
 
 interface PianoKeyProps {
   actualIndex: ActualIndex;
@@ -27,6 +30,8 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   const { selectedMusicalKey, selectedNoteIndices, currentChordRef } =
     useMusical();
   const { monochromeMode } = useDisplay();
+  const globalMode = useGlobalMode();
+  const { inputMode } = useChordPresets();
 
   const isShortKey = IndexUtils.isBlackKey(actualIndex);
   const chromaticIndex = actualToChromatic(actualIndex);
@@ -66,13 +71,22 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
         currentChordRef
       );
 
+  const handleClick = () => {
+    track("keyboard_interacted", {
+      global_mode: globalMode,
+      input_mode: inputMode,
+      keyboard_ui: "linear",
+    });
+    onClick(actualIndex); //forward to keyboardbase
+  };
+
   const allBaseClasses = baseClasses.join(" ");
   return (
     <div
       id={id}
       className={`${allBaseClasses} ${keyColors.primary} ${keyColors.text} !${keyColors.border}`}
       style={{ left }}
-      onClick={() => onClick(actualIndex)}
+      onClick={handleClick}
     >
       {noteText}
     </div>
