@@ -14,8 +14,6 @@ export const PauseScaleButton: React.FC = () => {
     }
   };
 
-  if (playbackState === PlaybackState.ScaleComplete) return null;
-
   return (
     <Button size="md" variant="action" onClick={handleClick}>
       {playbackState === PlaybackState.ScalePaused ? (

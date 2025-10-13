@@ -5,9 +5,8 @@ import { useBorder } from "@/lib/hooks";
 
 import { MusicalKeySelector } from "../MusicalKeySelector";
 import { TransposeWidget } from "../TransposeWidget";
-import { PlayScaleButton } from "../Buttons/PlayScaleButton";
-import { PauseScaleButton } from "../Buttons/PauseScaleButton";
-import { PlaybackModeSelect } from "./PlaybackModeSelect";
+import { ScalePlaybackModeSelect } from "./ScalePlaybackModeSelect";
+import { PlaybackWidget } from "../PlaybackWidget";
 
 export const SettingsPanelScales = () => {
   const settingsGap = "gap-tight";
@@ -35,13 +34,8 @@ export const SettingsPanelScales = () => {
         <div
           className={`${LAYOUT_PATTERNS.centerFlexCol} ${settingsGap} rounded p-2 flex-1 ${border}`}
         >
-          <PlaybackModeSelect />
-          <div
-            className={`${LAYOUT_PATTERNS.centerFlexRowGap} max-w-xs self-center`}
-          >
-            <PlayScaleButton />
-            <PauseScaleButton />
-          </div>
+          <ScalePlaybackModeSelect />
+          <PlaybackWidget />
         </div>
       </div>
     </div>
