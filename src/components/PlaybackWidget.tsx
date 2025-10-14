@@ -1,21 +1,17 @@
 import React from "react";
 import { LAYOUT_PATTERNS } from "@/lib/design";
-import { PlayScaleButton } from "./Buttons/PlayScaleButton";
-import { PauseScaleButton } from "./Buttons/PauseScaleButton";
+import { PlaySequenceButton } from "./Buttons/PlaySequenceButton";
+import { PauseSequenceButton } from "./Buttons/PauseSequenceButton";
 import { PlaybackState, useAudio } from "@/contexts/AudioContext";
-import { useGlobalMode } from "@/lib/hooks";
-import { GlobalMode } from "@/types/enums/GlobalMode";
 
 export const PlaybackWidget: React.FC = () => {
   const { playbackState } = useAudio();
-  const globalMode = useGlobalMode();
+
   return (
     <div className={`${LAYOUT_PATTERNS.centerFlexRowGap} max-w-xs self-center`}>
-      <PlayScaleButton />
-      {(globalMode === GlobalMode.ChordProgressions ||
-        (globalMode === GlobalMode.Scales &&
-          playbackState !== PlaybackState.ScaleComplete)) && (
-        <PauseScaleButton />
+      <PlaySequenceButton />
+      {playbackState !== PlaybackState.SequenceComplete && (
+        <PauseSequenceButton />
       )}
     </div>
   );

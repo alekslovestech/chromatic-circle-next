@@ -3,20 +3,21 @@ import { Button } from "../Common/Button";
 import { PauseIcon, ResumeIcon } from "../Icons";
 import { PLAYBACK_BUTTON_STYLES } from "@/lib/design/PlaybackButtonStyles";
 
-export const PauseScaleButton: React.FC = () => {
-  const { playbackState, pauseScalePlayback, resumeScalePlayback } = useAudio();
+export const PauseSequenceButton: React.FC = () => {
+  const { playbackState, pauseSequencePlayback, resumeSequencePlayback } =
+    useAudio();
 
   const handleClick = () => {
-    if (playbackState === PlaybackState.ScalePlaying) {
-      pauseScalePlayback();
-    } else if (playbackState === PlaybackState.ScalePaused) {
-      resumeScalePlayback();
+    if (playbackState === PlaybackState.SequencePlaying) {
+      pauseSequencePlayback();
+    } else if (playbackState === PlaybackState.SequencePaused) {
+      resumeSequencePlayback();
     }
   };
 
   return (
     <Button size="md" variant="action" onClick={handleClick}>
-      {playbackState === PlaybackState.ScalePaused ? (
+      {playbackState === PlaybackState.SequencePaused ? (
         <ResumeIcon className={PLAYBACK_BUTTON_STYLES.scalesMode} />
       ) : (
         <PauseIcon className={PLAYBACK_BUTTON_STYLES.scalesMode} />

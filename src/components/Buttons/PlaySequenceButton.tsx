@@ -3,24 +3,25 @@ import { Button } from "../Common/Button";
 import { PlayIcon, StopIcon } from "../Icons";
 import { PLAYBACK_BUTTON_STYLES } from "@/lib/design/PlaybackButtonStyles";
 
-export const PlayScaleButton: React.FC = () => {
-  const { playbackState, startScalePlayback, stopScalePlayback } = useAudio();
+export const PlaySequenceButton: React.FC = () => {
+  const { playbackState, startSequencePlayback, stopSequencePlayback } =
+    useAudio();
 
-  const isPLayingOrPaused = () =>
-    playbackState === PlaybackState.ScalePlaying ||
-    playbackState === PlaybackState.ScalePaused;
+  const isPlayingOrPaused = () =>
+    playbackState === PlaybackState.SequencePlaying ||
+    playbackState === PlaybackState.SequencePaused;
 
   const handleClick = () => {
-    if (isPLayingOrPaused()) {
-      stopScalePlayback();
+    if (isPlayingOrPaused()) {
+      stopSequencePlayback();
     } else {
-      startScalePlayback();
+      startSequencePlayback();
     }
   };
 
   return (
     <Button size="md" variant="action" onClick={handleClick}>
-      {isPLayingOrPaused() ? (
+      {isPlayingOrPaused() ? (
         <StopIcon className={PLAYBACK_BUTTON_STYLES.scalesMode} />
       ) : (
         <PlayIcon className={PLAYBACK_BUTTON_STYLES.scalesMode} />
