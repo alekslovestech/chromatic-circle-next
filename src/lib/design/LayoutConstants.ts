@@ -80,12 +80,12 @@ export const LAYOUT_CONFIGS = {
   },
   [GlobalMode.ChordProgressions]: {
     portrait: {
-      gridRows: DEFAULT_ROWS.portrait,
-      gridAreas: DEFAULT_GRID_AREAS.portrait,
+      gridRows: SCALES_ROWS.portrait,
+      gridAreas: SCALES_GRID_AREAS.portrait,
     },
     landscape: {
-      gridRows: DEFAULT_ROWS.landscape,
-      gridAreas: DEFAULT_GRID_AREAS.landscape,
+      gridRows: SCALES_ROWS.landscape,
+      gridAreas: SCALES_GRID_AREAS.landscape,
     },
   },
 } as const;

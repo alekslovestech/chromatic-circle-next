@@ -17,7 +17,7 @@ export const ChordProgressionSelector = () => {
   };
 
   return (
-    <div className="chord-progression-selector text-sm font-medium">
+    <div className="chord-progression-selector text-sm font-medium max-w-[80%]">
       {
         <div className="flex flex-col gap-2">
           <Select
@@ -25,6 +25,7 @@ export const ChordProgressionSelector = () => {
             value={selectedProgression ?? ""}
             onChange={handleChordProgressionChange}
             title="Select chord progression"
+            className="w-full max-w-full"
           >
             {Object.values(ChordProgressionType).map((mode) => (
               <option

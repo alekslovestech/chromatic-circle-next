@@ -4,10 +4,9 @@ import React from "react";
 import { LAYOUT_PATTERNS } from "@/lib/design";
 import { useBorder } from "@/lib/hooks";
 
-import { PauseScaleButton } from "../Buttons/PauseScaleButton";
-import { PlayScaleButton } from "../Buttons/PlayScaleButton";
 import { ChordProgressionSelector } from "../ChordProgressionSelector";
-import { PlaybackModeSelect } from "./PlaybackModeSelect";
+import { TransposeWidget } from "../TransposeWidget";
+import { PlaybackWidget } from "../PlaybackWidget";
 
 export const SettingsPanelChordProgressions = () => {
   const settingsGap = "gap-tight";
@@ -32,12 +31,11 @@ export const SettingsPanelChordProgressions = () => {
         <div
           className={`${LAYOUT_PATTERNS.centerFlexCol} ${settingsGap} rounded p-2 flex-1 ${border}`}
         >
-          <PlaybackModeSelect />
           <div
-            className={`${LAYOUT_PATTERNS.centerFlexRowGap} max-w-xs self-center`}
+            className={`${LAYOUT_PATTERNS.centerFlexCol} max-w-xs self-center gap-2`}
           >
-            <PlayScaleButton />
-            <PauseScaleButton />
+            <TransposeWidget target="notes" />
+            <PlaybackWidget />
           </div>
         </div>
       </div>

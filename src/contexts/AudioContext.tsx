@@ -1,15 +1,15 @@
 "use client";
 
 import React, { createContext, useContext, useState } from "react";
-import { useScalePlayback } from "@/lib/hooks/useScalePlayback";
-import { useChordProgressionPlayback } from "@/lib/hooks/useChordProgressionPlayback";
 import { ScalePlaybackMode } from "@/types/ScalePlaybackMode";
 import { ChordProgressionType } from "@/types/enums/ChordProgressionType";
 
+import { useSequencePlayback } from "@/lib/hooks/useSequencePlayback";
+
 export enum PlaybackState {
-  ScaleComplete,
-  ScalePlaying,
-  ScalePaused,
+  SequenceComplete,
+  SequencePlaying,
+  SequencePaused,
 }
 
 interface AudioContextType {
@@ -17,21 +17,25 @@ interface AudioContextType {
   playbackState: PlaybackState;
   setAudioInitialized: (initialized: boolean) => void;
 
-  // Scale playback
+  // Unified sequence playback
+  startSequencePlayback: () => void;
+  pauseSequencePlayback: () => void;
+  resumeSequencePlayback: () => void;
+  stopSequencePlayback: () => void;
+
+  // Scale-specific
   scalePlaybackMode: ScalePlaybackMode;
   setScalePlaybackMode: (mode: ScalePlaybackMode) => void;
-  startScalePlayback: () => void;
-  stopScalePlayback: () => void;
-  pauseScalePlayback: () => void;
-  resumeScalePlayback: () => void;
 
-  // Chord progression playback
+  // Chord progression-specific
   selectedProgression: ChordProgressionType | null;
   setSelectedProgression: (progression: ChordProgressionType | null) => void;
-  currentChordIndex: number;
-  startProgressionPlayback: () => void;
-  pauseProgressionPlayback: () => void;
-  stopProgressionPlayback: () => void;
+
+  // Legacy aliases (to be removed after full migration)
+  startScalePlayback: () => void;
+  pauseScalePlayback: () => void;
+  resumeScalePlayback: () => void;
+  stopScalePlayback: () => void;
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -49,16 +53,12 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [isAudioInitialized, setIsAudioInitialized] = useState(false);
   const [playbackState, setPlaybackState] = useState<PlaybackState>(
-    PlaybackState.ScaleComplete
+    PlaybackState.SequenceComplete
   );
 
-  const scalePlayback = useScalePlayback({
+  const sequencePlayback = useSequencePlayback({
     isAudioInitialized,
     playbackState,
-    setPlaybackState,
-  });
-
-  const chordProgressionPlayback = useChordProgressionPlayback({
     setPlaybackState,
   });
 
@@ -66,12 +66,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
     isAudioInitialized,
     playbackState,
     setAudioInitialized: setIsAudioInitialized,
-
-    // Scale playback
-    ...scalePlayback,
-
-    // Chord progression playback
-    ...chordProgressionPlayback,
+    ...sequencePlayback,
   };
 
   return (

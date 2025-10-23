@@ -44,7 +44,7 @@ export const useKeyboardHandlers = () => {
       }
       return index === currentChordRef.rootNote;
     },
-    [currentChordRef]
+    [currentChordRef, isFreeformMode]
   );
 
   return {

@@ -12,7 +12,7 @@ interface PlaybackModeOption {
   description: string;
 }
 
-const PLAYBACK_MODE_OPTIONS: PlaybackModeOption[] = [
+const SCALE_PLAYBACK_MODE_OPTIONS: PlaybackModeOption[] = [
   {
     id: "single-note",
     mode: ScalePlaybackMode.SingleNote,
@@ -33,7 +33,7 @@ const PLAYBACK_MODE_OPTIONS: PlaybackModeOption[] = [
   },
 ];
 
-export const PlaybackModeSelect: React.FC = () => {
+export const ScalePlaybackModeSelect: React.FC = () => {
   const { scalePlaybackMode, setScalePlaybackMode } = useAudio();
 
   const handleModeChange = (newMode: ScalePlaybackMode) => {
@@ -44,7 +44,7 @@ export const PlaybackModeSelect: React.FC = () => {
     <div className="playback-mode-select">
       <SectionTitle>Playback Mode</SectionTitle>
       <div className="flex gap-2 justify-center">
-        {PLAYBACK_MODE_OPTIONS.map(({ id, mode, label, description }) => (
+        {SCALE_PLAYBACK_MODE_OPTIONS.map(({ id, mode, label, description }) => (
           <Button
             key={id}
             id={`playback-${id}`}
