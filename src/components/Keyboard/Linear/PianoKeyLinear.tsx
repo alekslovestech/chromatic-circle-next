@@ -15,6 +15,8 @@ import { useDisplay } from "@/contexts/DisplayContext";
 import { track } from "@/lib/track";
 import { useGlobalMode } from "@/lib/hooks/useGlobalMode";
 import { useChordPresets } from "@/contexts/ChordPresetContext";
+import { addChromatic, subChromatic } from "@/types/ChromaticIndex";
+import { ACCIDENTAL_SYMBOL_STYLES } from "@/lib/design/AccidentalTypes";
 
 interface PianoKeyProps {
   actualIndex: ActualIndex;
@@ -80,6 +82,9 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
     onClick(actualIndex); //forward to keyboardbase
   };
 
+  const nextIsBlack = IndexUtils.isBlackKey(addChromatic(chromaticIndex, 1));
+  const prevIsBlack = IndexUtils.isBlackKey(subChromatic(chromaticIndex, 1));
+
   const allBaseClasses = baseClasses.join(" ");
   return (
     <div
@@ -88,7 +93,9 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
       style={{ left }}
       onClick={handleClick}
     >
-      {noteText}
+      {isShortKey ? "" : noteText}
+      {nextIsBlack && <span className={ACCIDENTAL_SYMBOL_STYLES.sharp}>♯</span>}
+      {prevIsBlack && <span className={ACCIDENTAL_SYMBOL_STYLES.flat}>♭</span>}
     </div>
   );
 };

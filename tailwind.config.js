@@ -23,6 +23,9 @@ module.exports = {
     {
       pattern: /text-playback-*/,
     },
+    {
+      pattern: /text-accidental-*/,
+    },
   ],
   theme: {
     extend: {
@@ -47,7 +50,10 @@ module.exports = {
           actionBorder: "rgba(60, 60, 60, 0.2)", // Stronger border for definition
           actionText: "rgb(50, 50, 50)", // Slightly different text color
         },
-
+        accidental: {
+          symbol: "rgb(51, 51, 51)", // Same as textOnWhite for consistency
+          symbolFaded: "rgba(100, 100, 110, 0.7)", // Slightly more visible than textOnWhiteFaded
+        },
         // New playback button colors
         playback: {
           scalesMode: "rgb(37, 99, 235)", //#2563eb
