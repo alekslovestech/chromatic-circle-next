@@ -1,9 +1,14 @@
 import React from "react";
 
-import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
+import {
+  useIsScalePreviewMode,
+  useGlobalMode,
+} from "@/lib/hooks/useGlobalMode";
+
+import { ACCIDENTAL_SYMBOL_STYLES } from "@/lib/design/AccidentalTypes";
+import { track } from "@/lib/track";
 
 import { ActualIndex, actualToChromatic } from "@/types/IndexTypes";
-import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
 
 import { IndexUtils } from "@/utils/IndexUtils";
 import { LinearKeyboardUtils } from "@/utils/Keyboard/Linear/LinearKeyboardUtils";
@@ -12,11 +17,10 @@ import { KeyboardUtils } from "@/utils/Keyboard/KeyboardUtils";
 
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
-import { track } from "@/lib/track";
-import { useGlobalMode } from "@/lib/hooks/useGlobalMode";
+
 import { useChordPresets } from "@/contexts/ChordPresetContext";
+
 import { addChromatic, subChromatic } from "@/types/ChromaticIndex";
-import { ACCIDENTAL_SYMBOL_STYLES } from "@/lib/design/AccidentalTypes";
 
 interface PianoKeyProps {
   actualIndex: ActualIndex;
@@ -60,12 +64,8 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   if (isBassNote) baseClasses.push("root-note");
 
   const id = KeyboardUtils.StringWithPaddedIndex("linearKey", actualIndex);
-  const noteText = isScales
-    ? KeyboardUtils.computeNoteTextForScalesMode(
-        chromaticIndex,
-        selectedMusicalKey,
-        KeyDisplayMode.NoteNames
-      )
+  const noteText = isShortKey
+    ? ""
     : KeyboardUtils.computeNoteTextForDefaultMode(
         chromaticIndex,
         isSelected,
@@ -93,7 +93,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
       style={{ left }}
       onClick={handleClick}
     >
-      {isShortKey ? "" : noteText}
+      {noteText}
       {nextIsBlack && <span className={ACCIDENTAL_SYMBOL_STYLES.sharp}>♯</span>}
       {prevIsBlack && <span className={ACCIDENTAL_SYMBOL_STYLES.flat}>♭</span>}
     </div>

@@ -3,7 +3,11 @@ import React from "react";
 
 import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
 
-import { ChromaticIndex } from "@/types/ChromaticIndex";
+import {
+  addChromatic,
+  ChromaticIndex,
+  subChromatic,
+} from "@/types/ChromaticIndex";
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
 
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
@@ -50,6 +54,13 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     innerRadius
   );
 
+  const { sharp: textPointSharp, flat: textPointFlat } =
+    ArcPathVisualizer.getAccidentalPositions(
+      chromaticIndex,
+      outerRadius,
+      innerRadius
+    );
+
   const baseClasses = ["key-base", "pie-slice-key"];
   const isSelected = KeyboardUtils.isSelectedEitherOctave(
     chromaticIndex,
@@ -57,6 +68,8 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   );
   const isScales = useIsScalePreviewMode();
   const isBlack = IndexUtils.isBlackKey(chromaticIndex);
+  const nextIsBlack = IndexUtils.isBlackKey(addChromatic(chromaticIndex, 1));
+  const prevIsBlack = IndexUtils.isBlackKey(subChromatic(chromaticIndex, 1));
 
   // Add color classes based on visual state and selection
   const keyColors = VisualStateUtils.getKeyColors(
@@ -82,6 +95,8 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
         selectedMusicalKey,
         KeyDisplayMode.ScaleDegree
       )
+    : isBlack
+    ? ""
     : KeyboardUtils.computeNoteTextForDefaultMode(
         chromaticIndex,
         isSelected,
@@ -115,6 +130,26 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
       >
         {noteText}
       </text>
+      {prevIsBlack && (
+        <text
+          x={textPointFlat.x}
+          y={textPointFlat.y}
+          style={{ fontSize: "8px" }}
+          className={`text-center pointer-events-none`}
+        >
+          ♭
+        </text>
+      )}
+      {nextIsBlack && (
+        <text
+          x={textPointSharp.x}
+          y={textPointSharp.y}
+          style={{ fontSize: "8px" }}
+          className={`text-center pointer-events-none`}
+        >
+          ♯
+        </text>
+      )}
     </g>
   );
 };

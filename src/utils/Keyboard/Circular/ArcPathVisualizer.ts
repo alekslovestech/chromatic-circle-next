@@ -1,8 +1,11 @@
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { CartesianPoint, PolarMath } from "./PolarMath";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+import { TWELVE } from "@/types/constants/NoteConstants";
 
 export class ArcPathVisualizer {
-  public static readonly ROMAN_POINT_COEFFICIENT = 0.85;
+  private static readonly ACCIDENTAL_POINT_ANGLE_COEFFICIENT = 0.7;
+  private static readonly ACCIDENTAL_POINT_OFFSET_FROM_INNER_RADIUS = 0.15; //(0=inner, 1=outer)
 
   public static getTextPoint(
     chromaticIndex: ChromaticIndex,
@@ -14,6 +17,47 @@ export class ArcPathVisualizer {
       (innerRadius + outerRadius) * 0.5,
       middleAngle
     );
+  }
+
+  public static getAccidentalPositions(
+    chromaticIndex: ChromaticIndex,
+    outerRadius: number,
+    innerRadius: number
+  ): { sharp: CartesianPoint; flat: CartesianPoint } {
+    const HALF_KEY_ANGLE =
+      (this.ACCIDENTAL_POINT_ANGLE_COEFFICIENT * Math.PI) / TWELVE;
+    const middleAngle = PolarMath.NoteIndexToMiddleAngle(chromaticIndex);
+    const radius =
+      innerRadius +
+      (outerRadius - innerRadius) *
+        this.ACCIDENTAL_POINT_OFFSET_FROM_INNER_RADIUS;
+
+    return {
+      sharp: PolarMath.getCartesianFromPolar(
+        radius,
+        middleAngle + HALF_KEY_ANGLE
+      ),
+      flat: PolarMath.getCartesianFromPolar(
+        radius,
+        middleAngle - HALF_KEY_ANGLE
+      ),
+    };
+  }
+
+  public static getTextPointAccidental(
+    chromaticIndex: ChromaticIndex,
+    outerRadius: number,
+    innerRadius: number,
+    accidental: AccidentalType
+  ): CartesianPoint {
+    const positions = this.getAccidentalPositions(
+      chromaticIndex,
+      outerRadius,
+      innerRadius
+    );
+    return accidental === AccidentalType.Sharp
+      ? positions.sharp
+      : positions.flat;
   }
 
   public static getArcPathData(
