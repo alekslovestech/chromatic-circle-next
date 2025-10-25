@@ -1,11 +1,16 @@
 import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
 import { ChordReference } from "@/types/interfaces/ChordReference";
 
-import { ChromaticIndex } from "@/types/ChromaticIndex";
+import {
+  addChromatic,
+  ChromaticIndex,
+  subChromatic,
+} from "@/types/ChromaticIndex";
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 
 import { SpellingUtils } from "@/utils/SpellingUtils";
+import { IndexUtils } from "@/utils/IndexUtils";
 import { NoteFormatter } from "@/utils/formatters/NoteFormatter";
 import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
 import { ActualNoteResolver } from "@/utils/resolvers/ActualNoteResolver";
@@ -75,5 +80,54 @@ export class KeyboardUtils {
       );
       return NoteFormatter.formatForDisplay(spelledNote);
     }
+  }
+
+  //returns true if the next or previous chromatic index is a black key
+  static getAccidentalState(chromaticIndex: ChromaticIndex) {
+    const nextIsBlack = IndexUtils.isBlackKey(addChromatic(chromaticIndex, 1));
+    const prevIsBlack = IndexUtils.isBlackKey(subChromatic(chromaticIndex, 1));
+    return { nextIsBlack, prevIsBlack };
+  }
+
+  static buildKeyClasses(
+    baseClasses: string[],
+    isSelected: boolean,
+    isShortKey: boolean,
+    isScales: boolean,
+    isBassNote: boolean
+  ): string {
+    const classes = [...baseClasses];
+    if (isSelected) classes.push("selected");
+    if (isShortKey) classes.push("short");
+    if (isScales) classes.push("disabled");
+    if (isBassNote) classes.push("root-note");
+    return classes.join(" ");
+  }
+
+  static getNoteText(
+    isLinearKeyboard: boolean,
+    chromaticIndex: ChromaticIndex,
+    isScales: boolean,
+    isShortKey: boolean,
+    isSelected: boolean,
+    selectedMusicalKey: MusicalKey,
+    currentChordRef?: ChordReference
+  ): string {
+    return isScales
+      ? KeyboardUtils.computeNoteTextForScalesMode(
+          chromaticIndex,
+          selectedMusicalKey,
+          isLinearKeyboard
+            ? KeyDisplayMode.NoteNames
+            : KeyDisplayMode.ScaleDegree
+        )
+      : isShortKey
+      ? ""
+      : KeyboardUtils.computeNoteTextForDefaultMode(
+          chromaticIndex,
+          isSelected,
+          selectedMusicalKey,
+          currentChordRef
+        );
   }
 }

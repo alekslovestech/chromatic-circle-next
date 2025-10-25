@@ -1,4 +1,6 @@
 export const ACCIDENTAL_SYMBOL_STYLES = {
-  sharp: "absolute right-[2px] top-2/3 -translate-y-1/2 text-xs",
-  flat: "absolute left-[2px] top-2/3 -translate-y-1/2 text-xs",
+  fontSizeLinear: "text-xs",
+  fontSizeCircular: "12px",
+  radialOffset: 0.15, //(0=inner, 1=outer)
+  angleCoefficient: 0.7, //how far from the edges of the pie slice to place the accidental (anglular coordinates)
 } as const;

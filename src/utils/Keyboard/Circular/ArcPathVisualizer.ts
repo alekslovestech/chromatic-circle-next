@@ -1,12 +1,12 @@
-import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { CartesianPoint, PolarMath } from "./PolarMath";
+
+import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { AccidentalType } from "@/types/enums/AccidentalType";
 import { TWELVE } from "@/types/constants/NoteConstants";
 
-export class ArcPathVisualizer {
-  private static readonly ACCIDENTAL_POINT_ANGLE_COEFFICIENT = 0.7;
-  private static readonly ACCIDENTAL_POINT_OFFSET_FROM_INNER_RADIUS = 0.15; //(0=inner, 1=outer)
+import { ACCIDENTAL_SYMBOL_STYLES } from "@/lib/design/AccidentalTypes";
 
+export class ArcPathVisualizer {
   public static getTextPoint(
     chromaticIndex: ChromaticIndex,
     outerRadius: number,
@@ -25,12 +25,11 @@ export class ArcPathVisualizer {
     innerRadius: number
   ): { sharp: CartesianPoint; flat: CartesianPoint } {
     const HALF_KEY_ANGLE =
-      (this.ACCIDENTAL_POINT_ANGLE_COEFFICIENT * Math.PI) / TWELVE;
+      (ACCIDENTAL_SYMBOL_STYLES.angleCoefficient * Math.PI) / TWELVE;
     const middleAngle = PolarMath.NoteIndexToMiddleAngle(chromaticIndex);
     const radius =
       innerRadius +
-      (outerRadius - innerRadius) *
-        this.ACCIDENTAL_POINT_OFFSET_FROM_INNER_RADIUS;
+      (outerRadius - innerRadius) * ACCIDENTAL_SYMBOL_STYLES.radialOffset;
 
     return {
       sharp: PolarMath.getCartesianFromPolar(
