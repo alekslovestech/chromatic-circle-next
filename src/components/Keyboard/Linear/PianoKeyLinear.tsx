@@ -104,7 +104,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
       id={id}
       className={`${allBaseClasses} ${keyColors.primary} ${keyColors.text} !${
         keyColors.border
-      } flex cursor-pointer ${isShortKey ? "z-20" : "items-end px-2 z-10"}`}
+      } flex cursor-pointer ${isShortKey ? "" : "items-end px-2"}`}
       style={{ left }}
       onClick={handleClick}
     >
