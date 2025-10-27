@@ -6,10 +6,10 @@ import {
 } from "@/lib/hooks/useGlobalMode";
 
 import { ACCIDENTAL_SYMBOL_STYLES } from "@/lib/design/AccidentalTypes";
-import { track } from "@/lib/track";
 
 import { ActualIndex, actualToChromatic } from "@/types/IndexTypes";
 import { AccidentalType } from "@/types/enums/AccidentalType";
+import { KeyboardUIType } from "@/types/enums/KeyboardUIType";
 
 import { IndexUtils } from "@/utils/IndexUtils";
 import { LinearKeyboardUtils } from "@/utils/Keyboard/Linear/LinearKeyboardUtils";
@@ -20,6 +20,7 @@ import { AccidentalFormatter } from "@/utils/formatters/AccidentalFormatter";
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
 import { useChordPresets } from "@/contexts/ChordPresetContext";
+import { TYPOGRAPHY } from "@/lib/design/Typography";
 
 interface PianoKeyProps {
   actualIndex: ActualIndex;
@@ -73,20 +74,21 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
     selectedMusicalKey
   );
 
-  const handleClick = () => {
-    track("keyboard_interacted", {
-      global_mode: globalMode,
-      input_mode: inputMode,
-      keyboard_ui: "linear",
-    });
-    onClick(actualIndex); //forward to keyboardbase
-  };
+  const handleClick = KeyboardUtils.createKeyboardClickHandler(
+    globalMode,
+    inputMode,
+    KeyboardUIType.Linear,
+    onClick,
+    actualIndex
+  );
 
   const renderAccidental = (accidental: AccidentalType) => {
-    const alignment = accidental === AccidentalType.Sharp ? "right" : "left";
+    const isSharp = accidental === AccidentalType.Sharp;
     return (
       <span
-        className={`absolute ${alignment}-[2px] top-2/3 -translate-y-1/2 
+        className={`absolute ${
+          isSharp ? "right-1" : "left-1"
+        } top-2/3 -translate-y-1/2 
         ${ACCIDENTAL_SYMBOL_STYLES.fontSizeLinear}`}
       >
         {AccidentalFormatter.getAccidentalSignForDisplay(accidental)}
@@ -100,13 +102,17 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   return (
     <div
       id={id}
-      className={`${allBaseClasses} ${keyColors.primary} ${keyColors.text} !${keyColors.border}`}
+      className={`${allBaseClasses} ${keyColors.primary} ${keyColors.text} !${
+        keyColors.border
+      } flex ${isShortKey ? "items-center" : "items-end"} font-bold`}
       style={{ left }}
       onClick={handleClick}
     >
-      {noteText}
-      {nextIsBlack && renderAccidental(AccidentalType.Sharp)}
+      {!isShortKey && (
+        <div className={`text-sm text-center w-full pb-0.5`}>{noteText}</div>
+      )}
       {prevIsBlack && renderAccidental(AccidentalType.Flat)}
+      {nextIsBlack && renderAccidental(AccidentalType.Sharp)}
     </div>
   );
 };

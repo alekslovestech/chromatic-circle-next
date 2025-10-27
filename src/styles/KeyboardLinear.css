@@ -20,7 +20,7 @@
 
 /* Handle both font-size and font-weight */
 .piano-key {
-  font-weight: bold; /* Default for normal keys */
+  /*font-weight: bold; /* Default for normal keys */
   position: absolute;
   box-sizing: border-box;
   width: var(--white-key-width);
@@ -28,21 +28,15 @@
   padding: 0 5px;
   border: 1px solid theme("colors.keys.borderColor"); /*TODO make this irrelevant*/
 
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-
   cursor: pointer;
   z-index: 1;
 }
 
 .piano-key.short {
-  font-weight: normal; /* Lighter weight for narrow black keys */
-  align-items: center;
+  /*font-weight: normal; /* Lighter weight for narrow black keys */
   width: var(--black-key-width);
   height: 60%;
 
-  justify-content: center;
   opacity: 1;
   transform: translateX(-50%);
 
