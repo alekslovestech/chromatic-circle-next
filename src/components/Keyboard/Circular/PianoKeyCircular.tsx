@@ -4,14 +4,17 @@ import React from "react";
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
 import { AccidentalType } from "@/types/enums/AccidentalType";
-import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
+import { KeyboardUIType } from "@/types/enums/KeyboardUIType";
+
+import {
+  CartesianPoint,
+  CartesianPointPair,
+} from "@/types/interfaces/CartesianPoint";
 
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
-import { track } from "@/lib/track";
 import { useGlobalMode } from "@/lib/hooks/useGlobalMode";
 import { ACCIDENTAL_SYMBOL_STYLES } from "@/lib/design/AccidentalTypes";
 
-import { CartesianPoint } from "@/utils/Keyboard/Circular/PolarMath";
 import { AccidentalFormatter } from "@/utils/formatters/AccidentalFormatter";
 import { ArcPathVisualizer } from "@/utils/Keyboard/Circular/ArcPathVisualizer";
 import { IndexUtils } from "@/utils/IndexUtils";
@@ -37,8 +40,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   innerRadius,
   onClick,
 }) => {
-  const { selectedMusicalKey, selectedNoteIndices, currentChordRef } =
-    useMusical();
+  const { selectedMusicalKey, selectedNoteIndices } = useMusical();
   const { monochromeMode } = useDisplay();
   const globalMode = useGlobalMode();
   const { inputMode } = useChordPresets();
@@ -91,14 +93,13 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     selectedMusicalKey
   );
 
-  const handleClick = () => {
-    track("keyboard_interacted", {
-      global_mode: globalMode,
-      input_mode: inputMode,
-      keyboard_ui: "circular",
-    });
-    onClick(chromaticToActual(chromaticIndex)); //forward to keyboardbase
-  };
+  const handleClick = KeyboardUtils.createKeyboardClickHandler(
+    globalMode,
+    inputMode,
+    KeyboardUIType.Circular,
+    onClick,
+    chromaticToActual(chromaticIndex)
+  );
 
   const renderAccidental = (
     accidental: AccidentalType,
@@ -118,7 +119,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     );
   };
 
-  const { sharp: textPointSharp, flat: textPointFlat } =
+  const textPointAccidentals: CartesianPointPair =
     ArcPathVisualizer.getAccidentalPositions(
       chromaticIndex,
       outerRadius,
@@ -144,9 +145,10 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
       </text>
       {!isScales && (
         <>
-          {prevIsBlack && renderAccidental(AccidentalType.Flat, textPointFlat)}
+          {prevIsBlack &&
+            renderAccidental(AccidentalType.Flat, textPointAccidentals.flat)}
           {nextIsBlack &&
-            renderAccidental(AccidentalType.Sharp, textPointSharp)}
+            renderAccidental(AccidentalType.Sharp, textPointAccidentals.sharp)}
         </>
       )}
     </g>

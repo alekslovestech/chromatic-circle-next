@@ -1,5 +1,8 @@
 import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
 import { AccidentalType } from "@/types/enums/AccidentalType";
+import { InputMode } from "@/types/enums/InputMode";
+import { GlobalMode } from "@/types/enums/GlobalMode";
+import { KeyboardUIType } from "@/types/enums/KeyboardUIType";
 
 import {
   addChromatic,
@@ -13,6 +16,7 @@ import { IndexUtils } from "@/utils/IndexUtils";
 import { NoteFormatter } from "@/utils/formatters/NoteFormatter";
 import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
 import { ChromaticNoteResolver } from "@/utils/resolvers/ChromaticNoteResolver";
+import { track } from "@/lib/track";
 
 export class KeyboardUtils {
   static StringWithPaddedIndex(prefix: string, index: number): string {
@@ -94,5 +98,22 @@ export class KeyboardUtils {
           KeyDisplayMode.ScaleDegree
         )
       : KeyboardUtils.computeNoteTextForDefaultMode(chromaticIndex);
+  }
+
+  static createKeyboardClickHandler(
+    globalMode: GlobalMode,
+    inputMode: InputMode,
+    keyboardType: KeyboardUIType,
+    onClick: (index: ActualIndex) => void,
+    index: ActualIndex
+  ) {
+    return () => {
+      track("keyboard_interacted", {
+        global_mode: globalMode,
+        input_mode: inputMode,
+        keyboard_ui: keyboardType,
+      });
+      onClick(index);
+    };
   }
 }

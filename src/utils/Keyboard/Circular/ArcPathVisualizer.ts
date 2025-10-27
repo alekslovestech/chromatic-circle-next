@@ -1,8 +1,12 @@
-import { CartesianPoint, PolarMath } from "./PolarMath";
+import { PolarMath } from "./PolarMath";
 
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { AccidentalType } from "@/types/enums/AccidentalType";
 import { TWELVE } from "@/types/constants/NoteConstants";
+import {
+  CartesianPoint,
+  CartesianPointPair,
+} from "@/types/interfaces/CartesianPoint";
 
 import { ACCIDENTAL_SYMBOL_STYLES } from "@/lib/design/AccidentalTypes";
 
@@ -23,7 +27,7 @@ export class ArcPathVisualizer {
     chromaticIndex: ChromaticIndex,
     outerRadius: number,
     innerRadius: number
-  ): { sharp: CartesianPoint; flat: CartesianPoint } {
+  ): CartesianPointPair {
     const HALF_KEY_ANGLE =
       (ACCIDENTAL_SYMBOL_STYLES.angleCoefficient * Math.PI) / TWELVE;
     const middleAngle = PolarMath.NoteIndexToMiddleAngle(chromaticIndex);
