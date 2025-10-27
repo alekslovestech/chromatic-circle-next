@@ -18,29 +18,20 @@
   container-type: inline-size;
 }
 
-/* Handle both font-size and font-weight */
+/* Handle layout and sizing */
 .piano-key {
-  /*font-weight: bold; /* Default for normal keys */
   position: absolute;
   box-sizing: border-box;
   width: var(--white-key-width);
   height: 100%;
-  padding: 0 5px;
   border: 1px solid theme("colors.keys.borderColor"); /*TODO make this irrelevant*/
-
-  cursor: pointer;
-  z-index: 1;
 }
 
 .piano-key.short {
-  /*font-weight: normal; /* Lighter weight for narrow black keys */
   width: var(--black-key-width);
   height: 60%;
 
-  opacity: 1;
   transform: translateX(-50%);
-
-  z-index: 2;
 }
 
 /* Container queries with proportional scaling */

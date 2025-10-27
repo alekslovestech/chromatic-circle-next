@@ -87,7 +87,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
     return (
       <span
         className={`absolute ${
-          isSharp ? "right-1" : "left-1"
+          isSharp ? "right-0.5" : "left-0.5"
         } top-2/3 -translate-y-1/2 
         ${ACCIDENTAL_SYMBOL_STYLES.fontSizeLinear}`}
       >
@@ -104,12 +104,14 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
       id={id}
       className={`${allBaseClasses} ${keyColors.primary} ${keyColors.text} !${
         keyColors.border
-      } flex ${isShortKey ? "items-center" : "items-end"} font-bold`}
+      } flex cursor-pointer ${isShortKey ? "z-20" : "items-end px-2 z-10"}`}
       style={{ left }}
       onClick={handleClick}
     >
       {!isShortKey && (
-        <div className={`text-sm text-center w-full pb-0.5`}>{noteText}</div>
+        <div className={`font-bold text-sm text-center w-full pb-0.5`}>
+          {noteText}
+        </div>
       )}
       {prevIsBlack && renderAccidental(AccidentalType.Flat)}
       {nextIsBlack && renderAccidental(AccidentalType.Sharp)}
