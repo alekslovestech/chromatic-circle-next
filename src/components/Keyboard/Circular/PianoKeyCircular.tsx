@@ -88,10 +88,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     false,
     chromaticIndex,
     isScales,
-    isBlack,
-    isSelected,
-    selectedMusicalKey,
-    currentChordRef
+    selectedMusicalKey
   );
 
   const handleClick = () => {

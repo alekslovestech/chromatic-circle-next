@@ -1,5 +1,5 @@
 import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
-import { ChordReference } from "@/types/interfaces/ChordReference";
+import { AccidentalType } from "@/types/enums/AccidentalType";
 
 import {
   addChromatic,
@@ -9,11 +9,9 @@ import {
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 
-import { SpellingUtils } from "@/utils/SpellingUtils";
 import { IndexUtils } from "@/utils/IndexUtils";
 import { NoteFormatter } from "@/utils/formatters/NoteFormatter";
 import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
-import { ActualNoteResolver } from "@/utils/resolvers/ActualNoteResolver";
 import { ChromaticNoteResolver } from "@/utils/resolvers/ChromaticNoteResolver";
 
 export class KeyboardUtils {
@@ -52,34 +50,13 @@ export class KeyboardUtils {
         );
   }
 
-  static computeNoteTextForDefaultMode(
-    chromaticIndex: ChromaticIndex,
-    isSelected: boolean,
-    selectedMusicalKey: MusicalKey,
-    currentChordRef?: ChordReference
-  ): string {
-    if (!isSelected) {
-      const resolvedNote = ChromaticNoteResolver.resolveAbsoluteNote(
-        chromaticIndex,
-        selectedMusicalKey.getDefaultAccidental()
-      );
-      return NoteFormatter.formatForDisplay(resolvedNote);
-    }
-    const targetNoteIndex = chromaticToActual(chromaticIndex);
-
-    if (currentChordRef) {
-      const spelledNote = SpellingUtils.computeSingleNoteFromChordPreset(
-        targetNoteIndex,
-        currentChordRef
-      );
-      return NoteFormatter.formatForDisplay(spelledNote);
-    } else {
-      const spelledNote = ActualNoteResolver.resolveNoteInKeyWithOctave(
-        selectedMusicalKey,
-        targetNoteIndex
-      );
-      return NoteFormatter.formatForDisplay(spelledNote);
-    }
+  static computeNoteTextForDefaultMode(chromaticIndex: ChromaticIndex): string {
+    if (IndexUtils.isBlackKey(chromaticIndex)) return "";
+    const resolvedNote = ChromaticNoteResolver.resolveAbsoluteNote(
+      chromaticIndex,
+      AccidentalType.Sharp // Use sharp as default
+    );
+    return NoteFormatter.formatForDisplay(resolvedNote);
   }
 
   //returns true if the next or previous chromatic index is a black key
@@ -108,26 +85,14 @@ export class KeyboardUtils {
     isLinearKeyboard: boolean,
     chromaticIndex: ChromaticIndex,
     isScales: boolean,
-    isShortKey: boolean,
-    isSelected: boolean,
-    selectedMusicalKey: MusicalKey,
-    currentChordRef?: ChordReference
+    selectedMusicalKey: MusicalKey
   ): string {
-    return isScales
+    return isScales && !isLinearKeyboard
       ? KeyboardUtils.computeNoteTextForScalesMode(
           chromaticIndex,
           selectedMusicalKey,
-          isLinearKeyboard
-            ? KeyDisplayMode.NoteNames
-            : KeyDisplayMode.ScaleDegree
+          KeyDisplayMode.ScaleDegree
         )
-      : isShortKey
-      ? ""
-      : KeyboardUtils.computeNoteTextForDefaultMode(
-          chromaticIndex,
-          isSelected,
-          selectedMusicalKey,
-          currentChordRef
-        );
+      : KeyboardUtils.computeNoteTextForDefaultMode(chromaticIndex);
   }
 }

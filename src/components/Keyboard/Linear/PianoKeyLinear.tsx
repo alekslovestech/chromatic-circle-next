@@ -70,10 +70,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
     true,
     chromaticIndex,
     isScales,
-    isShortKey,
-    isSelected,
-    selectedMusicalKey,
-    currentChordRef
+    selectedMusicalKey
   );
 
   const handleClick = () => {
