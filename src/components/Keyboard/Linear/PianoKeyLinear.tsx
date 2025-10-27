@@ -20,7 +20,6 @@ import { AccidentalFormatter } from "@/utils/formatters/AccidentalFormatter";
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
 import { useChordPresets } from "@/contexts/ChordPresetContext";
-import { TYPOGRAPHY } from "@/lib/design/Typography";
 
 interface PianoKeyProps {
   actualIndex: ActualIndex;
@@ -33,8 +32,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   isBassNote,
   onClick,
 }) => {
-  const { selectedMusicalKey, selectedNoteIndices, currentChordRef } =
-    useMusical();
+  const { selectedMusicalKey, selectedNoteIndices } = useMusical();
   const { monochromeMode } = useDisplay();
   const globalMode = useGlobalMode();
   const { inputMode } = useChordPresets();
