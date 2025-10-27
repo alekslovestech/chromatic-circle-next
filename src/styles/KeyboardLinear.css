@@ -25,6 +25,7 @@
   width: var(--white-key-width);
   height: 100%;
   border: 1px solid theme("colors.keys.borderColor"); /*TODO make this irrelevant*/
+  cursor: pointer;
   z-index: 1;
 }
 
