@@ -139,7 +139,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
       <text
         x={textPoint.x}
         y={textPoint.y}
-        className={`text-center pointer-events-none ${keyColors.text} `}
+        className={`text-center pointer-events-none ${keyColors.text} font-bold`}
       >
         {noteText}
       </text>
