@@ -13,7 +13,7 @@ import {
 
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 import { useGlobalMode } from "@/lib/hooks/useGlobalMode";
-import { ACCIDENTAL_SYMBOL_STYLES } from "@/lib/design/AccidentalTypes";
+import { TYPOGRAPHY } from "@/lib/design/Typography";
 
 import { AccidentalFormatter } from "@/utils/formatters/AccidentalFormatter";
 import { ArcPathVisualizer } from "@/utils/Keyboard/Circular/ArcPathVisualizer";
@@ -109,10 +109,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
       <text
         x={textPoint.x}
         y={textPoint.y}
-        style={{
-          fontSize: ACCIDENTAL_SYMBOL_STYLES.fontSizeCircular,
-        }}
-        className={`text-center pointer-events-none`}
+        className={`text-center pointer-events-none ${TYPOGRAPHY.circularAccidental}`}
       >
         {AccidentalFormatter.getAccidentalSignForDisplay(accidental)}
       </text>
@@ -139,7 +136,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
       <text
         x={textPoint.x}
         y={textPoint.y}
-        className={`text-center pointer-events-none ${keyColors.text} font-bold`}
+        className={`text-center pointer-events-none ${keyColors.text} ${TYPOGRAPHY.circularNoteText}`}
       >
         {noteText}
       </text>

@@ -94,7 +94,7 @@ export const TransposeWidget: React.FC<{
   const flexDirection = /*target === "notes" ? "flex-col" : */ "flex-row";
   return (
     <div>
-      {label && <div className={`${TYPOGRAPHY.displayText}`}>{label}</div>}
+      {label && <div className={`${TYPOGRAPHY.chordNameText}`}>{label}</div>}
       <div
         className={`transpose-buttons-container flex ${flexDirection} gap-2`}
       >

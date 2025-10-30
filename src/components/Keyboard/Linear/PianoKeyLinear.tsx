@@ -6,6 +6,7 @@ import {
 } from "@/lib/hooks/useGlobalMode";
 
 import { ACCIDENTAL_SYMBOL_STYLES } from "@/lib/design/AccidentalTypes";
+import { TYPOGRAPHY } from "@/lib/design/Typography";
 
 import { ActualIndex, actualToChromatic } from "@/types/IndexTypes";
 import { AccidentalType } from "@/types/enums/AccidentalType";
@@ -86,8 +87,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
       <span
         className={`absolute ${
           isSharp ? "right-0.5" : "left-0.5"
-        } top-2/3 -translate-y-1/2 
-        ${ACCIDENTAL_SYMBOL_STYLES.fontSizeLinear}`}
+        } top-2/3 -translate-y-1/2 ${TYPOGRAPHY.linearAccidental}`}
       >
         {AccidentalFormatter.getAccidentalSignForDisplay(accidental)}
       </span>
@@ -102,12 +102,14 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
       id={id}
       className={`${allBaseClasses} ${keyColors.primary} ${keyColors.text} !${
         keyColors.border
-      } flex ${isShortKey ? "" : "items-end px-2"}`}
+      } flex ${isShortKey ? "" : "items-end"}`}
       style={{ left }}
       onClick={handleClick}
     >
       {!isShortKey && (
-        <div className={`font-bold text-sm text-center w-full pb-0.5`}>
+        <div
+          className={`${TYPOGRAPHY.linearNoteText} text-center w-full leading-none mb-0.5`}
+        >
           {noteText}
         </div>
       )}
