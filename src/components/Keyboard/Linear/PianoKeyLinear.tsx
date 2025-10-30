@@ -5,7 +5,6 @@ import {
   useGlobalMode,
 } from "@/lib/hooks/useGlobalMode";
 
-import { ACCIDENTAL_SYMBOL_STYLES } from "@/lib/design/AccidentalTypes";
 import { TYPOGRAPHY } from "@/lib/design/Typography";
 
 import { ActualIndex, actualToChromatic } from "@/types/IndexTypes";
