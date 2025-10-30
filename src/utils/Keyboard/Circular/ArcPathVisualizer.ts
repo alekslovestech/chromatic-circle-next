@@ -8,7 +8,10 @@ import {
   CartesianPointPair,
 } from "@/types/interfaces/CartesianPoint";
 
-import { ACCIDENTAL_SYMBOL_STYLES } from "@/lib/design/AccidentalTypes";
+const ACCIDENTAL_SYMBOL_STYLES = {
+  radialOffset: 0.85, //(0=inner, 1=outer)
+  angleCoefficient: 0.7, //how far from the edges of the pie slice to place the accidental (anglular coordinates)
+} as const;
 
 export class ArcPathVisualizer {
   public static getTextPoint(
