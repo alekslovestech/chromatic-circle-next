@@ -10,6 +10,10 @@ import { TYPOGRAPHY } from "@/lib/design/Typography";
 import { ActualIndex, actualToChromatic } from "@/types/IndexTypes";
 import { AccidentalType } from "@/types/enums/AccidentalType";
 import { KeyboardUIType } from "@/types/enums/KeyboardUIType";
+import {
+  BLACK_KEY_WIDTH_RATIO,
+  WHITE_KEYS_PER_2OCTAVES,
+} from "@/types/constants/NoteConstants";
 
 import { IndexUtils } from "@/utils/IndexUtils";
 import { LinearKeyboardUtils } from "@/utils/Keyboard/Linear/LinearKeyboardUtils";
@@ -41,9 +45,15 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   const chromaticIndex = actualToChromatic(actualIndex);
   const left = LinearKeyboardUtils.getKeyPosition(actualIndex);
 
-  const baseClasses = ["key-base", "piano-key"];
+  const baseClasses = ["key-base"];
   const isSelected = selectedNoteIndices.includes(actualIndex);
   const isScales = useIsScalePreviewMode();
+
+  const widthRatio = isShortKey ? BLACK_KEY_WIDTH_RATIO : 1;
+  const keyWidthAsPercent = `${(
+    (widthRatio * 100) /
+    WHITE_KEYS_PER_2OCTAVES
+  ).toFixed(2)}%`;
 
   const keyColors = VisualStateUtils.getKeyColors(
     chromaticIndex,
@@ -101,8 +111,10 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
       id={id}
       className={`${allBaseClasses} ${keyColors.primary} ${keyColors.text} !${
         keyColors.border
-      } flex ${isShortKey ? "" : "items-end"}`}
-      style={{ left }}
+      } absolute box-border flex ${
+        isShortKey ? "h-[60%] -translate-x-1/2 z-[2]" : "h-full z-[1]"
+      } ${isShortKey ? "" : "items-end"}`}
+      style={{ left, width: keyWidthAsPercent }}
       onClick={handleClick}
     >
       {!isShortKey && (
