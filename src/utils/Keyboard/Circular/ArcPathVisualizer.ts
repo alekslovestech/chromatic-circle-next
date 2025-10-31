@@ -1,7 +1,6 @@
 import { PolarMath } from "./PolarMath";
 
 import { ChromaticIndex } from "@/types/ChromaticIndex";
-import { AccidentalType } from "@/types/enums/AccidentalType";
 import { TWELVE } from "@/types/constants/NoteConstants";
 import {
   CartesianPoint,
@@ -48,22 +47,6 @@ export class ArcPathVisualizer {
         middleAngle - HALF_KEY_ANGLE
       ),
     };
-  }
-
-  public static getTextPointAccidental(
-    chromaticIndex: ChromaticIndex,
-    outerRadius: number,
-    innerRadius: number,
-    accidental: AccidentalType
-  ): CartesianPoint {
-    const positions = this.getAccidentalPositions(
-      chromaticIndex,
-      outerRadius,
-      innerRadius
-    );
-    return accidental === AccidentalType.Sharp
-      ? positions.sharp
-      : positions.flat;
   }
 
   public static getArcPathData(
