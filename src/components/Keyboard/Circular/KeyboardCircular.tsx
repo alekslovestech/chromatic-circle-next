@@ -100,7 +100,10 @@ export const KeyboardCircular = () => {
   };
 
   return (
-    <svg viewBox={coords.join(" ")} className="svg-container">
+    <svg
+      viewBox={coords.join(" ")}
+      className="flex w-full max-w-[800px] h-full aspect-square p-[5px] justify-center items-center [container-type:inline-size]"
+    >
       {Array.from({ length: TWELVE }).map((_, index) => {
         const chromaticIndex = ixChromatic(index);
         const actualIndex = chromaticToActual(chromaticIndex); // Need to convert for checkIsRootNote

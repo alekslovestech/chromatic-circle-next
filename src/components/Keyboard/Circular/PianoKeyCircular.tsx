@@ -52,7 +52,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     innerRadius
   );
 
-  const baseClasses = ["key-base", "pie-slice-key"];
+  const baseClasses = ["key-base"];
   const isSelected = KeyboardUtils.isSelectedEitherOctave(
     chromaticIndex,
     selectedNoteIndices
@@ -106,6 +106,8 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
       <text
         x={textPoint.x}
         y={textPoint.y}
+        textAnchor="middle"
+        dominantBaseline="middle"
         className={`text-center pointer-events-none ${TYPOGRAPHY.circularAccidental}`}
       >
         {AccidentalFormatter.getAccidentalSignForDisplay(accidental)}
@@ -122,7 +124,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   return (
     <g
       id={id}
-      className={`${allBaseClasses}  !${keyColors.border}`}
+      className={`${allBaseClasses} !${keyColors.border} hover:[&_path]:opacity-80`}
       onClick={handleClick}
     >
       <path
@@ -132,6 +134,8 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
       <text
         x={textPoint.x}
         y={textPoint.y}
+        textAnchor="middle"
+        dominantBaseline="middle"
         className={`text-center pointer-events-none ${keyColors.text} ${TYPOGRAPHY.circularNoteText}`}
       >
         {noteText}
