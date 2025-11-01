@@ -94,9 +94,12 @@ export const KeyboardLinear = () => {
   }
 
   return (
-    <div ref={containerRef} className="keyboardlinear">
+    <div
+      ref={containerRef}
+      className="relative flex box-border w-full max-h-full aspect-[4/1] p-[5px] [container-type:inline-size]"
+    >
       {/*renderScaleBoundary()}*/}
-      <div className="keyboard-inner">{keys}</div>
+      <div className="relative w-full h-full">{keys}</div>
     </div>
   );
 };

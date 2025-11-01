@@ -34,7 +34,7 @@ describe("KeyboardLinear", () => {
     const gNote = document.getElementById("linearKey07");
 
     expect(fSharpNote).toBeInTheDocument();
-    expect(fSharpNote).toHaveClass("piano-key short");
+    expect(fSharpNote).toHaveClass("short");
 
     expect(gNote).toBeInTheDocument();
     expect(gNote).toHaveTextContent("G");

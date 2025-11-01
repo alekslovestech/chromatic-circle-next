@@ -41,9 +41,7 @@ export class VisualStateUtils {
 
     return {
       background: `keys-bg${stateColor}${selectedString}`,
-      text: isSelected
-        ? `keys-textOn${stateColor}`
-        : `keys-textOn${stateColor}Faded`,
+      text: `keys-textOn${stateColor}`,
       border: isRootNote ? "keys-borderRootNote" : "keys-borderColor",
     };
   }

@@ -1,13 +1,18 @@
 "use client";
 import React from "react";
 
-import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
-
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+import { KeyboardUIType } from "@/types/enums/KeyboardUIType";
+
+import { CartesianPoint } from "@/types/interfaces/CartesianPoint";
 
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
+import { useGlobalMode } from "@/lib/hooks/useGlobalMode";
+import { TYPOGRAPHY } from "@/lib/design/Typography";
 
+import { AccidentalFormatter } from "@/utils/formatters/AccidentalFormatter";
 import { ArcPathVisualizer } from "@/utils/Keyboard/Circular/ArcPathVisualizer";
 import { IndexUtils } from "@/utils/IndexUtils";
 import { VisualStateUtils } from "@/utils/visual/VisualStateUtils";
@@ -15,8 +20,6 @@ import { KeyboardUtils } from "@/utils/Keyboard/KeyboardUtils";
 
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
-import { track } from "@/lib/track";
-import { useGlobalMode } from "@/lib/hooks/useGlobalMode";
 import { useChordPresets } from "@/contexts/ChordPresetContext";
 
 interface CircularKeyProps {
@@ -34,8 +37,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   innerRadius,
   onClick,
 }) => {
-  const { selectedMusicalKey, selectedNoteIndices, currentChordRef } =
-    useMusical();
+  const { selectedMusicalKey, selectedNoteIndices } = useMusical();
   const { monochromeMode } = useDisplay();
   const globalMode = useGlobalMode();
   const { inputMode } = useChordPresets();
@@ -50,13 +52,15 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     innerRadius
   );
 
-  const baseClasses = ["key-base", "pie-slice-key"];
+  const baseClasses = ["key-base"];
   const isSelected = KeyboardUtils.isSelectedEitherOctave(
     chromaticIndex,
     selectedNoteIndices
   );
   const isScales = useIsScalePreviewMode();
   const isBlack = IndexUtils.isBlackKey(chromaticIndex);
+  const { nextIsBlack, prevIsBlack } =
+    KeyboardUtils.getAccidentalState(chromaticIndex);
 
   // Add color classes based on visual state and selection
   const keyColors = VisualStateUtils.getKeyColors(
@@ -70,38 +74,57 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     true
   );
 
-  if (isSelected) baseClasses.push("selected"); //add for testing
-  if (isScales) baseClasses.push("disabled");
-  if (isBlack) baseClasses.push("short");
-  if (isBassNote) baseClasses.push("root-note");
+  const allBaseClasses = KeyboardUtils.buildKeyClasses(
+    baseClasses,
+    isSelected,
+    isBlack,
+    isScales,
+    isBassNote
+  );
 
   const id = KeyboardUtils.StringWithPaddedIndex("circularKey", chromaticIndex);
-  const noteText = isScales
-    ? KeyboardUtils.computeNoteTextForScalesMode(
-        chromaticIndex,
-        selectedMusicalKey,
-        KeyDisplayMode.ScaleDegree
-      )
-    : KeyboardUtils.computeNoteTextForDefaultMode(
-        chromaticIndex,
-        isSelected,
-        selectedMusicalKey,
-        currentChordRef!
-      );
+  const noteText = KeyboardUtils.getNoteText(
+    false,
+    chromaticIndex,
+    isScales,
+    selectedMusicalKey
+  );
 
-  const handleClick = () => {
-    track("keyboard_interacted", {
-      global_mode: globalMode,
-      input_mode: inputMode,
-      keyboard_ui: "circular",
-    });
-    onClick(chromaticToActual(chromaticIndex)); //forward to keyboardbase
+  const handleClick = KeyboardUtils.createKeyboardClickHandler(
+    globalMode,
+    inputMode,
+    KeyboardUIType.Circular,
+    onClick,
+    chromaticToActual(chromaticIndex)
+  );
+
+  const renderAccidental = (
+    accidental: AccidentalType,
+    textPoint: CartesianPoint
+  ) => {
+    return (
+      <text
+        x={textPoint.x}
+        y={textPoint.y}
+        textAnchor="middle"
+        dominantBaseline="middle"
+        className={`text-center pointer-events-none ${TYPOGRAPHY.circularAccidental}`}
+      >
+        {AccidentalFormatter.getAccidentalSignForDisplay(accidental)}
+      </text>
+    );
   };
+
+  const textPointAccidentals = ArcPathVisualizer.getAccidentalPositions(
+    chromaticIndex,
+    outerRadius,
+    innerRadius
+  );
 
   return (
     <g
       id={id}
-      className={`${baseClasses.join(" ")}  !${keyColors.border}`}
+      className={`${allBaseClasses} !${keyColors.border} hover:[&_path]:opacity-80`}
       onClick={handleClick}
     >
       <path
@@ -111,10 +134,20 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
       <text
         x={textPoint.x}
         y={textPoint.y}
-        className={`text-center pointer-events-none ${keyColors.text} `}
+        textAnchor="middle"
+        dominantBaseline="middle"
+        className={`text-center pointer-events-none ${keyColors.text} ${TYPOGRAPHY.circularNoteText}`}
       >
         {noteText}
       </text>
+      {!isScales && (
+        <>
+          {prevIsBlack &&
+            renderAccidental(AccidentalType.Flat, textPointAccidentals.flat)}
+          {nextIsBlack &&
+            renderAccidental(AccidentalType.Sharp, textPointAccidentals.sharp)}
+        </>
+      )}
     </g>
   );
 };

@@ -96,7 +96,7 @@ export const ChordNameDisplay: React.FC = () => {
         </div>
         <div
           id="chord-name-value"
-          className={`${TYPOGRAPHY.displayText} max-w-full text-center break-words`}
+          className={`${TYPOGRAPHY.chordNameText} max-w-full text-center break-words`}
         >
           {chordNameDisplay}
         </div>

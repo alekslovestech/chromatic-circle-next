@@ -1,9 +1,18 @@
+import { PolarMath } from "./PolarMath";
+
 import { ChromaticIndex } from "@/types/ChromaticIndex";
-import { CartesianPoint, PolarMath } from "./PolarMath";
+import { TWELVE } from "@/types/constants/NoteConstants";
+import {
+  CartesianPoint,
+  CartesianPointPair,
+} from "@/types/interfaces/CartesianPoint";
+
+const ACCIDENTAL_SYMBOL_STYLES = {
+  radialOffset: 0.85, //(0=inner, 1=outer)
+  angleCoefficient: 0.7, //how far from the edges of the pie slice to place the accidental (anglular coordinates)
+} as const;
 
 export class ArcPathVisualizer {
-  public static readonly ROMAN_POINT_COEFFICIENT = 0.85;
-
   public static getTextPoint(
     chromaticIndex: ChromaticIndex,
     outerRadius: number,
@@ -14,6 +23,30 @@ export class ArcPathVisualizer {
       (innerRadius + outerRadius) * 0.5,
       middleAngle
     );
+  }
+
+  public static getAccidentalPositions(
+    chromaticIndex: ChromaticIndex,
+    outerRadius: number,
+    innerRadius: number
+  ): CartesianPointPair {
+    const HALF_KEY_ANGLE =
+      (ACCIDENTAL_SYMBOL_STYLES.angleCoefficient * Math.PI) / TWELVE;
+    const middleAngle = PolarMath.NoteIndexToMiddleAngle(chromaticIndex);
+    const radius =
+      innerRadius +
+      (outerRadius - innerRadius) * ACCIDENTAL_SYMBOL_STYLES.radialOffset;
+
+    return {
+      sharp: PolarMath.getCartesianFromPolar(
+        radius,
+        middleAngle + HALF_KEY_ANGLE
+      ),
+      flat: PolarMath.getCartesianFromPolar(
+        radius,
+        middleAngle - HALF_KEY_ANGLE
+      ),
+    };
   }
 
   public static getArcPathData(

@@ -1,19 +1,28 @@
 import React from "react";
 
-import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
+import {
+  useIsScalePreviewMode,
+  useGlobalMode,
+} from "@/lib/hooks/useGlobalMode";
+
+import { TYPOGRAPHY } from "@/lib/design/Typography";
 
 import { ActualIndex, actualToChromatic } from "@/types/IndexTypes";
-import { KeyDisplayMode } from "@/types/enums/KeyDisplayMode";
+import { AccidentalType } from "@/types/enums/AccidentalType";
+import { KeyboardUIType } from "@/types/enums/KeyboardUIType";
+import {
+  BLACK_KEY_WIDTH_RATIO,
+  WHITE_KEYS_PER_2OCTAVES,
+} from "@/types/constants/NoteConstants";
 
 import { IndexUtils } from "@/utils/IndexUtils";
 import { LinearKeyboardUtils } from "@/utils/Keyboard/Linear/LinearKeyboardUtils";
 import { VisualStateUtils } from "@/utils/visual/VisualStateUtils";
 import { KeyboardUtils } from "@/utils/Keyboard/KeyboardUtils";
+import { AccidentalFormatter } from "@/utils/formatters/AccidentalFormatter";
 
 import { useMusical } from "@/contexts/MusicalContext";
 import { useDisplay } from "@/contexts/DisplayContext";
-import { track } from "@/lib/track";
-import { useGlobalMode } from "@/lib/hooks/useGlobalMode";
 import { useChordPresets } from "@/contexts/ChordPresetContext";
 
 interface PianoKeyProps {
@@ -27,8 +36,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   isBassNote,
   onClick,
 }) => {
-  const { selectedMusicalKey, selectedNoteIndices, currentChordRef } =
-    useMusical();
+  const { selectedMusicalKey, selectedNoteIndices } = useMusical();
   const { monochromeMode } = useDisplay();
   const globalMode = useGlobalMode();
   const { inputMode } = useChordPresets();
@@ -37,9 +45,15 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   const chromaticIndex = actualToChromatic(actualIndex);
   const left = LinearKeyboardUtils.getKeyPosition(actualIndex);
 
-  const baseClasses = ["key-base", "piano-key"];
+  const baseClasses = ["key-base"];
   const isSelected = selectedNoteIndices.includes(actualIndex);
   const isScales = useIsScalePreviewMode();
+
+  const widthRatio = isShortKey ? BLACK_KEY_WIDTH_RATIO : 1;
+  const keyWidthAsPercent = `${(
+    (widthRatio * 100) /
+    WHITE_KEYS_PER_2OCTAVES
+  ).toFixed(2)}%`;
 
   const keyColors = VisualStateUtils.getKeyColors(
     chromaticIndex,
@@ -52,43 +66,66 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
     false
   );
 
-  if (isSelected) baseClasses.push("selected"); //add for testing
-  if (isShortKey) baseClasses.push("short");
-  if (isScales) baseClasses.push("disabled");
-  if (isBassNote) baseClasses.push("root-note");
+  const allBaseClasses = KeyboardUtils.buildKeyClasses(
+    baseClasses,
+    isSelected,
+    isShortKey,
+    isScales,
+    isBassNote
+  );
 
   const id = KeyboardUtils.StringWithPaddedIndex("linearKey", actualIndex);
-  const noteText = isScales
-    ? KeyboardUtils.computeNoteTextForScalesMode(
-        chromaticIndex,
-        selectedMusicalKey,
-        KeyDisplayMode.NoteNames
-      )
-    : KeyboardUtils.computeNoteTextForDefaultMode(
-        chromaticIndex,
-        isSelected,
-        selectedMusicalKey,
-        currentChordRef
-      );
+  const noteText = KeyboardUtils.getNoteText(
+    true,
+    chromaticIndex,
+    isScales,
+    selectedMusicalKey
+  );
 
-  const handleClick = () => {
-    track("keyboard_interacted", {
-      global_mode: globalMode,
-      input_mode: inputMode,
-      keyboard_ui: "linear",
-    });
-    onClick(actualIndex); //forward to keyboardbase
+  const handleClick = KeyboardUtils.createKeyboardClickHandler(
+    globalMode,
+    inputMode,
+    KeyboardUIType.Linear,
+    onClick,
+    actualIndex
+  );
+
+  const renderAccidental = (accidental: AccidentalType) => {
+    const isSharp = accidental === AccidentalType.Sharp;
+    return (
+      <span
+        className={`absolute ${
+          isSharp ? "right-0.5" : "left-0.5"
+        } top-2/3 -translate-y-1/2 ${TYPOGRAPHY.linearAccidental}`}
+      >
+        {AccidentalFormatter.getAccidentalSignForDisplay(accidental)}
+      </span>
+    );
   };
 
-  const allBaseClasses = baseClasses.join(" ");
+  const { nextIsBlack, prevIsBlack } =
+    KeyboardUtils.getAccidentalState(chromaticIndex);
+
   return (
     <div
       id={id}
-      className={`${allBaseClasses} ${keyColors.primary} ${keyColors.text} !${keyColors.border}`}
-      style={{ left }}
+      className={`${allBaseClasses} ${keyColors.primary} ${keyColors.text} !${
+        keyColors.border
+      } absolute box-border flex ${
+        isShortKey ? "h-[60%] -translate-x-1/2 z-[2]" : "h-full z-[1]"
+      } ${isShortKey ? "" : "items-end"}`}
+      style={{ left, width: keyWidthAsPercent }}
       onClick={handleClick}
     >
-      {noteText}
+      {!isShortKey && (
+        <div
+          className={`${TYPOGRAPHY.linearNoteText} text-center w-full leading-none mb-0.5`}
+        >
+          {noteText}
+        </div>
+      )}
+      {prevIsBlack && renderAccidental(AccidentalType.Flat)}
+      {nextIsBlack && renderAccidental(AccidentalType.Sharp)}
     </div>
   );
 };
