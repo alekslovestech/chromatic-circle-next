@@ -82,7 +82,10 @@ export const KeyboardCircular = () => {
     );
 
     return [
-      <g className="scale-boundary circular" key="scale-boundrary-circular">
+      <g
+        className="stroke-keys-scaleBoundaryColor stroke-2"
+        key="scale-boundrary-circular"
+      >
         <line
           x1={point_start.x}
           y1={point_start.y}
