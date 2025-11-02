@@ -38,14 +38,14 @@ export class ArcPathVisualizer {
       (outerRadius - innerRadius) * ACCIDENTAL_SYMBOL_STYLES.radialOffset;
 
     return {
-      sharp: PolarMath.getCartesianFromPolar(
-        radius,
-        middleAngle + HALF_KEY_ANGLE
-      ),
-      flat: PolarMath.getCartesianFromPolar(
+      start: PolarMath.getCartesianFromPolar(
         radius,
         middleAngle - HALF_KEY_ANGLE
-      ),
+      ), //flat
+      end: PolarMath.getCartesianFromPolar(
+        radius,
+        middleAngle + HALF_KEY_ANGLE
+      ), //sharp
     };
   }
 

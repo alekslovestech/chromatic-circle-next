@@ -1,16 +1,13 @@
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { ActualIndex } from "@/types/IndexTypes";
 import { TWELVE } from "@/types/constants/NoteConstants";
+import { CartesianPoint } from "@/types/interfaces/CartesianPoint";
 
 const TWO_PI = 2 * Math.PI;
 const INIT_ANGLE = -Math.PI / 2; //vertical up
 
 const FULL_KEY_ANGLE = TWO_PI / TWELVE;
 const HALF_KEY_ANGLE = FULL_KEY_ANGLE / 2;
-export interface CartesianPoint {
-  x: number;
-  y: number;
-}
 
 export class PolarMath {
   static getCartesianFromPolar(

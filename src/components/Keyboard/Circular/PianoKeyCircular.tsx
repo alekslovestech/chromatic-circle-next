@@ -6,7 +6,10 @@ import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
 import { AccidentalType } from "@/types/enums/AccidentalType";
 import { KeyboardUIType } from "@/types/enums/KeyboardUIType";
 
-import { CartesianPoint } from "@/types/interfaces/CartesianPoint";
+import {
+  CartesianPoint,
+  CartesianPointPair,
+} from "@/types/interfaces/CartesianPoint";
 
 import { useIsScalePreviewMode } from "@/lib/hooks/useGlobalMode";
 import { useGlobalMode } from "@/lib/hooks/useGlobalMode";
@@ -115,11 +118,12 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     );
   };
 
-  const textPointAccidentals = ArcPathVisualizer.getAccidentalPositions(
-    chromaticIndex,
-    outerRadius,
-    innerRadius
-  );
+  const textPointAccidentals: CartesianPointPair =
+    ArcPathVisualizer.getAccidentalPositions(
+      chromaticIndex,
+      outerRadius,
+      innerRadius
+    );
 
   return (
     <g
@@ -143,9 +147,9 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
       {!isScales && (
         <>
           {prevIsBlack &&
-            renderAccidental(AccidentalType.Flat, textPointAccidentals.flat)}
+            renderAccidental(AccidentalType.Flat, textPointAccidentals.start)}
           {nextIsBlack &&
-            renderAccidental(AccidentalType.Sharp, textPointAccidentals.sharp)}
+            renderAccidental(AccidentalType.Sharp, textPointAccidentals.end)}
         </>
       )}
     </g>
