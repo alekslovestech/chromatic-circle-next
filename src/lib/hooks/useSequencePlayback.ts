@@ -1,20 +1,29 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import { chromaticToActual } from "@/types/IndexTypes";
 import { ChordProgressionType } from "@/types/enums/ChordProgressionType";
-import { ChordProgressionLibrary } from "@/types/ChordProgressionLibrary";
+import { GlobalMode } from "@/types/enums/GlobalMode";
+
+import { chromaticToActual, ixActualArray } from "@/types/IndexTypes";
+import { ChordProgressionLibrary } from "@/types/ChordProgressions/ChordProgressionLibrary";
 import { AbsoluteChord } from "@/types/AbsoluteChord";
 import { ScalePlaybackMode } from "@/types/ScalePlaybackMode";
+import { TWELVE } from "@/types/constants/NoteConstants";
+
+import { IndexUtils } from "@/utils/IndexUtils";
 
 import { PlaybackState } from "@/contexts/AudioContext";
 import { useMusical } from "@/contexts/MusicalContext";
 import { useGlobalMode } from "@/lib/hooks/useGlobalMode";
-import { GlobalMode } from "@/types/enums/GlobalMode";
-import { ScaleDegreeIndex } from "@/types/ScaleModes/ScaleDegreeType";
 
-const PLAYBACK_DURATION_SCALE = 300;
-const PLAYBACK_DURATION_CHORD = 500;
+import {
+  ScaleDegreeIndex,
+  ixScaleDegreeIndex,
+} from "@/types/ScaleModes/ScaleDegreeType";
+
+const PLAYBACK_DURATION_SCALE_SINGLE_NOTE = 300;
+const PLAYBACK_DURATION_SCALE_TRIAD = 500;
+const PLAYBACK_DURATION_CHORDPROGRESSION = 500;
 
 interface UseSequencePlaybackProps {
   isAudioInitialized: boolean;
@@ -66,20 +75,38 @@ export const useSequencePlayback = ({
 
     const currentScaleDegreeIndex = scaleIndexRef.current as ScaleDegreeIndex;
 
+    // First: check if we've played the last regular scale degree and next should be the octave
+    if (currentScaleDegreeIndex === selectedMusicalKey.scalePatternLength) {
+      // Play the octave (degree 0, one octave higher)
+      const octaveNoteIndices = selectedMusicalKey.getNoteIndicesForScaleDegree(
+        ixScaleDegreeIndex(0), // degree 0
+        scalePlaybackMode
+      );
+      // Add 12 semitones (one octave) to each note
+      const octaveIndices = octaveNoteIndices.map((idx) => idx + TWELVE);
+      const fittedOctaveIndices = ixActualArray(
+        IndexUtils.fitChordToAbsoluteRange(octaveIndices)
+      );
+      setNotesDirectly(fittedOctaveIndices);
+
+      setPlaybackState(PlaybackState.SequenceComplete);
+      stopCurrentPlayback();
+      return;
+    }
+
+    // If we're past the octave, just return (should not happen, defensive)
+    if (currentScaleDegreeIndex > selectedMusicalKey.scalePatternLength) {
+      return;
+    }
+
+    // Play current note or chord
     const noteIndices = selectedMusicalKey.getNoteIndicesForScaleDegree(
       currentScaleDegreeIndex,
       scalePlaybackMode
     );
     setNotesDirectly(noteIndices);
 
-    // Check if we've reached the end of the scale
-    if (currentScaleDegreeIndex >= selectedMusicalKey.scalePatternLength - 1) {
-      setPlaybackState(PlaybackState.SequenceComplete);
-      stopCurrentPlayback();
-      return;
-    }
-
-    // Move to next scale degree
+    // Always increment once at the end
     scaleIndexRef.current++;
   }, [
     selectedMusicalKey,
@@ -104,20 +131,37 @@ export const useSequencePlayback = ({
     chordIndexRef.current = (chordIndexRef.current + 1) % progression.length;
   }, [selectedProgression, selectedMusicalKey, setNotesDirectly]);
 
+  const getPlaybackDuration = useCallback(
+    (scalePlaybackMode: ScalePlaybackMode) => {
+      return scalePlaybackMode === ScalePlaybackMode.SingleNote
+        ? PLAYBACK_DURATION_SCALE_SINGLE_NOTE
+        : PLAYBACK_DURATION_SCALE_TRIAD;
+    },
+    []
+  );
+
   const resumeCurrentPlayback = useCallback(() => {
+    const playbackDuration = getPlaybackDuration(scalePlaybackMode);
     if (globalMode === GlobalMode.Scales) {
       scaleTimerRef.current = setInterval(
         () => playScaleStep(),
-        PLAYBACK_DURATION_SCALE
+        playbackDuration
       );
     } else if (globalMode === GlobalMode.ChordProgressions) {
       progressionTimerRef.current = setInterval(
         () => playProgressionStep(),
-        PLAYBACK_DURATION_CHORD
+        PLAYBACK_DURATION_CHORDPROGRESSION
       );
     }
     setPlaybackState(PlaybackState.SequencePlaying);
-  }, [globalMode, playScaleStep, playProgressionStep, setPlaybackState]);
+  }, [
+    globalMode,
+    playScaleStep,
+    playProgressionStep,
+    setPlaybackState,
+    scalePlaybackMode,
+    getPlaybackDuration,
+  ]);
 
   // Start functions - define these after step functions
   const startScalePlayback = useCallback(() => {
@@ -125,23 +169,30 @@ export const useSequencePlayback = ({
 
     scaleIndexRef.current = 0;
     playScaleStep();
-
+    const playbackDuration = getPlaybackDuration(scalePlaybackMode);
     scaleTimerRef.current = setInterval(
       () => playScaleStep(),
-      PLAYBACK_DURATION_SCALE
+      playbackDuration
     );
     setPlaybackState(PlaybackState.SequencePlaying);
-  }, [selectedMusicalKey, isAudioInitialized, setPlaybackState, playScaleStep]);
+  }, [
+    selectedMusicalKey,
+    isAudioInitialized,
+    setPlaybackState,
+    playScaleStep,
+    scalePlaybackMode,
+    getPlaybackDuration,
+  ]);
 
   const startChordProgressionPlayback = useCallback(() => {
     if (!selectedProgression || !selectedMusicalKey) return;
 
     chordIndexRef.current = 0;
     playProgressionStep();
-
+    const playbackDuration = getPlaybackDuration(scalePlaybackMode);
     progressionTimerRef.current = setInterval(
       () => playProgressionStep(),
-      PLAYBACK_DURATION_CHORD
+      playbackDuration
     );
     setPlaybackState(PlaybackState.SequencePlaying);
   }, [

@@ -1,6 +1,6 @@
 import { ChordType } from "@/types/enums/ChordType";
 
-import { ChordProgression } from "@/types/ChordProgression";
+import { ChordProgression } from "@/types/ChordProgressions/ChordProgression";
 import { DEFAULT_MUSICAL_KEY, MusicalKey } from "@/types/Keys/MusicalKey";
 import { AbsoluteChord } from "@/types/AbsoluteChord";
 import { KeyType } from "@/types/enums/KeyType";

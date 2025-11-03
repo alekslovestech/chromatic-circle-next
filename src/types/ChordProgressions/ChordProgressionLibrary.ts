@@ -1,4 +1,4 @@
-import { ChordProgression } from "@/types/ChordProgression";
+import { ChordProgression } from "./ChordProgression";
 import { ChordProgressionType } from "@/types/enums/ChordProgressionType";
 
 class ChordProgressionLibrarySingleton {
