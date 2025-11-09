@@ -4,6 +4,6 @@ export interface CartesianPoint {
 }
 
 export interface CartesianPointPair {
-  sharp: CartesianPoint;
-  flat: CartesianPoint;
+  start: CartesianPoint; //also flat
+  end: CartesianPoint; //also sharp
 }

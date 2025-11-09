@@ -28,11 +28,7 @@ export const KeyboardLinear = () => {
     const circleCenterY = 105;
     // Create a vertical line at the tonic position - in both scales
     return (
-      <svg
-        className="scale-boundary-svg"
-        viewBox="0 -10 100 110"
-        preserveAspectRatio="none"
-      >
+      <svg viewBox="0 -10 100 110" preserveAspectRatio="none">
         <line
           className="scale-boundary linear"
           key="scale-boundrary-left"

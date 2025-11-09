@@ -2,7 +2,11 @@ import { TWELVE } from "@/types/constants/NoteConstants";
 import { ChromaticIndex, ixChromatic } from "@/types/ChromaticIndex";
 
 import { ColorUtils } from "@/utils/visual/ColorUtils";
-import { CartesianPoint, PolarMath } from "@/utils/Keyboard/Circular/PolarMath";
+import { PolarMath } from "@/utils/Keyboard/Circular/PolarMath";
+import {
+  CartesianPoint,
+  CartesianPointPair,
+} from "@/types/interfaces/CartesianPoint";
 
 import { useMusical } from "@/contexts/MusicalContext";
 
@@ -45,28 +49,28 @@ export const KeyboardCircular = () => {
     tonicIndex: ChromaticIndex,
     innerRadius: number,
     outerRadius: number
-  ): CartesianPoint[] => {
+  ): CartesianPointPair => {
     const COEFF = 1.05;
     const { startAngle: startOfTonicAngle } =
       PolarMath.NoteIndexToAngleRange(tonicIndex);
-    const point_start: CartesianPoint = PolarMath.getCartesianFromPolar(
+    const start: CartesianPoint = PolarMath.getCartesianFromPolar(
       innerRadius / COEFF,
       startOfTonicAngle,
       true
     );
 
-    const point_end: CartesianPoint = PolarMath.getCartesianFromPolar(
+    const end: CartesianPoint = PolarMath.getCartesianFromPolar(
       outerRadius * COEFF,
       startOfTonicAngle,
       true
     );
 
-    return [point_start, point_end];
+    return { start, end };
   };
 
   const renderScaleBoundary = () => {
     if (!isScales) return null;
-    const [point_start, point_end] = getLineCartesianPoints(
+    const line = getLineCartesianPoints(
       selectedMusicalKey.tonicIndex,
       INNER_RADIUS,
       OUTER_RADIUS * 0.95
@@ -82,12 +86,15 @@ export const KeyboardCircular = () => {
     );
 
     return [
-      <g className="scale-boundary circular" key="scale-boundrary-circular">
+      <g
+        className="stroke-keys-scaleBoundaryColor stroke-2"
+        key="scale-boundrary-circular"
+      >
         <line
-          x1={point_start.x}
-          y1={point_start.y}
-          x2={point_end.x}
-          y2={point_end.y}
+          x1={line.start.x}
+          y1={line.start.y}
+          x2={line.end.x}
+          y2={line.end.y}
         />
         <circle
           cx={point_end_circle.x}

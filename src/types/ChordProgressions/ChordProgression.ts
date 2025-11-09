@@ -1,6 +1,6 @@
-import { MusicalKey } from "./Keys/MusicalKey";
-import { RomanResolver } from "../utils/resolvers/RomanResolver";
-import { AbsoluteChord } from "./AbsoluteChord";
+import { MusicalKey } from "@/types/Keys/MusicalKey";
+import { AbsoluteChord } from "@/types/AbsoluteChord";
+import { RomanResolver } from "@/utils/resolvers/RomanResolver";
 
 // Represents a chord progression
 export class ChordProgression {
