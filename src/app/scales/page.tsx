@@ -1,19 +1,32 @@
 "use client";
+import Link from "next/link";
+import { useEffect } from "react";
 
 import { COMMON_STYLES, NOTATION_LAYOUT } from "@/lib/design";
 import { usePageLayout, useBorder } from "@/lib/hooks";
 
 import { StaffRenderer } from "@/components/StaffRenderer";
+import { ChordNameDisplay } from "@/components/ChordNameDisplay";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
 import { SettingsPanelScales } from "@/components/Settings/SettingsPanelScales";
-import { ChordNameDisplay } from "@/components/ChordNameDisplay";
-import Link from "next/link";
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 
-export default function ScalesdPage() {
+import { useAudio } from "@/contexts/AudioContext";
+import { useMusical } from "@/contexts/MusicalContext";
+
+export default function ScalesPage() {
   const { gridRows, gridAreas, gridColumns } = usePageLayout();
   const border = useBorder();
+  const { isAudioInitialized, startSequencePlayback } = useAudio();
+  const { selectedMusicalKey } = useMusical();
+
+  // Autoplay when entering scales mode and audio is initialized
+  useEffect(() => {
+    if (isAudioInitialized && selectedMusicalKey) {
+      startSequencePlayback();
+    }
+  }, [isAudioInitialized, selectedMusicalKey, startSequencePlayback]);
 
   return (
     <div

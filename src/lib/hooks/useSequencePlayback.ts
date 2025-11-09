@@ -44,23 +44,18 @@ export const useSequencePlayback = ({
     ScalePlaybackMode.SingleNote
   );
   const scaleIndexRef = useRef<number>(0);
-  const scaleTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const sequenceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Chord progression-specific state
   const [selectedProgression, setSelectedProgression] =
     useState<ChordProgressionType | null>(null);
   const chordIndexRef = useRef<number>(0);
-  const progressionTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Helper functions - define these first
   const stopCurrentPlayback = useCallback(() => {
-    if (scaleTimerRef.current) {
-      clearInterval(scaleTimerRef.current);
-      scaleTimerRef.current = null;
-    }
-    if (progressionTimerRef.current) {
-      clearInterval(progressionTimerRef.current);
-      progressionTimerRef.current = null;
+    if (sequenceTimerRef.current) {
+      clearInterval(sequenceTimerRef.current);
+      sequenceTimerRef.current = null;
     }
   }, []);
 
@@ -143,12 +138,12 @@ export const useSequencePlayback = ({
   const resumeCurrentPlayback = useCallback(() => {
     const playbackDuration = getPlaybackDuration(scalePlaybackMode);
     if (globalMode === GlobalMode.Scales) {
-      scaleTimerRef.current = setInterval(
+      sequenceTimerRef.current = setInterval(
         () => playScaleStep(),
         playbackDuration
       );
     } else if (globalMode === GlobalMode.ChordProgressions) {
-      progressionTimerRef.current = setInterval(
+      sequenceTimerRef.current = setInterval(
         () => playProgressionStep(),
         PLAYBACK_DURATION_CHORDPROGRESSION
       );
@@ -167,10 +162,11 @@ export const useSequencePlayback = ({
   const startScalePlayback = useCallback(() => {
     if (!selectedMusicalKey || !isAudioInitialized) return;
 
+    stopCurrentPlayback();
     scaleIndexRef.current = 0;
     playScaleStep();
     const playbackDuration = getPlaybackDuration(scalePlaybackMode);
-    scaleTimerRef.current = setInterval(
+    sequenceTimerRef.current = setInterval(
       () => playScaleStep(),
       playbackDuration
     );
@@ -182,15 +178,17 @@ export const useSequencePlayback = ({
     playScaleStep,
     scalePlaybackMode,
     getPlaybackDuration,
+    stopCurrentPlayback,
   ]);
 
   const startChordProgressionPlayback = useCallback(() => {
     if (!selectedProgression || !selectedMusicalKey) return;
 
+    stopCurrentPlayback();
     chordIndexRef.current = 0;
     playProgressionStep();
     const playbackDuration = getPlaybackDuration(scalePlaybackMode);
-    progressionTimerRef.current = setInterval(
+    sequenceTimerRef.current = setInterval(
       () => playProgressionStep(),
       playbackDuration
     );
@@ -200,16 +198,23 @@ export const useSequencePlayback = ({
     selectedMusicalKey,
     setPlaybackState,
     playProgressionStep,
+    stopCurrentPlayback,
   ]);
 
   // Unified playback functions - define these last
   const startSequencePlayback = useCallback(() => {
+    stopCurrentPlayback();
     if (globalMode === GlobalMode.Scales) {
       startScalePlayback();
     } else if (globalMode === GlobalMode.ChordProgressions) {
       startChordProgressionPlayback();
     }
-  }, [globalMode, startScalePlayback, startChordProgressionPlayback]);
+  }, [
+    globalMode,
+    startScalePlayback,
+    startChordProgressionPlayback,
+    stopCurrentPlayback,
+  ]);
 
   const pauseSequencePlayback = useCallback(() => {
     if (playbackState === PlaybackState.SequencePlaying) {
