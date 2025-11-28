@@ -113,7 +113,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
         keyColors.border
       } absolute box-border flex ${
         isShortKey ? "h-[60%] -translate-x-1/2 z-[2]" : "h-full z-[1]"
-      } ${isShortKey ? "" : "items-end"}`}
+      } ${isShortKey ? "" : "items-end"} shadow-linear-key`}
       style={{ left, width: keyWidthAsPercent }}
       onClick={handleClick}
     >
