@@ -29,6 +29,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        "linear-key": "inset 0 0 0 1px rgba(0, 0, 0, 0.5)",
+      },
       colors: {
         test: "red",
         test2: "#598abb",

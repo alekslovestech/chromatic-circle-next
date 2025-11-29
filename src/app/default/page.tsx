@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { COMMON_STYLES, NOTATION_LAYOUT } from "@/lib/design";
 import { usePageLayout, useBorder } from "@/lib/hooks";
 
@@ -9,7 +11,6 @@ import { InputSettings } from "@/components/Settings/InputSettings";
 import { SettingsPanelDefault } from "@/components/Settings/SettingsPanelDefault";
 import { KeyboardLinear } from "@/components/Keyboard/Linear/KeyboardLinear";
 import { KeyboardCircular } from "@/components/Keyboard/Circular/KeyboardCircular";
-import Link from "next/link";
 import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 
 export default function Home() {
