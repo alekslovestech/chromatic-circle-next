@@ -26,6 +26,9 @@ module.exports = {
     {
       pattern: /text-accidental-*/,
     },
+    {
+      pattern: /fill-accidental-*/,
+    },
   ],
   theme: {
     extend: {
@@ -56,6 +59,8 @@ module.exports = {
         accidental: {
           symbol: "rgb(51, 51, 51)", // Same as textOnWhite for consistency
           symbolFaded: "rgba(100, 100, 110, 0.7)", // Slightly more visible than textOnWhiteFaded
+          // Add highlight color for accidentals similar to keys.bgHighlighted
+          highlight: "rgb(113, 182, 255)", // Matches keys.bgHighlighted
         },
         // New playback button colors
         playback: {

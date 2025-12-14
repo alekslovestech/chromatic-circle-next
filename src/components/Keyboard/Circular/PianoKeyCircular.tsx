@@ -1,7 +1,11 @@
 "use client";
 import React from "react";
 
-import { ChromaticIndex } from "@/types/ChromaticIndex";
+import {
+  ChromaticIndex,
+  addChromatic,
+  subChromatic,
+} from "@/types/ChromaticIndex";
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
 import { AccidentalType } from "@/types/enums/AccidentalType";
 import { KeyboardUIType } from "@/types/enums/KeyboardUIType";
@@ -65,6 +69,24 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   const { nextIsBlack, prevIsBlack } =
     KeyboardUtils.getAccidentalState(chromaticIndex);
 
+  // Check if adjacent black notes are selected (for highlighting accidentals)
+  const prevChromaticIndex = subChromatic(chromaticIndex, 1);
+  const nextChromaticIndex = addChromatic(chromaticIndex, 1);
+  const prevBlackIsSelected =
+    !isBlack &&
+    prevIsBlack &&
+    KeyboardUtils.isSelectedEitherOctave(
+      prevChromaticIndex,
+      selectedNoteIndices
+    );
+  const nextBlackIsSelected =
+    !isBlack &&
+    nextIsBlack &&
+    KeyboardUtils.isSelectedEitherOctave(
+      nextChromaticIndex,
+      selectedNoteIndices
+    );
+
   // Add color classes based on visual state and selection
   const keyColors = VisualStateUtils.getKeyColors(
     chromaticIndex,
@@ -103,15 +125,19 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
 
   const renderAccidental = (
     accidental: AccidentalType,
-    textPoint: CartesianPoint
+    textPoint: CartesianPoint,
+    isHighlighted: boolean = false
   ) => {
+    const colorClass = isHighlighted
+      ? "fill-accidental-symbol"
+      : "fill-accidental-symbolFaded";
     return (
       <text
         x={textPoint.x}
         y={textPoint.y}
         textAnchor="middle"
         dominantBaseline="middle"
-        className={`text-center pointer-events-none ${TYPOGRAPHY.circularAccidental}`}
+        className={`text-center pointer-events-none ${TYPOGRAPHY.circularAccidental} ${colorClass}`}
       >
         {AccidentalFormatter.getAccidentalSignForDisplay(accidental)}
       </text>
@@ -147,9 +173,17 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
       {!isScales && (
         <>
           {prevIsBlack &&
-            renderAccidental(AccidentalType.Flat, textPointAccidentals.start)}
+            renderAccidental(
+              AccidentalType.Flat,
+              textPointAccidentals.start,
+              prevBlackIsSelected
+            )}
           {nextIsBlack &&
-            renderAccidental(AccidentalType.Sharp, textPointAccidentals.end)}
+            renderAccidental(
+              AccidentalType.Sharp,
+              textPointAccidentals.end,
+              nextBlackIsSelected
+            )}
         </>
       )}
     </g>
