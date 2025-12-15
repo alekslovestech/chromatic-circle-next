@@ -97,10 +97,10 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   );
 
   // Determine if white key text should be highlighted (when the white key itself is selected)
-  const shouldHighlightWhiteKeyText = !isShortKey && isSelected;
-  const textColorClass = shouldHighlightWhiteKeyText
-    ? "text-accidental-highlightOnSelected"
-    : keyColors.text;
+  const textColorClass =
+    !isShortKey && isSelected
+      ? VisualStateUtils.getHighlightedTextColorClass("text")
+      : keyColors.text;
 
   const id = KeyboardUtils.StringWithPaddedIndex("linearKey", actualIndex);
   const noteText = KeyboardUtils.getNoteText(
@@ -123,9 +123,10 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
     isHighlighted: boolean = false
   ) => {
     const isSharp = accidental === AccidentalType.Sharp;
-    const colorClass = isHighlighted
-      ? "text-accidental-highlight"
-      : "text-accidental-symbolFaded";
+    const colorClass = VisualStateUtils.getAccidentalColorClass(
+      isHighlighted,
+      "text"
+    );
     return (
       <span
         className={`absolute ${

@@ -80,4 +80,19 @@ export class VisualStateUtils {
     );
     return this.computeColors(pureColors, isSvg);
   }
+
+  // Get text color class for white keys when selected
+  static getHighlightedTextColorClass(prefix: "fill" | "text"): string {
+    return `${prefix}-accidental-highlightOnSelected`;
+  }
+
+  // Get accidental color class
+  static getAccidentalColorClass(
+    isHighlighted: boolean,
+    prefix: "fill" | "text"
+  ): string {
+    return isHighlighted
+      ? `${prefix}-accidental-highlight`
+      : `${prefix}-accidental-symbolFaded`;
+  }
 }

@@ -108,10 +108,10 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   );
 
   // Determine if white key text should be highlighted (when the white key itself is selected)
-  const shouldHighlightWhiteKeyText = !isBlack && isSelected;
-  const textColorClass = shouldHighlightWhiteKeyText
-    ? "fill-accidental-highlightOnSelected"
-    : keyColors.text;
+  const textColorClass =
+    !isBlack && isSelected
+      ? VisualStateUtils.getHighlightedTextColorClass("fill")
+      : keyColors.text;
 
   const id = KeyboardUtils.StringWithPaddedIndex("circularKey", chromaticIndex);
   const noteText = KeyboardUtils.getNoteText(
@@ -134,9 +134,10 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     textPoint: CartesianPoint,
     isHighlighted: boolean = false
   ) => {
-    const colorClass = isHighlighted
-      ? "fill-accidental-highlight"
-      : "fill-accidental-symbolFaded";
+    const colorClass = VisualStateUtils.getAccidentalColorClass(
+      isHighlighted,
+      "fill"
+    );
     return (
       <text
         x={textPoint.x}
