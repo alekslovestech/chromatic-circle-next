@@ -78,7 +78,18 @@ export class VisualStateUtils {
       isBlack,
       isSelected
     );
-    return this.computeColors(pureColors, isSvg);
+    const baseColors = this.computeColors(pureColors, isSvg);
+
+    // Override text color if white key is selected (highlighted)
+    const textColor =
+      !isBlack && isSelected
+        ? this.getHighlightedTextColorClass(isSvg ? "fill" : "text")
+        : baseColors.text;
+
+    return {
+      ...baseColors,
+      text: textColor,
+    };
   }
 
   // Get text color class for white keys when selected

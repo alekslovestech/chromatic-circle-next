@@ -96,12 +96,6 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
     isBassNote
   );
 
-  // Determine if white key text should be highlighted (when the white key itself is selected)
-  const textColorClass =
-    !isShortKey && isSelected
-      ? VisualStateUtils.getHighlightedTextColorClass("text")
-      : keyColors.text;
-
   const id = KeyboardUtils.StringWithPaddedIndex("linearKey", actualIndex);
   const noteText = KeyboardUtils.getNoteText(
     true,
@@ -153,7 +147,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
     >
       {!isShortKey && (
         <div
-          className={`${TYPOGRAPHY.linearNoteText} text-center w-full leading-none mb-0.5 ${textColorClass}`}
+          className={`${TYPOGRAPHY.linearNoteText} text-center w-full leading-none mb-0.5 ${keyColors.text}`}
         >
           {noteText}
         </div>
