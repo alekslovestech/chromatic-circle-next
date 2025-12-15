@@ -130,7 +130,7 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   ) => {
     const colorClass = VisualStateUtils.getAccidentalColorClass(
       isHighlighted,
-      "fill"
+      true // isSvg
     );
     return (
       <text

@@ -119,7 +119,7 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
     const isSharp = accidental === AccidentalType.Sharp;
     const colorClass = VisualStateUtils.getAccidentalColorClass(
       isHighlighted,
-      "text"
+      false // isSvg
     );
     return (
       <span
