@@ -4,15 +4,10 @@ import { InputMode } from "@/types/enums/InputMode";
 import { GlobalMode } from "@/types/enums/GlobalMode";
 import { KeyboardUIType } from "@/types/enums/KeyboardUIType";
 
-import {
-  addChromatic,
-  ChromaticIndex,
-  subChromatic,
-} from "@/types/ChromaticIndex";
+import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 
-import { IndexUtils } from "@/utils/IndexUtils";
 import { BlackKeyUtils } from "@/utils/BlackKeyUtils";
 import { NoteFormatter } from "@/utils/formatters/NoteFormatter";
 import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
