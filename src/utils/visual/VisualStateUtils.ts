@@ -1,12 +1,6 @@
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 
-interface PureColors {
-  background: string; // "keys-bgWhite"
-  text: string; // "keys-textOnWhite"
-  border: string; // "keys-borderColor"
-}
-
 interface KeyColors {
   primary: string; // "fill-keys-bgWhite" or "bg-keys-bgWhite"
   text: string; // "fill-keys-textOnWhite" or "text-keys-textOnWhite"
@@ -14,16 +8,17 @@ interface KeyColors {
 }
 
 export class VisualStateUtils {
-  // Step 1: Pure business logic (8 parameters → semantic colors)
-  static getPureColors(
+  static getKeyColors(
     chromaticIndex: ChromaticIndex,
     isScales: boolean,
     musicalKey: MusicalKey,
     monochromeMode: boolean,
     isRootNote: boolean,
     isBlack: boolean,
-    isSelected: boolean
-  ): PureColors {
+    isSelected: boolean,
+    isSvg: boolean
+  ): KeyColors {
+    // Determine state color based on context
     const isDiatonic = musicalKey.scaleModeInfo.isDiatonicNote(
       chromaticIndex,
       musicalKey.tonicIndex
@@ -39,45 +34,43 @@ export class VisualStateUtils {
 
     const selectedString = isSelected ? "Selected" : "";
 
-    return {
-      background: `keys-bg${stateColor}${selectedString}`,
-      text: `keys-textOn${stateColor}`,
-      border: isRootNote ? "keys-borderRootNote" : "keys-borderColor",
-    };
-  }
-
-  // Step 2: Rendering transformation (pure colors + isSvg → CSS classes)
-  static computeColors(pureColors: PureColors, isSvg: boolean): KeyColors {
+    // Build CSS classes
     const primaryPrefix = isSvg ? "fill" : "bg";
-    const textPrefix = isSvg ? "fill" : "text";
+    const textPrefix = this.getTextPrefix(isSvg);
 
-    return {
-      primary: `${primaryPrefix}-${pureColors.background}`,
-      text: `${textPrefix}-${pureColors.text}`,
-      border: `border-${pureColors.border}`,
-    };
+    const primary = `${primaryPrefix}-keys-bg${stateColor}${selectedString}`;
+    const border = `border-${
+      isRootNote ? "keys-borderRootNote" : "keys-borderColor"
+    }`;
+
+    // Determine text color (with highlight override for selected white keys)
+    const baseTextColor = `${textPrefix}-keys-textOn${stateColor}`;
+    const text =
+      !isBlack && isSelected
+        ? this.getHighlightedTextColorClass(isSvg)
+        : baseTextColor;
+
+    return { primary, text, border };
   }
 
-  // Convenience method: Maintains existing API
-  static getKeyColors(
-    chromaticIndex: ChromaticIndex,
-    isScales: boolean,
-    musicalKey: MusicalKey,
-    monochromeMode: boolean,
-    isRootNote: boolean,
-    isBlack: boolean,
-    isSelected: boolean,
+  // Get accidental color class
+  static getAccidentalColorClass(
+    isHighlighted: boolean,
     isSvg: boolean
-  ): KeyColors {
-    const pureColors = this.getPureColors(
-      chromaticIndex,
-      isScales,
-      musicalKey,
-      monochromeMode,
-      isRootNote,
-      isBlack,
-      isSelected
-    );
-    return this.computeColors(pureColors, isSvg);
+  ): string {
+    const prefix = this.getTextPrefix(isSvg);
+    return isHighlighted
+      ? `${prefix}-accidental-highlight`
+      : `${prefix}-accidental-symbolFaded`;
+  }
+
+  // Get text color class for white keys when selected
+  private static getHighlightedTextColorClass(isSvg: boolean): string {
+    const prefix = this.getTextPrefix(isSvg);
+    return `${prefix}-accidental-highlightOnSelected`;
+  }
+
+  private static getTextPrefix(isSvg: boolean): string {
+    return isSvg ? "fill" : "text";
   }
 }

@@ -4,15 +4,11 @@ import { InputMode } from "@/types/enums/InputMode";
 import { GlobalMode } from "@/types/enums/GlobalMode";
 import { KeyboardUIType } from "@/types/enums/KeyboardUIType";
 
-import {
-  addChromatic,
-  ChromaticIndex,
-  subChromatic,
-} from "@/types/ChromaticIndex";
+import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
 import { MusicalKey } from "@/types/Keys/MusicalKey";
 
-import { IndexUtils } from "@/utils/IndexUtils";
+import { BlackKeyUtils } from "@/utils/BlackKeyUtils";
 import { NoteFormatter } from "@/utils/formatters/NoteFormatter";
 import { MusicalKeyFormatter } from "@/utils/formatters/MusicalKeyFormatter";
 import { ChromaticNoteResolver } from "@/utils/resolvers/ChromaticNoteResolver";
@@ -55,7 +51,7 @@ export class KeyboardUtils {
   }
 
   static computeNoteTextForDefaultMode(chromaticIndex: ChromaticIndex): string {
-    if (IndexUtils.isBlackKey(chromaticIndex)) return "";
+    if (BlackKeyUtils.isBlackKey(chromaticIndex)) return "";
     const resolvedNote = ChromaticNoteResolver.resolveAbsoluteNote(
       chromaticIndex,
       AccidentalType.Sharp // Use sharp as default
@@ -63,11 +59,43 @@ export class KeyboardUtils {
     return NoteFormatter.formatForDisplay(resolvedNote);
   }
 
-  //returns true if the next or previous chromatic index is a black key
-  static getAccidentalState(chromaticIndex: ChromaticIndex) {
-    const nextIsBlack = IndexUtils.isBlackKey(addChromatic(chromaticIndex, 1));
-    const prevIsBlack = IndexUtils.isBlackKey(subChromatic(chromaticIndex, 1));
-    return { nextIsBlack, prevIsBlack };
+  // Unified function: returns adjacent key state (black status and selection status)
+  static getAdjacentKeyState(
+    chromaticIndex: ChromaticIndex,
+    selectedNoteIndices: ActualIndex[]
+  ): {
+    prevIsBlack: boolean;
+    nextIsBlack: boolean;
+    prevBlackIsSelected: boolean;
+    nextBlackIsSelected: boolean;
+  } {
+    const isBlack = BlackKeyUtils.isBlackKey(chromaticIndex);
+    const {
+      prev: prevChromaticIndex,
+      next: nextChromaticIndex,
+      prevIsBlack,
+      nextIsBlack,
+    } = BlackKeyUtils.getAdjacentChromaticIndices(chromaticIndex);
+
+    if (isBlack) {
+      return {
+        prevIsBlack,
+        nextIsBlack,
+        prevBlackIsSelected: false,
+        nextBlackIsSelected: false,
+      };
+    }
+
+    return {
+      prevIsBlack,
+      nextIsBlack,
+      prevBlackIsSelected:
+        prevIsBlack &&
+        this.isSelectedEitherOctave(prevChromaticIndex, selectedNoteIndices),
+      nextBlackIsSelected:
+        nextIsBlack &&
+        this.isSelectedEitherOctave(nextChromaticIndex, selectedNoteIndices),
+    };
   }
 
   static buildKeyClasses(

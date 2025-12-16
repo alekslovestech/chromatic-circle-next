@@ -8,7 +8,7 @@ import {
   WHITE_KEYS_PER_2OCTAVES,
   BLACK_KEY_WIDTH_RATIO,
 } from "@/types/constants/NoteConstants";
-import { IndexUtils } from "@/utils/IndexUtils";
+import { BlackKeyUtils } from "@/utils/BlackKeyUtils";
 
 //utils for calculating the linear keyboard geometry
 export class LinearKeyboardUtils {
@@ -30,7 +30,7 @@ export class LinearKeyboardUtils {
       ((position + WHITE_KEYS_PER_OCTAVE) / WHITE_KEYS_PER_2OCTAVES) * 100;
     //black keys are 70% of the width of a white key
     const shortKeyWidthPercent = 70 / WHITE_KEYS_PER_2OCTAVES / 2;
-    const offset = IndexUtils.isBlackKey(tonicIndex)
+    const offset = BlackKeyUtils.isBlackKey(tonicIndex)
       ? -shortKeyWidthPercent
       : 0;
     return { x1: x1 + offset, x2: x2 + offset };
@@ -46,7 +46,7 @@ export class LinearKeyboardUtils {
     const x2 = (position + WHITE_KEYS_PER_OCTAVE) * whiteKeyWidth;
     //black keys are 70% of the width of a white key
     const shortKeyWidth = (whiteKeyWidth * BLACK_KEY_WIDTH_RATIO) / 2;
-    const offset = IndexUtils.isBlackKey(tonicIndex) ? -shortKeyWidth : 0;
+    const offset = BlackKeyUtils.isBlackKey(tonicIndex) ? -shortKeyWidth : 0;
     return { x1: x1 + offset, x2: x2 + offset };
   }
 

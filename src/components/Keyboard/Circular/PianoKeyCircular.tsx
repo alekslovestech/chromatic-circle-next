@@ -17,7 +17,7 @@ import { TYPOGRAPHY } from "@/lib/design/Typography";
 
 import { AccidentalFormatter } from "@/utils/formatters/AccidentalFormatter";
 import { ArcPathVisualizer } from "@/utils/Keyboard/Circular/ArcPathVisualizer";
-import { IndexUtils } from "@/utils/IndexUtils";
+import { BlackKeyUtils } from "@/utils/BlackKeyUtils";
 import { VisualStateUtils } from "@/utils/visual/VisualStateUtils";
 import { KeyboardUtils } from "@/utils/Keyboard/KeyboardUtils";
 
@@ -61,9 +61,9 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     selectedNoteIndices
   );
   const isScales = useIsScalePreviewMode();
-  const isBlack = IndexUtils.isBlackKey(chromaticIndex);
-  const { nextIsBlack, prevIsBlack } =
-    KeyboardUtils.getAccidentalState(chromaticIndex);
+  const isBlack = BlackKeyUtils.isBlackKey(chromaticIndex);
+  const { prevIsBlack, nextIsBlack, prevBlackIsSelected, nextBlackIsSelected } =
+    KeyboardUtils.getAdjacentKeyState(chromaticIndex, selectedNoteIndices);
 
   // Add color classes based on visual state and selection
   const keyColors = VisualStateUtils.getKeyColors(
@@ -103,15 +103,20 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
 
   const renderAccidental = (
     accidental: AccidentalType,
-    textPoint: CartesianPoint
+    textPoint: CartesianPoint,
+    isHighlighted: boolean = false
   ) => {
+    const colorClass = VisualStateUtils.getAccidentalColorClass(
+      isHighlighted,
+      true // isSvg
+    );
     return (
       <text
         x={textPoint.x}
         y={textPoint.y}
         textAnchor="middle"
         dominantBaseline="middle"
-        className={`text-center pointer-events-none ${TYPOGRAPHY.circularAccidental}`}
+        className={`text-center pointer-events-none ${TYPOGRAPHY.circularAccidental} ${colorClass}`}
       >
         {AccidentalFormatter.getAccidentalSignForDisplay(accidental)}
       </text>
@@ -147,9 +152,17 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
       {!isScales && (
         <>
           {prevIsBlack &&
-            renderAccidental(AccidentalType.Flat, textPointAccidentals.start)}
+            renderAccidental(
+              AccidentalType.Flat,
+              textPointAccidentals.start,
+              prevBlackIsSelected
+            )}
           {nextIsBlack &&
-            renderAccidental(AccidentalType.Sharp, textPointAccidentals.end)}
+            renderAccidental(
+              AccidentalType.Sharp,
+              textPointAccidentals.end,
+              nextBlackIsSelected
+            )}
         </>
       )}
     </g>

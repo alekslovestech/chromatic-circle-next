@@ -15,7 +15,7 @@ import {
   WHITE_KEYS_PER_2OCTAVES,
 } from "@/types/constants/NoteConstants";
 
-import { IndexUtils } from "@/utils/IndexUtils";
+import { BlackKeyUtils } from "@/utils/BlackKeyUtils";
 import { LinearKeyboardUtils } from "@/utils/Keyboard/Linear/LinearKeyboardUtils";
 import { VisualStateUtils } from "@/utils/visual/VisualStateUtils";
 import { KeyboardUtils } from "@/utils/Keyboard/KeyboardUtils";
@@ -41,13 +41,16 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   const globalMode = useGlobalMode();
   const { inputMode } = useChordPresets();
 
-  const isShortKey = IndexUtils.isBlackKey(actualIndex);
   const chromaticIndex = actualToChromatic(actualIndex);
+  const isShortKey = BlackKeyUtils.isBlackKey(chromaticIndex);
   const left = LinearKeyboardUtils.getKeyPosition(actualIndex);
 
   const baseClasses = ["key-base"];
   const isSelected = selectedNoteIndices.includes(actualIndex);
   const isScales = useIsScalePreviewMode();
+
+  const { prevIsBlack, nextIsBlack, prevBlackIsSelected, nextBlackIsSelected } =
+    KeyboardUtils.getAdjacentKeyState(chromaticIndex, selectedNoteIndices);
 
   const widthRatio = isShortKey ? BLACK_KEY_WIDTH_RATIO : 1;
   const keyWidthAsPercent = `${(
@@ -90,26 +93,32 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
     actualIndex
   );
 
-  const renderAccidental = (accidental: AccidentalType) => {
+  const renderAccidental = (
+    accidental: AccidentalType,
+    isHighlighted: boolean = false
+  ) => {
     const isSharp = accidental === AccidentalType.Sharp;
+    const colorClass = VisualStateUtils.getAccidentalColorClass(
+      isHighlighted,
+      false // isSvg
+    );
     return (
       <span
         className={`absolute ${
           isSharp ? "right-0.5" : "left-0.5"
-        } top-2/3 -translate-y-1/2 ${TYPOGRAPHY.linearAccidental}`}
+        } top-2/3 -translate-y-1/2 ${
+          TYPOGRAPHY.linearAccidental
+        } ${colorClass}`}
       >
         {AccidentalFormatter.getAccidentalSignForDisplay(accidental)}
       </span>
     );
   };
 
-  const { nextIsBlack, prevIsBlack } =
-    KeyboardUtils.getAccidentalState(chromaticIndex);
-
   return (
     <div
       id={id}
-      className={`${allBaseClasses} ${keyColors.primary} ${keyColors.text} !${
+      className={`${allBaseClasses} ${keyColors.primary} !${
         keyColors.border
       } absolute box-border flex ${
         isShortKey ? "h-[60%] -translate-x-1/2 z-[2]" : "h-full z-[1]"
@@ -119,13 +128,15 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
     >
       {!isShortKey && (
         <div
-          className={`${TYPOGRAPHY.linearNoteText} text-center w-full leading-none mb-0.5`}
+          className={`${TYPOGRAPHY.linearNoteText} text-center w-full leading-none mb-0.5 ${keyColors.text}`}
         >
           {noteText}
         </div>
       )}
-      {prevIsBlack && renderAccidental(AccidentalType.Flat)}
-      {nextIsBlack && renderAccidental(AccidentalType.Sharp)}
+      {prevIsBlack &&
+        renderAccidental(AccidentalType.Flat, prevBlackIsSelected)}
+      {nextIsBlack &&
+        renderAccidental(AccidentalType.Sharp, nextBlackIsSelected)}
     </div>
   );
 };

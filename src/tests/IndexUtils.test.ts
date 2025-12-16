@@ -7,6 +7,7 @@ import {
   ixInversion,
 } from "@/types/IndexTypes";
 import { IndexUtils } from "@/utils/IndexUtils";
+import { BlackKeyUtils } from "@/utils/BlackKeyUtils";
 import { ChordUtils } from "@/utils/ChordUtils";
 
 describe("IndexUtils", () => {
@@ -129,13 +130,13 @@ describe("IndexUtils", () => {
 
     blackKeys.forEach((key) => {
       it(`${key} is black`, () => {
-        expect(IndexUtils.isBlackKey(ixActual(key))).toBeTruthy();
+        expect(BlackKeyUtils.isBlackKey(ixChromatic(key))).toBeTruthy();
       });
     });
 
     whiteKeys.forEach((key) => {
       it(`${key} is white`, () => {
-        expect(IndexUtils.isBlackKey(ixActual(key))).toBeFalsy();
+        expect(BlackKeyUtils.isBlackKey(ixChromatic(key))).toBeFalsy();
       });
     });
   });
