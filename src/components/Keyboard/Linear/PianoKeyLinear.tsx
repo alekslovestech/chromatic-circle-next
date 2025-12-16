@@ -9,14 +9,13 @@ import { TYPOGRAPHY } from "@/lib/design/Typography";
 
 import { ActualIndex, actualToChromatic } from "@/types/IndexTypes";
 import { AccidentalType } from "@/types/enums/AccidentalType";
-import { addChromatic, subChromatic } from "@/types/ChromaticIndex";
 import { KeyboardUIType } from "@/types/enums/KeyboardUIType";
 import {
   BLACK_KEY_WIDTH_RATIO,
   WHITE_KEYS_PER_2OCTAVES,
 } from "@/types/constants/NoteConstants";
 
-import { IndexUtils } from "@/utils/IndexUtils";
+import { BlackKeyUtils } from "@/utils/BlackKeyUtils";
 import { LinearKeyboardUtils } from "@/utils/Keyboard/Linear/LinearKeyboardUtils";
 import { VisualStateUtils } from "@/utils/visual/VisualStateUtils";
 import { KeyboardUtils } from "@/utils/Keyboard/KeyboardUtils";
@@ -42,34 +41,16 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   const globalMode = useGlobalMode();
   const { inputMode } = useChordPresets();
 
-  const isShortKey = IndexUtils.isBlackKey(actualIndex);
   const chromaticIndex = actualToChromatic(actualIndex);
+  const isShortKey = BlackKeyUtils.isBlackKey(chromaticIndex);
   const left = LinearKeyboardUtils.getKeyPosition(actualIndex);
 
   const baseClasses = ["key-base"];
   const isSelected = selectedNoteIndices.includes(actualIndex);
   const isScales = useIsScalePreviewMode();
 
-  const { nextIsBlack, prevIsBlack } =
-    KeyboardUtils.getAccidentalState(chromaticIndex);
-
-  // Check if adjacent black notes are selected (for highlighting accidentals)
-  const prevChromaticIndex = subChromatic(chromaticIndex, 1);
-  const nextChromaticIndex = addChromatic(chromaticIndex, 1);
-  const prevBlackIsSelected =
-    !isShortKey &&
-    prevIsBlack &&
-    selectedNoteIndices.some((idx) => {
-      const idxChromatic = actualToChromatic(idx);
-      return idxChromatic === prevChromaticIndex;
-    });
-  const nextBlackIsSelected =
-    !isShortKey &&
-    nextIsBlack &&
-    selectedNoteIndices.some((idx) => {
-      const idxChromatic = actualToChromatic(idx);
-      return idxChromatic === nextChromaticIndex;
-    });
+  const { prevIsBlack, nextIsBlack, prevBlackIsSelected, nextBlackIsSelected } =
+    KeyboardUtils.getAdjacentKeyState(chromaticIndex, selectedNoteIndices);
 
   const widthRatio = isShortKey ? BLACK_KEY_WIDTH_RATIO : 1;
   const keyWidthAsPercent = `${(

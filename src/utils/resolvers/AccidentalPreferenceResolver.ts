@@ -6,7 +6,7 @@ import { IntervalType } from "@/types/enums/IntervalType";
 import { NoteGroupingId } from "@/types/NoteGroupingId";
 import { ChromaticIndex } from "@/types/ChromaticIndex";
 
-import { IndexUtils } from "@/utils/IndexUtils";
+import { BlackKeyUtils } from "@/utils/BlackKeyUtils";
 
 export class AccidentalPreferenceResolver {
   static getChordPresetSpellingPreference(
@@ -24,11 +24,11 @@ export class AccidentalPreferenceResolver {
   ): AccidentalType {
     switch (chordQuality) {
       case ChordQuality.Minor_Interval:
-        return IndexUtils.isBlackKey(rootChromaticIndex)
+        return BlackKeyUtils.isBlackKey(rootChromaticIndex)
           ? AccidentalType.Sharp
           : AccidentalType.Flat;
       case ChordQuality.Major_Interval:
-        return IndexUtils.isBlackKey(rootChromaticIndex)
+        return BlackKeyUtils.isBlackKey(rootChromaticIndex)
           ? AccidentalType.Flat
           : AccidentalType.Sharp;
 
@@ -41,7 +41,7 @@ export class AccidentalPreferenceResolver {
           ? AccidentalType.Flat
           : AccidentalType.Sharp;
       case ChordQuality.Diminished:
-        return IndexUtils.isBlackKey(rootChromaticIndex)
+        return BlackKeyUtils.isBlackKey(rootChromaticIndex)
           ? AccidentalType.Sharp
           : AccidentalType.Flat;
       //there's no purely correct way to do this, sometimes mixed accidentals are best
@@ -52,7 +52,7 @@ export class AccidentalPreferenceResolver {
 
       //optimal spelling not yet defined, or there's no preference
       default:
-        return IndexUtils.isBlackKey(rootChromaticIndex)
+        return BlackKeyUtils.isBlackKey(rootChromaticIndex)
           ? AccidentalType.Sharp
           : AccidentalType.Flat;
     }

@@ -4,10 +4,6 @@ import { ChromaticIndex, subChromatic } from "@/types/ChromaticIndex";
 import { ActualIndex } from "@/types/IndexTypes";
 
 export class IndexUtils {
-  static isBlackKey(actualIndex: ActualIndex | ChromaticIndex): boolean {
-    return [1, 3, 6, 8, 10].includes(actualIndex % TWELVE);
-  }
-
   //everything relative to root note
   static normalizeIndices(indices: number[]): number[] {
     const rootNote = indices[0];

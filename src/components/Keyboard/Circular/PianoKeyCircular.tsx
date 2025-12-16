@@ -1,11 +1,7 @@
 "use client";
 import React from "react";
 
-import {
-  ChromaticIndex,
-  addChromatic,
-  subChromatic,
-} from "@/types/ChromaticIndex";
+import { ChromaticIndex } from "@/types/ChromaticIndex";
 import { ActualIndex, chromaticToActual } from "@/types/IndexTypes";
 import { AccidentalType } from "@/types/enums/AccidentalType";
 import { KeyboardUIType } from "@/types/enums/KeyboardUIType";
@@ -21,7 +17,7 @@ import { TYPOGRAPHY } from "@/lib/design/Typography";
 
 import { AccidentalFormatter } from "@/utils/formatters/AccidentalFormatter";
 import { ArcPathVisualizer } from "@/utils/Keyboard/Circular/ArcPathVisualizer";
-import { IndexUtils } from "@/utils/IndexUtils";
+import { BlackKeyUtils } from "@/utils/BlackKeyUtils";
 import { VisualStateUtils } from "@/utils/visual/VisualStateUtils";
 import { KeyboardUtils } from "@/utils/Keyboard/KeyboardUtils";
 
@@ -65,27 +61,9 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
     selectedNoteIndices
   );
   const isScales = useIsScalePreviewMode();
-  const isBlack = IndexUtils.isBlackKey(chromaticIndex);
-  const { nextIsBlack, prevIsBlack } =
-    KeyboardUtils.getAccidentalState(chromaticIndex);
-
-  // Check if adjacent black notes are selected (for highlighting accidentals)
-  const prevChromaticIndex = subChromatic(chromaticIndex, 1);
-  const nextChromaticIndex = addChromatic(chromaticIndex, 1);
-  const prevBlackIsSelected =
-    !isBlack &&
-    prevIsBlack &&
-    KeyboardUtils.isSelectedEitherOctave(
-      prevChromaticIndex,
-      selectedNoteIndices
-    );
-  const nextBlackIsSelected =
-    !isBlack &&
-    nextIsBlack &&
-    KeyboardUtils.isSelectedEitherOctave(
-      nextChromaticIndex,
-      selectedNoteIndices
-    );
+  const isBlack = BlackKeyUtils.isBlackKey(chromaticIndex);
+  const { prevIsBlack, nextIsBlack, prevBlackIsSelected, nextBlackIsSelected } =
+    KeyboardUtils.getAdjacentKeyState(chromaticIndex, selectedNoteIndices);
 
   // Add color classes based on visual state and selection
   const keyColors = VisualStateUtils.getKeyColors(
