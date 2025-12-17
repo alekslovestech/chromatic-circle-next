@@ -24,11 +24,4 @@ export class BlackKeyUtils {
       nextIsBlack: this.isBlackKey(nextChromaticIndex),
     };
   }
-
-  // Returns true if the next or previous chromatic index is a black key
-  static getAccidentalState(chromaticIndex: ChromaticIndex) {
-    const { prevIsBlack, nextIsBlack } =
-      this.getAdjacentChromaticIndices(chromaticIndex);
-    return { prevIsBlack, nextIsBlack };
-  }
 }
