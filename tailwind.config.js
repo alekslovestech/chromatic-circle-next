@@ -86,7 +86,7 @@ module.exports = {
 
           bgHighlighted: "rgb(113, 182, 255)", //"#B0D6FD",
           bgHighlightedSelected: "rgb(59, 97, 222)", //"#3B61DE",
-          textOnHighlighted: "rgb(68, 68, 68)", //"#444444",
+          textOnHighlighted: "rgb(255, 255, 255)", // #FFFFFF
 
           bgMuted: "rgb(228, 229, 230)", //"#E4E5E6",
           bgMutedSelected: "rgb(150, 150, 150)", //"#969696",
