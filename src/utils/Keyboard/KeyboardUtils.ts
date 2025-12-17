@@ -64,35 +64,31 @@ export class KeyboardUtils {
     chromaticIndex: ChromaticIndex,
     selectedNoteIndices: ActualIndex[]
   ): {
-    prevIsBlack: boolean;
-    nextIsBlack: boolean;
-    prevBlackIsSelected: boolean;
-    nextBlackIsSelected: boolean;
+    prevAccidentalExists: boolean;
+    nextAccidentalExists: boolean;
+    prevAccidentalSelected: boolean;
+    nextAccidentalSelected: boolean;
   } {
     const isBlack = BlackKeyUtils.isBlackKey(chromaticIndex);
-    const {
-      prev: prevChromaticIndex,
-      next: nextChromaticIndex,
-      prevIsBlack,
-      nextIsBlack,
-    } = BlackKeyUtils.getAdjacentChromaticIndices(chromaticIndex);
+    const { prevChromaticIndex, nextChromaticIndex, prevIsBlack, nextIsBlack } =
+      BlackKeyUtils.getAdjacentChromaticIndices(chromaticIndex);
 
     if (isBlack) {
       return {
-        prevIsBlack,
-        nextIsBlack,
-        prevBlackIsSelected: false,
-        nextBlackIsSelected: false,
+        prevAccidentalExists: prevIsBlack,
+        nextAccidentalExists: nextIsBlack,
+        prevAccidentalSelected: false,
+        nextAccidentalSelected: false,
       };
     }
 
     return {
-      prevIsBlack,
-      nextIsBlack,
-      prevBlackIsSelected:
+      prevAccidentalExists: prevIsBlack,
+      nextAccidentalExists: nextIsBlack,
+      prevAccidentalSelected:
         prevIsBlack &&
         this.isSelectedEitherOctave(prevChromaticIndex, selectedNoteIndices),
-      nextBlackIsSelected:
+      nextAccidentalSelected:
         nextIsBlack &&
         this.isSelectedEitherOctave(nextChromaticIndex, selectedNoteIndices),
     };

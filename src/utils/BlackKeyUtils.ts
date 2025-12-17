@@ -1,28 +1,27 @@
-import { TWELVE } from "@/types/constants/NoteConstants";
 import {
-  addChromatic,
   ChromaticIndex,
+  addChromatic,
   subChromatic,
 } from "@/types/ChromaticIndex";
 
 export class BlackKeyUtils {
   static isBlackKey(chromaticIndex: ChromaticIndex): boolean {
-    return [1, 3, 6, 8, 10].includes(chromaticIndex % TWELVE);
+    return [1, 3, 6, 8, 10].includes(chromaticIndex);
   }
 
   static getAdjacentChromaticIndices(chromaticIndex: ChromaticIndex): {
-    prev: ChromaticIndex;
-    next: ChromaticIndex;
+    prevChromaticIndex: ChromaticIndex;
+    nextChromaticIndex: ChromaticIndex;
     prevIsBlack: boolean;
     nextIsBlack: boolean;
   } {
-    const prev = subChromatic(chromaticIndex, 1);
-    const next = addChromatic(chromaticIndex, 1);
+    const prevChromaticIndex = subChromatic(chromaticIndex, 1);
+    const nextChromaticIndex = addChromatic(chromaticIndex, 1);
     return {
-      prev,
-      next,
-      prevIsBlack: this.isBlackKey(prev),
-      nextIsBlack: this.isBlackKey(next),
+      prevChromaticIndex,
+      nextChromaticIndex,
+      prevIsBlack: this.isBlackKey(prevChromaticIndex),
+      nextIsBlack: this.isBlackKey(nextChromaticIndex),
     };
   }
 
@@ -33,4 +32,3 @@ export class BlackKeyUtils {
     return { prevIsBlack, nextIsBlack };
   }
 }
-

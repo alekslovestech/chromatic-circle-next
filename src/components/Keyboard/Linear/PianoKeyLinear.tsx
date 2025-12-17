@@ -49,8 +49,12 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
   const isSelected = selectedNoteIndices.includes(actualIndex);
   const isScales = useIsScalePreviewMode();
 
-  const { prevIsBlack, nextIsBlack, prevBlackIsSelected, nextBlackIsSelected } =
-    KeyboardUtils.getAdjacentKeyState(chromaticIndex, selectedNoteIndices);
+  const {
+    prevAccidentalExists,
+    nextAccidentalExists,
+    prevAccidentalSelected,
+    nextAccidentalSelected,
+  } = KeyboardUtils.getAdjacentKeyState(chromaticIndex, selectedNoteIndices);
 
   const widthRatio = isShortKey ? BLACK_KEY_WIDTH_RATIO : 1;
   const keyWidthAsPercent = `${(
@@ -133,10 +137,10 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
           {noteText}
         </div>
       )}
-      {prevIsBlack &&
-        renderAccidental(AccidentalType.Flat, prevBlackIsSelected)}
-      {nextIsBlack &&
-        renderAccidental(AccidentalType.Sharp, nextBlackIsSelected)}
+      {prevAccidentalExists &&
+        renderAccidental(AccidentalType.Flat, prevAccidentalSelected)}
+      {nextAccidentalExists &&
+        renderAccidental(AccidentalType.Sharp, nextAccidentalSelected)}
     </div>
   );
 };
