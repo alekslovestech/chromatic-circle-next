@@ -43,10 +43,10 @@ export class VisualStateUtils {
       isRootNote ? "keys-borderRootNote" : "keys-borderColor"
     }`;
 
-    // Determine text color (with highlight override for selected white keys)
+    // Determine text color (with highlight override for selected white keys in non-scale mode only)
     const baseTextColor = `${textPrefix}-keys-textOn${stateColor}`;
     const text =
-      !isBlack && isSelected
+      !isScales && !isBlack && isSelected
         ? this.getHighlightedTextColorClass(isSvg)
         : baseTextColor;
 

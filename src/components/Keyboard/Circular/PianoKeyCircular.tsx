@@ -62,8 +62,12 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   );
   const isScales = useIsScalePreviewMode();
   const isBlack = BlackKeyUtils.isBlackKey(chromaticIndex);
-  const { prevIsBlack, nextIsBlack, prevBlackIsSelected, nextBlackIsSelected } =
-    KeyboardUtils.getAdjacentKeyState(chromaticIndex, selectedNoteIndices);
+  const {
+    prevAccidentalExists,
+    nextAccidentalExists,
+    prevAccidentalSelected,
+    nextAccidentalSelected,
+  } = KeyboardUtils.getAdjacentKeyState(chromaticIndex, selectedNoteIndices);
 
   // Add color classes based on visual state and selection
   const keyColors = VisualStateUtils.getKeyColors(
@@ -151,17 +155,17 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
       </text>
       {!isScales && (
         <>
-          {prevIsBlack &&
+          {prevAccidentalExists &&
             renderAccidental(
               AccidentalType.Flat,
               textPointAccidentals.start,
-              prevBlackIsSelected
+              prevAccidentalSelected
             )}
-          {nextIsBlack &&
+          {nextAccidentalExists &&
             renderAccidental(
               AccidentalType.Sharp,
               textPointAccidentals.end,
-              nextBlackIsSelected
+              nextAccidentalSelected
             )}
         </>
       )}
