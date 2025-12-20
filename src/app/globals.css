@@ -1,8 +1,8 @@
+@import "@/styles/KeyboardBase.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import "@/styles/KeyboardBase.css";
 
 /* Ensure Next.js root and parents have full height */
 html,
