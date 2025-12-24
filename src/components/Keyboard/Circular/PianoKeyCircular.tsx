@@ -62,12 +62,6 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   );
   const isScales = useIsScalePreviewMode();
   const isBlack = BlackKeyUtils.isBlackKey(chromaticIndex);
-  const {
-    prevAccidentalExists,
-    nextAccidentalExists,
-    prevAccidentalSelected,
-    nextAccidentalSelected,
-  } = KeyboardUtils.getAdjacentKeyState(chromaticIndex, selectedNoteIndices);
 
   // Add color classes based on visual state and selection
   const keyColors = VisualStateUtils.getKeyColors(
@@ -108,10 +102,13 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
   const renderAccidental = (
     accidental: AccidentalType,
     textPoint: CartesianPoint,
-    isHighlighted: boolean = false
+    isSelected: boolean
   ) => {
-    const colorClass = VisualStateUtils.getAccidentalColorClass(
-      isHighlighted,
+    // Account for monochrome mode: in monochrome mode, black keys are treated as white
+    const effectiveIsBlack = isBlack && !monochromeMode;
+    const colorClass = VisualStateUtils.getTextColorClassForNonScaleMode(
+      isSelected,
+      effectiveIsBlack,
       true // isSvg
     );
     return (
@@ -153,20 +150,18 @@ export const PianoKeyCircular: React.FC<CircularKeyProps> = ({
       >
         {noteText}
       </text>
-      {!isScales && (
+      {!isScales && isBlack && (
         <>
-          {prevAccidentalExists &&
-            renderAccidental(
-              AccidentalType.Flat,
-              textPointAccidentals.start,
-              prevAccidentalSelected
-            )}
-          {nextAccidentalExists &&
-            renderAccidental(
-              AccidentalType.Sharp,
-              textPointAccidentals.end,
-              nextAccidentalSelected
-            )}
+          {renderAccidental(
+            AccidentalType.Sharp,
+            textPointAccidentals.start,
+            isSelected
+          )}
+          {renderAccidental(
+            AccidentalType.Flat,
+            textPointAccidentals.end,
+            isSelected
+          )}
         </>
       )}
     </g>
