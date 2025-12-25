@@ -43,31 +43,37 @@ export class VisualStateUtils {
       isRootNote ? "keys-borderRootNote" : "keys-borderColor"
     }`;
 
-    // Determine text color (with highlight override for selected white keys in non-scale mode only)
-    const baseTextColor = `${textPrefix}-keys-textOn${stateColor}`;
-    const text =
-      !isScales && !isBlack && isSelected
-        ? this.getHighlightedTextColorClass(isSvg)
-        : baseTextColor;
+    // Determine text color - always use Selected or Faded variants
+    // For scale mode, use Highlighted/Muted colors (no Selected/Faded variants)
+    // For non-scale mode, use White/Black with Selected or Faded suffix
+    let text: string;
+    if (isScales) {
+      // Scale mode uses Highlighted/Muted colors (no Selected/Faded variants)
+      text = `${textPrefix}-keys-textOn${stateColor}`;
+    } else {
+      // Non-scale mode: always use Selected or Faded variant
+      const effectiveIsBlack = isBlack && !monochromeMode;
+      text = this.getTextColorClassForNonScaleMode(
+        isSelected,
+        effectiveIsBlack,
+        isSvg
+      );
+    }
 
     return { primary, text, border };
   }
 
-  // Get accidental color class
-  static getAccidentalColorClass(
-    isHighlighted: boolean,
+  // Get text color class for non-scale mode
+  // isBlack should be the effective value (already accounting for monochrome mode if needed)
+  static getTextColorClassForNonScaleMode(
+    isSelected: boolean,
+    isBlack: boolean,
     isSvg: boolean
   ): string {
     const prefix = this.getTextPrefix(isSvg);
-    return isHighlighted
-      ? `${prefix}-accidental-highlight`
-      : `${prefix}-accidental-symbolFaded`;
-  }
-
-  // Get text color class for white keys when selected
-  private static getHighlightedTextColorClass(isSvg: boolean): string {
-    const prefix = this.getTextPrefix(isSvg);
-    return `${prefix}-accidental-highlightOnSelected`;
+    const state = isSelected ? "Selected" : "Faded";
+    const keyType = isBlack ? "Black" : "White";
+    return `${prefix}-keys-textOn${keyType}${state}`;
   }
 
   private static getTextPrefix(isSvg: boolean): string {

@@ -16,7 +16,8 @@ import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 export default function Home() {
   const { gridRows, gridAreas, gridColumns } = usePageLayout();
   const border = useBorder();
-
+  const SHOW_STAFF_RENDERER =
+    process.env.NEXT_PUBLIC_SHOW_STAFF_RENDERER !== "false";
   return (
     <div
       className={`DefaultPage-container ${COMMON_STYLES.pageContainer} bg-canvas-bgDefault ${border}`}
@@ -30,16 +31,18 @@ export default function Home() {
           width: "100%",
         }}
       >
-        <div
-          className="grid"
-          style={{
-            gridArea: "staff",
-            ...NOTATION_LAYOUT,
-          }}
-        >
-          <StaffRenderer />
-          <ChordNameDisplay />
-        </div>
+        {SHOW_STAFF_RENDERER && (
+          <div
+            className="grid"
+            style={{
+              gridArea: "staff",
+              ...NOTATION_LAYOUT,
+            }}
+          >
+            <StaffRenderer />
+            <ChordNameDisplay />
+          </div>
+        )}
         <div
           className={`DefaultPage-settings-container ${COMMON_STYLES.settingsPanel} ${border}`}
           style={{ gridArea: "settings" }}

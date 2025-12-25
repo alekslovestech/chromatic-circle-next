@@ -23,12 +23,6 @@ module.exports = {
     {
       pattern: /text-playback-*/,
     },
-    {
-      pattern: /text-accidental-*/,
-    },
-    {
-      pattern: /fill-accidental-*/,
-    },
   ],
   theme: {
     extend: {
@@ -37,12 +31,10 @@ module.exports = {
       },
       colors: {
         test: "red",
-        test2: "#598abb",
 
         buttons: {
           bgDefault: "rgb(225, 227, 230)", //"#e1e3e6",
           bgSelected: "rgb(99, 132, 165)", //"#598abb",
-          bgHover: "rgba(99, 132, 165, 0.3)",
           textDefault: "rgb(26, 26, 26)", //"#1A1A1A",
           textSelected: "rgb(255, 255, 255)", //"#ffffff",
           border: "rgba(45, 45, 45, 0.05)",
@@ -55,13 +47,6 @@ module.exports = {
           actionBgActive: "rgb(200, 210, 220)", // Even darker when actively pressed
           actionBorder: "rgba(60, 60, 60, 0.2)", // Stronger border for definition
           actionText: "rgb(50, 50, 50)", // Slightly different text color
-        },
-        accidental: {
-          symbol: "rgb(51, 51, 51)", // Same as textOnWhite for consistency
-          symbolFaded: "rgba(100, 100, 110, 0.7)", // Slightly more visible than textOnWhiteFaded
-          // Add highlight color for accidentals similar to keys.bgHighlighted
-          highlight: "rgb(113, 182, 255)", // Matches keys.bgHighlighted
-          highlightOnSelected: "rgb(37, 99, 235)", // Darker blue for text on selected white keys
         },
         // New playback button colors
         playback: {
@@ -77,8 +62,8 @@ module.exports = {
           bgBlack: "rgb(68, 68, 68)", //"#444444",
           bgWhiteSelected: "rgb(190, 227, 236)", //"#BEE3EC",
           bgBlackSelected: "rgb(90, 156, 179)", //"#5A9CB3",
-          textOnWhite: "rgb(51, 51, 51)", //"#333333",
-          textOnBlack: "rgb(245, 245, 245)", //"#F5F5F5",
+          textOnWhiteSelected: "rgb(63, 105, 201)", // Softer blue for selected white keys
+          textOnBlackSelected: "rgb(255, 255, 255)", // White for selected black keys
           textOnWhiteFaded: "rgba(100, 100, 110, 0.5)", //"#64646E",
           textOnBlackFaded: "rgba(200, 200, 210, 0.5)", //"#C8C8D2",
           bgHover: "rgb(240, 240, 240)", //"#f0f0f0",

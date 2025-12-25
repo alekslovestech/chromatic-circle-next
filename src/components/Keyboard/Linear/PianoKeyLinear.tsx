@@ -99,11 +99,12 @@ export const PianoKeyLinear: React.FC<PianoKeyProps> = ({
 
   const renderAccidental = (
     accidental: AccidentalType,
-    isHighlighted: boolean = false
+    isSelected: boolean
   ) => {
     const isSharp = accidental === AccidentalType.Sharp;
-    const colorClass = VisualStateUtils.getAccidentalColorClass(
-      isHighlighted,
+    const colorClass = VisualStateUtils.getTextColorClassForNonScaleMode(
+      isSelected,
+      false, // isBlack: Accidentals are on white keys in linear keyboard
       false // isSvg
     );
     return (
