@@ -160,4 +160,54 @@ describe("IndexUtils", () => {
       });
     });
   });
+
+  describe("transposeNotes", () => {
+    const cases = [
+      {
+        desc: "transpose up",
+        input: [0, 4, 7],
+        amount: 1,
+        expected: [1, 5, 8],
+      },
+      {
+        desc: "transpose down",
+        input: [0, 4, 7],
+        amount: -1,
+        expected: [11, 15, 18],
+      },
+      {
+        desc: "transpose from B to C (11 to 12)",
+        input: [11],
+        amount: 1,
+        expected: [12],
+      },
+      {
+        desc: "transpose down from C to B (12 to 11)",
+        input: [12],
+        amount: -1,
+        expected: [11],
+      },
+      {
+        desc: "transpose chord from B to C",
+        input: [11, 15, 18],
+        amount: 1,
+        expected: [12, 16, 19],
+      },
+
+      {
+        desc: "transpose at lower bound",
+        input: [0],
+        amount: -1,
+        expected: [11],
+      },
+    ];
+
+    cases.forEach(({ desc, input, amount, expected }) => {
+      it(desc, () => {
+        const actualInput = ixActualArray(input);
+        const result = IndexUtils.transposeNotes(actualInput, amount);
+        expect(result).toEqual(ixActualArray(expected));
+      });
+    });
+  });
 });

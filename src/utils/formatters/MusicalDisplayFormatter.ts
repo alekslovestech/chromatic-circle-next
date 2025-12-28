@@ -242,7 +242,8 @@ export class MusicalDisplayFormatter {
       const rootNoteIndex = indices[0];
       return makeChordReference(rootNoteIndex, id, inversionIndex);
     } else {
-      // Inversion - need to calculate what the root would be in root position
+      // Inversion - calculate root note and normalize to chromatic (0-11)
+      // This is because inversions represent the same chord regardless of octave
       const chordOffsets = ChordUtils.getOffsetsFromIdAndInversion(
         id,
         inversionIndex
@@ -251,8 +252,11 @@ export class MusicalDisplayFormatter {
       const bassNote = indices[0]; // First note in user input (bass note)
 
       // Calculate root: bassNote = rootNote + bassOffset, so rootNote = bassNote - bassOffset
-      const rootNote = ixActual(bassNote - bassOffset);
-      return makeChordReference(rootNote, id, inversionIndex);
+      let rootNote = bassNote - bassOffset;
+      // Normalize to 0-11 range for inversions (chromatic root)
+      while (rootNote < 0) rootNote += TWELVE;
+      const rootNoteChromatic = ixActual(rootNote % TWELVE);
+      return makeChordReference(rootNoteChromatic, id, inversionIndex);
     }
   }
 

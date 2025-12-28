@@ -161,6 +161,27 @@ describe("ChordMatch tests", () => {
       inv: 0,
       indices: [0, 6, 15],
     },
+    {
+      desc: "major chord root at index 11 (B)",
+      root: 11,
+      type: ChordType.Major,
+      inv: 0,
+      indices: [11, 15, 18],
+    },
+    {
+      desc: "major chord in second octave (C at index 12)",
+      root: 12,
+      type: ChordType.Major,
+      inv: 0,
+      indices: [12, 16, 19],
+    },
+    {
+      desc: "major chord first inversion in second octave",
+      root: 0,
+      type: ChordType.Major,
+      inv: 1,
+      indices: [16, 19, 24], // E-G-C in second octave
+    },
   ];
 
   testCases.forEach(({ desc, root, type, inv, indices }) => {

@@ -98,5 +98,17 @@ describe("ChordUpdates", () => {
       keyVerificationUtils.verifySelectedLinearKeys([11, 14, 19]);
       verifyChordName("G/B");
     });
+
+    test("Transposing from B (index 11) to C should go to C in next octave (index 12)", () => {
+      // Start by clicking B note (index 11) to set up B major
+      ReactTestUtils.clickKey("linearKey11"); // B
+      keyVerificationUtils.verifySelectedLinearKeys([11, 15, 18]); // B, D#, F#
+      verifyChordName("B");
+
+      // Transpose up - should go to C major in next octave [12, 16, 19], not [0, 4, 7]
+      ReactTestUtils.clickKey("transpose-up-button");
+      keyVerificationUtils.verifySelectedLinearKeys([12, 16, 19]); // C, E, G in second octave
+      verifyChordName("C");
+    });
   });
 });
