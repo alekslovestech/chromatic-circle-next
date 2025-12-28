@@ -239,7 +239,7 @@ export class MusicalDisplayFormatter {
 
     if (inversionIndex === 0) {
       // Root position - first note is the root
-      const rootNoteIndex = ixActual(indices[0] % TWELVE);
+      const rootNoteIndex = indices[0];
       return makeChordReference(rootNoteIndex, id, inversionIndex);
     } else {
       // Inversion - need to calculate what the root would be in root position
@@ -252,8 +252,7 @@ export class MusicalDisplayFormatter {
 
       // Calculate root: bassNote = rootNote + bassOffset, so rootNote = bassNote - bassOffset
       const rootNote = ixActual(bassNote - bassOffset);
-      const rootNoteIndex = ixActual(rootNote % TWELVE);
-      return makeChordReference(rootNoteIndex, id, inversionIndex);
+      return makeChordReference(rootNote, id, inversionIndex);
     }
   }
 
