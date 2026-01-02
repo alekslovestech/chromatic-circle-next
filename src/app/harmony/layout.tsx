@@ -1,6 +1,6 @@
-import { defaultViewMetadata } from "@/lib/metadata";
+import { harmonyViewMetadata } from "@/lib/metadata";
 
-export const metadata = defaultViewMetadata;
+export const metadata = harmonyViewMetadata;
 
 export default function HarmonyLayout({
   children,
@@ -9,4 +9,3 @@ export default function HarmonyLayout({
 }>) {
   return <>{children}</>;
 }
-

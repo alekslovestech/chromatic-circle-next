@@ -6,9 +6,9 @@ export const useGlobalMode = () => {
   const pathname = usePathname();
   switch (pathname) {
     case "/harmony":
-      return GlobalMode.Default;
+      return GlobalMode.Harmony;
     case "/harmony-demo":
-      return GlobalMode.Default;
+      return GlobalMode.Harmony;
     case "/scales":
       return GlobalMode.Scales;
     case "/scales-demo":
@@ -18,7 +18,7 @@ export const useGlobalMode = () => {
     case "/minimal":
       return GlobalMode.Minimal;
     default:
-      return GlobalMode.Default;
+      return GlobalMode.Harmony;
   }
 };
 

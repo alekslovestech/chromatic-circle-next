@@ -48,7 +48,7 @@ const SCALES_ROWS: GridRowsConfig = {
 };
 
 export const LAYOUT_CONFIGS = {
-  [GlobalMode.Default]: {
+  [GlobalMode.Harmony]: {
     portrait: {
       gridRows: DEFAULT_ROWS.portrait,
       gridAreas: DEFAULT_GRID_AREAS.portrait,

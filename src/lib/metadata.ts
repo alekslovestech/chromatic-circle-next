@@ -48,7 +48,7 @@ export const baseMetadata: Metadata = {
 };
 
 // Default view metadata
-export const defaultViewMetadata: Metadata = {
+export const harmonyViewMetadata: Metadata = {
   ...baseMetadata,
   title: "Music Wheel App - Intervals and Chords",
   keywords: ["black and white keys", "intervals", "chord presets"],
