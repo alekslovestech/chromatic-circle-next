@@ -59,7 +59,7 @@ export default function ScalesPage() {
           {/* Add GlobalModeButton positioned in top-left corner */}
           {!isDemoRoute && (
             <div className="absolute top-2 left-2 z-10">
-              <Link href="/default">
+              <Link href="/harmony">
                 <GlobalModeButton text="Basic Mode" />
               </Link>
             </div>

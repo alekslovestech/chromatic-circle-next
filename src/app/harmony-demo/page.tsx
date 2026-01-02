@@ -1,1 +1,1 @@
-export { default } from "../default/page";
+export { default } from "../harmony/page";

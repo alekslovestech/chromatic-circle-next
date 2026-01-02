@@ -5,12 +5,14 @@ import { usePathname } from "next/navigation";
 export const useGlobalMode = () => {
   const pathname = usePathname();
   switch (pathname) {
+    case "/harmony":
+      return GlobalMode.Default;
+    case "/harmony-demo":
+      return GlobalMode.Default;
     case "/scales":
       return GlobalMode.Scales;
     case "/scales-demo":
       return GlobalMode.Scales;
-    case "/harmony-demo":
-      return GlobalMode.Default;
     case "/chordprogressions-demo":
       return GlobalMode.ChordProgressions;
     case "/minimal":
