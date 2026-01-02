@@ -15,7 +15,7 @@ export const useBorder = () => {
   // During SSR, return the default border to avoid hydration mismatch
   if (!isClient) return "border border-containers-border";
 
-  return globalMode === GlobalMode.Demo
+  return globalMode === GlobalMode.Minimal
     ? "border border-transparent"
     : `border border-containers-${
         process.env.NODE_ENV === "development" ? "borderDebug" : "border"
