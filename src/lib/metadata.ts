@@ -47,7 +47,7 @@ export const baseMetadata: Metadata = {
   },
 };
 
-// Default view metadata
+// Harmony view metadata
 export const harmonyViewMetadata: Metadata = {
   ...baseMetadata,
   title: "Music Wheel App - Intervals and Chords",
@@ -55,12 +55,12 @@ export const harmonyViewMetadata: Metadata = {
   description: "Exploring intervals and chords on the chromatic circle",
   openGraph: {
     ...baseMetadata.openGraph,
-    title: "Default View - Music Wheel",
+    title: "Music Wheel - Harmony View",
     description: "Exploring intervals and chords on the chromatic circle",
   },
   twitter: {
     ...baseMetadata.twitter,
-    title: "Default View - Music Wheel",
+    title: "Music Wheel - Harmony View",
     description:
       "Basic features for exploring music theory with the chromatic circle",
   },
