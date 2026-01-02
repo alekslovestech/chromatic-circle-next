@@ -9,7 +9,7 @@ export const useGlobalMode = () => {
       return GlobalMode.Scales;
     case "/chordprogressions":
       return GlobalMode.ChordProgressions;
-    case "/demo":
+    case "/minimal":
       return GlobalMode.Demo;
     default:
       return GlobalMode.Default;
