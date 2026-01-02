@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import { COMMON_STYLES, NOTATION_LAYOUT } from "@/lib/design";
-import { usePageLayout, useBorder } from "@/lib/hooks";
+import { usePageLayout, useBorder, useIsDemoRoute } from "@/lib/hooks";
 
 import { ChordNameDisplay } from "@/components/ChordNameDisplay";
 import { StaffRenderer } from "@/components/StaffRenderer";
@@ -16,6 +16,7 @@ import { GlobalModeButton } from "@/components/Buttons/GlobalModeButton";
 export default function Home() {
   const { gridRows, gridAreas, gridColumns } = usePageLayout();
   const border = useBorder();
+  const isDemoRoute = useIsDemoRoute();
   const SHOW_STAFF_RENDERER =
     process.env.NEXT_PUBLIC_SHOW_STAFF_RENDERER !== "false";
   return (
@@ -54,11 +55,13 @@ export default function Home() {
           style={{ gridArea: "circular" }}
         >
           {/* Add GlobalModeButton positioned in top-left corner */}
-          <div className="absolute top-1 left-1 z-10">
-            <Link href="/scales">
-              <GlobalModeButton text="Scales Mode" />
-            </Link>
-          </div>
+          {!isDemoRoute && (
+            <div className="absolute top-1 left-1 z-10">
+              <Link href="/scales">
+                <GlobalModeButton text="Scales Mode" />
+              </Link>
+            </div>
+          )}
 
           <div
             className={`DefaultPage-circular-inner ${COMMON_STYLES.circularInner} ${border}`}

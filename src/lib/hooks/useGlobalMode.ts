@@ -7,6 +7,10 @@ export const useGlobalMode = () => {
   switch (pathname) {
     case "/scales":
       return GlobalMode.Scales;
+    case "/scales-demo":
+      return GlobalMode.Scales;
+    case "/harmony-demo":
+      return GlobalMode.Default;
     case "/chordprogressions-demo":
       return GlobalMode.ChordProgressions;
     case "/minimal":
@@ -16,7 +20,12 @@ export const useGlobalMode = () => {
   }
 };
 
-export const useIsDemoMode = () => {
+export const useIsDemoRoute = () => {
+  const pathname = usePathname();
+  return pathname?.endsWith("-demo") ?? false;
+};
+
+export const useIsMinimalMode = () => {
   const globalMode = useGlobalMode();
   return globalMode === GlobalMode.Minimal;
 };

@@ -4,7 +4,7 @@ import * as Tone from "tone";
 
 import { TWELVE } from "@/types/constants/NoteConstants";
 import { ActualIndex } from "@/types/IndexTypes";
-import { useIsDemoMode } from "@/lib/hooks/useGlobalMode";
+import { useIsMinimalMode } from "@/lib/hooks/useGlobalMode";
 
 import { useAudio } from "@/contexts/AudioContext";
 import { useMusical } from "@/contexts/MusicalContext";
@@ -19,7 +19,7 @@ export const useAudioPlayer = () => {
   const synthRef = useRef<Tone.PolySynth | null>(null);
   const { isAudioInitialized, setAudioInitialized } = useAudio();
   const { selectedNoteIndices } = useMusical();
-  const isDemoMode = useIsDemoMode();
+  const isDemoMode = useIsMinimalMode();
 
   //4n=500ms at default tempo
   const noteDuration = isDemoMode ? "4n" : "8n.";
