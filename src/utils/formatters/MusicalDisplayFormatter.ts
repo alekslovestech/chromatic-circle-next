@@ -20,6 +20,7 @@ import {
   ixActual,
   ixInversion,
   actualToChromatic,
+  addOffsetToActual,
 } from "@/types/IndexTypes";
 import { NoteGrouping } from "@/types/NoteGrouping";
 import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
@@ -305,21 +306,19 @@ export class MusicalDisplayFormatter {
     chordRef: ChordReference
   ): ActualIndex {
     const definition = NoteGroupingLibrary.getGroupingById(chordRef.id);
-    if (!definition || chordRef.inversionIndex === 0) {
+    const inversionOffsets = definition?.inversions?.[chordRef.inversionIndex];
+    if (
+      chordRef.inversionIndex === 0 ||
+      !definition ||
+      !inversionOffsets ||
+      inversionOffsets.length === 0
+    ) {
       return chordRef.rootNote;
     }
 
-    const inversionOffsets = definition.inversions[chordRef.inversionIndex];
-    if (!inversionOffsets || inversionOffsets.length === 0)
-      return chordRef.rootNote;
-
     const bassOffset = inversionOffsets[0]; // First note in inversion is the bass
 
-    // Handle negative offsets properly
-    let bassNote = chordRef.rootNote + bassOffset;
-    while (bassNote < 0) bassNote += TWELVE;
-
-    return ixActual(bassNote % TWELVE);
+    return addOffsetToActual(chordRef.rootNote, bassOffset);
   }
 
   // Enhanced method for deriving chord names that handles unknown chords better
