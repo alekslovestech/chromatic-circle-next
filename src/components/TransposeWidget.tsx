@@ -1,6 +1,5 @@
 "use client";
 
-import { ixActualArray } from "@/types/IndexTypes";
 import { IndexUtils } from "@/utils/IndexUtils";
 import { useMusical } from "@/contexts/MusicalContext";
 import {
@@ -10,10 +9,9 @@ import {
 
 import { Button } from "./Common/Button";
 import { TYPOGRAPHY } from "@/lib/design";
-import { makeChordReference } from "@/types/interfaces/ChordReference";
-import { addChromatic } from "@/types/ChromaticIndex";
 import { track } from "@/lib/track";
 import { useGlobalMode } from "@/lib/hooks/useGlobalMode";
+import { MusicalDisplayFormatter } from "@/utils/formatters/MusicalDisplayFormatter";
 
 type TransposeDirection = "up" | "down";
 export type TransposeTarget = "key" | "notes";
@@ -48,23 +46,25 @@ const TransposeButton: React.FC<TransposeButtonProps> = ({
     });
     if (target === "notes") {
       // Transpose selected notes
-      const transposedIndices = ixActualArray(
-        IndexUtils.shiftIndices(selectedNoteIndices, amount)
+      const transposedIndices = IndexUtils.transposeNotes(
+        selectedNoteIndices,
+        amount
       );
 
-      if (isFreeformMode) {
-        // In freeform mode, directly update the selected notes
-        setNotesDirectly(transposedIndices);
-      } else if (currentChordRef && transposedIndices.length > 0) {
-        // In preset mode, update chord reference to match transposed notes
-        const oldRoot = currentChordRef.rootNote;
-        const newRoot = addChromatic(oldRoot, amount);
-        const updatedChordRef = makeChordReference(
-          newRoot,
-          currentChordRef.id,
-          currentChordRef.inversionIndex
-        );
-        setCurrentChordRef(updatedChordRef);
+      console.log("transposedIndices", transposedIndices);
+
+      // Update notes directly (works for both modes)
+      setNotesDirectly(transposedIndices);
+
+      // In preset mode, update chord reference from the transposed notes
+      if (!isFreeformMode && currentChordRef && transposedIndices.length > 0) {
+        const newChordRef =
+          MusicalDisplayFormatter.getChordReferenceFromIndices(
+            transposedIndices
+          );
+        if (newChordRef) {
+          setCurrentChordRef(newChordRef);
+        }
       }
     } else {
       // Transpose musical key

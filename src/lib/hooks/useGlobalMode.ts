@@ -5,20 +5,31 @@ import { usePathname } from "next/navigation";
 export const useGlobalMode = () => {
   const pathname = usePathname();
   switch (pathname) {
+    case "/harmony":
+      return GlobalMode.Harmony;
+    case "/harmony-demo":
+      return GlobalMode.Harmony;
     case "/scales":
       return GlobalMode.Scales;
-    case "/chordprogressions":
+    case "/scales-demo":
+      return GlobalMode.Scales;
+    case "/chordprogressions-demo":
       return GlobalMode.ChordProgressions;
-    case "/demo":
-      return GlobalMode.Demo;
+    case "/minimal":
+      return GlobalMode.Minimal;
     default:
-      return GlobalMode.Default;
+      return GlobalMode.Harmony;
   }
 };
 
-export const useIsDemoMode = () => {
+export const useIsDemoRoute = () => {
+  const pathname = usePathname();
+  return pathname?.endsWith("-demo") ?? false;
+};
+
+export const useIsMinimalMode = () => {
   const globalMode = useGlobalMode();
-  return globalMode === GlobalMode.Demo;
+  return globalMode === GlobalMode.Minimal;
 };
 
 export const useIsScalePreviewMode = () => {

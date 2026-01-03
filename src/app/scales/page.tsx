@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 
 import { COMMON_STYLES, NOTATION_LAYOUT } from "@/lib/design";
-import { usePageLayout, useBorder } from "@/lib/hooks";
+import { usePageLayout, useBorder, useIsDemoRoute } from "@/lib/hooks";
 
 import { StaffRenderer } from "@/components/StaffRenderer";
 import { ChordNameDisplay } from "@/components/ChordNameDisplay";
@@ -18,6 +18,7 @@ import { useMusical } from "@/contexts/MusicalContext";
 export default function ScalesPage() {
   const { gridRows, gridAreas, gridColumns } = usePageLayout();
   const border = useBorder();
+  const isDemoRoute = useIsDemoRoute();
   const { isAudioInitialized, startSequencePlayback } = useAudio();
   const { selectedMusicalKey } = useMusical();
 
@@ -56,11 +57,13 @@ export default function ScalesPage() {
           style={{ gridArea: "circular" }}
         >
           {/* Add GlobalModeButton positioned in top-left corner */}
-          <div className="absolute top-2 left-2 z-10">
-            <Link href="/default">
-              <GlobalModeButton text="Basic Mode" />
-            </Link>
-          </div>
+          {!isDemoRoute && (
+            <div className="absolute top-2 left-2 z-10">
+              <Link href="/harmony">
+                <GlobalModeButton text="Basic Mode" />
+              </Link>
+            </div>
+          )}
 
           <div
             className={`ScalesPage-circular-inner ${COMMON_STYLES.circularInner} ${border}`}

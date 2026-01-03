@@ -4,7 +4,7 @@ import { useCallback, useRef, useState } from "react";
 import { ChordProgressionType } from "@/types/enums/ChordProgressionType";
 import { GlobalMode } from "@/types/enums/GlobalMode";
 
-import { chromaticToActual, ixActualArray } from "@/types/IndexTypes";
+import { chromaticToActual } from "@/types/IndexTypes";
 import { ChordProgressionLibrary } from "@/types/ChordProgressions/ChordProgressionLibrary";
 import { AbsoluteChord } from "@/types/AbsoluteChord";
 import { ScalePlaybackMode } from "@/types/ScalePlaybackMode";
@@ -78,9 +78,9 @@ export const useSequencePlayback = ({
         scalePlaybackMode
       );
       // Add 12 semitones (one octave) to each note
-      const octaveIndices = octaveNoteIndices.map((idx) => idx + TWELVE);
-      const fittedOctaveIndices = ixActualArray(
-        IndexUtils.fitChordToAbsoluteRange(octaveIndices)
+      const fittedOctaveIndices = IndexUtils.transposeNotes(
+        octaveNoteIndices,
+        TWELVE
       );
       setNotesDirectly(fittedOctaveIndices);
 

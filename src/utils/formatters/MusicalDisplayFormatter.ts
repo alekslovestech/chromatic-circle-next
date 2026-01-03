@@ -20,6 +20,7 @@ import {
   ixActual,
   ixInversion,
   actualToChromatic,
+  addOffsetToActual,
 } from "@/types/IndexTypes";
 import { NoteGrouping } from "@/types/NoteGrouping";
 import { NoteGroupingLibrary } from "@/types/NoteGroupingLibrary";
@@ -239,10 +240,11 @@ export class MusicalDisplayFormatter {
 
     if (inversionIndex === 0) {
       // Root position - first note is the root
-      const rootNoteIndex = ixActual(indices[0] % TWELVE);
+      const rootNoteIndex = indices[0];
       return makeChordReference(rootNoteIndex, id, inversionIndex);
     } else {
-      // Inversion - need to calculate what the root would be in root position
+      // Inversion - calculate root note and normalize to chromatic (0-11)
+      // This is because inversions represent the same chord regardless of octave
       const chordOffsets = ChordUtils.getOffsetsFromIdAndInversion(
         id,
         inversionIndex
@@ -251,9 +253,11 @@ export class MusicalDisplayFormatter {
       const bassNote = indices[0]; // First note in user input (bass note)
 
       // Calculate root: bassNote = rootNote + bassOffset, so rootNote = bassNote - bassOffset
-      const rootNote = ixActual(bassNote - bassOffset);
-      const rootNoteIndex = ixActual(rootNote % TWELVE);
-      return makeChordReference(rootNoteIndex, id, inversionIndex);
+      let rootNote = bassNote - bassOffset;
+      // Normalize to 0-11 range for inversions (chromatic root)
+      while (rootNote < 0) rootNote += TWELVE;
+      const rootNoteChromatic = ixActual(rootNote % TWELVE);
+      return makeChordReference(rootNoteChromatic, id, inversionIndex);
     }
   }
 
@@ -302,21 +306,19 @@ export class MusicalDisplayFormatter {
     chordRef: ChordReference
   ): ActualIndex {
     const definition = NoteGroupingLibrary.getGroupingById(chordRef.id);
-    if (!definition || chordRef.inversionIndex === 0) {
+    const inversionOffsets = definition?.inversions?.[chordRef.inversionIndex];
+    if (
+      chordRef.inversionIndex === 0 ||
+      !definition ||
+      !inversionOffsets ||
+      inversionOffsets.length === 0
+    ) {
       return chordRef.rootNote;
     }
 
-    const inversionOffsets = definition.inversions[chordRef.inversionIndex];
-    if (!inversionOffsets || inversionOffsets.length === 0)
-      return chordRef.rootNote;
-
     const bassOffset = inversionOffsets[0]; // First note in inversion is the bass
 
-    // Handle negative offsets properly
-    let bassNote = chordRef.rootNote + bassOffset;
-    while (bassNote < 0) bassNote += TWELVE;
-
-    return ixActual(bassNote % TWELVE);
+    return addOffsetToActual(chordRef.rootNote, bassOffset);
   }
 
   // Enhanced method for deriving chord names that handles unknown chords better

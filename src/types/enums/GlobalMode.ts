@@ -1,6 +1,6 @@
 export enum GlobalMode {
-  Default = "Default",
+  Harmony = "Harmony",
   Scales = "Scales",
   ChordProgressions = "ChordProgressions",
-  Demo = "Demo",
+  Minimal = "Minimal",
 }
