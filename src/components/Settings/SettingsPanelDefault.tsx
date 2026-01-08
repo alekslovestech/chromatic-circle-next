@@ -21,7 +21,7 @@ export const SettingsPanelDefault = () => {
       {/*<CircularVisModeSelect />*/}
 
       {/*<MonochromeModeToggle />*/}
-      <div className="flex flex-col max-w-xs self-center">
+      <div className="flex flex-col max-w-xs self-center gap-snug">
         <PlayNotesButton />
         <div className="transpose-widget-container">
           <TransposeWidget target="notes" />

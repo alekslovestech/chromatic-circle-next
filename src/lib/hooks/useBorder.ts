@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { GlobalMode } from "@/types/enums/GlobalMode";
 
-import { useGlobalMode } from "./useGlobalMode";
+import { useGlobalMode, useIsDemoRoute } from "./useGlobalMode";
 
 export const useBorder = () => {
   const globalMode = useGlobalMode();
@@ -15,7 +15,9 @@ export const useBorder = () => {
   // During SSR, return the default border to avoid hydration mismatch
   if (!isClient) return "border border-containers-border";
 
-  return globalMode === GlobalMode.Minimal
+  const isDemoRoute = useIsDemoRoute();
+
+  return isDemoRoute || globalMode === GlobalMode.Minimal
     ? "border border-transparent"
     : `border border-containers-${
         process.env.NODE_ENV === "development" ? "borderDebug" : "border"
