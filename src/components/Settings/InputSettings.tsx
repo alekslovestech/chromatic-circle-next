@@ -18,7 +18,7 @@ export const InputSettings: React.FC = () => {
     <div
       className={`settings-container flex flex-row ${LAYOUT_PATTERNS.fullSize} gap-loose`}
     >
-      <div className="w-1/3 h-full flex items-center justify-center">
+      <div className="w-1/3 h-full flex items-center justify-center border-r border-containers-divider pr-loose">
         <InputModeSelector />
       </div>
       <div
