@@ -85,8 +85,8 @@ module.exports = {
           scaleBoundaryColor: "rgb(60, 60, 60)", //"#3C3C3C",
         },
         containers: {
-          outline: "rgba(0,0, 128, 0.05)", // Default container border
-          outlineDebug: "rgba(0,0,0, 0.8)", // Default container border
+          outline: "rgba(0,0,128,0.01)", // Default container border (fainter)
+          outlineDebug: "rgba(0,0,0,0.5)", // Debug container border
           divider: "rgba(45, 45, 45, 0.15)",
         },
         canvas: {
