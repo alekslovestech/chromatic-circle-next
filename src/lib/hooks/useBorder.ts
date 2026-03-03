@@ -1,11 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { GlobalMode } from "@/types/enums/GlobalMode";
-
-import { useGlobalMode, useIsDemoRoute } from "./useGlobalMode";
 
 export const useBorder = () => {
-  const globalMode = useGlobalMode();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -13,13 +9,9 @@ export const useBorder = () => {
   }, []);
 
   // During SSR, return the default border to avoid hydration mismatch
-  if (!isClient) return "border border-containers-border";
-
-  const isDemoRoute = useIsDemoRoute();
-
-  return isDemoRoute || globalMode === GlobalMode.Minimal
-    ? "border border-transparent"
-    : `border border-containers-${
-        process.env.NODE_ENV === "development" ? "borderDebug" : "border"
-      }`;
+  const outline =
+    isClient && process.env.NODE_ENV === "development"
+      ? "border-containers-outlineDebug"
+      : "border-containers-outline";
+  return `border ${outline}`;
 };

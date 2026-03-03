@@ -1,9 +1,4 @@
 import { LAYOUT_PATTERNS } from "./LayoutPatterns";
-/*
-export const DEBUG_BORDER =
-  process.env.NODE_ENV === "development"
-    ? "border border-containers-borderDebug"
-    : "border border-containers-border";*/
 
 export const COMMON_STYLES = {
   staff: `${LAYOUT_PATTERNS.fullSize} ${LAYOUT_PATTERNS.centerFlex} px-snug rounded`,
