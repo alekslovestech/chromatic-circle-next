@@ -33,18 +33,20 @@ module.exports = {
         test: "red",
 
         buttons: {
-          bgDefault: "rgb(225, 227, 230)", //"#e1e3e6",
+          // Slightly warmer grays (less blue) for a softer UI; inactive ~6% lighter
+          bgDefault: "rgb(235, 233, 229)",
+          bgHover: "rgb(221, 218, 212)",
           bgSelected: "rgb(99, 132, 165)", //"#598abb",
           textDefault: "rgb(26, 26, 26)", //"#1A1A1A",
           textSelected: "rgb(255, 255, 255)", //"#ffffff",
           border: "rgba(45, 45, 45, 0.05)",
           borderSelected: "rgba(192, 42, 42, 0.2)",
-          bgDisabled: "rgb(229, 231, 235)", // #e5e7eb - Tailwind gray-200
+          bgDisabled: "rgb(239, 237, 233)",
 
-          // New action button colors
-          actionBgDefault: "rgb(240, 242, 245)", // Slightly lighter, more "pressable"
-          actionBgHover: "rgb(220, 225, 230)", // Darker on hover for press effect
-          actionBgActive: "rgb(200, 210, 220)", // Even darker when actively pressed
+          // New action button colors (inactive default ~6% lighter)
+          actionBgDefault: "rgb(248, 246, 242)",
+          actionBgHover: "rgb(232, 228, 220)", // Darker on hover for press effect
+          actionBgActive: "rgb(210, 204, 192)", // Even darker when actively pressed
           actionBorder: "rgba(60, 60, 60, 0.2)", // Stronger border for definition
           actionText: "rgb(50, 50, 50)", // Slightly different text color
         },
@@ -85,9 +87,10 @@ module.exports = {
         containers: {
           border: "rgba(0,0, 128, 0.05)", // Default container border
           borderDebug: "rgba(0,0,0, 0.8)", // Default container border
+          divider: "rgba(45, 45, 45, 0.15)",
         },
         canvas: {
-          bgDefault: "rgb(247, 248, 250)", //"#F7F8FA",
+          bgDefault: "rgb(212, 214, 216)", // Even darker gray than before
           bgScales: "rgb(220, 220, 220)", //"#F0F2F5",
         },
       },

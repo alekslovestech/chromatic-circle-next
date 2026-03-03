@@ -42,7 +42,7 @@ export const ChordPresetSelector: React.FC = () => {
       currentChordRef?.rootNote ??
       (selectedNoteIndices.length > 0
         ? MusicalDisplayFormatter.getChordReferenceFromIndices(
-            selectedNoteIndices
+            selectedNoteIndices,
           )?.rootNote
         : ixActual(7));
 
@@ -62,7 +62,7 @@ export const ChordPresetSelector: React.FC = () => {
         {presets
           .filter(
             (preset) =>
-              NoteGroupingLibrary.getGroupingById(preset).isVisiblePreset
+              NoteGroupingLibrary.getGroupingById(preset).isVisiblePreset,
           )
           .map((presetId) => (
             <ChordPresetButton
@@ -86,7 +86,7 @@ export const ChordPresetSelector: React.FC = () => {
         {presets
           .filter(
             (preset) =>
-              NoteGroupingLibrary.getGroupingById(preset).isVisiblePreset
+              NoteGroupingLibrary.getGroupingById(preset).isVisiblePreset,
           )
           .map((presetId) => (
             <ChordPresetButton
@@ -104,12 +104,14 @@ export const ChordPresetSelector: React.FC = () => {
     if (!currentChordRef) return null;
 
     const presetDefinition = NoteGroupingLibrary.getGroupingById(
-      currentChordRef.id
+      currentChordRef.id,
     );
     if (presetDefinition && presetDefinition.hasInversions) {
       const inversionCount = presetDefinition.inversions.length;
       return (
-        <div className={`inversion-controls flex flex-col gap-tight ${border}`}>
+        <div
+          className="inversion-controls flex flex-col gap-tight border-t border-containers-divider"
+        >
           <SectionTitle centered={true}>Inversion</SectionTitle>
           <div
             className={`inversion-button-container flex flex-row gap-snug justify-center`}
