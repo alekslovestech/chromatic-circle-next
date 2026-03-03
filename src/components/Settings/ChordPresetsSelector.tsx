@@ -109,9 +109,7 @@ export const ChordPresetSelector: React.FC = () => {
     if (presetDefinition && presetDefinition.hasInversions) {
       const inversionCount = presetDefinition.inversions.length;
       return (
-        <div
-          className="inversion-controls flex flex-col gap-tight border-t border-containers-divider"
-        >
+        <div className="inversion-controls flex flex-col gap-tight border-t border-containers-divider">
           <SectionTitle centered={true}>Inversion</SectionTitle>
           <div
             className={`inversion-button-container flex flex-row gap-snug justify-center`}

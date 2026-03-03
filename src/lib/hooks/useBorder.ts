@@ -20,6 +20,6 @@ export const useBorder = () => {
   return isDemoRoute || globalMode === GlobalMode.Minimal
     ? "border border-transparent"
     : `border border-containers-${
-        process.env.NODE_ENV === "development" ? "borderDebug" : "border"
+        process.env.NODE_ENV === "development" ? "outlineDebug" : "outline"
       }`;
 };

@@ -18,7 +18,7 @@ module.exports = {
       pattern: /border-keys-*/,
     },
     {
-      pattern: /border-containers-border*/,
+      pattern: /border-containers-*/,
     },
     {
       pattern: /text-playback-*/,
@@ -85,8 +85,8 @@ module.exports = {
           scaleBoundaryColor: "rgb(60, 60, 60)", //"#3C3C3C",
         },
         containers: {
-          border: "rgba(0,0, 128, 0.05)", // Default container border
-          borderDebug: "rgba(0,0,0, 0.8)", // Default container border
+          outline: "rgba(0,0, 128, 0.05)", // Default container border
+          outlineDebug: "rgba(0,0,0, 0.8)", // Default container border
           divider: "rgba(45, 45, 45, 0.15)",
         },
         canvas: {
