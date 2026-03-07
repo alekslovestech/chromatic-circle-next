@@ -1,14 +1,17 @@
 import { makeChromaticIndex, subChromatic } from "@/types/ChromaticIndex";
 import { ActualIndex } from "@/types/IndexTypes";
-import { TWELVE } from "@/types/constants/NoteConstants";
+import chroma from "chroma-js";
+import {
+  INTERVAL_CLASS_COLORS,
+  intervalClass,
+} from "@/utils/visual/IntervalClassColors";
 
-type RGB = [number, number, number];
 export class ColorUtils {
   static getChordColor(indices: ActualIndex[]): string {
     const cyclicIntervals = this.cyclicIntervalsFromActualIndices(indices);
     const mixcolor = this.mixChordColor(cyclicIntervals);
-    const mixColorRounded = mixcolor.map((color) => Math.round(color));
-    return `rgb(${mixColorRounded[0]}, ${mixColorRounded[1]}, ${mixColorRounded[2]})`;
+    const [r, g, b] = mixcolor.rgb().map((c: number) => Math.round(c));
+    return chroma(r, g, b).css();
   }
 
   static cyclicIntervalsFromActualIndices(indices: number[]): number[] {
@@ -44,44 +47,27 @@ export class ColorUtils {
     return reordered;
   }
 
-  private static mixChordColor(intervals: number[]): RGB {
-    if (intervals.length === 0) return [222, 222, 222]; // Return unison color for empty intervals
+  private static mixChordColor(intervals: number[]): ReturnType<typeof chroma> {
+    if (intervals.length === 0) return INTERVAL_CLASS_COLORS[0]; // Unison for empty intervals
 
-    let rgbSum: RGB = [0, 0, 0];
+    let rgbSum = [0, 0, 0] as [number, number, number];
     let totalWeight = 0;
 
     intervals.forEach((interval, i) => {
-      const iclass = this.intervalClass(interval);
-      const color = this.intervalClassColors[iclass];
+      const iclass = intervalClass(interval);
+      const [r, g, b] = INTERVAL_CLASS_COLORS[iclass].rgb();
       const weight = intervals.length - i;
 
-      rgbSum[0] += color[0] * weight;
-      rgbSum[1] += color[1] * weight;
-      rgbSum[2] += color[2] * weight;
+      rgbSum[0] += r * weight;
+      rgbSum[1] += g * weight;
+      rgbSum[2] += b * weight;
       totalWeight += weight;
     });
 
-    return [
+    return chroma(
       rgbSum[0] / totalWeight,
       rgbSum[1] / totalWeight,
       rgbSum[2] / totalWeight,
-    ];
-  }
-
-  // Interval class → RGB color mapping
-  private static intervalClassColors: Record<number, RGB> = {
-    0: [222, 222, 222], // Unison/Octave - Light Gray
-    1: [219, 20, 61], // m2 / M7 - Crimson
-    2: [255, 166, 0], // M2 / m7 - Orange
-    3: [64, 105, 224], // m3 / M6 - Royal Blue
-    4: [255, 255, 0], // M3 / m6 - Bright Yellow
-    5: [0, 207, 209], // P4 / P5 - Cyan
-    6: [255, 0, 255], // Tritone - Magenta
-  };
-
-  // Convert semitone interval to interval class (0–6)
-  private static intervalClass(semitone: number): number {
-    const mod = semitone % TWELVE;
-    return Math.min(mod, TWELVE - mod);
+    );
   }
 }
