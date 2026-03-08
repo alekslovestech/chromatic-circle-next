@@ -3,7 +3,6 @@ import { ActualIndex } from "@/types/IndexTypes";
 import chroma from "chroma-js";
 import {
   INTERVAL_CLASS_COLORS,
-  INTERVAL_CLASS_DISSONANCE,
   intervalClass,
 } from "@/utils/visual/IntervalClassColors";
 
@@ -44,6 +43,19 @@ export class ColorUtils {
       reordered.push(intervals[(startIndex + i) % len]);
     }
 
+    if (len >= 4) {
+      const diagonalIntervals: number[] = [];
+      const diagonalCount = Math.floor(len / 2); // Only unique diagonals
+      for (let i = 0; i < diagonalCount; i++) {
+        const semitone = intervalClass(
+          subChromatic(sortedPcs[(i + 2) % len], sortedPcs[i]),
+        );
+        diagonalIntervals.push(semitone);
+      }
+      diagonalIntervals.sort((a, b) => a - b);
+      reordered.push(...diagonalIntervals);
+    }
+
     return reordered;
   }
 
@@ -67,10 +79,7 @@ export class ColorUtils {
     // Harshness weight: based on dissonance curve (1 = consonant, up to 2 for most dissonant).
     const weights = intervals.map((interval, i) => {
       const orderWeight = intervals.length - i;
-      const dissonance =
-        INTERVAL_CLASS_DISSONANCE[intervalClass(interval)] ?? 0;
-      const harshnessWeight = 1 + dissonance;
-      return orderWeight * harshnessWeight;
+      return orderWeight;
     });
     return { colors, weights };
   }
