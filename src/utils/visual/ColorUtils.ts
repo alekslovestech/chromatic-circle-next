@@ -3,15 +3,15 @@ import { ActualIndex } from "@/types/IndexTypes";
 import chroma from "chroma-js";
 import {
   INTERVAL_CLASS_COLORS,
+  INTERVAL_CLASS_DISSONANCE,
   intervalClass,
 } from "@/utils/visual/IntervalClassColors";
 
 export class ColorUtils {
   static getChordColor(indices: ActualIndex[]): string {
     const cyclicIntervals = this.cyclicIntervalsFromActualIndices(indices);
-    const mixcolor = this.mixChordColor(cyclicIntervals);
-    const [r, g, b] = mixcolor.rgb().map((c: number) => Math.round(c));
-    return chroma(r, g, b).css();
+    const mixcolor = this.mixChordColor(cyclicIntervals, "lch");
+    return mixcolor.css();
   }
 
   static cyclicIntervalsFromActualIndices(indices: number[]): number[] {
@@ -47,27 +47,89 @@ export class ColorUtils {
     return reordered;
   }
 
-  private static mixChordColor(intervals: number[]): ReturnType<typeof chroma> {
-    if (intervals.length === 0) return INTERVAL_CLASS_COLORS[0]; // Unison for empty intervals
+  private static mixChordColor(
+    intervals: number[],
+    colorFormat: chroma.ColorFormat,
+  ): chroma.Color {
+    if (intervals.length === 0) return INTERVAL_CLASS_COLORS[0];
+    const { colors, weights } = this.colorsAndWeightsForIntervals(intervals);
+    return this.mixColors(colors, weights, colorFormat);
+  }
 
-    let rgbSum = [0, 0, 0] as [number, number, number];
-    let totalWeight = 0;
-
-    intervals.forEach((interval, i) => {
-      const iclass = intervalClass(interval);
-      const [r, g, b] = INTERVAL_CLASS_COLORS[iclass].rgb();
-      const weight = intervals.length - i;
-
-      rgbSum[0] += r * weight;
-      rgbSum[1] += g * weight;
-      rgbSum[2] += b * weight;
-      totalWeight += weight;
+  private static colorsAndWeightsForIntervals(intervals: number[]): {
+    colors: chroma.Color[];
+    weights: number[];
+  } {
+    const colors = intervals.map(
+      (interval) => INTERVAL_CLASS_COLORS[intervalClass(interval)],
+    );
+    // Order weight: higher for intervals earlier in the cyclic order.
+    // Harshness weight: based on dissonance curve (1 = consonant, up to 2 for most dissonant).
+    const weights = intervals.map((interval, i) => {
+      const orderWeight = intervals.length - i;
+      const dissonance =
+        INTERVAL_CLASS_DISSONANCE[intervalClass(interval)] ?? 0;
+      const harshnessWeight = 1 + dissonance;
+      return orderWeight * harshnessWeight;
     });
+    return { colors, weights };
+  }
 
-    return chroma(
+  private static mixColors(
+    colors: chroma.Color[],
+    weights: number[],
+    colorFormat: chroma.ColorFormat,
+  ): chroma.Color {
+    if (colors.length === 0) return INTERVAL_CLASS_COLORS[0];
+    if (colors.length === 1) return colors[0];
+    return colorFormat === "lch"
+      ? this.mixColorsLCH(colors, weights)
+      : this.mixColorsRGB(colors, weights);
+  }
+
+  private static mixColorsRGB(
+    colors: chroma.Color[],
+    weights: number[],
+  ): chroma.Color {
+    let rgbSum: [number, number, number] = [0, 0, 0];
+    let totalWeight = 0;
+    colors.forEach((color, i) => {
+      const [r, g, b] = color.rgb();
+      const w = weights[i];
+      rgbSum[0] += r * w;
+      rgbSum[1] += g * w;
+      rgbSum[2] += b * w;
+      totalWeight += w;
+    });
+    return chroma.rgb(
       rgbSum[0] / totalWeight,
       rgbSum[1] / totalWeight,
       rgbSum[2] / totalWeight,
     );
+  }
+
+  private static mixColorsLCH(
+    colors: chroma.Color[],
+    weights: number[],
+  ): chroma.Color {
+    let lSum = 0;
+    let cSum = 0;
+    let hxSum = 0;
+    let hySum = 0;
+    let totalWeight = 0;
+    colors.forEach((color, i) => {
+      const [L, C, H] = color.lch();
+      const w = weights[i];
+      const hRad = (H * Math.PI) / 180;
+      lSum += L * w;
+      cSum += C * w;
+      hxSum += Math.cos(hRad) * w;
+      hySum += Math.sin(hRad) * w;
+      totalWeight += w;
+    });
+    const L = lSum / totalWeight;
+    const C = cSum / totalWeight;
+    const H = (Math.atan2(hySum, hxSum) * 180) / Math.PI;
+    return chroma.lch(L, C, H < 0 ? H + 360 : H);
   }
 }
