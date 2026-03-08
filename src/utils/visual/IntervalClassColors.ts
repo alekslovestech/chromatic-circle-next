@@ -17,7 +17,7 @@ export const INTERVAL_CLASS_COLORS: Record<IntervalClass, chroma.Color> = {
 export const INTERVAL_CLASS_DISSONANCE: Record<IntervalClass, number> = {
   0: 0, // Unison/Octave
   1: 0.9, // m2 / M7
-  2: 0, // M2 / m7 (softer so sus2/sus4 don’t look harsh)
+  2: 0.5, // M2 / m7 (softer so sus2/sus4 don’t look harsh)
   3: 0, // m3 / M6
   4: 0, // M3 / m6
   5: 0, // P4 / P5

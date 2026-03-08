@@ -3,6 +3,7 @@ import { ActualIndex } from "@/types/IndexTypes";
 import chroma from "chroma-js";
 import {
   INTERVAL_CLASS_COLORS,
+  INTERVAL_CLASS_DISSONANCE,
   intervalClass,
 } from "@/utils/visual/IntervalClassColors";
 
@@ -75,11 +76,9 @@ export class ColorUtils {
     const colors = intervals.map(
       (interval) => INTERVAL_CLASS_COLORS[intervalClass(interval)],
     );
-    // Order weight: higher for intervals earlier in the cyclic order.
-    // Harshness weight: based on dissonance curve (1 = consonant, up to 2 for most dissonant).
-    const weights = intervals.map((interval, i) => {
-      const orderWeight = intervals.length - i;
-      return orderWeight;
+    const weights = intervals.map((interval) => {
+      const ic = intervalClass(interval);
+      return 1 + INTERVAL_CLASS_DISSONANCE[ic];
     });
     return { colors, weights };
   }
