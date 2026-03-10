@@ -7,6 +7,9 @@ import {
   intervalClass,
 } from "@/utils/visual/IntervalClassColors";
 
+/** Max extra weight for the first interval in sortedPcs order; decays linearly to 0 for the last. Increase to make chord type (e.g. major vs minor) more distinguishable. */
+const ORDER_WEIGHT_MAX = 1.0;
+
 export class ColorUtils {
   static getChordColor(indices: ActualIndex[]): string {
     const cyclicIntervals = this.cyclicIntervalsFromActualIndices(indices);
@@ -73,12 +76,16 @@ export class ColorUtils {
     colors: chroma.Color[];
     weights: number[];
   } {
+    const n = intervals.length;
     const colors = intervals.map(
       (interval) => INTERVAL_CLASS_COLORS[intervalClass(interval)],
     );
-    const weights = intervals.map((interval) => {
+    const weights = intervals.map((interval, i) => {
       const ic = intervalClass(interval);
-      return 1 + INTERVAL_CLASS_DISSONANCE[ic];
+      const dissonanceWeight = 1 + INTERVAL_CLASS_DISSONANCE[ic];
+      const orderWeight =
+        n > 1 ? (ORDER_WEIGHT_MAX * (n - 1 - i)) / (n - 1) : 0;
+      return dissonanceWeight + orderWeight;
     });
     return { colors, weights };
   }
