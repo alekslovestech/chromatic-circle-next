@@ -6,6 +6,7 @@ import {
   INTERVAL_CLASS_DISSONANCE,
   intervalClass,
 } from "@/utils/visual/IntervalClassColors";
+import { IntervalClass } from "@/types/IntervalClass";
 
 /** Max extra weight for the first interval in sortedPcs order; decays linearly to 0 for the last. Increase to make chord type (e.g. major vs minor) more distinguishable. */
 const ORDER_WEIGHT_MAX = 1.0;
@@ -72,21 +73,39 @@ export class ColorUtils {
     return this.mixColors(colors, weights, colorFormat);
   }
 
+  private static dedupIntervals(intervals: number[]): number[] {
+    const seen = new Set<IntervalClass>();
+    const deduped: number[] = [];
+    intervals.forEach((interval) => {
+      const ic = intervalClass(interval);
+      if (!seen.has(ic)) {
+        seen.add(ic);
+        deduped.push(interval);
+      }
+    });
+    return deduped;
+  }
+
   private static colorsAndWeightsForIntervals(intervals: number[]): {
     colors: chroma.Color[];
     weights: number[];
   } {
     const n = intervals.length;
-    const colors = intervals.map(
-      (interval) => INTERVAL_CLASS_COLORS[intervalClass(interval)],
-    );
-    const weights = intervals.map((interval, i) => {
+    const colors: chroma.Color[] = [];
+    const weights: number[] = [];
+
+    // Precompute unique intervals by interval class, keeping first occurrence for order weighting.
+    const deduped = this.dedupIntervals(intervals);
+
+    deduped.forEach((interval, i) => {
       const ic = intervalClass(interval);
+      colors.push(INTERVAL_CLASS_COLORS[ic]);
       const dissonanceWeight = 1 + INTERVAL_CLASS_DISSONANCE[ic];
       const orderWeight =
         n > 1 ? (ORDER_WEIGHT_MAX * (n - 1 - i)) / (n - 1) : 0;
-      return dissonanceWeight + orderWeight;
+      weights.push(dissonanceWeight + orderWeight);
     });
+
     return { colors, weights };
   }
 
