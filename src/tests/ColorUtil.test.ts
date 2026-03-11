@@ -1,6 +1,7 @@
-import { ColorUtils } from "../utils/visual/ColorUtils";
+import { ActualIndex } from "@/types/IndexTypes";
+import { IntervalUtils } from "../utils/IntervalUtils";
 
-describe("ColorUtils.cyclicIntervals", () => {
+describe("IntervalUtils.cyclicIntervals", () => {
   describe("up to intervals (0–2 notes)", () => {
     const testCases = [
       {
@@ -27,9 +28,9 @@ describe("ColorUtils.cyclicIntervals", () => {
     ];
 
     test.each(testCases)("$name", ({ input, expected }) => {
-      expect(ColorUtils.cyclicIntervalsFromActualIndices(input)).toEqual(
-        expected,
-      );
+      expect(
+        IntervalUtils.cyclicIntervalsFromActualIndices(input as ActualIndex[]),
+      ).toEqual(expected);
     });
   });
 
@@ -57,9 +58,9 @@ describe("ColorUtils.cyclicIntervals", () => {
     ];
 
     test.each(testCases)("$name", ({ input, expected }) => {
-      expect(ColorUtils.cyclicIntervalsFromActualIndices(input)).toEqual(
-        expected,
-      );
+      expect(
+        IntervalUtils.cyclicIntervalsFromActualIndices(input as ActualIndex[]),
+      ).toEqual(expected);
     });
   });
 
@@ -126,7 +127,7 @@ describe("ColorUtils.cyclicIntervals", () => {
 
     test.each(testCases)("$name", ({ input, expected }) => {
       expect(
-        ColorUtils.cyclicIntervalsFromActualIndices(input as ActualIndex[]),
+        IntervalUtils.cyclicIntervalsFromActualIndices(input as ActualIndex[]),
       ).toEqual(expected);
     });
   });
