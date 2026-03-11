@@ -1,4 +1,8 @@
-import { makeChromaticIndex, subChromatic } from "@/types/ChromaticIndex";
+import {
+  ChromaticIndex,
+  makeChromaticIndex,
+  subChromatic,
+} from "@/types/ChromaticIndex";
 import { ActualIndex } from "@/types/IndexTypes";
 import chroma from "chroma-js";
 import {
@@ -6,7 +10,11 @@ import {
   INTERVAL_CLASS_DISSONANCE,
   intervalClass,
 } from "@/utils/visual/IntervalClassColors";
-import { IntervalClass } from "@/types/IntervalClass";
+import {
+  IntervalClass,
+  IntervalDistance,
+  ixIntervalDistance,
+} from "@/types/IntervalClass";
 
 /** Max extra weight for the first interval in sortedPcs order; decays linearly to 0 for the last. Increase to make chord type (e.g. major vs minor) more distinguishable. */
 const ORDER_WEIGHT_MAX = 1.0;
@@ -18,44 +26,48 @@ export class ColorUtils {
     return mixcolor.css();
   }
 
-  static cyclicIntervalsFromActualIndices(indices: number[]): number[] {
+  static cyclicIntervalsFromActualIndices(
+    indices: ActualIndex[],
+  ): IntervalDistance[] {
     const pcs = indices.map((index) => makeChromaticIndex(index));
     const sortedPcs = pcs.sort((a, b) => a - b);
     return this.cyclicIntervals(sortedPcs);
   }
 
-  private static cyclicIntervals(sortedPcs: number[]): number[] {
+  private static cyclicIntervals(
+    sortedPcs: ChromaticIndex[],
+  ): IntervalDistance[] {
     if (sortedPcs.length <= 1) return [];
 
-    const intervals: number[] = [];
+    const intervals: IntervalDistance[] = [];
     const len = sortedPcs.length;
 
     // Calculate all intervals first
     for (let i = 0; i < len; i++) {
       const current = sortedPcs[i];
       const next = sortedPcs[(i + 1) % len];
-      const diff = subChromatic(next, current);
+      const diff = ixIntervalDistance(subChromatic(next, current));
       intervals.push(diff);
     }
 
     // Find the smallest interval and its index
-    let minInterval = Math.min(...intervals);
+    let minInterval = Math.min(...intervals) as IntervalDistance;
     let startIndex = intervals.indexOf(minInterval);
 
     // Reorder intervals starting from the smallest, maintaining cyclic order
-    const reordered: number[] = [];
+    const reordered: IntervalDistance[] = [];
     for (let i = 0; i < len; i++) {
       reordered.push(intervals[(startIndex + i) % len]);
     }
 
     if (len >= 4) {
-      const diagonalIntervals: number[] = [];
+      const diagonalIntervals: IntervalDistance[] = [];
       const diagonalCount = Math.floor(len / 2); // Only unique diagonals
       for (let i = 0; i < diagonalCount; i++) {
-        const semitone = intervalClass(
-          subChromatic(sortedPcs[(i + 2) % len], sortedPcs[i]),
-        );
-        diagonalIntervals.push(semitone);
+        const currentInterval = intervals[(startIndex + i) % len];
+        const nextInterval = intervals[(startIndex + i + 1) % len];
+        const semitones = (currentInterval + nextInterval) as IntervalDistance;
+        diagonalIntervals.push(semitones);
       }
       diagonalIntervals.sort((a, b) => a - b);
       reordered.push(...diagonalIntervals);
@@ -65,7 +77,7 @@ export class ColorUtils {
   }
 
   private static mixChordColor(
-    intervals: number[],
+    intervals: IntervalDistance[],
     colorFormat: chroma.ColorFormat,
   ): chroma.Color {
     if (intervals.length === 0) return INTERVAL_CLASS_COLORS[0];
@@ -73,9 +85,11 @@ export class ColorUtils {
     return this.mixColors(colors, weights, colorFormat);
   }
 
-  private static dedupIntervals(intervals: number[]): number[] {
+  private static dedupIntervals(
+    intervals: IntervalDistance[],
+  ): IntervalDistance[] {
     const seen = new Set<IntervalClass>();
-    const deduped: number[] = [];
+    const deduped: IntervalDistance[] = [];
     intervals.forEach((interval) => {
       const ic = intervalClass(interval);
       if (!seen.has(ic)) {
@@ -86,7 +100,7 @@ export class ColorUtils {
     return deduped;
   }
 
-  private static colorsAndWeightsForIntervals(intervals: number[]): {
+  private static colorsAndWeightsForIntervals(intervals: IntervalDistance[]): {
     colors: chroma.Color[];
     weights: number[];
   } {
