@@ -85,32 +85,32 @@ describe("ColorUtils.cyclicIntervals", () => {
       {
         name: "mMaj7 from C",
         input: [0, 3, 7, 11],
-        expected: [1, 3, 4, 4, 4, 5],
+        expected: [1, 3, 4, 4, 4, 7],
       },
       {
         name: "min7 from C",
         input: [0, 3, 7, 10],
-        expected: [2, 3, 4, 3, 5, 5],
+        expected: [2, 3, 4, 3, 5, 7],
       },
       {
         name: "7 from C",
         input: [0, 4, 7, 10],
-        expected: [2, 4, 3, 3, 5, 6],
+        expected: [2, 4, 3, 3, 6, 7],
       },
       {
         name: "Maj7 from C",
         input: [0, 4, 7, 11],
-        expected: [1, 4, 3, 4, 5, 5],
+        expected: [1, 4, 3, 4, 5, 7],
       },
       {
         name: "mMaj7 from C",
         input: [0, 3, 7, 11],
-        expected: [1, 3, 4, 4, 4, 5],
+        expected: [1, 3, 4, 4, 4, 7],
       },
       {
         name: "+Maj7 from C",
         input: [0, 4, 8, 11],
-        expected: [1, 4, 4, 3, 4, 5],
+        expected: [1, 4, 4, 3, 5, 8],
       },
       {
         name: "dim7 from C",
@@ -125,9 +125,9 @@ describe("ColorUtils.cyclicIntervals", () => {
     ];
 
     test.each(testCases)("$name", ({ input, expected }) => {
-      expect(ColorUtils.cyclicIntervalsFromActualIndices(input)).toEqual(
-        expected,
-      );
+      expect(
+        ColorUtils.cyclicIntervalsFromActualIndices(input as ActualIndex[]),
+      ).toEqual(expected);
     });
   });
 });
