@@ -1,87 +1,110 @@
-import { makeChromaticIndex, subChromatic } from "@/types/ChromaticIndex";
 import { ActualIndex } from "@/types/IndexTypes";
-import { TWELVE } from "@/types/constants/NoteConstants";
+import { IntervalDistance } from "@/types/IntervalClass";
+import chroma from "chroma-js";
+import { IntervalUtils } from "@/utils/IntervalUtils";
+import {
+  INTERVAL_CLASS_COLORS,
+  INTERVAL_CLASS_DISSONANCE,
+  intervalClass,
+} from "@/utils/visual/IntervalClassColors";
 
-type RGB = [number, number, number];
+/** Max extra weight for the first interval in sortedPcs order; decays linearly to 0 for the last. Increase to make chord type (e.g. major vs minor) more distinguishable. */
+const ORDER_WEIGHT_MAX = 1.0;
+
 export class ColorUtils {
   static getChordColor(indices: ActualIndex[]): string {
-    const cyclicIntervals = this.cyclicIntervalsFromActualIndices(indices);
-    const mixcolor = this.mixChordColor(cyclicIntervals);
-    const mixColorRounded = mixcolor.map((color) => Math.round(color));
-    return `rgb(${mixColorRounded[0]}, ${mixColorRounded[1]}, ${mixColorRounded[2]})`;
+    const cyclicIntervals = IntervalUtils.cyclicIntervalsFromActualIndices(indices);
+    const mixcolor = this.mixChordColor(cyclicIntervals, "lch");
+    return mixcolor.css();
   }
 
-  static cyclicIntervalsFromActualIndices(indices: number[]): number[] {
-    const pcs = indices.map((index) => makeChromaticIndex(index));
-    const sortedPcs = pcs.sort((a, b) => a - b);
-    return this.cyclicIntervals(sortedPcs);
+  private static mixChordColor(
+    intervals: IntervalDistance[],
+    colorFormat: chroma.ColorFormat,
+  ): chroma.Color {
+    if (intervals.length === 0) return INTERVAL_CLASS_COLORS[0];
+    const { colors, weights } = this.colorsAndWeightsForIntervals(intervals);
+    return this.mixColors(colors, weights, colorFormat);
   }
 
-  private static cyclicIntervals(sortedPcs: number[]): number[] {
-    if (sortedPcs.length <= 1) return [];
+  private static colorsAndWeightsForIntervals(intervals: IntervalDistance[]): {
+    colors: chroma.Color[];
+    weights: number[];
+  } {
+    const n = intervals.length;
+    const colors: chroma.Color[] = [];
+    const weights: number[] = [];
 
-    const intervals: number[] = [];
-    const len = sortedPcs.length;
+    // Precompute unique intervals by interval class, keeping first occurrence for order weighting.
+    const deduped = IntervalUtils.dedupIntervals(intervals);
 
-    // Calculate all intervals first
-    for (let i = 0; i < len; i++) {
-      const current = sortedPcs[i];
-      const next = sortedPcs[(i + 1) % len];
-      const diff = subChromatic(next, current);
-      intervals.push(diff);
-    }
-
-    // Find the smallest interval and its index
-    let minInterval = Math.min(...intervals);
-    let startIndex = intervals.indexOf(minInterval);
-
-    // Reorder intervals starting from the smallest, maintaining cyclic order
-    const reordered: number[] = [];
-    for (let i = 0; i < len; i++) {
-      reordered.push(intervals[(startIndex + i) % len]);
-    }
-
-    return reordered;
-  }
-
-  private static mixChordColor(intervals: number[]): RGB {
-    if (intervals.length === 0) return [222, 222, 222]; // Return unison color for empty intervals
-
-    let rgbSum: RGB = [0, 0, 0];
-    let totalWeight = 0;
-
-    intervals.forEach((interval, i) => {
-      const iclass = this.intervalClass(interval);
-      const color = this.intervalClassColors[iclass];
-      const weight = intervals.length - i;
-
-      rgbSum[0] += color[0] * weight;
-      rgbSum[1] += color[1] * weight;
-      rgbSum[2] += color[2] * weight;
-      totalWeight += weight;
+    deduped.forEach((interval, i) => {
+      const ic = intervalClass(interval);
+      colors.push(INTERVAL_CLASS_COLORS[ic]);
+      const dissonanceWeight = 1 + INTERVAL_CLASS_DISSONANCE[ic];
+      const orderWeight =
+        n > 1 ? (ORDER_WEIGHT_MAX * (n - 1 - i)) / (n - 1) : 0;
+      weights.push(dissonanceWeight + orderWeight);
     });
 
-    return [
+    return { colors, weights };
+  }
+
+  private static mixColors(
+    colors: chroma.Color[],
+    weights: number[],
+    colorFormat: chroma.ColorFormat,
+  ): chroma.Color {
+    if (colors.length === 0) return INTERVAL_CLASS_COLORS[0];
+    if (colors.length === 1) return colors[0];
+    return colorFormat === "lch"
+      ? this.mixColorsLCH(colors, weights)
+      : this.mixColorsRGB(colors, weights);
+  }
+
+  private static mixColorsRGB(
+    colors: chroma.Color[],
+    weights: number[],
+  ): chroma.Color {
+    let rgbSum: [number, number, number] = [0, 0, 0];
+    let totalWeight = 0;
+    colors.forEach((color, i) => {
+      const [r, g, b] = color.rgb();
+      const w = weights[i];
+      rgbSum[0] += r * w;
+      rgbSum[1] += g * w;
+      rgbSum[2] += b * w;
+      totalWeight += w;
+    });
+    return chroma.rgb(
       rgbSum[0] / totalWeight,
       rgbSum[1] / totalWeight,
       rgbSum[2] / totalWeight,
-    ];
+    );
   }
 
-  // Interval class → RGB color mapping
-  private static intervalClassColors: Record<number, RGB> = {
-    0: [222, 222, 222], // Unison/Octave - Light Gray
-    1: [219, 20, 61], // m2 / M7 - Crimson
-    2: [255, 166, 0], // M2 / m7 - Orange
-    3: [64, 105, 224], // m3 / M6 - Royal Blue
-    4: [255, 255, 0], // M3 / m6 - Bright Yellow
-    5: [0, 207, 209], // P4 / P5 - Cyan
-    6: [255, 0, 255], // Tritone - Magenta
-  };
-
-  // Convert semitone interval to interval class (0–6)
-  private static intervalClass(semitone: number): number {
-    const mod = semitone % TWELVE;
-    return Math.min(mod, TWELVE - mod);
+  private static mixColorsLCH(
+    colors: chroma.Color[],
+    weights: number[],
+  ): chroma.Color {
+    let lSum = 0;
+    let cSum = 0;
+    let hxSum = 0;
+    let hySum = 0;
+    let totalWeight = 0;
+    colors.forEach((color, i) => {
+      const [L, C, H] = color.lch();
+      const w = weights[i];
+      const hRad = (H * Math.PI) / 180;
+      lSum += L * w;
+      cSum += C * w;
+      hxSum += Math.cos(hRad) * w;
+      hySum += Math.sin(hRad) * w;
+      totalWeight += w;
+    });
+    const L = lSum / totalWeight;
+    const C = cSum / totalWeight;
+    const H = (Math.atan2(hySum, hxSum) * 180) / Math.PI;
+    return chroma.lch(L, C, H < 0 ? H + 360 : H);
   }
 }
