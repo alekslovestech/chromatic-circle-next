@@ -39,19 +39,12 @@ export class ColorUtils {
     deduped.forEach((interval, i) => {
       const ic = intervalClass(interval);
       colors.push(INTERVAL_CLASS_COLORS[ic]);
-      const dissonanceWeight = this.dissonanceWeightForInterval(interval);
+      const dissonanceWeight = 1 + INTERVAL_CLASS_DISSONANCE[ic];
       const orderWeight = this.orderWeightForPosition(i, len);
       weights.push(dissonanceWeight + orderWeight);
     });
 
     return { colors, weights };
-  }
-
-  private static dissonanceWeightForInterval(
-    interval: IntervalDistance,
-  ): number {
-    const ic = intervalClass(interval);
-    return 1 + INTERVAL_CLASS_DISSONANCE[ic];
   }
 
   /** Order weight: 0 for position 0, then linear decay from ORDER_WEIGHT_MAX (position 1) to 0 (last). */
