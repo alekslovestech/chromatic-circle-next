@@ -4,9 +4,7 @@ import {
   subChromatic,
 } from "@/types/ChromaticIndex";
 import { ActualIndex } from "@/types/IndexTypes";
-import { IntervalClass, IntervalDistance, ixIntervalDistance } from "@/types/IntervalClass";
-import { intervalClass } from "@/utils/visual/IntervalClassColors";
-
+import { IntervalDistance, ixIntervalDistance } from "@/types/IntervalClass";
 export class IntervalUtils {
   static cyclicIntervalsFromActualIndices(
     indices: ActualIndex[],
@@ -53,18 +51,5 @@ export class IntervalUtils {
     }
 
     return reordered;
-  }
-
-  static dedupIntervals(intervals: IntervalDistance[]): IntervalDistance[] {
-    const seen = new Set<IntervalClass>();
-    const deduped: IntervalDistance[] = [];
-    intervals.forEach((interval) => {
-      const ic = intervalClass(interval);
-      if (!seen.has(ic)) {
-        seen.add(ic);
-        deduped.push(interval);
-      }
-    });
-    return deduped;
   }
 }

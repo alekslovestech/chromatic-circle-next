@@ -33,27 +33,24 @@ export class ColorUtils {
     const colors: chroma.Color[] = [];
     const weights: number[] = [];
 
-    // Precompute unique intervals by interval class, keeping first occurrence for order weighting.
-    const deduped = IntervalUtils.dedupIntervals(intervals);
-
-    deduped.forEach((interval, i) => {
+    intervals.forEach((interval, i) => {
       const ic = intervalClass(interval);
       colors.push(INTERVAL_CLASS_COLORS[ic]);
-      const dissonanceWeight = 1 + INTERVAL_CLASS_DISSONANCE[ic];
-      const orderWeight = this.orderWeightForPosition(i, len);
+      const dissonance = INTERVAL_CLASS_DISSONANCE[ic];
+      const dissonanceWeight = 1 + dissonance;
+      const orderWeight =
+        dissonance === 0 ? this.orderWeightForPosition(i, len) : 0;
       weights.push(dissonanceWeight + orderWeight);
     });
 
     return { colors, weights };
   }
 
-  /** Order weight: 0 for position 0, then linear decay from ORDER_WEIGHT_MAX (position 1) to 0 (last). */
+  /** Order weight: linear decay from ORDER_WEIGHT_MAX (first position) to 0 (last). Only applied to consonant ICs. */
   private static orderWeightForPosition(i: number, len: number): number {
     const ORDER_WEIGHT_MAX = 1.5;
-    if (i === 0) return 0;
-    return len === 2
-      ? ORDER_WEIGHT_MAX
-      : (ORDER_WEIGHT_MAX * (len - 1 - i)) / (len - 2);
+    if (len <= 1) return 0;
+    return (ORDER_WEIGHT_MAX * (len - 1 - i)) / (len - 1);
   }
 
   private static mixColors(
