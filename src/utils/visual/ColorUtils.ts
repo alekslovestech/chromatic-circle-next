@@ -8,12 +8,10 @@ import {
   intervalClass,
 } from "@/utils/visual/IntervalClassColors";
 
-/** Max extra weight for the first interval in sortedPcs order; decays linearly to 0 for the last. Increase to make chord type (e.g. major vs minor) more distinguishable. */
-const ORDER_WEIGHT_MAX = 1.0;
-
 export class ColorUtils {
   static getChordColor(indices: ActualIndex[]): string {
-    const cyclicIntervals = IntervalUtils.cyclicIntervalsFromActualIndices(indices);
+    const cyclicIntervals =
+      IntervalUtils.cyclicIntervalsFromActualIndices(indices);
     const mixcolor = this.mixChordColor(cyclicIntervals, "lch");
     return mixcolor.css();
   }
@@ -31,7 +29,7 @@ export class ColorUtils {
     colors: chroma.Color[];
     weights: number[];
   } {
-    const n = intervals.length;
+    const len = intervals.length;
     const colors: chroma.Color[] = [];
     const weights: number[] = [];
 
@@ -41,13 +39,28 @@ export class ColorUtils {
     deduped.forEach((interval, i) => {
       const ic = intervalClass(interval);
       colors.push(INTERVAL_CLASS_COLORS[ic]);
-      const dissonanceWeight = 1 + INTERVAL_CLASS_DISSONANCE[ic];
-      const orderWeight =
-        n > 1 ? (ORDER_WEIGHT_MAX * (n - 1 - i)) / (n - 1) : 0;
+      const dissonanceWeight = this.dissonanceWeightForInterval(interval);
+      const orderWeight = this.orderWeightForPosition(i, len);
       weights.push(dissonanceWeight + orderWeight);
     });
 
     return { colors, weights };
+  }
+
+  private static dissonanceWeightForInterval(
+    interval: IntervalDistance,
+  ): number {
+    const ic = intervalClass(interval);
+    return 1 + INTERVAL_CLASS_DISSONANCE[ic];
+  }
+
+  /** Order weight: 0 for position 0, then linear decay from ORDER_WEIGHT_MAX (position 1) to 0 (last). */
+  private static orderWeightForPosition(i: number, len: number): number {
+    const ORDER_WEIGHT_MAX = 1.5;
+    if (i === 0) return 0;
+    return len === 2
+      ? ORDER_WEIGHT_MAX
+      : (ORDER_WEIGHT_MAX * (len - 1 - i)) / (len - 2);
   }
 
   private static mixColors(
